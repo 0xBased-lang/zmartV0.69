@@ -13,6 +13,10 @@ pub mod resolve_market;
 pub mod initiate_dispute;
 pub mod finalize_market;
 
+// Claim Instructions (Day 6)
+pub mod claim_winnings;
+pub mod withdraw_liquidity;
+
 // Re-export instruction handlers
 pub use initialize_global_config::*;
 pub use create_market::*;
@@ -23,3 +27,5 @@ pub use sell_shares::*;
 pub use resolve_market::*;
 pub use initiate_dispute::*;
 pub use finalize_market::*;
+pub use claim_winnings::*;
+pub use withdraw_liquidity::*;

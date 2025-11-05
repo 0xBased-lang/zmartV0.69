@@ -171,4 +171,32 @@ pub mod zmart_core {
     ) -> Result<()> {
         finalize_market::handler(ctx, dispute_agree, dispute_disagree)
     }
+
+    // ============================================================================
+    // Claim Instructions (Day 6)
+    // ============================================================================
+
+    /// Claim winnings after market finalized
+    ///
+    /// Users claim based on final outcome:
+    /// - YES outcome: Only YES holders win
+    /// - NO outcome: Only NO holders win
+    /// - INVALID outcome: All holders refunded
+    ///
+    /// First claimer pays resolver their accumulated fees
+    pub fn claim_winnings(
+        ctx: Context<ClaimWinnings>,
+    ) -> Result<()> {
+        claim_winnings::handler(ctx)
+    }
+
+    /// Withdraw remaining liquidity after market finalized
+    ///
+    /// Creator withdraws remaining pool funds + LP fees while
+    /// preserving rent reserve.
+    pub fn withdraw_liquidity(
+        ctx: Context<WithdrawLiquidity>,
+    ) -> Result<()> {
+        withdraw_liquidity::handler(ctx)
+    }
 }
