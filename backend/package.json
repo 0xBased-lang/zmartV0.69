@@ -14,7 +14,8 @@
     "test:coverage": "jest --coverage",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
-    "format": "prettier --write 'src/**/*.ts'"
+    "format": "prettier --write 'src/**/*.ts'",
+    "validate:week2": "ts-node scripts/validate-week2-simple.ts"
   },
   "keywords": [
     "solana",
