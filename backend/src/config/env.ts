@@ -63,10 +63,9 @@ const envSchema = Joi.object({
   // API Configuration
   API_PORT: Joi.number().port().default(3000).description("API server port"),
   API_HOST: Joi.string().default("localhost").description("API server host"),
-  CORS_ORIGIN: Joi.string()
-    .uri()
-    .default("http://localhost:3001")
-    .description("CORS allowed origin"),
+  CORS_ORIGINS: Joi.string()
+    .default("http://localhost:3001,http://localhost:3000")
+    .description("CORS allowed origins (comma-separated)"),
 
   // WebSocket Configuration
   WS_PORT: Joi.number().port().default(3001).description("WebSocket server port"),
@@ -138,7 +137,7 @@ export const config = {
   api: {
     port: envVars.API_PORT as number,
     host: envVars.API_HOST as string,
-    corsOrigin: envVars.CORS_ORIGIN as string,
+    corsOrigins: (envVars.CORS_ORIGINS as string).split(",").map((s) => s.trim()),
   },
   websocket: {
     port: envVars.WS_PORT as number,
