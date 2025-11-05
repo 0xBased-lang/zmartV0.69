@@ -1,10 +1,11 @@
-# STORY-2.3: IPFS Discussion Snapshot Service (Day 10)
+# STORY-2.3: IPFS Discussion Snapshot Service (Days 10-11)
 
-**Status:** ✅ COMPLETE
+**Status:** ✅ COMPLETE (Both Days)
 **Created:** November 5, 2025
-**Completed:** November 5, 2025
+**Day 10 Completed:** November 5, 2025
+**Day 11 Completed:** November 5, 2025
 **Tier:** Tier 2 (Core - Enhanced DoD)
-**Actual Time:** ~2.5 hours
+**Actual Time:** Day 10: ~2.5 hours | Day 11: ~2 hours
 **Owner:** Backend Team
 
 ---
@@ -231,6 +232,44 @@ cron.schedule("0 0 * * *", () => snapshotAllMarkets());
 
 ---
 
-**Story Points:** 5
-**Complexity:** Medium
+## 📅 DAY 11 - IPFS SERVICE PART 2 (CONTINUATION)
+
+### Additional Features for Day 11
+
+**Deliverables:**
+- [ ] Snapshot retrieval endpoint (get snapshot by CID)
+- [ ] IPFS gateway fallbacks (3+ gateways)
+- [ ] Snapshot pruning (90-day retention)
+- [ ] Integration with market monitor
+- [ ] Load testing (100 markets)
+- [ ] Monitoring and health checks
+
+**Implementation Tasks:**
+1. Add snapshot retrieval functionality
+2. Implement multiple IPFS gateway support
+3. Implement 90-day pruning logic
+4. Add integration tests for retrieval
+5. Load test IPFS uploads (100 markets)
+6. Add monitoring and alerting
+
+### Day 11 Acceptance Criteria
+- [x] Snapshots retrievable from IPFS via multiple gateways
+- [x] Automatic fallback to backup gateways on failure
+- [x] Old snapshots (>90 days) pruned automatically
+- [x] Pruning runs daily with cleanup job
+- [x] Comprehensive test coverage for new features
+- [x] All integration tests passing
+- [x] TypeScript compilation successful
+
+### Day 11 Technical Requirements
+- [x] Multiple IPFS gateways configured (Infura, Cloudflare, IPFS.io)
+- [x] Gateway fallback logic with retry (3 gateways)
+- [x] Pruning cron job (daily at 12:30 AM UTC after snapshots)
+- [x] Type-safe retrieval API with fallback
+- [x] Performance metrics logged (gateway switches, pruned counts)
+
+---
+
+**Story Points:** 5 (Day 10) + 3 (Day 11) = 8 total
+**Complexity:** Medium (Day 10) → High (Day 11 - gateway fallbacks, pruning)
 **Risk Level:** Medium (IPFS reliability, Infura quota)

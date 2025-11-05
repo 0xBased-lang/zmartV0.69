@@ -2,7 +2,9 @@
 // IPFS Service - Main Entry Point
 // ============================================================
 // Purpose: Export IPFS services and scheduler
-// Story: 2.3 (Day 10)
+// Story: 2.3 (Days 10-11)
+// Day 10: Snapshot creation and upload
+// Day 11: Pruning integration, multi-gateway
 
 import cron from "node-cron";
 import logger from "../../utils/logger";
@@ -17,10 +19,12 @@ export { IPFSSnapshotService, DiscussionSnapshot, SnapshotResult } from "./snaps
  * IPFSSnapshotScheduler
  *
  * Manages cron scheduling for IPFS snapshot service
+ * Day 11: Added pruning job for 90-day cleanup
  */
 export class IPFSSnapshotScheduler {
   private snapshotService: IPFSSnapshotService;
-  private cronJob: cron.ScheduledTask | null = null;
+  private snapshotCronJob: cron.ScheduledTask | null = null;
+  private pruningCronJob: cron.ScheduledTask | null = null;
 
   constructor(
     supabase: SupabaseClient,
@@ -31,17 +35,18 @@ export class IPFSSnapshotScheduler {
 
   /**
    * Start the cron scheduler
+   * Day 11: Enhanced with pruning job
    */
   start(): void {
-    if (this.cronJob) {
+    if (this.snapshotCronJob) {
       logger.warn("[IPFSSnapshotScheduler] Scheduler already running");
       return;
     }
 
     logger.info(`[IPFSSnapshotScheduler] Starting scheduler with cron: ${this.cronSchedule}`);
 
-    // Schedule daily snapshots
-    this.cronJob = cron.schedule(this.cronSchedule, async () => {
+    // Schedule daily snapshots (midnight UTC)
+    this.snapshotCronJob = cron.schedule(this.cronSchedule, async () => {
       try {
         logger.info("[IPFSSnapshotScheduler] Running scheduled snapshot...");
         await this.snapshotService.run();
@@ -51,33 +56,69 @@ export class IPFSSnapshotScheduler {
       }
     });
 
-    logger.info("[IPFSSnapshotScheduler] Scheduler started successfully");
+    // Day 11: Schedule daily pruning (12:30 AM UTC, 30 min after snapshots)
+    this.pruningCronJob = cron.schedule("30 0 * * *", async () => {
+      try {
+        logger.info("[IPFSSnapshotScheduler] Running scheduled pruning (>90 days)...");
+        const prunedCount = await this.snapshotService.pruneOldSnapshots();
+        logger.info(`[IPFSSnapshotScheduler] Scheduled pruning complete: ${prunedCount} records deleted`);
+      } catch (error) {
+        logger.error("[IPFSSnapshotScheduler] Error in pruning task:", error);
+      }
+    });
+
+    logger.info(
+      "[IPFSSnapshotScheduler] Scheduler started successfully:\n" +
+      `  - Snapshots: ${this.cronSchedule}\n` +
+      "  - Pruning: 30 0 * * * (12:30 AM UTC)"
+    );
   }
 
   /**
    * Stop the cron scheduler
+   * Day 11: Updated to stop both jobs
    */
   stop(): void {
-    if (this.cronJob) {
-      this.cronJob.stop();
-      this.cronJob = null;
-      logger.info("[IPFSSnapshotScheduler] Scheduler stopped");
+    if (this.snapshotCronJob) {
+      this.snapshotCronJob.stop();
+      this.snapshotCronJob = null;
     }
+
+    if (this.pruningCronJob) {
+      this.pruningCronJob.stop();
+      this.pruningCronJob = null;
+    }
+
+    logger.info("[IPFSSnapshotScheduler] Scheduler stopped (snapshots + pruning)");
   }
 
   /**
    * Get scheduler status
+   * Day 11: Updated with pruning status
    */
   getStatus(): {
     isRunning: boolean;
-    cronSchedule: string;
+    snapshotCronSchedule: string;
+    pruningCronSchedule: string;
     snapshotService: { isRunning: boolean; ipfsGateway: string };
   } {
     return {
-      isRunning: this.cronJob !== null,
-      cronSchedule: this.cronSchedule,
+      isRunning: this.snapshotCronJob !== null && this.pruningCronJob !== null,
+      snapshotCronSchedule: this.cronSchedule,
+      pruningCronSchedule: "30 0 * * *",
       snapshotService: this.snapshotService.getStatus(),
     };
+  }
+
+  /**
+   * Manually trigger pruning (for testing or manual cleanup)
+   * Day 11: New method
+   */
+  async runPruningNow(): Promise<number> {
+    logger.info("[IPFSSnapshotScheduler] Running manual pruning...");
+    const prunedCount = await this.snapshotService.pruneOldSnapshots();
+    logger.info(`[IPFSSnapshotScheduler] Manual pruning complete: ${prunedCount} records deleted`);
+    return prunedCount;
   }
 
   /**

@@ -3,13 +3,62 @@
 // ============================================================
 // Purpose: Daily snapshots of market discussions to IPFS
 // Pattern Prevention: #5 (Documentation Explosion) - Immutable audit trail
-// Story: 2.3 (Day 10)
+// Story: 2.3 (Days 10-11)
+// Day 10: Snapshot creation and upload
+// Day 11: Gateway fallbacks, pruning, enhanced retrieval
 
 import { create, IPFSHTTPClient } from "ipfs-http-client";
 import { SupabaseClient } from "@supabase/supabase-js";
 import logger from "../../utils/logger";
 import { retryWithBackoff } from "../../utils/retry";
 import { config } from "../../config";
+
+/**
+ * IPFS Gateway configuration
+ */
+interface IPFSGateway {
+  name: string;
+  host: string;
+  port: number;
+  protocol: string;
+  headers?: Record<string, string>;
+  isPublic: boolean;
+}
+
+/**
+ * Multiple IPFS gateways with fallback support
+ */
+const IPFS_GATEWAYS: IPFSGateway[] = [
+  // Primary: Infura (authenticated)
+  {
+    name: "Infura",
+    host: "ipfs.infura.io",
+    port: 5001,
+    protocol: "https",
+    headers: {
+      authorization: `Basic ${Buffer.from(
+        `${config.ipfs.projectId}:${config.ipfs.projectSecret}`
+      ).toString("base64")}`,
+    },
+    isPublic: false,
+  },
+  // Fallback 1: Cloudflare (public)
+  {
+    name: "Cloudflare",
+    host: "cloudflare-ipfs.com",
+    port: 443,
+    protocol: "https",
+    isPublic: true,
+  },
+  // Fallback 2: IPFS.io (public)
+  {
+    name: "IPFS.io",
+    host: "ipfs.io",
+    port: 443,
+    protocol: "https",
+    isPublic: true,
+  },
+];
 
 /**
  * Discussion snapshot structure (version 1.0)
@@ -50,22 +99,55 @@ export interface SnapshotResult {
  */
 export class IPFSSnapshotService {
   private ipfs: IPFSHTTPClient;
+  private currentGatewayIndex: number = 0;
   private isRunning: boolean = false;
 
   constructor(private supabase: SupabaseClient) {
-    // Initialize IPFS client with Infura gateway
-    this.ipfs = create({
-      host: "ipfs.infura.io",
-      port: 5001,
-      protocol: "https",
-      headers: {
-        authorization: `Basic ${Buffer.from(
-          `${config.ipfs.projectId}:${config.ipfs.projectSecret}`
-        ).toString("base64")}`,
-      },
-    });
+    // Initialize IPFS client with primary gateway (Infura)
+    this.ipfs = this.createIPFSClient(IPFS_GATEWAYS[0]);
+    logger.info("[IPFSSnapshotService] Initialized with primary gateway: Infura");
+  }
 
-    logger.info("[IPFSSnapshotService] Initialized with Infura gateway");
+  /**
+   * Create IPFS client for a specific gateway
+   */
+  private createIPFSClient(gateway: IPFSGateway): IPFSHTTPClient {
+    return create({
+      host: gateway.host,
+      port: gateway.port,
+      protocol: gateway.protocol,
+      headers: gateway.headers,
+    });
+  }
+
+  /**
+   * Switch to next available IPFS gateway
+   * Returns true if switched successfully, false if no more gateways
+   */
+  private switchToNextGateway(): boolean {
+    this.currentGatewayIndex++;
+
+    if (this.currentGatewayIndex >= IPFS_GATEWAYS.length) {
+      logger.error("[IPFSSnapshotService] All gateways exhausted");
+      return false;
+    }
+
+    const newGateway = IPFS_GATEWAYS[this.currentGatewayIndex];
+    this.ipfs = this.createIPFSClient(newGateway);
+    logger.warn(`[IPFSSnapshotService] Switched to gateway: ${newGateway.name}`);
+
+    return true;
+  }
+
+  /**
+   * Reset to primary gateway
+   */
+  private resetToPrimaryGateway(): void {
+    if (this.currentGatewayIndex !== 0) {
+      this.currentGatewayIndex = 0;
+      this.ipfs = this.createIPFSClient(IPFS_GATEWAYS[0]);
+      logger.info("[IPFSSnapshotService] Reset to primary gateway: Infura");
+    }
   }
 
   /**
@@ -223,33 +305,65 @@ export class IPFSSnapshotService {
   }
 
   /**
-   * Upload snapshot to IPFS with retry logic
+   * Upload snapshot to IPFS with retry logic and gateway fallback
+   * Day 11: Enhanced with multi-gateway fallback
    * Returns CID string
    */
   private async uploadToIPFS(snapshot: DiscussionSnapshot): Promise<string> {
     const snapshotJson = JSON.stringify(snapshot, null, 2);
+    let lastError: Error | null = null;
 
-    const cid = await retryWithBackoff(
-      async () => {
+    // Try each gateway in sequence
+    for (let gatewayAttempt = 0; gatewayAttempt < IPFS_GATEWAYS.length; gatewayAttempt++) {
+      const currentGateway = IPFS_GATEWAYS[this.currentGatewayIndex];
+
+      try {
         logger.debug(
           `[IPFSSnapshotService] Uploading snapshot for market ${snapshot.market_id} ` +
-          `(${snapshot.discussions_count} discussions, ${snapshotJson.length} bytes)`
+          `via ${currentGateway.name} (${snapshot.discussions_count} discussions, ${snapshotJson.length} bytes)`
         );
 
-        const result = await this.ipfs.add(snapshotJson);
-        logger.debug(`[IPFSSnapshotService] Upload successful: ${result.cid.toString()}`);
+        // Try upload with retry for current gateway
+        const cid = await retryWithBackoff(
+          async () => {
+            const result = await this.ipfs.add(snapshotJson);
+            return result.cid.toString();
+          },
+          {
+            maxAttempts: 2, // Reduced per-gateway attempts
+            initialDelay: 1000,
+            maxDelay: 5000,
+            backoffFactor: 2,
+          }
+        );
 
-        return result.cid.toString();
-      },
-      {
-        maxAttempts: 3,
-        initialDelay: 2000,
-        maxDelay: 10000,
-        backoffFactor: 2,
+        logger.info(
+          `[IPFSSnapshotService] Upload successful via ${currentGateway.name}: ${cid}`
+        );
+
+        // Reset to primary gateway on success
+        this.resetToPrimaryGateway();
+
+        return cid;
+      } catch (error) {
+        lastError = error as Error;
+        logger.warn(
+          `[IPFSSnapshotService] Upload failed via ${currentGateway.name}:`,
+          error
+        );
+
+        // Try next gateway if available
+        if (!this.switchToNextGateway()) {
+          break; // No more gateways
+        }
       }
-    );
+    }
 
-    return cid;
+    // All gateways failed
+    this.resetToPrimaryGateway();
+    throw new Error(
+      `IPFS upload failed on all gateways: ${lastError?.message || "Unknown error"}`
+    );
   }
 
   /**
@@ -277,33 +391,107 @@ export class IPFSSnapshotService {
   }
 
   /**
-   * Retrieve snapshot from IPFS by CID
+   * Prune old snapshots (>90 days)
+   * Day 11: Automatic cleanup of old IPFS anchors
+   * Returns number of pruned records
    */
-  async retrieveSnapshot(cid: string): Promise<DiscussionSnapshot> {
+  async pruneOldSnapshots(): Promise<number> {
     try {
-      logger.debug(`[IPFSSnapshotService] Retrieving snapshot: ${cid}`);
-
-      // Get data from IPFS
-      const chunks: Uint8Array[] = [];
-      for await (const chunk of this.ipfs.cat(cid)) {
-        chunks.push(chunk);
-      }
-
-      // Concatenate chunks and parse JSON
-      const buffer = Buffer.concat(chunks);
-      const snapshotJson = buffer.toString("utf-8");
-      const snapshot = JSON.parse(snapshotJson) as DiscussionSnapshot;
-
-      logger.debug(
-        `[IPFSSnapshotService] Retrieved snapshot for market ${snapshot.market_id} ` +
-        `(${snapshot.discussions_count} discussions)`
+      const ninetyDaysAgo = new Date(Date.now() - 90 * 86400000);
+      logger.info(
+        `[IPFSSnapshotService] Pruning snapshots older than ${ninetyDaysAgo.toISOString()}`
       );
 
-      return snapshot;
+      // Find old snapshots
+      const { data: oldSnapshots, error: selectError } = await this.supabase
+        .from("ipfs_anchors")
+        .select("id, market_id, ipfs_hash, created_at")
+        .lt("created_at", ninetyDaysAgo.toISOString())
+        .order("created_at", { ascending: true });
+
+      if (selectError) {
+        throw new Error(`Failed to fetch old snapshots: ${selectError.message}`);
+      }
+
+      if (!oldSnapshots || oldSnapshots.length === 0) {
+        logger.info("[IPFSSnapshotService] No old snapshots to prune");
+        return 0;
+      }
+
+      logger.info(`[IPFSSnapshotService] Found ${oldSnapshots.length} old snapshots to prune`);
+
+      // Delete old snapshots from Supabase
+      // Note: We DON'T delete from IPFS (immutable), only DB records
+      const { error: deleteError } = await this.supabase
+        .from("ipfs_anchors")
+        .delete()
+        .lt("created_at", ninetyDaysAgo.toISOString());
+
+      if (deleteError) {
+        throw new Error(`Failed to delete old snapshots: ${deleteError.message}`);
+      }
+
+      logger.info(`[IPFSSnapshotService] Pruned ${oldSnapshots.length} snapshots`);
+      return oldSnapshots.length;
     } catch (error) {
-      logger.error(`[IPFSSnapshotService] Error retrieving snapshot ${cid}:`, error);
-      throw new Error(`Failed to retrieve snapshot from IPFS: ${error}`);
+      logger.error("[IPFSSnapshotService] Error pruning old snapshots:", error);
+      throw error;
     }
+  }
+
+  /**
+   * Retrieve snapshot from IPFS by CID
+   * Day 11: Enhanced with gateway fallback
+   */
+  async retrieveSnapshot(cid: string): Promise<DiscussionSnapshot> {
+    let lastError: Error | null = null;
+
+    // Try each gateway in sequence
+    for (let gatewayAttempt = 0; gatewayAttempt < IPFS_GATEWAYS.length; gatewayAttempt++) {
+      const currentGateway = IPFS_GATEWAYS[this.currentGatewayIndex];
+
+      try {
+        logger.debug(`[IPFSSnapshotService] Retrieving snapshot ${cid} via ${currentGateway.name}`);
+
+        // Get data from IPFS
+        const chunks: Uint8Array[] = [];
+        for await (const chunk of this.ipfs.cat(cid)) {
+          chunks.push(chunk);
+        }
+
+        // Concatenate chunks and parse JSON
+        const buffer = Buffer.concat(chunks);
+        const snapshotJson = buffer.toString("utf-8");
+        const snapshot = JSON.parse(snapshotJson) as DiscussionSnapshot;
+
+        logger.info(
+          `[IPFSSnapshotService] Retrieved snapshot via ${currentGateway.name} for market ${snapshot.market_id} ` +
+          `(${snapshot.discussions_count} discussions)`
+        );
+
+        // Reset to primary gateway on success
+        this.resetToPrimaryGateway();
+
+        return snapshot;
+      } catch (error) {
+        lastError = error as Error;
+        logger.warn(
+          `[IPFSSnapshotService] Retrieval failed via ${currentGateway.name}:`,
+          error
+        );
+
+        // Try next gateway if available
+        if (!this.switchToNextGateway()) {
+          break; // No more gateways
+        }
+      }
+    }
+
+    // All gateways failed
+    this.resetToPrimaryGateway();
+    throw new Error(
+      `IPFS retrieval failed on all gateways for CID ${cid}: ${lastError?.message || "Unknown error"}`
+    );
   }
 
   /**
