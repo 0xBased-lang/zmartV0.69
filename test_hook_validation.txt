@@ -6,3 +6,4 @@ Test Cases:
 3. ❌ feat: commit without story reference - Should fail
 4. ❌ feat: commit with incomplete DoD - Should fail
 
+# Testing negative case
