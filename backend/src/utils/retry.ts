@@ -112,4 +112,6 @@ export async function withCustomRetry<T>(
   throw lastError!;
 }
 
+// Named exports
+export { withRetry as retryWithBackoff };
 export default withRetry;
