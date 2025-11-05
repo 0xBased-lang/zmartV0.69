@@ -6,12 +6,11 @@ use crate::state::{GlobalConfig, MarketAccount, MarketState};
 ///
 /// Backend authority finalizes the market after vote aggregation.
 /// - RESOLVING: Keep proposed outcome after dispute window expires
-/// - DISPUTED: Check if ≥60% agree on flipping outcome
+/// - DISPUTED: Check if ≥60% agree to flip outcome
 ///
 /// # Arguments
-/// * `vote_yes_count` - Votes for YES outcome (used in DISPUTED state)
-/// * `vote_no_count` - Votes for NO outcome (used in DISPUTED state)
-/// * `total_votes` - Total votes cast (used in DISPUTED state)
+/// * `dispute_agree` - Dispute agree votes (Some for DISPUTED, None for RESOLVING)
+/// * `dispute_disagree` - Dispute disagree votes (Some for DISPUTED, None for RESOLVING)
 #[derive(Accounts)]
 pub struct FinalizeMarket<'info> {
     #[account(
@@ -37,45 +36,46 @@ pub struct FinalizeMarket<'info> {
 
 pub fn handler(
     ctx: Context<FinalizeMarket>,
-    vote_yes_count: u64,
-    vote_no_count: u64,
-    total_votes: u64,
+    dispute_agree: Option<u32>,
+    dispute_disagree: Option<u32>,
 ) -> Result<()> {
     let market = &mut ctx.accounts.market;
     let config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
 
+    // Record if market was disputed (before state change)
+    let was_disputed = market.state == MarketState::Disputed;
+
     // Determine final outcome based on current state
     let final_outcome = if market.state == MarketState::Disputed {
         // DISPUTED case: Use community votes to determine outcome
-        require!(total_votes > 0, ErrorCode::NoVotesRecorded);
+        let agree = dispute_agree.ok_or(ErrorCode::NoVotesRecorded)?;
+        let disagree = dispute_disagree.ok_or(ErrorCode::NoVotesRecorded)?;
+        let total = agree.checked_add(disagree).ok_or(ErrorCode::OverflowError)?;
 
-        // Convert u64 to u32 for storage (validate range)
-        let vote_yes_u32 = vote_yes_count.try_into()
-            .map_err(|_| ErrorCode::OverflowError)?;
-        let vote_no_u32 = vote_no_count.try_into()
-            .map_err(|_| ErrorCode::OverflowError)?;
-        let total_u32 = total_votes.try_into()
-            .map_err(|_| ErrorCode::OverflowError)?;
+        require!(total > 0, ErrorCode::NoVotesRecorded);
 
         // Record dispute votes
-        market.dispute_agree = vote_yes_u32;
-        market.dispute_disagree = vote_no_u32;
-        market.dispute_total_votes = total_u32;
+        market.dispute_agree = agree;
+        market.dispute_disagree = disagree;
+        market.dispute_total_votes = total;
 
-        // Calculate which outcome has majority support
-        let yes_percentage_bps = (vote_yes_count as u128)
+        // Calculate dispute agreement rate
+        let agree_rate_bps = (agree as u64)
             .checked_mul(10000).ok_or(ErrorCode::OverflowError)?
-            .checked_div(total_votes as u128).ok_or(ErrorCode::DivisionByZero)? as u64;
+            .checked_div(total as u64).ok_or(ErrorCode::DivisionByZero)?;
 
-        // Determine final outcome: YES if ≥60% vote YES, otherwise NO
-        // (Note: this treats abstentions as NO votes)
-        if yes_percentage_bps >= config.dispute_success_threshold as u64 {
-            // ≥60% voted YES
-            Some(true)
+        // Check if dispute succeeded (≥60% agree to flip)
+        if agree_rate_bps >= config.dispute_success_threshold as u64 {
+            // Dispute succeeded → flip outcome
+            match market.proposed_outcome {
+                Some(true) => Some(false),   // YES → NO
+                Some(false) => Some(true),   // NO → YES
+                None => None,                // INVALID stays INVALID
+            }
         } else {
-            // <60% voted YES (includes NO votes + abstentions)
-            Some(false)
+            // Dispute failed → keep proposed outcome
+            market.proposed_outcome
         }
     } else {
         // RESOLVING case: No dispute occurred
@@ -95,6 +95,7 @@ pub fn handler(
 
     // Set final outcome and mark as finalized
     market.final_outcome = final_outcome;
+    market.was_disputed = was_disputed;
     market.finalized_at = clock.unix_timestamp;
     market.state = MarketState::Finalized;
 
@@ -102,7 +103,7 @@ pub fn handler(
     // emit!(MarketFinalized {
     //     market_id: market.market_id,
     //     final_outcome,
-    //     was_disputed: market.state == MarketState::Disputed,
+    //     was_disputed,
     //     timestamp: market.finalized_at,
     // });
 
@@ -114,72 +115,81 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_vote_percentage_calculation() {
+    fn test_dispute_success_calculation() {
         // Test 60% threshold
-        let yes = 60u64;
-        let no = 40u64;
-        let total = yes + no;
+        let agree = 60u32;
+        let disagree = 40u32;
+        let total = agree + disagree;
 
-        let yes_bps = (yes as u128) * 10000 / (total as u128);
-        assert_eq!(yes_bps, 6000); // Exactly 60%
+        let agree_bps = (agree as u64) * 10000 / (total as u64);
+        assert_eq!(agree_bps, 6000); // Exactly 60%
 
         let threshold = 6000u64;
-        assert!(yes_bps >= threshold as u128);
+        assert!(agree_bps >= threshold); // Should succeed
     }
 
     #[test]
     fn test_below_threshold() {
-        // 59% should result in NO outcome
-        let yes = 59u64;
-        let no = 41u64;
-        let total = yes + no;
+        // 59% should fail
+        let agree = 59u32;
+        let disagree = 41u32;
+        let total = agree + disagree;
 
-        let yes_bps = (yes as u128) * 10000 / (total as u128);
-        assert_eq!(yes_bps, 5900); // 59%
+        let agree_bps = (agree as u64) * 10000 / (total as u64);
+        assert_eq!(agree_bps, 5900); // 59%
 
         let threshold = 6000u64;
-        assert!(yes_bps < threshold as u128);
+        assert!(agree_bps < threshold); // Should fail
     }
 
     #[test]
-    fn test_unanimous_yes() {
-        // 100% YES should pass
-        let yes = 100u64;
-        let no = 0u64;
-        let total = yes + no;
+    fn test_outcome_flipping() {
+        // Test outcome flipping logic
+        let proposed_yes: Option<bool> = Some(true);
+        let proposed_no: Option<bool> = Some(false);
 
-        let yes_bps = (yes as u128) * 10000 / (total as u128);
-        assert_eq!(yes_bps, 10000); // 100%
+        // Flip YES → NO
+        let flipped_yes = match proposed_yes {
+            Some(true) => Some(false),
+            Some(false) => Some(true),
+            None => None,
+        };
+        assert_eq!(flipped_yes, Some(false));
 
-        let threshold = 6000u64;
-        assert!(yes_bps >= threshold as u128);
+        // Flip NO → YES
+        let flipped_no = match proposed_no {
+            Some(true) => Some(false),
+            Some(false) => Some(true),
+            None => None,
+        };
+        assert_eq!(flipped_no, Some(true));
     }
 
     #[test]
     fn test_50_50_split() {
-        // 50/50 should result in NO (< 60%)
-        let yes = 50u64;
-        let no = 50u64;
-        let total = yes + no;
+        // 50/50 should fail (< 60%)
+        let agree = 50u32;
+        let disagree = 50u32;
+        let total = agree + disagree;
 
-        let yes_bps = (yes as u128) * 10000 / (total as u128);
-        assert_eq!(yes_bps, 5000); // 50%
+        let agree_bps = (agree as u64) * 10000 / (total as u64);
+        assert_eq!(agree_bps, 5000); // 50%
 
         let threshold = 6000u64;
-        assert!(yes_bps < threshold as u128);
+        assert!(agree_bps < threshold); // Should fail
     }
 
     #[test]
     fn test_exact_threshold() {
         // Exactly 60% should pass (inclusive)
-        let yes = 6u64;
-        let no = 4u64;
-        let total = yes + no;
+        let agree = 6u32;
+        let disagree = 4u32;
+        let total = agree + disagree;
 
-        let yes_bps = (yes as u128) * 10000 / (total as u128);
-        assert_eq!(yes_bps, 6000);
+        let agree_bps = (agree as u64) * 10000 / (total as u64);
+        assert_eq!(agree_bps, 6000);
 
         let threshold = 6000u64;
-        assert!(yes_bps >= threshold as u128);
+        assert!(agree_bps >= threshold); // Should pass (>=)
     }
 }

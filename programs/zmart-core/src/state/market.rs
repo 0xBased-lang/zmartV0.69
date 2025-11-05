@@ -136,6 +136,19 @@ pub struct MarketAccount {
     pub proposal_total_votes: u32,
 
     // ============================================================
+    // Resolution Voting (Off-chain aggregated, on-chain recorded)
+    // ============================================================
+
+    /// Number of "agree with resolution" votes
+    pub resolution_agree: u32,
+
+    /// Number of "disagree with resolution" votes
+    pub resolution_disagree: u32,
+
+    /// Total resolution votes cast
+    pub resolution_total_votes: u32,
+
+    // ============================================================
     // Dispute Voting (Off-chain aggregated, on-chain recorded)
     // ============================================================
 
@@ -147,6 +160,9 @@ pub struct MarketAccount {
 
     /// Total dispute votes cast
     pub dispute_total_votes: u32,
+
+    /// Flag indicating if market was disputed
+    pub was_disputed: bool,
 
     // ============================================================
     // Access Control
@@ -167,8 +183,8 @@ impl MarketAccount {
     ///
     /// Note: Actual size reported by Anchor compiler including alignment
     ///
-    /// Total: 464 bytes
-    pub const LEN: usize = 464;
+    /// Total: 472 bytes (464 original + 4 fields: 3xu32 + 1xbool = 13 bytes, but alignment = 8 total)
+    pub const LEN: usize = 472;
 
     /// Check if state transition is valid
     ///
@@ -436,9 +452,13 @@ mod tests {
             proposal_likes: 0,
             proposal_dislikes: 0,
             proposal_total_votes: 0,
+            resolution_agree: 0,
+            resolution_disagree: 0,
+            resolution_total_votes: 0,
             dispute_agree: 0,
             dispute_disagree: 0,
             dispute_total_votes: 0,
+            was_disputed: false,
             is_cancelled: false,
             reserved: [0; 128],
             bump: 255,

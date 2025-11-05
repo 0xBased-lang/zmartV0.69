@@ -9,6 +9,7 @@ use crate::state::{GlobalConfig, MarketAccount, MarketState};
 ///
 /// # Arguments
 /// * `proposed_outcome` - Proposed outcome (true=YES, false=NO)
+/// * `ipfs_evidence_hash` - IPFS CID with resolution evidence (46 bytes)
 #[derive(Accounts)]
 pub struct ResolveMarket<'info> {
     #[account(
@@ -33,6 +34,7 @@ pub struct ResolveMarket<'info> {
 pub fn handler(
     ctx: Context<ResolveMarket>,
     proposed_outcome: bool,
+    ipfs_evidence_hash: [u8; 46],
 ) -> Result<()> {
     let market = &mut ctx.accounts.market;
 
@@ -42,7 +44,13 @@ pub fn handler(
     // Record resolution proposal
     market.proposed_outcome = Some(proposed_outcome);
     market.resolver = ctx.accounts.resolver.key();
+    market.ipfs_evidence_hash = ipfs_evidence_hash;
     market.resolution_proposed_at = Clock::get()?.unix_timestamp;
+
+    // Initialize resolution vote counters
+    market.resolution_agree = 0;
+    market.resolution_disagree = 0;
+    market.resolution_total_votes = 0;
 
     // Transition state: ACTIVE → RESOLVING
     market.state = MarketState::Resolving;

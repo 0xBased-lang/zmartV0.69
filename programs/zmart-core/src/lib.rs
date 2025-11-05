@@ -136,11 +136,13 @@ pub mod zmart_core {
     /// # Arguments
     ///
     /// * `proposed_outcome` - true for YES, false for NO
+    /// * `ipfs_evidence_hash` - IPFS CID with resolution evidence (46 bytes)
     pub fn resolve_market(
         ctx: Context<ResolveMarket>,
         proposed_outcome: bool,
+        ipfs_evidence_hash: [u8; 46],
     ) -> Result<()> {
-        resolve_market::handler(ctx, proposed_outcome)
+        resolve_market::handler(ctx, proposed_outcome, ipfs_evidence_hash)
     }
 
     /// Challenge a resolution (RESOLVING → DISPUTED)
@@ -156,19 +158,17 @@ pub mod zmart_core {
     /// Set final outcome (RESOLVING/DISPUTED → FINALIZED)
     ///
     /// Backend authority finalizes market after vote aggregation.
-    /// For disputed markets: if ≥60% agree on different outcome, flip result.
+    /// For disputed markets: if ≥60% agree to flip, flip the outcome.
     ///
     /// # Arguments
     ///
-    /// * `vote_yes_count` - Total votes for YES outcome
-    /// * `vote_no_count` - Total votes for NO outcome
-    /// * `total_votes` - Total number of votes cast
+    /// * `dispute_agree` - Dispute agree votes (Some for DISPUTED, None for RESOLVING)
+    /// * `dispute_disagree` - Dispute disagree votes (Some for DISPUTED, None for RESOLVING)
     pub fn finalize_market(
         ctx: Context<FinalizeMarket>,
-        vote_yes_count: u64,
-        vote_no_count: u64,
-        total_votes: u64,
+        dispute_agree: Option<u32>,
+        dispute_disagree: Option<u32>,
     ) -> Result<()> {
-        finalize_market::handler(ctx, vote_yes_count, vote_no_count, total_votes)
+        finalize_market::handler(ctx, dispute_agree, dispute_disagree)
     }
 }
