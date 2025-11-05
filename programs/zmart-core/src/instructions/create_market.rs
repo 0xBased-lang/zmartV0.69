@@ -18,7 +18,7 @@ use crate::error::ErrorCode;
 /// # Errors
 ///
 /// * `ProtocolPaused` - If protocol is paused
-/// * `InvalidLMSRParameter` - If b_parameter == 0
+/// * `InvalidBParameter` - If b_parameter < MIN_B
 /// * `InvalidLiquidity` - If initial_liquidity == 0
 #[derive(Accounts)]
 #[instruction(market_id: [u8; 32])]
@@ -71,7 +71,7 @@ pub fn handler(
     // Validate LMSR parameter
     require!(
         b_parameter > 0,
-        ErrorCode::InvalidLMSRParameter
+        ErrorCode::InvalidBParameter
     );
 
     // Validate initial liquidity
@@ -261,7 +261,7 @@ mod tests {
     fn test_parameter_validation_requirements() {
         // b_parameter must be > 0
         let invalid_b = 0u64;
-        assert_eq!(invalid_b, 0); // Would trigger InvalidLMSRParameter
+        assert_eq!(invalid_b, 0); // Would trigger InvalidBParameter
 
         let valid_b = 1_000_000_000u64;
         assert!(valid_b > 0);

@@ -83,4 +83,44 @@ pub mod zmart_core {
     ) -> Result<()> {
         activate_market::handler(ctx)
     }
+
+    // ============================================================================
+    // Trading Instructions (Day 4)
+    // ============================================================================
+
+    /// Buy YES or NO shares using LMSR
+    ///
+    /// Users specify a target cost and receive shares calculated by LMSR.
+    /// Fees (10% total) are added on top: 3% protocol, 2% resolver, 5% LP.
+    ///
+    /// # Arguments
+    ///
+    /// * `outcome` - true for YES, false for NO
+    /// * `target_cost` - Maximum willing to pay (before fees, slippage protection)
+    pub fn buy_shares(
+        ctx: Context<BuyShares>,
+        outcome: bool,
+        target_cost: u64,
+    ) -> Result<()> {
+        buy_shares::handler(ctx, outcome, target_cost)
+    }
+
+    /// Sell YES or NO shares back to the pool
+    ///
+    /// Users specify number of shares to sell and receive proceeds calculated
+    /// by LMSR. Fees (10% total) are deducted from proceeds.
+    ///
+    /// # Arguments
+    ///
+    /// * `outcome` - true for YES, false for NO
+    /// * `shares_to_sell` - Number of shares to sell
+    /// * `min_proceeds` - Minimum acceptable proceeds (slippage protection)
+    pub fn sell_shares(
+        ctx: Context<SellShares>,
+        outcome: bool,
+        shares_to_sell: u64,
+        min_proceeds: u64,
+    ) -> Result<()> {
+        sell_shares::handler(ctx, outcome, shares_to_sell, min_proceeds)
+    }
 }

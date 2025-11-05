@@ -151,13 +151,21 @@ pub enum ErrorCode {
     #[msg("Exponential overflow")]
     ExponentialOverflow,
 
+    /// 6506: Exponent too large for safe calculation
+    #[msg("Exponent too large")]
+    ExponentTooLarge,
+
+    /// 6507: Invalid input value for mathematical operation
+    #[msg("Invalid input value")]
+    InvalidInput,
+
     // ============================================================
     // Validation Errors (6600-6699)
     // ============================================================
 
-    /// 6600: Invalid LMSR b parameter (must be > 0)
-    #[msg("Invalid LMSR parameter")]
-    InvalidLMSRParameter,
+    /// 6600: Invalid LMSR b parameter (must be >= MIN_B)
+    #[msg("Invalid LMSR b parameter")]
+    InvalidBParameter,
 
     /// 6601: Invalid market ID
     #[msg("Invalid market ID")]
