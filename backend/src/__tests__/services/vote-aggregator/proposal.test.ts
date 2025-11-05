@@ -27,7 +27,7 @@ const mockKeypair: any = {
   publicKey: new PublicKey("3eHjEggmR7s3nW2new79iXWCq7aTCmDnmZ8Vy3CoTjy4"),
 };
 
-let mockSupabaseResponse = { data: null, error: null };
+let mockSupabaseResponse: any = { data: null, error: null };
 const mockSupabase: any = {
   from: jest.fn(() => mockSupabase),
   select: jest.fn(() => mockSupabase),

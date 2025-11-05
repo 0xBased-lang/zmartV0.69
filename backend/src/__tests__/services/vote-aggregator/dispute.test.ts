@@ -27,12 +27,13 @@ const mockKeypair: any = {
   publicKey: new PublicKey("3eHjEggmR7s3nW2new79iXWCq7aTCmDnmZ8Vy3CoTjy4"),
 };
 
+let mockSupabaseResponse: any = { data: null, error: null };
 const mockSupabase: any = {
-  from: jest.fn().mockReturnThis(),
-  select: jest.fn().mockReturnThis(),
-  eq: jest.fn().mockReturnThis(),
-  update: jest.fn().mockReturnThis(),
-  order: jest.fn().mockReturnThis(),
+  from: jest.fn(() => mockSupabase),
+  select: jest.fn(() => mockSupabase),
+  eq: jest.fn(() => Promise.resolve(mockSupabaseResponse)),
+  update: jest.fn(() => mockSupabase),
+  order: jest.fn(() => mockSupabase),
 };
 
 const mockGlobalConfigPda = new PublicKey("2aWG3YTjEggmR7s3nW2new79iXWCq7aTCmDnmZ8Vy3k5");
@@ -42,6 +43,7 @@ describe("DisputeVoteAggregator", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockSupabaseResponse = { data: null, error: null };
     aggregator = new DisputeVoteAggregator(
       mockProgram,
       mockKeypair,
