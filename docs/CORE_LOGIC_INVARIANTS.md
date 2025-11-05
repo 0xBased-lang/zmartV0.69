@@ -9,6 +9,26 @@
 
 ---
 
+## ⭐ AUTHORITATIVE SOURCE OF TRUTH
+
+**THIS DOCUMENT IS THE SINGLE SOURCE OF TRUTH FOR:**
+
+- ✅ **All LMSR formulas** (cost function, share calculation, pricing)
+- ✅ **All state machine transitions** (6-state FSM: PROPOSED → FINALIZED)
+- ✅ **All economic parameters** (fees, thresholds, timers)
+- ✅ **All game theory mechanics** (incentives, payouts, dispute resolution)
+
+**CONFLICT RESOLUTION RULES:**
+
+1. **If conflicts exist:** CORE_LOGIC_INVARIANTS.md wins (ALWAYS)
+2. **Update other docs:** Modify conflicting documents to match this source
+3. **Validation:** Run `./scripts/validate-spec-consistency.sh` to verify alignment
+4. **Threshold Authority:** Dispute success = 60% (simplified from blueprint's dual 75%/50% thresholds for V1 MVP)
+
+**Note:** This is the extracted blueprint logic. For Solana-specific implementation details (account structures, PDAs, error codes), see `03_SOLANA_PROGRAM_DESIGN.md` - but THIS document defines WHAT must be implemented.
+
+---
+
 ## Purpose
 
 This document extracts the **core logic, mechanics, incentives, and game theory** from the KEKTECH 3.0 blueprint that MUST be preserved in the Solana implementation, regardless of blockchain-specific optimizations.
