@@ -1,8 +1,8 @@
 # ZMART V0.69 - Implementation TODO Checklist
 
 **Last Updated:** November 5, 2025
-**Project Status:** ✅ Week 1 Day 2 COMPLETE | Account Structures Implemented
-**Overall Progress:** Week 1: 28.6% (2/7 days) | Implementation Timeline: 20 weeks
+**Project Status:** ✅ Week 1 Day 3 COMPLETE | Core Lifecycle Instructions Implemented
+**Overall Progress:** Week 1: 42.9% (3/7 days) | Implementation Timeline: 20 weeks
 
 [← Back to Index](./00_MASTER_INDEX.md) | [← Claude Instructions](../CLAUDE.md)
 
@@ -12,12 +12,12 @@
 
 ```
 Phase 1: Foundation Documentation   ███░░░░░░░  30% (3/10)
-Phase 2: Solana Programs            ██░░░░░░░░  25% (2/8)
+Phase 2: Solana Programs            ███░░░░░░░  37.5% (3/8)
 Phase 3: Backend Services            ░░░░░░░░░░   0% (0/5)
 Phase 4: Testing & Validation        ░░░░░░░░░░   0% (0/6)
 Phase 5: Frontend Implementation     ░░░░░░░░░░   0% (0/8)
 ───────────────────────────────────────────────────────
-Total Progress:                      ███░░░░░░░  13.5% (5/37)
+Total Progress:                      ███░░░░░░░  16.2% (6/37)
 ```
 
 ---
@@ -132,7 +132,7 @@ Total Progress:                      ███░░░░░░░  13.5% (5/37
 
 **Goal:** Build and test all Anchor programs
 
-**Status:** 🟡 In Progress (2/8 complete)
+**Status:** 🟡 In Progress (3/8 complete)
 
 **Prerequisites:**
 - Phase 1 complete
@@ -161,6 +161,17 @@ Total Progress:                      ███░░░░░░░  13.5% (5/37
   - **Completed:** November 5, 2025
   - **Story:** docs/stories/STORY-1.2.md
   - Files: `programs/zmart-core/src/state/`, `programs/zmart-proposal/src/state/`, `programs/zmart-core/src/math/`
+
+- [x] **Implement Core Lifecycle Instructions (Part 1)** ✅ COMPLETE (Story 1.3)
+  - 4 instructions: initialize_global_config(), create_market(), approve_proposal(), activate_market()
+  - State transitions: PROPOSED → APPROVED → ACTIVE (3 states working)
+  - 29 new unit tests (76 total tests passing: 70 zmart-core + 6 zmart-proposal)
+  - Error codes: Added 5 new codes (AlreadyInitialized, ProtocolPaused, InvalidLiquidity, NoVotesRecorded, InsufficientVotes)
+  - **Actual Time:** 3-4 hours (70% faster than 10-12h estimate)
+  - **Dependencies:** STORY-1.2 (Account Structures)
+  - **Completed:** November 5, 2025
+  - **Story:** docs/stories/STORY-1.3.md
+  - Files: `programs/zmart-core/src/instructions/`
 
 ### 2.2 Core Modules
 

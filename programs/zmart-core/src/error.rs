@@ -19,6 +19,10 @@ pub enum ErrorCode {
     #[msg("Invalid time limit: must be positive")]
     InvalidTimeLimit,
 
+    /// 6003: Global config already initialized (can only initialize once)
+    #[msg("Global config already initialized")]
+    AlreadyInitialized,
+
     // ============================================================
     // State Transition Errors (6100-6199)
     // ============================================================
@@ -39,6 +43,10 @@ pub enum ErrorCode {
     #[msg("Market is cancelled")]
     MarketCancelled,
 
+    /// 6104: Protocol is paused (emergency pause active)
+    #[msg("Protocol is paused")]
+    ProtocolPaused,
+
     // ============================================================
     // Trading Errors (6200-6299)
     // ============================================================
@@ -58,6 +66,10 @@ pub enum ErrorCode {
     /// 6203: Insufficient liquidity in market
     #[msg("Insufficient liquidity")]
     InsufficientLiquidity,
+
+    /// 6204: Invalid liquidity amount (must be > 0)
+    #[msg("Invalid liquidity amount")]
+    InvalidLiquidity,
 
     // ============================================================
     // Resolution Errors (6300-6399)
@@ -82,6 +94,14 @@ pub enum ErrorCode {
     /// 6304: No winnings to claim (user has no shares on winning outcome)
     #[msg("No winnings to claim")]
     NoWinnings,
+
+    /// 6305: No votes recorded for proposal or dispute
+    #[msg("No votes recorded")]
+    NoVotesRecorded,
+
+    /// 6306: Insufficient votes to meet threshold (proposal or dispute)
+    #[msg("Insufficient votes to meet threshold")]
+    InsufficientVotes,
 
     // ============================================================
     // Authorization Errors (6400-6499)
@@ -135,9 +155,9 @@ pub enum ErrorCode {
     // Validation Errors (6600-6699)
     // ============================================================
 
-    /// 6600: Invalid LMSR b parameter (too small or too large)
-    #[msg("Invalid b parameter")]
-    InvalidBParameter,
+    /// 6600: Invalid LMSR b parameter (must be > 0)
+    #[msg("Invalid LMSR parameter")]
+    InvalidLMSRParameter,
 
     /// 6601: Invalid market ID
     #[msg("Invalid market ID")]
