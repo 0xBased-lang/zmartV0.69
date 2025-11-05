@@ -1,0 +1,41 @@
+{
+  "name": "zmart-v069",
+  "version": "0.69.0",
+  "private": true,
+  "description": "ZMART - Solana prediction market platform with LMSR",
+  "keywords": ["solana", "prediction-markets", "lmsr", "anchor", "web3"],
+  "author": "ZMART Team",
+  "license": "MIT",
+  "workspaces": [
+    "backend",
+    "frontend",
+    "tests"
+  ],
+  "scripts": {
+    "build": "anchor build",
+    "test": "anchor test",
+    "deploy:devnet": "anchor deploy --provider.cluster devnet",
+    "deploy:mainnet": "anchor deploy --provider.cluster mainnet-beta",
+    "keys": "anchor keys list",
+    "clean": "anchor clean && rm -rf node_modules",
+    "verify": "cargo check --all && pnpm run lint",
+    "lint": "echo 'Linting will be configured in Week 2'"
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@solana/web3.js": "^1.87.6",
+    "@solana/spl-token": "^0.3.9",
+    "typescript": "^5.3.3",
+    "ts-mocha": "^10.0.0",
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.10.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.12.0"
+}

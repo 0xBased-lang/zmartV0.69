@@ -1,0 +1,232 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, develop, feature/**]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  validate:
+    name: Validation & Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript compilation
+        run: npx tsc --noEmit
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Prettier check
+        run: npx prettier --check "**/*.{ts,tsx,js,json,md}"
+
+      - name: Dependency audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true # Don't fail build on moderate vulnerabilities
+
+  test-rust:
+    name: Rust/Anchor Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Solana
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/v1.18.0/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+
+      - name: Install Anchor
+        run: |
+          cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
+          avm install latest
+          avm use latest
+
+      - name: Build programs
+        run: anchor build
+
+      - name: Run tests
+        run: anchor test
+
+      - name: Check compute units
+        run: |
+          echo "Analyzing compute unit usage..."
+          anchor test --show-compute-units > compute_report.txt || true
+          cat compute_report.txt
+
+  test-backend:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Coverage report
+        run: npm run test:coverage
+        continue-on-error: true
+
+  circuit-breaker:
+    name: Circuit Breaker (Pattern #3 Prevention)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Need full history to analyze commits
+
+      - name: Check for excessive fix commits
+        run: |
+          echo "🔍 Checking for systemic issues (circuit breaker)..."
+
+          # Count distinct stories in fix commits (last 24h)
+          DIFFERENT_STORIES=$(git log --since="24 hours ago" --pretty=%s | \
+            grep "fix:" | \
+            grep -oP 'Story [0-9]+\.[0-9]+' | \
+            sort -u | \
+            wc -l)
+
+          echo "Found $DIFFERENT_STORIES different stories with fixes in last 24 hours"
+
+          if [ $DIFFERENT_STORIES -ge 3 ]; then
+            echo ""
+            echo "🚨 =================================="
+            echo "🚨 CIRCUIT BREAKER ACTIVATED"
+            echo "🚨 =================================="
+            echo ""
+            echo "❌ 3+ different stories being fixed in last 24 hours"
+            echo "❌ This indicates systemic issues, not isolated bugs"
+            echo ""
+            echo "📋 Required Actions:"
+            echo "1. HALT all new feature development"
+            echo "2. Schedule mandatory root cause analysis meeting"
+            echo "3. Document systemic issue in docs/LESSONS_LEARNED.md"
+            echo "4. Implement prevention (test, validation, etc.)"
+            echo "5. Reset counter and resume work"
+            echo ""
+            echo "See: docs/DEFINITION_OF_DONE.md (Circuit Breaker Rules)"
+            echo ""
+            exit 1
+          fi
+
+          echo "✅ Circuit breaker check passed ($DIFFERENT_STORIES fix stories)"
+
+  supabase-types:
+    name: Verify Supabase Types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        run: npm install -g supabase
+
+      - name: Start Supabase (local)
+        run: supabase start
+
+      - name: Generate types and compare
+        run: |
+          echo "Generating fresh types from database..."
+          supabase gen types typescript --local > temp-types.ts
+
+          if [ ! -f types/database.ts ]; then
+            echo "⚠️  Warning: types/database.ts not found, creating it"
+            mv temp-types.ts types/database.ts
+            exit 0
+          fi
+
+          if ! diff temp-types.ts types/database.ts; then
+            echo ""
+            echo "❌ ERROR: Supabase types out of sync with database!"
+            echo ""
+            echo "Fix: Run the following command locally and commit:"
+            echo "  supabase gen types typescript --local > types/database.ts"
+            echo ""
+            echo "This is enforced by pre-commit hook (.git-hooks/pre-commit)"
+            echo "See: docs/SCHEMA_MANAGEMENT.md"
+            echo ""
+            exit 1
+          fi
+
+          echo "✅ Supabase types in sync with database"
+
+      - name: Stop Supabase
+        run: supabase stop
+
+  build-check:
+    name: Build Verification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Check bundle size
+        run: |
+          echo "Checking bundle sizes..."
+          du -sh .next/ || echo "Build output not found"
+          # Add bundle size checks here if needed
+
+  summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs: [validate, test-rust, test-backend, circuit-breaker, supabase-types, build-check]
+    if: always()
+    steps:
+      - name: Check all jobs
+        run: |
+          echo "CI Pipeline Summary:"
+          echo "===================="
+          echo "Validation: ${{ needs.validate.result }}"
+          echo "Rust Tests: ${{ needs.test-rust.result }}"
+          echo "Backend Tests: ${{ needs.test-backend.result }}"
+          echo "Circuit Breaker: ${{ needs.circuit-breaker.result }}"
+          echo "Supabase Types: ${{ needs.supabase-types.result }}"
+          echo "Build Check: ${{ needs.build-check.result }}"
+          echo ""
+
+          if [ "${{ needs.validate.result }}" != "success" ] || \
+             [ "${{ needs.test-rust.result }}" != "success" ] || \
+             [ "${{ needs.test-backend.result }}" != "success" ] || \
+             [ "${{ needs.supabase-types.result }}" != "success" ] || \
+             [ "${{ needs.build-check.result }}" != "success" ]; then
+            echo "❌ CI Pipeline FAILED - Review failures above"
+            exit 1
+          fi
+
+          # Circuit breaker is optional (only runs on PRs)
+          if [ "${{ needs.circuit-breaker.result }}" == "failure" ]; then
+            echo "🚨 Circuit Breaker TRIGGERED - Systemic issues detected"
+            exit 1
+          fi
+
+          echo "✅ CI Pipeline PASSED - All checks successful"

@@ -1,0 +1,27 @@
+[package]
+name = "zmart-core"
+version = "0.69.0"
+description = "ZMART Core - Prediction market trading and resolution"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "zmart_core"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+
+[dependencies]
+anchor-lang = "0.29.0"
+anchor-spl = "0.29.0"
+solana-program = "1.17.0"
+
+[dev-dependencies]
+solana-program-test = "1.17.0"
+solana-sdk = "1.17.0"
+spl-token = { version = "4.0", features = ["no-entrypoint"] }
