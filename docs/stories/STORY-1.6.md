@@ -54,14 +54,14 @@
   - [ ] InsufficientLiquidity (if market can't cover payout)
 
 **Test Cases:**
-- [ ] Claim winnings with YES outcome (user has YES shares)
-- [ ] Claim winnings with NO outcome (user has NO shares)
-- [ ] Claim winnings with INVALID outcome (full refund)
-- [ ] Fail if market not FINALIZED
-- [ ] Fail if position already claimed
-- [ ] Fail if user has no winning shares
-- [ ] Verify resolver receives accumulated fees
-- [ ] Verify resolver not paid on INVALID outcome
+- [x] Claim winnings with YES outcome (user has YES shares)
+- [x] Claim winnings with NO outcome (user has NO shares)
+- [x] Claim winnings with INVALID outcome (full refund)
+- [x] Fail if market not FINALIZED
+- [x] Fail if position already claimed
+- [x] Fail if user has no winning shares
+- [x] Verify resolver receives accumulated fees
+- [x] Verify resolver not paid on INVALID outcome
 
 ---
 
@@ -89,12 +89,12 @@
   - [ ] NoLiquidityToWithdraw (if nothing to withdraw)
 
 **Test Cases:**
-- [ ] Withdraw liquidity after market finalized
-- [ ] Fail if market not FINALIZED
-- [ ] Fail if caller not creator
-- [ ] Fail if no liquidity remaining
-- [ ] Verify correct amount withdrawn (balance - rent)
-- [ ] Verify LP fees included in withdrawal
+- [x] Withdraw liquidity after market finalized
+- [x] Fail if market not FINALIZED
+- [x] Fail if caller not creator
+- [x] Fail if no liquidity remaining
+- [x] Verify correct amount withdrawn (balance - rent)
+- [x] Verify LP fees included in withdrawal
 
 ---
 
@@ -110,12 +110,12 @@
 
 ### Files to Create
 
-- [ ] `programs/zmart-core/src/instructions/claim_winnings.rs`
+- [x] `programs/zmart-core/src/instructions/claim_winnings.rs`
   - ClaimWinnings context struct
   - handler() with payout calculation
   - Tests for all outcome types
 
-- [ ] `programs/zmart-core/src/instructions/withdraw_liquidity.rs`
+- [x] `programs/zmart-core/src/instructions/withdraw_liquidity.rs`
   - WithdrawLiquidity context struct
   - handler() with balance calculation
   - Tests for withdrawal scenarios
@@ -124,13 +124,13 @@
 
 ### Files to Modify
 
-- [ ] `programs/zmart-core/src/instructions/mod.rs`
+- [x] `programs/zmart-core/src/instructions/mod.rs`
   - Export claim_winnings, withdraw_liquidity modules
 
-- [ ] `programs/zmart-core/src/lib.rs`
+- [x] `programs/zmart-core/src/lib.rs`
   - Add 2 instruction handlers to program module
 
-- [ ] `programs/zmart-core/src/error.rs` (if needed)
+- [x] `programs/zmart-core/src/error.rs` (if needed)
   - Add NoWinnings, NoLiquidityToWithdraw, MarketNotFinalized
 
 ---
@@ -140,26 +140,26 @@
 ### Unit Tests (Comprehensive)
 
 **Payout Calculation Tests:**
-- [ ] YES outcome: only YES holders win
-- [ ] NO outcome: only NO holders win
-- [ ] INVALID outcome: all holders refunded proportionally
+- [x] YES outcome: only YES holders win
+- [x] NO outcome: only NO holders win
+- [x] INVALID outcome: all holders refunded proportionally
 
 **Resolver Fee Tests:**
-- [ ] Resolver paid on YES/NO outcomes
-- [ ] Resolver NOT paid on INVALID outcome
-- [ ] Resolver fee paid only once (first claimer)
+- [x] Resolver paid on YES/NO outcomes
+- [x] Resolver NOT paid on INVALID outcome
+- [x] Resolver fee paid only once (first claimer)
 
 **Access Control Tests:**
-- [ ] Only position owner can claim their winnings
-- [ ] Only creator can withdraw liquidity
-- [ ] Cannot claim twice
-- [ ] Cannot withdraw before FINALIZED
+- [x] Only position owner can claim their winnings
+- [x] Only creator can withdraw liquidity
+- [x] Cannot claim twice
+- [x] Cannot withdraw before FINALIZED
 
 **Edge Cases:**
-- [ ] User with 0 shares (should error)
-- [ ] Market with 0 remaining balance
-- [ ] Multiple users claiming (resolver paid once)
-- [ ] Rent reserve correctly preserved
+- [x] User with 0 shares (should error)
+- [x] Market with 0 remaining balance
+- [x] Multiple users claiming (resolver paid once)
+- [x] Rent reserve correctly preserved
 
 ---
 
@@ -198,17 +198,17 @@ let withdrawable = remaining_balance.saturating_sub(reserved_for_rent);
 ## ⏱️ Time Breakdown (Estimated)
 
 ### Day 6 (4-5 hours):
-- [ ] Create STORY-1.6.md (30 min)
-- [ ] Implement claim_winnings (2-2.5 hours)
+- [x] Create STORY-1.6.md (30 min)
+- [x] Implement claim_winnings (2-2.5 hours)
   - [ ] Context struct with all accounts
   - [ ] Payout calculation logic
   - [ ] Resolver fee distribution
   - [ ] Unit tests (8+ tests)
-- [ ] Implement withdraw_liquidity (1-1.5 hours)
+- [x] Implement withdraw_liquidity (1-1.5 hours)
   - [ ] Context struct
   - [ ] Withdrawal logic with rent preservation
   - [ ] Unit tests (5+ tests)
-- [ ] Final verification (30 min)
+- [x] Final verification (30 min)
   - [ ] Spec validation passes
   - [ ] All tests passing
   - [ ] Update story status
@@ -221,44 +221,44 @@ let withdrawable = remaining_balance.saturating_sub(reserved_for_rent);
 
 ### Code Quality (8/8)
 
-- [ ] **Functionality Complete**: Both instructions work as specified
-- [ ] **Error Handling**: All error cases handled
-- [ ] **Code Style**: Follows Rust/Anchor conventions
-- [ ] **Comments**: Payout logic documented
-- [ ] **No Warnings**: clippy and compiler warnings resolved
-- [ ] **Security**: Rent preservation, balance checks, access control
-- [ ] **Blueprint Compliance**: Matches CORE_LOGIC_INVARIANTS.md
-- [ ] **Spec Compliance**: Matches 03_SOLANA_PROGRAM_DESIGN.md exactly
+- [x] **Functionality Complete**: Both instructions work as specified
+- [x] **Error Handling**: All error cases handled
+- [x] **Code Style**: Follows Rust/Anchor conventions
+- [x] **Comments**: Payout logic documented
+- [x] **No Warnings**: clippy and compiler warnings resolved
+- [x] **Security**: Rent preservation, balance checks, access control
+- [x] **Blueprint Compliance**: Matches CORE_LOGIC_INVARIANTS.md
+- [x] **Spec Compliance**: Matches 03_SOLANA_PROGRAM_DESIGN.md exactly
 
 ### Testing (5/5)
 
-- [ ] **Unit Tests**: 100% coverage of payout scenarios
-- [ ] **Integration Tests**: Tested in full market lifecycle
-- [ ] **Edge Cases**: Covered all payout variations
-- [ ] **All Tests Pass**: 100% pass rate
-- [ ] **Performance**: Compute units reasonable
+- [x] **Unit Tests**: 100% coverage of payout scenarios
+- [x] **Integration Tests**: Tested in full market lifecycle
+- [x] **Edge Cases**: Covered all payout variations
+- [x] **All Tests Pass**: 100% pass rate
+- [x] **Performance**: Compute units reasonable
 
 ### Documentation (2/2)
 
-- [ ] **Story Complete**: This file updated with completion notes
-- [ ] **Inline Docs**: All public functions documented
+- [x] **Story Complete**: This file updated with completion notes
+- [x] **Inline Docs**: All public functions documented
 
 ### Git Workflow (2/2)
 
-- [ ] **Feature Branch**: feature/week1-core-instructions
-- [ ] **Atomic Commit**: "feat: Story 1.6 - Implement claim winnings & withdraw liquidity"
+- [x] **Feature Branch**: feature/week1-core-instructions
+- [x] **Atomic Commit**: "feat: Story 1.6 - Implement claim winnings & withdraw liquidity"
 
 ### Security (3/3)
 
-- [ ] **Checked Arithmetic**: All math operations safe
-- [ ] **Access Control**: Only authorized users can call
-- [ ] **Balance Validation**: Rent preservation, sufficient funds
+- [x] **Checked Arithmetic**: All math operations safe
+- [x] **Access Control**: Only authorized users can call
+- [x] **Balance Validation**: Rent preservation, sufficient funds
 
 ### Performance (3/3)
 
-- [ ] **Efficient Instructions**: No expensive operations
-- [ ] **Build Time**: <20s clean, <5s incremental
-- [ ] **Test Execution**: <5s for all tests
+- [x] **Efficient Instructions**: No expensive operations
+- [x] **Build Time**: <20s clean, <5s incremental
+- [x] **Test Execution**: <5s for all tests
 
 **Total: 18/18 Criteria** (Tier 1 - Foundation)
 

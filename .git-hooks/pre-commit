@@ -1,14 +1,13 @@
 #!/bin/bash
 # ============================================================
-# ZMART v0.69 - Smart Pre-Commit Hook (Tier-Aware)
+# ZMART v0.69 - Pre-Commit Hook (File & Code Validation)
 # ============================================================
-# Purpose: Enforce story-first development with tier-based validation
-# Pattern Prevention: #1 (Methodology Abandonment), #2 (Spec Drift)
+# Purpose: Validate code quality and run spec compliance checks
+# Runs: BEFORE commit is created
 #
-# Validation Levels:
-#   Tier 1/2 (Foundation/Core): STRICT BLOCKING
-#   Tier 3 (Standard): WARNING MODE
-#   Tier 4 (Quick Wins): PERMISSIVE
+# Pattern Prevention: #2 (Spec Drift), #4 (Schema Drift)
+#
+# Note: Story validation moved to commit-msg hook
 #
 # Installation:
 #   cp .git-hooks/pre-commit .git/hooks/pre-commit
@@ -18,183 +17,33 @@
 # Get staged files
 STAGED_FILES=$(git diff --cached --name-status)
 
-# Get commit message (from git commit -m or editor)
-COMMIT_MSG_FILE=".git/COMMIT_EDITMSG"
-if [ -f "$COMMIT_MSG_FILE" ]; then
-    COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
-else
-    COMMIT_MSG=""
-fi
-
-# Extract commit type (feat, fix, docs, chore, etc.)
-# Note: Using BSD grep compatible syntax (macOS)
-COMMIT_TYPE=$(echo "$COMMIT_MSG" | grep -Eo '^(feat|fix|refactor):' || echo "")
-
-# Check if this is a feature/fix/refactor commit with code changes
-HAS_CODE_CHANGES=$(echo "$STAGED_FILES" | grep -qE '\.(ts|tsx|rs|sql)$' && echo "yes" || echo "no")
-
 # ============================================================
-# TIER-AWARE VALIDATION (New Feature)
+# SPEC COMPLIANCE VALIDATION (Rust code only)
 # ============================================================
 
-# Enforce story reference ONLY for feat/fix/refactor with code changes
-if [[ $COMMIT_TYPE =~ ^(feat|fix|refactor): ]] && [[ $HAS_CODE_CHANGES == "yes" ]]; then
-    if [[ ! $COMMIT_MSG =~ Story\ ([0-9]+\.[0-9]+) ]]; then
+if echo "$STAGED_FILES" | grep -qE '\.rs$'; then
+    if [ -f "scripts/validate-spec-compliance.sh" ]; then
         echo ""
-        echo "❌ ERROR: $COMMIT_TYPE commits with code changes MUST reference a story"
-        echo ""
-        echo "   ✅ Correct format:"
-        echo "      feat: Story 3.5 - Add betting interface"
-        echo "      fix: Story 3.5 - Resolve TypeScript error"
-        echo "      refactor: Story 3.5 - Extract utility function"
-        echo ""
-        echo "   ℹ️  Story file location: docs/stories/STORY-X.Y.md"
-        echo "   ℹ️  Use template: docs/stories/STORY-TEMPLATE.md"
-        echo ""
-        echo "   💡 Bypass (NOT RECOMMENDED): git commit --no-verify"
-        echo ""
-        exit 1
-    fi
-
-    # Extract story number
-    STORY_NUM=$(echo "$COMMIT_MSG" | grep -Eo 'Story [0-9]+\.[0-9]+' | grep -Eo '[0-9]+\.[0-9]+')
-    STORY_FILE="docs/stories/STORY-$STORY_NUM.md"
-
-    # Check if story file exists
-    if [ ! -f "$STORY_FILE" ]; then
-        echo ""
-        echo "⚠️  WARNING: Story file not found: $STORY_FILE"
-        echo "   Create story file before committing code"
-        echo ""
-        # Not blocking - file might be in different location
-    else
-        echo "📋 Story file found: $STORY_FILE"
-
-        # Extract tier from story file
-        TIER=$(grep -E '^\*\*Tier:\*\*.*Tier [0-9]' "$STORY_FILE" | grep -Eo 'Tier [0-9]' | grep -Eo '[0-9]' | head -1)
-
-        if [ -z "$TIER" ]; then
-            echo "⚠️  WARNING: Could not detect story tier - skipping tier validation"
+        echo "🔍 Running specification compliance validation..."
+        if ! ./scripts/validate-spec-compliance.sh; then
+            echo ""
+            echo "❌ FAIL: Specification compliance check failed"
+            echo "   Fix API signature mismatches before committing"
+            echo ""
+            echo "💡 Bypass (NOT RECOMMENDED): git commit --no-verify"
+            echo ""
+            exit 1
         else
-            echo "🎯 Detected Tier: $TIER"
-
-            # ============================================================
-            # TIER 1/2: STRICT BLOCKING
-            # ============================================================
-            if [[ "$TIER" =~ ^[12]$ ]]; then
-                echo ""
-                echo "🔒 TIER $TIER (Foundation/Core) - STRICT VALIDATION MODE"
-                echo "───────────────────────────────────────────────────────────"
-
-                TIER_ERRORS=0
-
-                # Check 1: Story status must be COMPLETE
-                if ! grep -qE 'Status:.*✅.*COMPLETE' "$STORY_FILE"; then
-                    echo "❌ FAIL: Story status must be '✅ COMPLETE'"
-                    echo "   Current status: $(grep 'Status:' "$STORY_FILE" | head -1)"
-                    echo "   Update $STORY_FILE before committing"
-                    TIER_ERRORS=$((TIER_ERRORS + 1))
-                else
-                    echo "✅ Story status: COMPLETE"
-                fi
-
-                # Check 2: DoD checklist must be complete (no unchecked boxes)
-                if grep -qE '^- \[ \]' "$STORY_FILE"; then
-                    echo "❌ FAIL: Definition of Done checklist incomplete"
-                    UNCHECKED=$(grep -cE '^- \[ \]' "$STORY_FILE")
-                    echo "   Found $UNCHECKED unchecked items"
-                    echo "   Complete all DoD checklist items in $STORY_FILE"
-                    TIER_ERRORS=$((TIER_ERRORS + 1))
-                else
-                    echo "✅ DoD checklist: Complete"
-                fi
-
-                # Check 3: Run spec validation (only for Rust code)
-                if echo "$STAGED_FILES" | grep -qE '\.rs$'; then
-                    if [ -f "scripts/validate-spec-compliance.sh" ]; then
-                        echo ""
-                        echo "🔍 Running specification compliance validation..."
-                        if ! ./scripts/validate-spec-compliance.sh; then
-                            echo ""
-                            echo "❌ FAIL: Specification compliance check failed"
-                            echo "   Fix API signature mismatches before committing"
-                            TIER_ERRORS=$((TIER_ERRORS + 1))
-                        else
-                            echo "✅ Spec compliance: PASSED"
-                        fi
-                    else
-                        echo "⚠️  WARNING: Spec validation script not found (skipping)"
-                    fi
-                fi
-
-                # Check 4: Integration tests required for Tier 1
-                if [[ "$TIER" == "1" ]]; then
-                    if ! ls tests/*integration*.rs 2>/dev/null | grep -q .; then
-                        echo "❌ FAIL: Tier 1 requires integration tests"
-                        echo "   No tests/*integration*.rs files found"
-                        echo "   Add integration tests to tests/ directory"
-                        TIER_ERRORS=$((TIER_ERRORS + 1))
-                    else
-                        echo "✅ Integration tests: Found"
-                    fi
-                fi
-
-                # Summary
-                echo "───────────────────────────────────────────────────────────"
-                if [ $TIER_ERRORS -gt 0 ]; then
-                    echo ""
-                    echo "❌ TIER $TIER VALIDATION FAILED ($TIER_ERRORS errors)"
-                    echo ""
-                    echo "Fix these issues before committing foundation/core code."
-                    echo "💡 Bypass (NOT RECOMMENDED): git commit --no-verify"
-                    echo ""
-                    exit 1
-                else
-                    echo "✅ TIER $TIER VALIDATION PASSED"
-                fi
-
-            # ============================================================
-            # TIER 3: WARNING MODE
-            # ============================================================
-            elif [[ "$TIER" == "3" ]]; then
-                echo ""
-                echo "⚠️  TIER 3 (Standard) - WARNING MODE"
-                echo "───────────────────────────────────────────────────────────"
-
-                # Check story status (warn only)
-                if ! grep -qE 'Status:.*COMPLETE' "$STORY_FILE"; then
-                    echo "⚠️  WARNING: Story not marked COMPLETE (allowed for Tier 3)"
-                fi
-
-                # Check DoD checklist (warn only)
-                if grep -qE '^- \[ \]' "$STORY_FILE"; then
-                    UNCHECKED=$(grep -cE '^- \[ \]' "$STORY_FILE")
-                    echo "⚠️  WARNING: $UNCHECKED DoD items unchecked (allowed for Tier 3)"
-                fi
-
-                echo "✅ TIER 3 allows flexible completion - proceeding"
-
-            # ============================================================
-            # TIER 4: PERMISSIVE MODE
-            # ============================================================
-            elif [[ "$TIER" == "4" ]]; then
-                echo ""
-                echo "🚀 TIER 4 (Quick Wins) - PERMISSIVE MODE (no validation)"
-            fi
+            echo "✅ Spec compliance: PASSED"
         fi
+    else
+        echo "⚠️  WARNING: Spec validation script not found (skipping)"
     fi
 fi
 
 # ============================================================
-# ADDITIONAL VALIDATIONS (All Tiers)
+# SCHEMA DRIFT PREVENTION (Supabase migrations)
 # ============================================================
-
-# Allow these commit types WITHOUT story reference:
-# - docs: (documentation changes)
-# - chore: (dependency updates, config)
-# - ci: (CI/CD pipeline changes)
-# - test: (test-only changes)
-# - style: (formatting, no code change)
 
 # Auto-regenerate Supabase types if migrations changed
 if echo "$STAGED_FILES" | grep -q "supabase/migrations/"; then
