@@ -123,4 +123,52 @@ pub mod zmart_core {
     ) -> Result<()> {
         sell_shares::handler(ctx, outcome, shares_to_sell, min_proceeds)
     }
+
+    // ============================================================================
+    // Resolution Instructions (Day 5)
+    // ============================================================================
+
+    /// Propose market resolution (ACTIVE → RESOLVING)
+    ///
+    /// Any user can propose resolution after market conditions met. Starts
+    /// 48-hour dispute window for community challenges.
+    ///
+    /// # Arguments
+    ///
+    /// * `proposed_outcome` - true for YES, false for NO
+    pub fn resolve_market(
+        ctx: Context<ResolveMarket>,
+        proposed_outcome: bool,
+    ) -> Result<()> {
+        resolve_market::handler(ctx, proposed_outcome)
+    }
+
+    /// Challenge a resolution (RESOLVING → DISPUTED)
+    ///
+    /// Any user can dispute proposed outcome during dispute window.
+    /// Opens community voting via off-chain aggregation.
+    pub fn initiate_dispute(
+        ctx: Context<InitiateDispute>,
+    ) -> Result<()> {
+        initiate_dispute::handler(ctx)
+    }
+
+    /// Set final outcome (RESOLVING/DISPUTED → FINALIZED)
+    ///
+    /// Backend authority finalizes market after vote aggregation.
+    /// For disputed markets: if ≥60% agree on different outcome, flip result.
+    ///
+    /// # Arguments
+    ///
+    /// * `vote_yes_count` - Total votes for YES outcome
+    /// * `vote_no_count` - Total votes for NO outcome
+    /// * `total_votes` - Total number of votes cast
+    pub fn finalize_market(
+        ctx: Context<FinalizeMarket>,
+        vote_yes_count: u64,
+        vote_no_count: u64,
+        total_votes: u64,
+    ) -> Result<()> {
+        finalize_market::handler(ctx, vote_yes_count, vote_no_count, total_votes)
+    }
 }

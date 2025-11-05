@@ -103,6 +103,18 @@ pub enum ErrorCode {
     #[msg("Insufficient votes to meet threshold")]
     InsufficientVotes,
 
+    /// 6307: Market already resolved (resolution proposal already submitted)
+    #[msg("Market already resolved")]
+    AlreadyResolved,
+
+    /// 6308: Dispute period has not ended yet (cannot finalize before window expires)
+    #[msg("Dispute period not ended")]
+    DisputePeriodNotEnded,
+
+    /// 6309: Market already disputed
+    #[msg("Already disputed")]
+    AlreadyDisputed,
+
     // ============================================================
     // Authorization Errors (6400-6499)
     // ============================================================
