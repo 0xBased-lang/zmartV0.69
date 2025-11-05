@@ -12,12 +12,12 @@
 
 ```
 Phase 1: Foundation Documentation   ███░░░░░░░  30% (3/10)
-Phase 2: Solana Programs            ░░░░░░░░░░   0% (0/8)
+Phase 2: Solana Programs            █░░░░░░░░░  12.5% (1/8)
 Phase 3: Backend Services            ░░░░░░░░░░   0% (0/5)
 Phase 4: Testing & Validation        ░░░░░░░░░░   0% (0/6)
 Phase 5: Frontend Implementation     ░░░░░░░░░░   0% (0/8)
 ───────────────────────────────────────────────────────
-Total Progress:                      ███░░░░░░░   8% (3/37)
+Total Progress:                      ███░░░░░░░  10.8% (4/37)
 ```
 
 ---
@@ -132,7 +132,7 @@ Total Progress:                      ███░░░░░░░   8% (3/37)
 
 **Goal:** Build and test all Anchor programs
 
-**Status:** 🔴 Not Started (0/8 complete)
+**Status:** 🟡 In Progress (1/8 complete)
 
 **Prerequisites:**
 - Phase 1 complete
@@ -142,14 +142,15 @@ Total Progress:                      ███░░░░░░░   8% (3/37)
 
 ### 2.1 Project Setup
 
-- [ ] **Initialize Anchor Project** 🔴 NOT STARTED
-  - `anchor init zmart-prediction-market`
-  - Configure Anchor.toml for devnet
-  - **Estimated Time:** 1 hour
+- [x] **Initialize Anchor Project** ✅ COMPLETE (Story 1.1)
+  - Created 2-program architecture (zmart-core + zmart-proposal)
+  - Configured Anchor.toml for devnet/localnet
+  - Both programs compile successfully (173KB .so files)
+  - **Actual Time:** 3 hours
   - **Dependencies:** None
-  - **Blockers:** None
-  - **Assignee:** Claude
-  - Directory: `programs/zmart-prediction-market/`
+  - **Completed:** November 5, 2025
+  - **Story:** docs/stories/STORY-1.1.md
+  - Directory: `programs/zmart-core/` and `programs/zmart-proposal/`
 
 - [ ] **Define Account Structures** 🔴 NOT STARTED
   - GlobalConfig, MarketAccount, UserPosition, FeeVault
