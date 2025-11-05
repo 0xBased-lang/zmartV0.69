@@ -1,8 +1,8 @@
 # ZMART V0.69 - Implementation TODO Checklist
 
 **Last Updated:** November 5, 2025
-**Project Status:** ✅ Phase 1 - Documentation Complete | Ready for Week 1 Implementation
-**Overall Progress:** 60% Phase 1 Complete | Implementation Timeline: 20 weeks
+**Project Status:** ✅ Week 1 Day 2 COMPLETE | Account Structures Implemented
+**Overall Progress:** Week 1: 28.6% (2/7 days) | Implementation Timeline: 20 weeks
 
 [← Back to Index](./00_MASTER_INDEX.md) | [← Claude Instructions](../CLAUDE.md)
 
@@ -12,12 +12,12 @@
 
 ```
 Phase 1: Foundation Documentation   ███░░░░░░░  30% (3/10)
-Phase 2: Solana Programs            █░░░░░░░░░  12.5% (1/8)
+Phase 2: Solana Programs            ██░░░░░░░░  25% (2/8)
 Phase 3: Backend Services            ░░░░░░░░░░   0% (0/5)
 Phase 4: Testing & Validation        ░░░░░░░░░░   0% (0/6)
 Phase 5: Frontend Implementation     ░░░░░░░░░░   0% (0/8)
 ───────────────────────────────────────────────────────
-Total Progress:                      ███░░░░░░░  10.8% (4/37)
+Total Progress:                      ███░░░░░░░  13.5% (5/37)
 ```
 
 ---
@@ -132,7 +132,7 @@ Total Progress:                      ███░░░░░░░  10.8% (4/37
 
 **Goal:** Build and test all Anchor programs
 
-**Status:** 🟡 In Progress (1/8 complete)
+**Status:** 🟡 In Progress (2/8 complete)
 
 **Prerequisites:**
 - Phase 1 complete
@@ -152,14 +152,15 @@ Total Progress:                      ███░░░░░░░  10.8% (4/37
   - **Story:** docs/stories/STORY-1.1.md
   - Directory: `programs/zmart-core/` and `programs/zmart-proposal/`
 
-- [ ] **Define Account Structures** 🔴 NOT STARTED
-  - GlobalConfig, MarketAccount, UserPosition, FeeVault
-  - Calculate account sizes and rent
-  - **Estimated Time:** 3-4 hours
-  - **Dependencies:** 03_SOLANA_PROGRAM_DESIGN.md
-  - **Blockers:** None
-  - **Assignee:** Claude
-  - File: `programs/zmart-prediction-market/src/state.rs`
+- [x] **Define Account Structures** ✅ COMPLETE (Story 1.2)
+  - GlobalConfig (198 bytes), MarketAccount (464 bytes), UserPosition (182 bytes), VoteRecord (83 bytes)
+  - Fixed-point math module with overflow protection (49 unit tests passing)
+  - Error codes: 24 for zmart-core, 8 for zmart-proposal
+  - **Actual Time:** 4-5 hours (50% faster than estimate)
+  - **Dependencies:** CORE_LOGIC_INVARIANTS.md
+  - **Completed:** November 5, 2025
+  - **Story:** docs/stories/STORY-1.2.md
+  - Files: `programs/zmart-core/src/state/`, `programs/zmart-proposal/src/state/`, `programs/zmart-core/src/math/`
 
 ### 2.2 Core Modules
 
