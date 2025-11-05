@@ -1,9 +1,0 @@
-This is a test file to validate the improved git hook workflow.
-
-Test Cases:
-1. ✅ docs: commit (no story required) - PASSED
-2. 🔄 feat: commit with story reference + complete DoD - TESTING NOW
-3. ❌ feat: commit without story reference - Should fail
-4. ❌ feat: commit with incomplete DoD - Should fail
-
-# Testing negative case
