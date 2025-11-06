@@ -205,24 +205,42 @@ if [[ $AFFECTS_PROGRAMS == "yes" ]]; then
 
             if [ ! -z "$CURRENT_DAY" ] && [ "$CURRENT_DAY" -gt 0 ]; then
                 if [ "$DAY_NUM" != "$CURRENT_DAY" ]; then
+                    # ============================================================
+                    # DAY MISMATCH BLOCKING (Fix 1/8)
+                    # ============================================================
                     echo ""
-                    echo "⚠️  WARNING: Commit references Day $DAY_NUM but current day is $CURRENT_DAY"
-                    echo "   Update commit message to match current day or update progress tracker"
+                    echo "❌ ERROR: Day mismatch detected!"
                     echo ""
-                    # Not blocking - allow for flexibility
+                    echo "   Commit references: Day $DAY_NUM"
+                    echo "   Current day is:    Day $CURRENT_DAY"
+                    echo ""
+                    echo "   🔧 Fix options:"
+                    echo "      1. Update commit message to 'Day $CURRENT_DAY'"
+                    echo "      2. If Day $CURRENT_DAY is truly complete, run:"
+                    echo "         npm run validate-day-complete"
+                    echo "         (Day will auto-advance in future fix)"
+                    echo ""
+                    echo "   💡 Bypass (NOT RECOMMENDED): git commit --no-verify"
+                    echo ""
+                    exit 1
                 else
                     echo "✅ Day reference matches current day: Day $CURRENT_DAY"
                 fi
             fi
         fi
     else
-        # Missing day reference for program work
+        # Missing day reference for program work (Fix 1/8)
         echo ""
-        echo "⚠️  WARNING: Anchor program changes should reference day number"
+        echo "❌ ERROR: Anchor program changes MUST reference day number"
+        echo ""
+        echo "   Format: feat: Story X.Y - Day Z - [description]"
         echo "   Example: feat: Story 2.1 - Day 3 - Implement LMSR math"
-        echo "   See: docs/25_DAY_ANCHOR_ROADMAP.md"
         echo ""
-        # Not blocking - just a warning
+        echo "   See: docs/25_DAY_ANCHOR_ROADMAP.md for day numbers"
+        echo ""
+        echo "   💡 Bypass (NOT RECOMMENDED): git commit --no-verify"
+        echo ""
+        exit 1
     fi
 fi
 
