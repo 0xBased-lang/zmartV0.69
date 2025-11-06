@@ -70,6 +70,9 @@ pub fn handler(
     let position = &mut ctx.accounts.position;
     let config = &ctx.accounts.global_config;
 
+    // Check if protocol is paused (emergency pause active)
+    require!(!config.is_paused, ErrorCode::ProtocolPaused);
+
     // Calculate shares user gets for their target cost (using LMSR)
     let (cost_before_fees, shares_bought) = lmsr::calculate_buy_cost(
         market.shares_yes,

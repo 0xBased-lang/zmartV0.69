@@ -128,7 +128,7 @@ pub fn handler(
     market.bump = ctx.bumps.market;
 
     // Initialize reserved space
-    market.reserved = [0; 128];
+    market.reserved = [0; 120];
 
     msg!(
         "Market created: {:?} by creator: {} with b={}, liquidity={}",
@@ -186,8 +186,9 @@ mod tests {
             dispute_total_votes: 0,
             was_disputed: false,
             is_cancelled: false,
+            cancelled_at: None,
             bump: 255,
-            reserved: [0; 128],
+            reserved: [0; 120],
         }
     }
 
@@ -286,7 +287,7 @@ mod tests {
         assert_eq!(market.is_cancelled, false);
 
         // Reserved space should be zeroed
-        assert_eq!(market.reserved, [0; 128]);
+        assert_eq!(market.reserved, [0; 120]);
     }
 
     #[test]

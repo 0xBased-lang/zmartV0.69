@@ -310,4 +310,60 @@ pub mod zmart_core {
     ) -> Result<()> {
         aggregate_dispute_votes::handler(ctx, final_agrees, final_disagrees)
     }
+
+    // ============================================================================
+    // Admin Instructions (Phase 1, Week 3)
+    // ============================================================================
+
+    /// Update global protocol configuration parameters
+    ///
+    /// Allows admin to modify fee percentages, voting thresholds, and other
+    /// configuration parameters without redeploying the program.
+    ///
+    /// # Arguments
+    ///
+    /// * `protocol_fee_bps` - Protocol fee in basis points (0-10000)
+    /// * `resolver_reward_bps` - Resolver reward in basis points (0-10000)
+    /// * `liquidity_provider_fee_bps` - LP fee in basis points (0-10000)
+    /// * `proposal_approval_threshold` - Proposal approval threshold (0-10000)
+    /// * `dispute_success_threshold` - Dispute success threshold (0-10000)
+    pub fn update_global_config(
+        ctx: Context<UpdateGlobalConfig>,
+        protocol_fee_bps: u16,
+        resolver_reward_bps: u16,
+        liquidity_provider_fee_bps: u16,
+        proposal_approval_threshold: u16,
+        dispute_success_threshold: u16,
+    ) -> Result<()> {
+        update_global_config::handler(
+            ctx,
+            protocol_fee_bps,
+            resolver_reward_bps,
+            liquidity_provider_fee_bps,
+            proposal_approval_threshold,
+            dispute_success_threshold,
+        )
+    }
+
+    /// Toggle protocol pause state (pause/unpause trading)
+    ///
+    /// Allows admin to pause all trading operations in case of critical bugs,
+    /// exploits, or market instability. Calling when running pauses protocol.
+    /// Calling when paused unpauses protocol. Voting and resolution continue.
+    pub fn emergency_pause(
+        ctx: Context<EmergencyPause>,
+    ) -> Result<()> {
+        emergency_pause::handler(ctx)
+    }
+
+    /// Cancel a market and transition to CANCELLED state
+    ///
+    /// Allows admin to cancel markets that are invalid or fraudulent.
+    /// Only works for PROPOSED or APPROVED markets (cannot cancel active/resolving).
+    /// Sets market to CANCELLED state. Refunds handled by separate instruction.
+    pub fn cancel_market(
+        ctx: Context<CancelMarket>,
+    ) -> Result<()> {
+        cancel_market::handler(ctx)
+    }
 }
