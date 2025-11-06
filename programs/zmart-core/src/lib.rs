@@ -255,4 +255,26 @@ pub mod zmart_core {
     ) -> Result<()> {
         aggregate_proposal_votes::handler(ctx, final_likes, final_dislikes)
     }
+
+    /// Submit a vote on a market dispute (agree/disagree)
+    ///
+    /// Creates an on-chain VoteRecord for proof and duplicate prevention.
+    /// Votes are aggregated off-chain by the backend. When dispute voting
+    /// concludes, backend calls aggregate_dispute_votes.
+    ///
+    /// # Arguments
+    ///
+    /// * `vote` - true for "agree with dispute" (resolution is wrong),
+    ///            false for "disagree with dispute" (resolution is correct)
+    ///
+    /// # Errors
+    ///
+    /// * `ErrorCode::InvalidStateForVoting` - Market not in DISPUTED state
+    /// * `ErrorCode::AlreadyVoted` - User already voted (PDA init fails)
+    pub fn submit_dispute_vote(
+        ctx: Context<SubmitDisputeVote>,
+        vote: bool,
+    ) -> Result<()> {
+        submit_dispute_vote::handler(ctx, vote)
+    }
 }
