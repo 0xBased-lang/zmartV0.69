@@ -19,7 +19,14 @@
     "keys": "anchor keys list",
     "clean": "anchor clean && rm -rf node_modules",
     "verify": "cargo check --all && pnpm run lint",
-    "lint": "echo 'Linting will be configured in Week 2'"
+    "lint": "echo 'Linting will be configured in Week 2'",
+    "validate-day": "bash scripts/validate-day.sh",
+    "validate-day-complete": "bash scripts/validate-day-complete.sh",
+    "advance-day": "bash scripts/advance-day.sh",
+    "validate-phase": "bash scripts/validate-phase.sh",
+    "update-progress": "bash scripts/update-progress.sh",
+    "next-tasks": "bash scripts/show-next-tasks.sh",
+    "roadmap-status": "cat docs/25_DAY_PROGRESS_TRACKER.md"
   },
   "devDependencies": {
     "@coral-xyz/anchor": "^0.29.0",
