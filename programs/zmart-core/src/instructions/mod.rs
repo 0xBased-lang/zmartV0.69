@@ -19,6 +19,7 @@ pub mod withdraw_liquidity;
 
 // Voting Instructions (Phase 1, Week 1)
 pub mod submit_proposal_vote;
+pub mod aggregate_proposal_votes;
 
 // Re-export instruction handlers
 pub use initialize_global_config::*;
@@ -33,3 +34,4 @@ pub use finalize_market::*;
 pub use claim_winnings::*;
 pub use withdraw_liquidity::*;
 pub use submit_proposal_vote::*;
+pub use aggregate_proposal_votes::*;

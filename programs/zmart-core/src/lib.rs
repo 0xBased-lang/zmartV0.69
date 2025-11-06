@@ -224,4 +224,35 @@ pub mod zmart_core {
     ) -> Result<()> {
         submit_proposal_vote::handler(ctx, vote)
     }
+
+    /// Aggregate proposal votes and check approval threshold
+    ///
+    /// Backend authority aggregates votes off-chain (from VoteRecords) and submits
+    /// final counts. If 70%+ likes, market transitions to APPROVED state.
+    ///
+    /// # Arguments
+    ///
+    /// * `final_likes` - Total number of like votes (from off-chain aggregation)
+    /// * `final_dislikes` - Total number of dislike votes (from off-chain aggregation)
+    ///
+    /// # Behavior
+    ///
+    /// * Records vote counts in MarketAccount
+    /// * Calculates approval percentage
+    /// * If >= 70% likes: transitions to APPROVED state
+    /// * If < 70% likes: stays in PROPOSED (can re-aggregate)
+    /// * Emits ProposalAggregated event
+    ///
+    /// # Errors
+    ///
+    /// * `ErrorCode::Unauthorized` - Caller is not backend authority
+    /// * `ErrorCode::InvalidStateForVoting` - Market not in PROPOSED state
+    /// * `ErrorCode::OverflowError` - Vote count overflow (extremely unlikely)
+    pub fn aggregate_proposal_votes(
+        ctx: Context<AggregateProposalVotes>,
+        final_likes: u32,
+        final_dislikes: u32,
+    ) -> Result<()> {
+        aggregate_proposal_votes::handler(ctx, final_likes, final_dislikes)
+    }
 }
