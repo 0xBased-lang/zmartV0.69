@@ -35,6 +35,7 @@ pub fn handler(
     final_dislikes: u32,
 ) -> Result<()> {
     let market = &mut ctx.accounts.market;
+    let global_config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
 
     // Record vote counts on-chain
@@ -46,20 +47,19 @@ pub fn handler(
         .checked_add(final_dislikes)
         .ok_or(ErrorCode::OverflowError)?;
 
-    // Calculate approval percentage
-    // Formula: (likes / total) * 100
-    let likes_percentage = if total_votes > 0 {
+    // Calculate approval percentage in basis points (0-10000)
+    // Formula: (likes / total) * 10000
+    let likes_bps = if total_votes > 0 {
         (final_likes as u64)
-            .checked_mul(100)
+            .checked_mul(10000)
             .ok_or(ErrorCode::OverflowError)?
             / (total_votes as u64)
     } else {
         0u64 // Zero votes = 0% approval
     };
 
-    // Check 70% threshold
-    const APPROVAL_THRESHOLD: u64 = 70;
-    let approved = likes_percentage >= APPROVAL_THRESHOLD;
+    // Check threshold from GlobalConfig (default 7000 = 70%)
+    let approved = likes_bps >= global_config.proposal_approval_threshold as u64;
 
     if approved {
         // Transition to APPROVED state
@@ -68,12 +68,15 @@ pub fn handler(
     }
     // else: stays in PROPOSED (can re-aggregate later)
 
+    // Calculate display percentage (0-100) for event
+    let approval_percentage = (likes_bps / 100) as u8;
+
     // Emit event (always, for monitoring)
     emit!(ProposalAggregated {
         market_id: market.market_id,
         likes: final_likes,
         dislikes: final_dislikes,
-        approval_percentage: likes_percentage as u8,
+        approval_percentage,
         approved,
         timestamp: clock.unix_timestamp,
     });
