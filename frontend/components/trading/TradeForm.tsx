@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
   Outcome,
@@ -11,11 +11,14 @@ import {
   type MarketState,
   type TradeResult,
 } from '@/lib/lmsr';
+import { useTrade, TransactionState } from '@/lib/hooks/useTrade';
 import { OutcomeSelector } from './OutcomeSelector';
 import { QuantityInput } from './QuantityInput';
 import { CostBreakdown } from './CostBreakdown';
 import { SlippageSettings } from './SlippageSettings';
+import { TransactionModal } from './TransactionModal';
 import { cn } from '@/lib/utils';
+import toast from 'react-hot-toast';
 
 interface TradeFormProps {
   marketId: string;
@@ -35,6 +38,7 @@ interface TradeFormProps {
  */
 export function TradeForm({ marketId, marketState, onTrade, className }: TradeFormProps) {
   const { connected, publicKey } = useWallet();
+  const { state: txState, signature, error, executeTrade, reset, retry } = useTrade();
 
   // Form state
   const [outcome, setOutcome] = useState<Outcome>(Outcome.YES);
@@ -42,6 +46,10 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
   const [quantityInput, setQuantityInput] = useState<string>('');
   const [slippage, setSlippage] = useState<number>(1); // 1% default
   const [showSlippage, setShowSlippage] = useState(false);
+
+  // Modal visibility
+  const showModal =
+    txState !== TransactionState.IDLE && txState !== TransactionState.ERROR;
 
   // Calculate current prices
   const currentPrices = useMemo(() => {
@@ -108,18 +116,47 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!canSubmit || !tradeResult) return;
+    if (!canSubmit || !tradeResult || !quantity) return;
 
-    // TODO: Execute blockchain transaction
-    console.log('Executing trade:', {
-      marketId,
-      action,
-      outcome,
-      quantity: quantityInput,
-      result: tradeResult,
-    });
+    try {
+      // Execute trade transaction
+      const result = await executeTrade({
+        marketId,
+        action,
+        outcome,
+        quantity,
+        tradeResult,
+        maxSlippage: slippage,
+      });
 
-    onTrade?.(tradeResult);
+      if (result) {
+        // Success callback
+        onTrade?.(tradeResult);
+
+        // Show success toast
+        toast.success(
+          `${action === TradeAction.BUY ? 'Bought' : 'Sold'} ${quantityInput} ${outcome} shares`
+        );
+
+        // Reset form
+        setQuantityInput('');
+      }
+    } catch (err) {
+      // Error handled by modal
+      console.error('Trade execution failed:', err);
+    }
+  };
+
+  const handleCloseModal = () => {
+    reset();
+  };
+
+  const handleRetry = async () => {
+    try {
+      await retry();
+    } catch (err) {
+      console.error('Retry failed:', err);
+    }
   };
 
   return (
@@ -255,6 +292,24 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
             Supported: Phantom, Solflare, Backpack
           </p>
         </div>
+      )}
+
+      {/* Transaction Modal */}
+      {tradeResult && (
+        <TransactionModal
+          isOpen={showModal || txState === TransactionState.ERROR}
+          onClose={handleCloseModal}
+          state={txState}
+          signature={signature}
+          error={error}
+          onRetry={handleRetry}
+          action={action}
+          outcome={outcome}
+          quantity={quantity || 0n}
+          finalAmount={tradeResult.finalAmount}
+          newPrice={tradeResult.newPrice}
+          priceImpact={tradeResult.priceImpact}
+        />
       )}
     </form>
   );
