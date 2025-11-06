@@ -199,4 +199,29 @@ pub mod zmart_core {
     ) -> Result<()> {
         withdraw_liquidity::handler(ctx)
     }
+
+    // ============================================================================
+    // Voting Instructions (Phase 1, Week 1)
+    // ============================================================================
+
+    /// Submit a vote on a market proposal (like/dislike)
+    ///
+    /// Creates an on-chain VoteRecord for proof and duplicate prevention.
+    /// Votes are aggregated off-chain by the backend. When 70% approval
+    /// threshold is reached, backend calls approve_proposal.
+    ///
+    /// # Arguments
+    ///
+    /// * `vote` - true for "like" (support), false for "dislike" (oppose)
+    ///
+    /// # Errors
+    ///
+    /// * `ErrorCode::InvalidStateForVoting` - Market not in PROPOSED state
+    /// * `ErrorCode::AlreadyVoted` - User already voted (PDA init fails)
+    pub fn submit_proposal_vote(
+        ctx: Context<SubmitProposalVote>,
+        vote: bool,
+    ) -> Result<()> {
+        submit_proposal_vote::handler(ctx, vote)
+    }
 }
