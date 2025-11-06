@@ -147,6 +147,85 @@ if [[ $COMMIT_TYPE =~ ^(feat|fix|refactor): ]] && [[ $HAS_CODE_CHANGES == "yes" 
     fi
 fi
 
+# ============================================================
+# 25-DAY ROADMAP VALIDATION (Anchor Program Work)
+# ============================================================
+
+# Check if commit affects Anchor programs
+AFFECTS_PROGRAMS=$(echo "$STAGED_FILES" | grep -qE 'programs/.*\.(rs|toml)$' && echo "yes" || echo "no")
+
+if [[ $AFFECTS_PROGRAMS == "yes" ]]; then
+    # Get current day from progress tracker
+    if [ -f "docs/25_DAY_PROGRESS_TRACKER.md" ]; then
+        CURRENT_DAY=$(grep "^\*\*Current Day\*\*:" "docs/25_DAY_PROGRESS_TRACKER.md" | sed 's/.*: \([0-9]*\).*/\1/')
+
+        if [ ! -z "$CURRENT_DAY" ] && [ "$CURRENT_DAY" -gt 0 ]; then
+            # ============================================================
+            # VALIDATION MARKER CHECK (Fix 3/8)
+            # ============================================================
+            MARKER_FILE=".validation/day-${CURRENT_DAY}-validated"
+
+            if [ ! -f "$MARKER_FILE" ]; then
+                echo ""
+                echo "❌ ERROR: No validation marker found for Day $CURRENT_DAY"
+                echo ""
+                echo "   Run validation before committing:"
+                echo "   $ npm run validate-day"
+                echo ""
+                echo "   This ensures build/tests are passing before you commit."
+                echo ""
+                exit 1
+            fi
+
+            # Check if marker is stale (older than today)
+            MARKER_DATE=$(cat "$MARKER_FILE")
+            TODAY=$(date "+%Y-%m-%d")
+
+            if [ "$MARKER_DATE" != "$TODAY" ]; then
+                echo ""
+                echo "❌ ERROR: Validation marker is stale (from $MARKER_DATE)"
+                echo ""
+                echo "   Re-run validation:"
+                echo "   $ npm run validate-day"
+                echo ""
+                exit 1
+            fi
+
+            echo "✅ Validation marker valid (today: $TODAY)"
+        fi
+    fi
+
+    # Extract day number from commit message
+    if [[ $COMMIT_MSG =~ Day\ ([0-9]+) ]]; then
+        DAY_NUM=$(echo "$COMMIT_MSG" | grep -Eo 'Day [0-9]+' | grep -Eo '[0-9]+')
+
+        # Get current day from progress tracker
+        if [ -f "docs/25_DAY_PROGRESS_TRACKER.md" ]; then
+            CURRENT_DAY=$(grep "^\*\*Current Day\*\*:" "docs/25_DAY_PROGRESS_TRACKER.md" | sed 's/.*: \([0-9]*\).*/\1/')
+
+            if [ ! -z "$CURRENT_DAY" ] && [ "$CURRENT_DAY" -gt 0 ]; then
+                if [ "$DAY_NUM" != "$CURRENT_DAY" ]; then
+                    echo ""
+                    echo "⚠️  WARNING: Commit references Day $DAY_NUM but current day is $CURRENT_DAY"
+                    echo "   Update commit message to match current day or update progress tracker"
+                    echo ""
+                    # Not blocking - allow for flexibility
+                else
+                    echo "✅ Day reference matches current day: Day $CURRENT_DAY"
+                fi
+            fi
+        fi
+    else
+        # Missing day reference for program work
+        echo ""
+        echo "⚠️  WARNING: Anchor program changes should reference day number"
+        echo "   Example: feat: Story 2.1 - Day 3 - Implement LMSR math"
+        echo "   See: docs/25_DAY_ANCHOR_ROADMAP.md"
+        echo ""
+        # Not blocking - just a warning
+    fi
+fi
+
 echo ""
 echo "✅ Commit message validation passed"
 exit 0
