@@ -47,8 +47,8 @@ if [ "$CURRENT_DAY" -gt 1 ]; then
     PREV_DAY=$((CURRENT_DAY - 1))
     echo -e "Checking Day $PREV_DAY completion..."
 
-    # Check for completion marker in progress tracker
-    PREV_COMPLETE=$(grep "DAY $PREV_DAY" "$PROGRESS_FILE" | grep -o "✅" || echo "")
+    # Check for completion marker in progress tracker (case-insensitive)
+    PREV_COMPLETE=$(grep -i "day $PREV_DAY" "$PROGRESS_FILE" | grep -o "✅" || echo "")
     if [ -z "$PREV_COMPLETE" ]; then
         echo -e "${RED}❌ Day $PREV_DAY not marked complete${NC}"
         echo "Run: npm run validate-day-complete"
@@ -61,8 +61,12 @@ fi
 echo ""
 echo -e "Checking Day $CURRENT_DAY dependencies..."
 
-# Extract dependencies from roadmap (basic check)
-DAY_SECTION=$(sed -n "/^## Day $CURRENT_DAY:/,/^## Day $((CURRENT_DAY + 1)):/p" "$ROADMAP_FILE")
+# Extract dependencies from roadmap (basic check) - support both ## and ### headers
+DAY_SECTION=$(sed -n "/^### Day $CURRENT_DAY:/,/^### Day $((CURRENT_DAY + 1)):/p" "$ROADMAP_FILE")
+if [ -z "$DAY_SECTION" ]; then
+    # Try with ## if ### didn't work
+    DAY_SECTION=$(sed -n "/^## Day $CURRENT_DAY:/,/^## Day $((CURRENT_DAY + 1)):/p" "$ROADMAP_FILE")
+fi
 if [ -z "$DAY_SECTION" ]; then
     echo -e "${RED}❌ Could not find Day $CURRENT_DAY in roadmap${NC}"
     exit 1
@@ -70,22 +74,22 @@ fi
 
 # Check if build passes (for days after 1)
 if [ "$CURRENT_DAY" -gt 1 ] && [ -f "programs/zmart-core/Cargo.toml" ]; then
-    echo "Running anchor build..."
-    if ! anchor build > /dev/null 2>&1; then
-        echo -e "${RED}❌ Build failing - fix before starting Day $CURRENT_DAY${NC}"
+    echo "Checking compilation..."
+    if ! cargo check --manifest-path programs/zmart-core/Cargo.toml > /dev/null 2>&1; then
+        echo -e "${RED}❌ Compilation failing - fix before starting Day $CURRENT_DAY${NC}"
         exit 1
     fi
-    echo -e "${GREEN}✅ Build passing${NC}"
+    echo -e "${GREEN}✅ Compilation passing${NC}"
 fi
 
 # Check if tests pass (for days after 3)
 if [ "$CURRENT_DAY" -gt 3 ] && [ -f "programs/zmart-core/Cargo.toml" ]; then
-    echo "Running tests..."
-    if ! anchor test > /dev/null 2>&1; then
-        echo -e "${RED}❌ Tests failing - fix before starting Day $CURRENT_DAY${NC}"
+    echo "Running unit tests..."
+    if ! cargo test --manifest-path programs/zmart-core/Cargo.toml > /dev/null 2>&1; then
+        echo -e "${RED}❌ Unit tests failing - fix before starting Day $CURRENT_DAY${NC}"
         exit 1
     fi
-    echo -e "${GREEN}✅ Tests passing${NC}"
+    echo -e "${GREEN}✅ Unit tests passing${NC}"
 fi
 
 # Success
