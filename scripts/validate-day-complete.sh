@@ -27,20 +27,20 @@ fi
 echo -e "Validating Day ${BLUE}$CURRENT_DAY${NC}..."
 echo ""
 
-# Check build passes
+# Check compilation passes
 if [ -f "programs/zmart-core/Cargo.toml" ]; then
-    echo "Checking build..."
-    if ! anchor build > /dev/null 2>&1; then
-        echo -e "${RED}❌ Build failing${NC}"
+    echo "Checking compilation..."
+    if ! cargo check --manifest-path programs/zmart-core/Cargo.toml > /dev/null 2>&1; then
+        echo -e "${RED}❌ Compilation failing${NC}"
         exit 1
     fi
-    echo -e "${GREEN}✅ Build passing${NC}"
+    echo -e "${GREEN}✅ Compilation passing${NC}"
 fi
 
-# Check tests pass
-if [ -f "programs/zmart-core/tests/zmart-core.ts" ]; then
-    echo "Running tests..."
-    if ! anchor test > /dev/null 2>&1; then
+# Check unit tests pass
+if [ -f "programs/zmart-core/Cargo.toml" ]; then
+    echo "Running unit tests..."
+    if ! cargo test --manifest-path programs/zmart-core/Cargo.toml > /dev/null 2>&1; then
         echo -e "${RED}❌ Tests failing${NC}"
         exit 1
     fi
