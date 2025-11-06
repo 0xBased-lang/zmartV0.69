@@ -157,6 +157,45 @@ fi
 # Create lock
 touch "$LOCK_FILE"
 
+# ============================================================
+# TIME TRACKING SUMMARY (Fix 8/8)
+# ============================================================
+
+# Check if time log exists
+TIME_LOG=".validation/time-day-$CURRENT_DAY.log"
+if [ -f "$TIME_LOG" ]; then
+    ACTUAL_TIME=$(awk '{sum+=$1} END {print sum}' "$TIME_LOG" 2>/dev/null || echo "0")
+
+    # Get estimated time
+    if [ "$CURRENT_DAY" -eq 5 ]; then
+        ESTIMATED=10
+    else
+        ESTIMATED=8
+    fi
+
+    # Calculate efficiency
+    if command -v bc &> /dev/null && [ "$ACTUAL_TIME" != "0" ]; then
+        EFFICIENCY=$(echo "scale=0; $ESTIMATED / $ACTUAL_TIME * 100" | bc 2>/dev/null || echo "N/A")
+    else
+        EFFICIENCY="N/A"
+    fi
+
+    echo ""
+    echo "📊 Time Tracking Summary:"
+    echo "   Estimated: ${ESTIMATED}h"
+    echo "   Actual:    ${ACTUAL_TIME}h"
+    if [ "$EFFICIENCY" != "N/A" ]; then
+        echo "   Efficiency: ${EFFICIENCY}%"
+    fi
+
+    # Remove time log (day complete)
+    rm "$TIME_LOG"
+else
+    echo ""
+    echo "ℹ️  No time tracking data for Day $CURRENT_DAY"
+    echo "   Consider adding 'Time: Xh' to commit messages for velocity tracking"
+fi
+
 # Auto-increment CURRENT_DAY
 NEXT_DAY=$((CURRENT_DAY + 1))
 
