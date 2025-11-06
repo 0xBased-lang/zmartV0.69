@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "types:generate": "echo 'To generate types: npx supabase gen types typescript --project-id YOUR_PROJECT_ID > lib/supabase/types.ts'"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
