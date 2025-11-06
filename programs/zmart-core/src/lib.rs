@@ -277,4 +277,37 @@ pub mod zmart_core {
     ) -> Result<()> {
         submit_dispute_vote::handler(ctx, vote)
     }
+
+    /// Aggregate dispute votes and check dispute threshold
+    ///
+    /// Backend authority aggregates votes off-chain (from VoteRecords) and submits
+    /// final counts. If 60%+ agree with dispute, resolution is rejected and market
+    /// returns to RESOLVING state. If <60%, original resolution stands and market
+    /// transitions to FINALIZED.
+    ///
+    /// # Arguments
+    ///
+    /// * `final_agrees` - Total number of "agree with dispute" votes
+    /// * `final_disagrees` - Total number of "disagree with dispute" votes
+    ///
+    /// # Behavior
+    ///
+    /// * Records vote counts in MarketAccount
+    /// * Calculates agreement percentage
+    /// * If >= 60% agree: transitions to RESOLVING (resolution rejected)
+    /// * If < 60% agree: transitions to FINALIZED (resolution accepted)
+    /// * Emits DisputeAggregated event
+    ///
+    /// # Errors
+    ///
+    /// * `ErrorCode::Unauthorized` - Caller is not backend authority
+    /// * `ErrorCode::InvalidStateForVoting` - Market not in DISPUTED state
+    /// * `ErrorCode::OverflowError` - Vote count overflow (extremely unlikely)
+    pub fn aggregate_dispute_votes(
+        ctx: Context<AggregateDisputeVotes>,
+        final_agrees: u32,
+        final_disagrees: u32,
+    ) -> Result<()> {
+        aggregate_dispute_votes::handler(ctx, final_agrees, final_disagrees)
+    }
 }

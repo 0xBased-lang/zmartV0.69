@@ -21,6 +21,7 @@ pub mod withdraw_liquidity;
 pub mod submit_proposal_vote;
 pub mod aggregate_proposal_votes;
 pub mod submit_dispute_vote;
+pub mod aggregate_dispute_votes;
 
 // Re-export instruction handlers
 pub use initialize_global_config::*;
@@ -37,3 +38,4 @@ pub use withdraw_liquidity::*;
 pub use submit_proposal_vote::*;
 pub use aggregate_proposal_votes::*;
 pub use submit_dispute_vote::*;
+pub use aggregate_dispute_votes::*;
