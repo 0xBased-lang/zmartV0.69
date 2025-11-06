@@ -190,4 +190,16 @@ pub enum ErrorCode {
     /// 6603: Invalid IPFS hash
     #[msg("Invalid IPFS hash")]
     InvalidIpfsHash,
+
+    // ============================================================
+    // Voting Errors (6700-6799)
+    // ============================================================
+
+    /// 6700: User already voted on this proposal or dispute
+    #[msg("User already voted")]
+    AlreadyVoted,
+
+    /// 6701: Market not in correct state for voting
+    #[msg("Invalid state for voting")]
+    InvalidStateForVoting,
 }
