@@ -1,0 +1,479 @@
+/**
+ * LMSR Calculator Tests
+ *
+ * Validates LMSR implementation against reference values from
+ * docs/05_LMSR_MATHEMATICS.md and ensures consistency with
+ * Rust program implementation.
+ */
+
+import {
+  calculateCostFunction,
+  calculateBuyCost,
+  calculateSellProceeds,
+  calculatePrices,
+  calculateFees,
+  calculatePriceImpact,
+  calculateTrade,
+  validateMarketState,
+  toFixedPoint,
+  fromFixedPoint,
+  Outcome,
+  TradeAction,
+  LMSRError,
+  type MarketState,
+} from '../index';
+
+describe('Fixed-Point Arithmetic', () => {
+  it('converts number to fixed-point correctly', () => {
+    expect(toFixedPoint(1)).toBe(1_000_000_000n); // 1 SOL
+    expect(toFixedPoint(0.5)).toBe(500_000_000n); // 0.5 SOL
+    expect(toFixedPoint(0.001)).toBe(1_000_000n); // 0.001 SOL
+  });
+
+  it('converts fixed-point to number correctly', () => {
+    expect(fromFixedPoint(1_000_000_000n)).toBe(1);
+    expect(fromFixedPoint(500_000_000n)).toBe(0.5);
+    expect(fromFixedPoint(1_000_000n)).toBe(0.001);
+  });
+
+  it('round-trips correctly', () => {
+    const values = [0, 0.001, 0.5, 1, 10, 100, 1000];
+    for (const value of values) {
+      const fixed = toFixedPoint(value);
+      const back = fromFixedPoint(fixed);
+      expect(back).toBeCloseTo(value, 6);
+    }
+  });
+});
+
+describe('LMSR Cost Function', () => {
+  // Reference values from 05_LMSR_MATHEMATICS.md
+  // Example: b=1000, q_yes=q_no=0 → C(0,0) = 1000 * ln(2) ≈ 693.15
+
+  it('calculates cost at equilibrium (q_yes = q_no = 0)', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const cost = calculateCostFunction(
+      marketState.qYes,
+      marketState.qNo,
+      marketState.liquidity
+    );
+
+    // Expected: 1000 * ln(1 + 1) = 1000 * ln(2) ≈ 693.147
+    const costSOL = fromFixedPoint(cost);
+    expect(costSOL).toBeCloseTo(693.147, 1);
+  });
+
+  it('calculates cost with positive quantities', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(100),
+      qNo: toFixedPoint(100),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const cost = calculateCostFunction(
+      marketState.qYes,
+      marketState.qNo,
+      marketState.liquidity
+    );
+
+    // Cost should be > 693 (baseline)
+    const costSOL = fromFixedPoint(cost);
+    expect(costSOL).toBeGreaterThan(693);
+  });
+
+  it('throws error for zero liquidity', () => {
+    expect(() =>
+      calculateCostFunction(toFixedPoint(0), toFixedPoint(0), toFixedPoint(0))
+    ).toThrow(LMSRError);
+  });
+});
+
+describe('LMSR Price Calculation', () => {
+  it('calculates 50/50 prices at equilibrium', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const prices = calculatePrices(marketState);
+
+    // At equilibrium (q_yes = q_no), both prices should be 50%
+    expect(prices.yesPrice).toBeCloseTo(50, 1);
+    expect(prices.noPrice).toBeCloseTo(50, 1);
+    expect(prices.probabilitySum).toBeCloseTo(100, 1);
+  });
+
+  it('calculates prices with YES bias', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(100), // More YES shares
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const prices = calculatePrices(marketState);
+
+    // YES price should be > 50%, NO price should be < 50%
+    expect(prices.yesPrice).toBeGreaterThan(50);
+    expect(prices.noPrice).toBeLessThan(50);
+    expect(prices.probabilitySum).toBeCloseTo(100, 1);
+  });
+
+  it('calculates prices with NO bias', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(100), // More NO shares
+      liquidity: toFixedPoint(1000),
+    };
+
+    const prices = calculatePrices(marketState);
+
+    // NO price should be > 50%, YES price should be < 50%
+    expect(prices.noPrice).toBeGreaterThan(50);
+    expect(prices.yesPrice).toBeLessThan(50);
+    expect(prices.probabilitySum).toBeCloseTo(100, 1);
+  });
+
+  it('prices sum to approximately 100%', () => {
+    const marketStates: MarketState[] = [
+      { qYes: toFixedPoint(0), qNo: toFixedPoint(0), liquidity: toFixedPoint(1000) },
+      { qYes: toFixedPoint(50), qNo: toFixedPoint(50), liquidity: toFixedPoint(1000) },
+      { qYes: toFixedPoint(100), qNo: toFixedPoint(0), liquidity: toFixedPoint(1000) },
+      { qYes: toFixedPoint(0), qNo: toFixedPoint(100), liquidity: toFixedPoint(1000) },
+    ];
+
+    for (const marketState of marketStates) {
+      const prices = calculatePrices(marketState);
+      expect(prices.probabilitySum).toBeCloseTo(100, 1);
+    }
+  });
+});
+
+describe('LMSR Buy Cost', () => {
+  it('calculates buy cost for YES shares', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const cost = calculateBuyCost(toFixedPoint(10), Outcome.YES, marketState);
+
+    // Buying 10 shares at 50/50 should cost ~5 SOL (10 * 0.5)
+    const costSOL = fromFixedPoint(cost);
+    expect(costSOL).toBeGreaterThan(4);
+    expect(costSOL).toBeLessThan(6);
+  });
+
+  it('calculates buy cost for NO shares', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const cost = calculateBuyCost(toFixedPoint(10), Outcome.NO, marketState);
+
+    // Buying 10 NO shares at 50/50 should cost ~5 SOL
+    const costSOL = fromFixedPoint(cost);
+    expect(costSOL).toBeGreaterThan(4);
+    expect(costSOL).toBeLessThan(6);
+  });
+
+  it('cost increases with quantity (convexity)', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const cost10 = calculateBuyCost(toFixedPoint(10), Outcome.YES, marketState);
+    const cost20 = calculateBuyCost(toFixedPoint(20), Outcome.YES, marketState);
+    const cost30 = calculateBuyCost(toFixedPoint(30), Outcome.YES, marketState);
+
+    // Due to convexity: cost(30) > cost(20) > cost(10)
+    expect(cost20).toBeGreaterThan(cost10);
+    expect(cost30).toBeGreaterThan(cost20);
+
+    // And cost(30) > 2 * cost(10) (superlinear due to price impact)
+    expect(cost30).toBeGreaterThan(cost10 * 2n);
+  });
+
+  it('throws error for zero quantity', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    expect(() => calculateBuyCost(toFixedPoint(0), Outcome.YES, marketState)).toThrow(
+      LMSRError
+    );
+  });
+});
+
+describe('LMSR Sell Proceeds', () => {
+  it('calculates sell proceeds for YES shares', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(100), // User has 100 shares
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const proceeds = calculateSellProceeds(toFixedPoint(10), Outcome.YES, marketState);
+
+    // Selling 10 shares should return positive proceeds
+    expect(proceeds).toBeGreaterThan(0n);
+  });
+
+  it('throws error when selling more than available', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(50), // Only 50 shares available
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    expect(() =>
+      calculateSellProceeds(toFixedPoint(100), Outcome.YES, marketState)
+    ).toThrow(LMSRError);
+  });
+
+  it('proceeds decrease with quantity (concavity)', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(100),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const proceeds10 = calculateSellProceeds(toFixedPoint(10), Outcome.YES, marketState);
+    const proceeds20 = calculateSellProceeds(toFixedPoint(20), Outcome.YES, marketState);
+
+    // Due to concavity: proceeds(20) < 2 * proceeds(10)
+    expect(proceeds20).toBeLessThan(proceeds10 * 2n);
+  });
+});
+
+describe('Fee Calculation', () => {
+  it('calculates correct fee breakdown', () => {
+    const baseCost = toFixedPoint(100); // 100 SOL
+
+    const fees = calculateFees(baseCost);
+
+    // Protocol: 3% of 100 = 3 SOL
+    expect(fromFixedPoint(fees.protocolFee)).toBeCloseTo(3, 2);
+
+    // Creator: 2% of 100 = 2 SOL
+    expect(fromFixedPoint(fees.creatorFee)).toBeCloseTo(2, 2);
+
+    // Staker: 5% of 100 = 5 SOL
+    expect(fromFixedPoint(fees.stakerFee)).toBeCloseTo(5, 2);
+
+    // Total: 10% of 100 = 10 SOL
+    expect(fromFixedPoint(fees.totalFee)).toBeCloseTo(10, 2);
+  });
+
+  it('fees sum correctly', () => {
+    const baseCost = toFixedPoint(100);
+    const fees = calculateFees(baseCost);
+
+    const sum = fees.protocolFee + fees.creatorFee + fees.stakerFee;
+    expect(sum).toBe(fees.totalFee);
+  });
+});
+
+describe('Price Impact Calculation', () => {
+  it('calculates positive price impact', () => {
+    const impact = calculatePriceImpact(50, 60);
+    expect(impact).toBeCloseTo(20, 1); // 20% increase
+  });
+
+  it('calculates negative price impact', () => {
+    const impact = calculatePriceImpact(50, 40);
+    expect(impact).toBeCloseTo(-20, 1); // 20% decrease
+  });
+
+  it('throws error for zero current price', () => {
+    expect(() => calculatePriceImpact(0, 50)).toThrow(LMSRError);
+  });
+});
+
+describe('Complete Trade Calculation', () => {
+  it('calculates complete buy trade', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const result = calculateTrade({
+      action: TradeAction.BUY,
+      outcome: Outcome.YES,
+      quantity: toFixedPoint(10),
+      marketState,
+    });
+
+    // Verify all fields are present
+    expect(result.shares).toBe(toFixedPoint(10));
+    expect(result.baseCost).toBeGreaterThan(0n);
+    expect(result.protocolFee).toBeGreaterThan(0n);
+    expect(result.creatorFee).toBeGreaterThan(0n);
+    expect(result.stakerFee).toBeGreaterThan(0n);
+    expect(result.totalFee).toBeGreaterThan(0n);
+    expect(result.finalAmount).toBeGreaterThan(result.baseCost);
+
+    // New price should be > 50% (YES increased)
+    expect(result.newPrice).toBeGreaterThan(50);
+
+    // Price impact should be positive
+    expect(result.priceImpact).toBeGreaterThan(0);
+  });
+
+  it('calculates complete sell trade', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(100),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const result = calculateTrade({
+      action: TradeAction.SELL,
+      outcome: Outcome.YES,
+      quantity: toFixedPoint(10),
+      marketState,
+    });
+
+    // For sell: final amount = proceeds - fees
+    expect(result.finalAmount).toBeLessThan(result.baseCost);
+
+    // New price should decrease (YES supply decreased)
+    expect(result.newPrice).toBeLessThan(50);
+
+    // Price impact should be negative
+    expect(result.priceImpact).toBeLessThan(0);
+  });
+
+  it('buy and sell are roughly inverse operations', () => {
+    const initialState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    // Buy 10 YES shares
+    const buyResult = calculateTrade({
+      action: TradeAction.BUY,
+      outcome: Outcome.YES,
+      quantity: toFixedPoint(10),
+      marketState: initialState,
+    });
+
+    // State after buy
+    const afterBuyState: MarketState = {
+      qYes: toFixedPoint(10),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    // Sell 10 YES shares
+    const sellResult = calculateTrade({
+      action: TradeAction.SELL,
+      outcome: Outcome.YES,
+      quantity: toFixedPoint(10),
+      marketState: afterBuyState,
+    });
+
+    // After selling, should be back at ~50% (ignoring fees)
+    expect(sellResult.newPrice).toBeCloseTo(50, 0);
+
+    // Buy cost should be roughly equal to sell proceeds (ignoring fees)
+    const buyCostSOL = fromFixedPoint(buyResult.baseCost);
+    const sellProceedsSOL = fromFixedPoint(sellResult.baseCost);
+    expect(buyCostSOL).toBeCloseTo(sellProceedsSOL, 0);
+  });
+});
+
+describe('Market State Validation', () => {
+  it('validates correct market state', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(100),
+      qNo: toFixedPoint(100),
+      liquidity: toFixedPoint(1000),
+    };
+
+    expect(() => validateMarketState(marketState)).not.toThrow();
+  });
+
+  it('throws error for negative YES shares', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(-1),
+      qNo: toFixedPoint(100),
+      liquidity: toFixedPoint(1000),
+    };
+
+    expect(() => validateMarketState(marketState)).toThrow(LMSRError);
+  });
+
+  it('throws error for zero liquidity', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(100),
+      qNo: toFixedPoint(100),
+      liquidity: toFixedPoint(0),
+    };
+
+    expect(() => validateMarketState(marketState)).toThrow(LMSRError);
+  });
+});
+
+describe('Edge Cases', () => {
+  it('handles very small trades', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(1000),
+    };
+
+    const cost = calculateBuyCost(toFixedPoint(0.001), Outcome.YES, marketState);
+    expect(cost).toBeGreaterThan(0n);
+  });
+
+  it('handles large liquidity parameter', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(100000), // Very high liquidity = low price volatility
+    };
+
+    const cost = calculateBuyCost(toFixedPoint(10), Outcome.YES, marketState);
+
+    // With high liquidity, cost should be closer to linear (10 * 0.5 = 5)
+    const costSOL = fromFixedPoint(cost);
+    expect(costSOL).toBeGreaterThan(4.9);
+    expect(costSOL).toBeLessThan(5.1);
+  });
+
+  it('handles low liquidity parameter', () => {
+    const marketState: MarketState = {
+      qYes: toFixedPoint(0),
+      qNo: toFixedPoint(0),
+      liquidity: toFixedPoint(10), // Very low liquidity = high price volatility
+    };
+
+    const cost = calculateBuyCost(toFixedPoint(1), Outcome.YES, marketState);
+
+    // With low liquidity, even small trades have high impact
+    const prices = calculatePrices(marketState);
+    const result = calculateTrade({
+      action: TradeAction.BUY,
+      outcome: Outcome.YES,
+      quantity: toFixedPoint(1),
+      marketState,
+    });
+
+    expect(result.priceImpact).toBeGreaterThan(5); // >5% impact
+  });
+});
