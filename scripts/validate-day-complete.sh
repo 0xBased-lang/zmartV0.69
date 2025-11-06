@@ -85,6 +85,60 @@ sed -i.bak "s/DAY $CURRENT_DAY.*\] 0%   ⏳ PENDING/DAY $CURRENT_DAY  [███
 echo -e "${GREEN}✅ Progress tracker updated${NC}"
 
 # ============================================================
+# AUTO-RUN PHASE GATES (Fix 6/8)
+# ============================================================
+
+# Check if this is a phase boundary day
+PHASE_BOUNDARIES="8 15 20 23 25"
+for BOUNDARY_DAY in $PHASE_BOUNDARIES; do
+    if [ "$CURRENT_DAY" -eq "$BOUNDARY_DAY" ]; then
+        # Determine phase number
+        if [ "$BOUNDARY_DAY" -eq 8 ]; then
+            PHASE=1
+            PHASE_NAME="Phase 1 → 2 (Programs → SDK)"
+        elif [ "$BOUNDARY_DAY" -eq 15 ]; then
+            PHASE=2
+            PHASE_NAME="Phase 2 → 3 (SDK → Testing)"
+        elif [ "$BOUNDARY_DAY" -eq 20 ]; then
+            PHASE=3
+            PHASE_NAME="Phase 3 → 4 (Testing → Events)"
+        elif [ "$BOUNDARY_DAY" -eq 23 ]; then
+            PHASE=4
+            PHASE_NAME="Phase 4 → 5 (Events → Deployment)"
+        elif [ "$BOUNDARY_DAY" -eq 25 ]; then
+            PHASE=5
+            PHASE_NAME="Phase 5 → LAUNCH"
+        fi
+
+        echo ""
+        echo -e "${BLUE}🚦 PHASE GATE DETECTED: $PHASE_NAME${NC}"
+        echo ""
+        echo "Running phase gate validation..."
+
+        # Run phase validation
+        if bash scripts/validate-phase.sh $PHASE; then
+            echo ""
+            echo -e "${GREEN}✅ PHASE $PHASE GO - Ready to proceed${NC}"
+            echo ""
+
+            # Create phase completion marker
+            mkdir -p .validation
+            touch ".validation/phase-$PHASE-complete"
+        else
+            echo ""
+            echo -e "${RED}🚨 PHASE $PHASE NO-GO - Fix issues before proceeding${NC}"
+            echo ""
+            echo "Cannot advance to next phase until all checks pass."
+            echo "Review validation output above for specific failures."
+            echo ""
+            exit 1
+        fi
+
+        break
+    fi
+done
+
+# ============================================================
 # AUTO-INCREMENT DAY WITH FILE LOCKING (Fix 2/8)
 # ============================================================
 
