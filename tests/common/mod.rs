@@ -18,12 +18,14 @@ pub mod account_helpers;
 pub mod market_helpers;
 pub mod lmsr_helpers;
 pub mod assertions;
+pub mod voting_helpers;
 
 // Re-export for convenience
 pub use account_helpers::*;
 pub use market_helpers::*;
 pub use lmsr_helpers::*;
 pub use assertions::*;
+pub use voting_helpers::*;
 
 // ============================================================
 // Test Context Management
@@ -56,13 +58,6 @@ impl TestContext {
             processor!(zmart_core::entry),
         );
 
-        let mut program_test = program_test;
-        program_test.add_program(
-            "zmart_proposal",
-            zmart_proposal::id(),
-            processor!(zmart_proposal::entry),
-        );
-
         let (mut banks_client, payer, recent_blockhash) = program_test.start().await;
 
         // Create and fund test accounts
@@ -87,7 +82,7 @@ impl TestContext {
             trader2,
             resolver,
             core_program_id: zmart_core::id(),
-            proposal_program_id: zmart_proposal::id(),
+            proposal_program_id: zmart_core::id(), // Single program now
         })
     }
 

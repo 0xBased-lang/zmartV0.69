@@ -6586,16 +6586,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "zmart-proposal"
-version = "0.69.0"
-dependencies = [
- "anchor-lang",
- "solana-program",
- "solana-program-test",
- "solana-sdk",
-]
-
-[[package]]
 name = "zstd"
 version = "0.11.2+zstd.1.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
