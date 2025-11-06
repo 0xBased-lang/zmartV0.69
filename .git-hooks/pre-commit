@@ -58,6 +58,38 @@ if echo "$STAGED_FILES" | grep -q "supabase/migrations/"; then
     fi
 fi
 
+# ============================================================
+# PROGRESS TRACKER PROTECTION (Fix 7/8)
+# ============================================================
+
+PROGRESS_FILE="docs/25_DAY_PROGRESS_TRACKER.md"
+
+# Check if progress tracker is staged
+if echo "$STAGED_FILES" | grep -q "^M.*$PROGRESS_FILE$"; then
+    # Check if CURRENT_DAY line was modified
+    CURRENT_DAY_CHANGED=$(git diff --cached "$PROGRESS_FILE" | grep -E '^\+\*\*Current Day\*\*:' || echo "")
+
+    if [ ! -z "$CURRENT_DAY_CHANGED" ]; then
+        echo ""
+        echo "❌ ERROR: Manual edit to CURRENT_DAY detected"
+        echo ""
+        echo "   File: $PROGRESS_FILE"
+        echo "   Changed line: $(echo $CURRENT_DAY_CHANGED | tr -d '+')"
+        echo ""
+        echo "   🔒 CURRENT_DAY must be updated via scripts only:"
+        echo ""
+        echo "      1. Complete current day's work"
+        echo "      2. Run: npm run validate-day-complete"
+        echo "      3. Script will auto-advance to next day (future fix)"
+        echo ""
+        echo "   This ensures proper validation and tracking."
+        echo ""
+        echo "   💡 Bypass (NOT RECOMMENDED): git commit --no-verify"
+        echo ""
+        exit 1
+    fi
+fi
+
 echo ""
 echo "✅ Pre-commit validation passed"
 exit 0
