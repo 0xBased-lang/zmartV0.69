@@ -19,6 +19,7 @@ pub mod market_helpers;
 pub mod lmsr_helpers;
 pub mod assertions;
 pub mod voting_helpers;
+pub mod admin_helpers;
 
 // Re-export for convenience
 pub use account_helpers::*;
@@ -26,6 +27,7 @@ pub use market_helpers::*;
 pub use lmsr_helpers::*;
 pub use assertions::*;
 pub use voting_helpers::*;
+pub use admin_helpers::*;
 
 // ============================================================
 // Test Context Management
