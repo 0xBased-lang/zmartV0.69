@@ -244,6 +244,42 @@ if [[ $AFFECTS_PROGRAMS == "yes" ]]; then
     fi
 fi
 
+# ============================================================
+# FRONTEND WORK BLOCKING (Fix 5/8 - Strictest Enforcement)
+# ============================================================
+
+# Detect frontend changes
+AFFECTS_FRONTEND=$(echo "$STAGED_FILES" | grep -qE 'frontend/.*\.(ts|tsx|jsx|js|css|scss)$' && echo "yes" || echo "no")
+
+if [[ $AFFECTS_FRONTEND == "yes" ]]; then
+    # Check if this is docs/chore commit (exempt from blocking)
+    if [[ $COMMIT_TYPE =~ ^(docs|chore|style): ]]; then
+        echo "ℹ️  Frontend docs/chore/style commit - exempt from blocking"
+    else
+        # BLOCK ALL FRONTEND CODE CHANGES
+        echo ""
+        echo "❌ ERROR: Frontend work blocked during 25-day roadmap"
+        echo ""
+        echo "   The 25-day roadmap is for Anchor programs ONLY."
+        echo "   Frontend (Week 3) is already 100% complete."
+        echo ""
+        echo "   🔒 NO frontend code changes allowed until Day 25 complete."
+        echo ""
+        echo "   Detected frontend file changes:"
+        echo "$STAGED_FILES" | grep -E 'frontend/.*\.(ts|tsx|jsx|js|css|scss)$' | sed 's/^/     - /'
+        echo ""
+        echo "   ✅ Allowed commit types (frontend):"
+        echo "      - docs: Update documentation/comments"
+        echo "      - chore: Package updates, maintenance"
+        echo "      - style: Code formatting (no logic changes)"
+        echo ""
+        echo "   💡 Emergency bypass (requires explicit justification):"
+        echo "      git commit --no-verify"
+        echo ""
+        exit 1
+    fi
+fi
+
 echo ""
 echo "✅ Commit message validation passed"
 exit 0
