@@ -1,7 +1,6 @@
 [workspace]
 members = [
-    "programs/zmart-core",
-    "programs/zmart-proposal"
+    "programs/zmart-core"
 ]
 resolver = "2"
 
