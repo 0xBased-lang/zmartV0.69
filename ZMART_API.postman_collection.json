@@ -1,0 +1,292 @@
+{
+  "info": {
+    "name": "ZMART V0.69 API",
+    "description": "Complete API collection for ZMART prediction market platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "zmart-v069"
+  },
+  "item": [
+    {
+      "name": "Health & Status",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Markets",
+      "item": [
+        {
+          "name": "List Markets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/markets?limit=20&offset=0",
+              "host": ["{{base_url}}"],
+              "path": ["api", "markets"],
+              "query": [
+                {
+                  "key": "state",
+                  "value": "PROPOSED",
+                  "disabled": true
+                },
+                {
+                  "key": "category",
+                  "value": "crypto",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Get list of markets with optional filtering"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Market Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/markets/{{market_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "markets", "{{market_id}}"]
+            },
+            "description": "Get details of a specific market"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Market Trades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/markets/{{market_id}}/trades?limit=50&offset=0",
+              "host": ["{{base_url}}"],
+              "path": ["api", "markets", "{{market_id}}", "trades"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Get trades for a specific market"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Market Votes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/markets/{{market_id}}/votes?type=proposal",
+              "host": ["{{base_url}}"],
+              "path": ["api", "markets", "{{market_id}}", "votes"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "proposal",
+                  "description": "proposal or dispute"
+                }
+              ]
+            },
+            "description": "Get votes for a specific market"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Market Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/markets/{{market_id}}/stats",
+              "host": ["{{base_url}}"],
+              "path": ["api", "markets", "{{market_id}}", "stats"]
+            },
+            "description": "Get market statistics (volume, traders, etc.)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Market (On-Chain)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "description": "Wallet signature for authentication"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"Will Bitcoin reach $100k by end of 2025?\",\n  \"category\": \"crypto\",\n  \"end_date\": \"2025-12-31T23:59:59Z\",\n  \"liquidity\": 1000000000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/markets",
+              "host": ["{{base_url}}"],
+              "path": ["api", "markets"]
+            },
+            "description": "Create a new market on-chain"
+          },
+          "response": []
+        },
+        {
+          "name": "Resolve Market (On-Chain)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"outcome\": true,\n  \"ipfs_evidence_hash\": \"QmEvidence123456789012345678901234567890\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/markets/{{market_id}}/resolve",
+              "host": ["{{base_url}}"],
+              "path": ["api", "markets", "{{market_id}}", "resolve"]
+            },
+            "description": "Resolve market with outcome (true=YES, false=NO, null=INVALID)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Trading",
+      "item": [
+        {
+          "name": "Buy Shares (On-Chain)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"market_id\": \"{{market_id}}\",\n  \"outcome\": true,\n  \"shares\": 100000000,\n  \"max_cost\": 500000000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/trades/buy",
+              "host": ["{{base_url}}"],
+              "path": ["api", "trades", "buy"]
+            },
+            "description": "Buy shares on-chain (outcome: true=YES, false=NO)"
+          },
+          "response": []
+        },
+        {
+          "name": "Sell Shares (On-Chain)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"market_id\": \"{{market_id}}\",\n  \"outcome\": false,\n  \"shares\": 50000000,\n  \"min_proceeds\": 200000000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/trades/sell",
+              "host": ["{{base_url}}"],
+              "path": ["api", "trades", "sell"]
+            },
+            "description": "Sell shares on-chain (outcome: true=YES, false=NO)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:4000",
+      "type": "string"
+    },
+    {
+      "key": "market_id",
+      "value": "market-1762466408246-4",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "",
+      "type": "string",
+      "description": "Wallet signature for authentication (set after connecting wallet)"
+    }
+  ]
+}
