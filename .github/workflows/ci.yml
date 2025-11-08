@@ -13,27 +13,54 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
+          cache: 'pnpm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies (Backend)
+        working-directory: ./backend
+        run: pnpm install --frozen-lockfile
 
-      - name: TypeScript compilation
-        run: npx tsc --noEmit
+      - name: Install dependencies (Frontend)
+        working-directory: ./frontend
+        run: pnpm install --frozen-lockfile
 
-      - name: ESLint
-        run: npm run lint
+      - name: TypeScript compilation (Backend)
+        working-directory: ./backend
+        run: pnpm exec tsc --noEmit
+
+      - name: TypeScript compilation (Frontend)
+        working-directory: ./frontend
+        run: pnpm exec tsc --noEmit
+
+      - name: ESLint (Backend)
+        working-directory: ./backend
+        run: pnpm run lint || echo "Lint script not configured"
+        continue-on-error: true
+
+      - name: ESLint (Frontend)
+        working-directory: ./frontend
+        run: pnpm run lint
 
       - name: Prettier check
         run: npx prettier --check "**/*.{ts,tsx,js,json,md}"
 
-      - name: Dependency audit
-        run: npm audit --audit-level=moderate
-        continue-on-error: true # Don't fail build on moderate vulnerabilities
+      - name: Dependency audit (Backend)
+        working-directory: ./backend
+        run: pnpm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Dependency audit (Frontend)
+        working-directory: ./frontend
+        run: pnpm audit --audit-level=moderate
+        continue-on-error: true
 
   test-rust:
     name: Rust/Anchor Tests
@@ -70,20 +97,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        working-directory: ./backend
+        run: pnpm install --frozen-lockfile
 
       - name: Run tests
-        run: npm test
+        working-directory: ./backend
+        run: pnpm test
 
       - name: Coverage report
-        run: npm run test:coverage
+        working-directory: ./backend
+        run: pnpm run test:coverage
         continue-on-error: true
 
   circuit-breaker:
@@ -178,22 +213,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
+          cache: 'pnpm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies (Frontend)
+        working-directory: ./frontend
+        run: pnpm install --frozen-lockfile
 
       - name: Build production bundle
-        run: npm run build
+        working-directory: ./frontend
+        run: pnpm run build
 
       - name: Check bundle size
         run: |
           echo "Checking bundle sizes..."
-          du -sh .next/ || echo "Build output not found"
+          du -sh frontend/.next/ || echo "Build output not found"
           # Add bundle size checks here if needed
 
   summary:

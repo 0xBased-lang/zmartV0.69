@@ -1,0 +1,202 @@
+name: PR Quality Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-title-check:
+    name: Validate PR Title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title format
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          echo "PR Title: $PR_TITLE"
+
+          # Check for story reference
+          if ! echo "$PR_TITLE" | grep -qE "Story [0-9]+\.[0-9]+"; then
+            echo ""
+            echo "❌ PR title must reference a story"
+            echo ""
+            echo "✅ Correct format:"
+            echo "   feat: Story 3.5 - Add betting interface"
+            echo "   fix: Story 3.5 - Resolve TypeScript error"
+            echo ""
+            exit 1
+          fi
+
+          echo "✅ PR title format is valid"
+
+  pr-size-check:
+    name: Check PR Size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Calculate PR size
+        run: |
+          FILES_CHANGED=$(git diff --name-only origin/${{ github.base_ref }}..HEAD | wc -l)
+          LINES_CHANGED=$(git diff --shortstat origin/${{ github.base_ref }}..HEAD | grep -oE '[0-9]+ insertions|[0-9]+ deletions' | grep -oE '[0-9]+' | awk '{s+=$1} END {print s}')
+
+          echo "Files changed: $FILES_CHANGED"
+          echo "Lines changed: $LINES_CHANGED"
+
+          # Warning thresholds
+          if [ $FILES_CHANGED -gt 20 ]; then
+            echo ""
+            echo "⚠️  Warning: Large PR ($FILES_CHANGED files)"
+            echo "Consider splitting into smaller PRs for easier review"
+            echo ""
+          fi
+
+          if [ $LINES_CHANGED -gt 500 ]; then
+            echo ""
+            echo "⚠️  Warning: Large PR ($LINES_CHANGED lines)"
+            echo "Consider splitting into smaller PRs for easier review"
+            echo ""
+          fi
+
+          # Hard limit (optional - can be disabled)
+          if [ $FILES_CHANGED -gt 50 ] || [ $LINES_CHANGED -gt 1000 ]; then
+            echo "❌ PR is too large for effective review"
+            echo "Please split into smaller, focused PRs"
+            # Uncomment to enforce:
+            # exit 1
+          fi
+
+          echo "✅ PR size is acceptable"
+
+  pr-description-check:
+    name: Validate PR Description
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR description
+        run: |
+          PR_BODY="${{ github.event.pull_request.body }}"
+
+          if [ -z "$PR_BODY" ]; then
+            echo ""
+            echo "❌ PR description is empty"
+            echo ""
+            echo "Please add:"
+            echo "- Summary of changes"
+            echo "- Testing performed"
+            echo "- Related story/issue"
+            echo ""
+            exit 1
+          fi
+
+          # Check for common sections
+          MISSING_SECTIONS=""
+
+          if ! echo "$PR_BODY" | grep -qi "summary\|overview\|description"; then
+            MISSING_SECTIONS="$MISSING_SECTIONS\n- Summary/Overview section"
+          fi
+
+          if ! echo "$PR_BODY" | grep -qi "test\|testing\|tested"; then
+            MISSING_SECTIONS="$MISSING_SECTIONS\n- Testing section"
+          fi
+
+          if [ -n "$MISSING_SECTIONS" ]; then
+            echo ""
+            echo "⚠️  Warning: PR description may be missing sections:"
+            echo -e "$MISSING_SECTIONS"
+            echo ""
+            echo "Consider adding these sections for better context"
+            echo ""
+            # Not failing - just warning
+          fi
+
+          echo "✅ PR description provided"
+
+  pr-commit-quality:
+    name: Check Commit Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Analyze commits
+        run: |
+          echo "Analyzing commit messages..."
+
+          COMMITS=$(git log --oneline origin/${{ github.base_ref }}..HEAD)
+          COMMIT_COUNT=$(echo "$COMMITS" | wc -l)
+
+          echo "Commits in PR: $COMMIT_COUNT"
+          echo ""
+
+          # Check for WIP/debug commits
+          if echo "$COMMITS" | grep -qiE "wip|todo|fixme|debug|temp|test"; then
+            echo "⚠️  Warning: Found WIP/debug commits"
+            echo "Consider squashing before merging"
+            echo ""
+          fi
+
+          # Check for commit message format
+          INVALID_COMMITS=$(git log --oneline origin/${{ github.base_ref }}..HEAD | grep -vE "^[0-9a-f]+ (feat|fix|docs|style|refactor|perf|test|chore):")
+
+          if [ -n "$INVALID_COMMITS" ]; then
+            echo "⚠️  Warning: Some commits don't follow conventional commits:"
+            echo "$INVALID_COMMITS"
+            echo ""
+            echo "Expected format: <type>: <description>"
+            echo "Types: feat, fix, docs, style, refactor, perf, test, chore"
+            echo ""
+          fi
+
+          echo "✅ Commit quality check complete"
+
+  pr-conflicts-check:
+    name: Check for Merge Conflicts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check merge conflicts
+        run: |
+          git fetch origin ${{ github.base_ref }}
+
+          if git merge-tree $(git merge-base HEAD origin/${{ github.base_ref }}) HEAD origin/${{ github.base_ref }} | grep -q '<<<<<'; then
+            echo ""
+            echo "❌ Merge conflicts detected"
+            echo ""
+            echo "Please resolve conflicts with base branch"
+            echo ""
+            exit 1
+          fi
+
+          echo "✅ No merge conflicts detected"
+
+  pr-checklist:
+    name: PR Checklist Summary
+    runs-on: ubuntu-latest
+    needs: [pr-title-check, pr-size-check, pr-description-check, pr-commit-quality, pr-conflicts-check]
+    if: always()
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## PR Quality Check Summary"
+          echo ""
+          echo "| Check | Status |"
+          echo "|-------|--------|"
+          echo "| Title Format | ${{ needs.pr-title-check.result == 'success' && '✅' || '❌' }} |"
+          echo "| PR Size | ${{ needs.pr-size-check.result == 'success' && '✅' || '⚠️' }} |"
+          echo "| Description | ${{ needs.pr-description-check.result == 'success' && '✅' || '❌' }} |"
+          echo "| Commit Quality | ${{ needs.pr-commit-quality.result == 'success' && '✅' || '⚠️' }} |"
+          echo "| No Conflicts | ${{ needs.pr-conflicts-check.result == 'success' && '✅' || '❌' }} |"
+          echo ""
+
+          if [ "${{ needs.pr-title-check.result }}" != "success" ] || \
+             [ "${{ needs.pr-conflicts-check.result }}" != "success" ]; then
+            echo "❌ Required checks failed - please fix before merging"
+            exit 1
+          fi
+
+          echo "✅ All required checks passed"
