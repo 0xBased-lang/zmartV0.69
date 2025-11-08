@@ -48,17 +48,38 @@ const envSchema = Joi.object({
     .default("redis://localhost:6379")
     .description("Redis connection URL"),
 
-  // IPFS Configuration
+  // IPFS Configuration (Optional - for IPFS Service)
   IPFS_PROJECT_ID: Joi.string()
-    .required()
-    .description("Infura IPFS project ID"),
+    .optional()
+    .description("Infura IPFS project ID (optional until IPFS service deployed)"),
   IPFS_PROJECT_SECRET: Joi.string()
-    .required()
-    .description("Infura IPFS project secret"),
+    .optional()
+    .description("Infura IPFS project secret (optional until IPFS service deployed)"),
   IPFS_GATEWAY_URL: Joi.string()
     .uri()
-    .default("https://ipfs.infura.io:5001")
-    .description("IPFS gateway URL"),
+    .optional()
+    .description("IPFS gateway URL (optional until IPFS service deployed)"),
+
+  // Helius Configuration (Optional - for Event Indexer)
+  HELIUS_RPC_URL: Joi.string()
+    .uri()
+    .optional()
+    .description("Helius RPC URL (optional until Event Indexer deployed)"),
+  HELIUS_WEBHOOK_SECRET: Joi.string()
+    .optional()
+    .description("Helius webhook secret (optional until Event Indexer deployed)"),
+
+  // Pinata Configuration (Optional - for IPFS Service)
+  PINATA_API_KEY: Joi.string()
+    .optional()
+    .description("Pinata API key (optional until IPFS service deployed)"),
+  PINATA_SECRET_KEY: Joi.string()
+    .optional()
+    .description("Pinata secret key (optional until IPFS service deployed)"),
+  PINATA_GATEWAY_URL: Joi.string()
+    .uri()
+    .optional()
+    .description("Pinata gateway URL (optional until IPFS service deployed)"),
 
   // API Configuration
   API_PORT: Joi.number().port().default(3000).description("API server port"),

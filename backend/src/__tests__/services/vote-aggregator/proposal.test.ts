@@ -28,12 +28,33 @@ const mockKeypair: any = {
 };
 
 let mockSupabaseResponse: any = { data: null, error: null };
+
+// Create a Supabase mock that properly supports:
+// 1. Chaining: supabase.from().select().eq()
+// 2. Per-test overrides: mockSupabase.select.mockResolvedValueOnce()
+//
+// Key insight: When mockResolvedValueOnce() is called on select, it should return
+// that value directly (skipping eq()), so we make eq() just forward the response.
 const mockSupabase: any = {
-  from: jest.fn(() => mockSupabase),
-  select: jest.fn(() => mockSupabase),
-  eq: jest.fn(() => Promise.resolve(mockSupabaseResponse)),
-  update: jest.fn(() => mockSupabase),
-  order: jest.fn(() => mockSupabase),
+  from: jest.fn().mockImplementation(function(this: any) { return this; }),
+
+  // select() returns 'this' for chaining, BUT can be overridden per-test
+  select: jest.fn().mockImplementation(function(this: any) { return this; }),
+
+  // eq() returns a promise with mockSupabaseResponse
+  // When select.mockResolvedValueOnce() is used, this chain gets bypassed
+  eq: jest.fn().mockImplementation(() => Promise.resolve(mockSupabaseResponse)),
+
+  // order() for chaining
+  order: jest.fn().mockImplementation(function(this: any) { return this; }),
+
+  // update() for chaining
+  update: jest.fn().mockImplementation(function(this: any) { return this; }),
+
+  // Make the mock itself thenable (for awaiting the chain result)
+  then: function(resolve: any) {
+    return Promise.resolve(mockSupabaseResponse).then(resolve);
+  },
 };
 
 const mockGlobalConfigPda = new PublicKey("2aWG3YTjEggmR7s3nW2new79iXWCq7aTCmDnmZ8Vy3k5");
@@ -77,7 +98,7 @@ describe("ProposalVoteAggregator", () => {
 
     it("should return correct approval rate for edge case (exact 70%)", async () => {
       // 7 likes, 3 dislikes = 70%
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [
           { vote: true },
           { vote: true },
@@ -91,7 +112,7 @@ describe("ProposalVoteAggregator", () => {
           { vote: false },
         ],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-2");
 
@@ -109,25 +130,25 @@ describe("ProposalVoteAggregator", () => {
         ...Array(301).fill({ vote: false }),
       ];
 
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: votes,
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-3");
 
       expect(result.likes).toBe(699);
       expect(result.dislikes).toBe(301);
       expect(result.totalVotes).toBe(1000);
-      expect(result.approvalRate).toBe(69.9);
+      expect(result.approvalRate).toBeCloseTo(69.9, 1); // Allow floating point tolerance
       expect(result.meetsThreshold).toBe(false); // 69.9% < 70%
     });
 
     it("should handle zero votes", async () => {
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-4");
 
@@ -139,14 +160,14 @@ describe("ProposalVoteAggregator", () => {
     });
 
     it("should handle 100% approval", async () => {
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [
           { vote: true },
           { vote: true },
           { vote: true },
         ],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-5");
 
@@ -158,14 +179,14 @@ describe("ProposalVoteAggregator", () => {
     });
 
     it("should handle 0% approval", async () => {
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [
           { vote: false },
           { vote: false },
           { vote: false },
         ],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-6");
 
@@ -177,10 +198,10 @@ describe("ProposalVoteAggregator", () => {
     });
 
     it("should throw error if Supabase query fails", async () => {
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: null,
         error: { message: "Database connection failed" },
-      });
+      };
 
       await expect(aggregator.aggregateVotes("market-7")).rejects.toThrow(
         "Failed to fetch votes for market market-7"
@@ -194,10 +215,10 @@ describe("ProposalVoteAggregator", () => {
         ...Array(2000).fill({ vote: false }), // 20%
       ];
 
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: votes,
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-8");
 

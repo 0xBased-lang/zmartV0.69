@@ -124,7 +124,7 @@ export class ProposalVoteAggregator {
   private async getProposedMarkets(): Promise<any[]> {
     const { data, error } = await this.supabase
       .from("markets")
-      .select("id, on_chain_address, creator, title, description, created_at")
+      .select("id, on_chain_address, creator_wallet, question, description, created_at")
       .eq("state", "PROPOSED")
       .order("created_at", { ascending: true });
 

@@ -28,12 +28,19 @@ const mockKeypair: any = {
 };
 
 let mockSupabaseResponse: any = { data: null, error: null };
+
+// Create a Supabase mock that properly supports:
+// 1. Chaining: supabase.from().select().eq()
+// 2. Per-test overrides via mockSupabaseResponse
 const mockSupabase: any = {
-  from: jest.fn(() => mockSupabase),
-  select: jest.fn(() => mockSupabase),
-  eq: jest.fn(() => Promise.resolve(mockSupabaseResponse)),
-  update: jest.fn(() => mockSupabase),
-  order: jest.fn(() => mockSupabase),
+  from: jest.fn().mockImplementation(function(this: any) { return this; }),
+  select: jest.fn().mockImplementation(function(this: any) { return this; }),
+  eq: jest.fn().mockImplementation(() => Promise.resolve(mockSupabaseResponse)),
+  order: jest.fn().mockImplementation(function(this: any) { return this; }),
+  update: jest.fn().mockImplementation(function(this: any) { return this; }),
+  then: function(resolve: any) {
+    return Promise.resolve(mockSupabaseResponse).then(resolve);
+  },
 };
 
 const mockGlobalConfigPda = new PublicKey("2aWG3YTjEggmR7s3nW2new79iXWCq7aTCmDnmZ8Vy3k5");
@@ -56,7 +63,7 @@ describe("DisputeVoteAggregator", () => {
   describe("aggregateVotes", () => {
     it("should correctly count agree and disagree votes", async () => {
       // Mock Supabase response
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [
           { vote: true },  // agree with dispute
           { vote: true },  // agree
@@ -64,7 +71,7 @@ describe("DisputeVoteAggregator", () => {
           { vote: false }, // disagree
         ],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-1");
 
@@ -77,7 +84,7 @@ describe("DisputeVoteAggregator", () => {
 
     it("should return correct agree rate for edge case (exact 60%)", async () => {
       // 6 agree, 4 disagree = 60%
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [
           { vote: true },
           { vote: true },
@@ -91,7 +98,7 @@ describe("DisputeVoteAggregator", () => {
           { vote: false },
         ],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-2");
 
@@ -109,25 +116,25 @@ describe("DisputeVoteAggregator", () => {
         ...Array(401).fill({ vote: false }),
       ];
 
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: votes,
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-3");
 
       expect(result.agreeVotes).toBe(599);
       expect(result.disagreeVotes).toBe(401);
       expect(result.totalVotes).toBe(1000);
-      expect(result.agreeRate).toBe(59.9);
+      expect(result.agreeRate).toBeCloseTo(59.9, 1); // Allow floating point tolerance
       expect(result.disputeSucceeded).toBe(false); // 59.9% < 60%
     });
 
     it("should handle zero votes", async () => {
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-4");
 
@@ -139,14 +146,14 @@ describe("DisputeVoteAggregator", () => {
     });
 
     it("should handle 100% agree (dispute fully succeeds)", async () => {
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [
           { vote: true },
           { vote: true },
           { vote: true },
         ],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-5");
 
@@ -158,14 +165,14 @@ describe("DisputeVoteAggregator", () => {
     });
 
     it("should handle 0% agree (dispute fails)", async () => {
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: [
           { vote: false },
           { vote: false },
           { vote: false },
         ],
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-6");
 
@@ -177,10 +184,10 @@ describe("DisputeVoteAggregator", () => {
     });
 
     it("should throw error if Supabase query fails", async () => {
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: null,
         error: { message: "Database connection failed" },
-      });
+      };
 
       await expect(aggregator.aggregateVotes("market-7")).rejects.toThrow(
         "Failed to fetch dispute votes for market market-7"
@@ -194,10 +201,10 @@ describe("DisputeVoteAggregator", () => {
         ...Array(3000).fill({ vote: false }), // 30%
       ];
 
-      mockSupabase.select.mockResolvedValueOnce({
+      mockSupabaseResponse = {
         data: votes,
         error: null,
-      });
+      };
 
       const result = await aggregator.aggregateVotes("market-8");
 

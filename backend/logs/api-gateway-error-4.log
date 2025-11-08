@@ -1,0 +1,504 @@
+2025-11-07T18:20:33: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:33:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:33:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:33:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:33:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:33:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:33:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:33:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:33:   code: 'EADDRINUSE',
+2025-11-07T18:20:33:   errno: -48,
+2025-11-07T18:20:33:   syscall: 'listen',
+2025-11-07T18:20:33:   address: '::',
+2025-11-07T18:20:33:   port: 4000
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "error": {
+2025-11-07T18:20:33:     "code": "EADDRINUSE",
+2025-11-07T18:20:33:     "errno": -48,
+2025-11-07T18:20:33:     "syscall": "listen",
+2025-11-07T18:20:33:     "address": "::",
+2025-11-07T18:20:33:     "port": 4000
+2025-11-07T18:20:33:   }
+2025-11-07T18:20:33: }
+2025-11-07T18:20:34: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:34:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:34:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:34:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:34:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:34:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:34:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:34:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:34:   code: 'EADDRINUSE',
+2025-11-07T18:20:34:   errno: -48,
+2025-11-07T18:20:34:   syscall: 'listen',
+2025-11-07T18:20:34:   address: '::',
+2025-11-07T18:20:34:   port: 4000
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:34:   "service": "zmart-backend",
+2025-11-07T18:20:34:   "error": {
+2025-11-07T18:20:34:     "code": "EADDRINUSE",
+2025-11-07T18:20:34:     "errno": -48,
+2025-11-07T18:20:34:     "syscall": "listen",
+2025-11-07T18:20:34:     "address": "::",
+2025-11-07T18:20:34:     "port": 4000
+2025-11-07T18:20:34:   }
+2025-11-07T18:20:34: }
+2025-11-07T18:20:35: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:35:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:35:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:35:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:35:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:35:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:35:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:35:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:35:   code: 'EADDRINUSE',
+2025-11-07T18:20:35:   errno: -48,
+2025-11-07T18:20:35:   syscall: 'listen',
+2025-11-07T18:20:35:   address: '::',
+2025-11-07T18:20:35:   port: 4000
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:35:   "service": "zmart-backend",
+2025-11-07T18:20:35:   "error": {
+2025-11-07T18:20:35:     "code": "EADDRINUSE",
+2025-11-07T18:20:35:     "errno": -48,
+2025-11-07T18:20:35:     "syscall": "listen",
+2025-11-07T18:20:35:     "address": "::",
+2025-11-07T18:20:35:     "port": 4000
+2025-11-07T18:20:35:   }
+2025-11-07T18:20:35: }
+2025-11-07T18:20:36: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:36:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:36:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:36:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:36:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:36:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:36:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:36:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:36:   code: 'EADDRINUSE',
+2025-11-07T18:20:36:   errno: -48,
+2025-11-07T18:20:36:   syscall: 'listen',
+2025-11-07T18:20:36:   address: '::',
+2025-11-07T18:20:36:   port: 4000
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:36:   "service": "zmart-backend",
+2025-11-07T18:20:36:   "error": {
+2025-11-07T18:20:36:     "code": "EADDRINUSE",
+2025-11-07T18:20:36:     "errno": -48,
+2025-11-07T18:20:36:     "syscall": "listen",
+2025-11-07T18:20:36:     "address": "::",
+2025-11-07T18:20:36:     "port": 4000
+2025-11-07T18:20:36:   }
+2025-11-07T18:20:36: }
+2025-11-07T18:20:37: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:37:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:37:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:37:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:37:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:37:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:37:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:37:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:37:   code: 'EADDRINUSE',
+2025-11-07T18:20:37:   errno: -48,
+2025-11-07T18:20:37:   syscall: 'listen',
+2025-11-07T18:20:37:   address: '::',
+2025-11-07T18:20:37:   port: 4000
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:37:   "service": "zmart-backend",
+2025-11-07T18:20:37:   "error": {
+2025-11-07T18:20:37:     "code": "EADDRINUSE",
+2025-11-07T18:20:37:     "errno": -48,
+2025-11-07T18:20:37:     "syscall": "listen",
+2025-11-07T18:20:37:     "address": "::",
+2025-11-07T18:20:37:     "port": 4000
+2025-11-07T18:20:37:   }
+2025-11-07T18:20:37: }
+2025-11-07T18:20:38: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:38:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:38:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:38:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:38:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:38:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:38:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:38:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:38:   code: 'EADDRINUSE',
+2025-11-07T18:20:38:   errno: -48,
+2025-11-07T18:20:38:   syscall: 'listen',
+2025-11-07T18:20:38:   address: '::',
+2025-11-07T18:20:38:   port: 4000
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "error": {
+2025-11-07T18:20:38:     "code": "EADDRINUSE",
+2025-11-07T18:20:38:     "errno": -48,
+2025-11-07T18:20:38:     "syscall": "listen",
+2025-11-07T18:20:38:     "address": "::",
+2025-11-07T18:20:38:     "port": 4000
+2025-11-07T18:20:38:   }
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:38:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:38:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:38:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:38:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:38:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:38:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:38:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:38:   code: 'EADDRINUSE',
+2025-11-07T18:20:38:   errno: -48,
+2025-11-07T18:20:38:   syscall: 'listen',
+2025-11-07T18:20:38:   address: '::',
+2025-11-07T18:20:38:   port: 4000
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "error": {
+2025-11-07T18:20:38:     "code": "EADDRINUSE",
+2025-11-07T18:20:38:     "errno": -48,
+2025-11-07T18:20:38:     "syscall": "listen",
+2025-11-07T18:20:38:     "address": "::",
+2025-11-07T18:20:38:     "port": 4000
+2025-11-07T18:20:38:   }
+2025-11-07T18:20:38: }
+2025-11-07T18:20:39: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:39:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:39:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:39:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:39:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:39:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:39:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:39:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:39:   code: 'EADDRINUSE',
+2025-11-07T18:20:39:   errno: -48,
+2025-11-07T18:20:39:   syscall: 'listen',
+2025-11-07T18:20:39:   address: '::',
+2025-11-07T18:20:39:   port: 4000
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:39:   "service": "zmart-backend",
+2025-11-07T18:20:39:   "error": {
+2025-11-07T18:20:39:     "code": "EADDRINUSE",
+2025-11-07T18:20:39:     "errno": -48,
+2025-11-07T18:20:39:     "syscall": "listen",
+2025-11-07T18:20:39:     "address": "::",
+2025-11-07T18:20:39:     "port": 4000
+2025-11-07T18:20:39:   }
+2025-11-07T18:20:39: }
+2025-11-07T18:20:40: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:40:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:40:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:40:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:40:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:40:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:40:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:40:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:40:   code: 'EADDRINUSE',
+2025-11-07T18:20:40:   errno: -48,
+2025-11-07T18:20:40:   syscall: 'listen',
+2025-11-07T18:20:40:   address: '::',
+2025-11-07T18:20:40:   port: 4000
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "error": {
+2025-11-07T18:20:40:     "code": "EADDRINUSE",
+2025-11-07T18:20:40:     "errno": -48,
+2025-11-07T18:20:40:     "syscall": "listen",
+2025-11-07T18:20:40:     "address": "::",
+2025-11-07T18:20:40:     "port": 4000
+2025-11-07T18:20:40:   }
+2025-11-07T18:20:40: }
+2025-11-07T18:20:41: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:41:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:41:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:41:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:41:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:41:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:41:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:41:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:41:   code: 'EADDRINUSE',
+2025-11-07T18:20:41:   errno: -48,
+2025-11-07T18:20:41:   syscall: 'listen',
+2025-11-07T18:20:41:   address: '::',
+2025-11-07T18:20:41:   port: 4000
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:41:   "service": "zmart-backend",
+2025-11-07T18:20:41:   "error": {
+2025-11-07T18:20:41:     "code": "EADDRINUSE",
+2025-11-07T18:20:41:     "errno": -48,
+2025-11-07T18:20:41:     "syscall": "listen",
+2025-11-07T18:20:41:     "address": "::",
+2025-11-07T18:20:41:     "port": 4000
+2025-11-07T18:20:41:   }
+2025-11-07T18:20:41: }
+2025-11-07T18:20:42: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:42:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:42:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:42:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:42:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:42:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:42:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:42:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:42:   code: 'EADDRINUSE',
+2025-11-07T18:20:42:   errno: -48,
+2025-11-07T18:20:42:   syscall: 'listen',
+2025-11-07T18:20:42:   address: '::',
+2025-11-07T18:20:42:   port: 4000
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:42:   "service": "zmart-backend",
+2025-11-07T18:20:42:   "error": {
+2025-11-07T18:20:42:     "code": "EADDRINUSE",
+2025-11-07T18:20:42:     "errno": -48,
+2025-11-07T18:20:42:     "syscall": "listen",
+2025-11-07T18:20:42:     "address": "::",
+2025-11-07T18:20:42:     "port": 4000
+2025-11-07T18:20:42:   }
+2025-11-07T18:20:42: }
+2025-11-07T18:20:43: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:43:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:43:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:43:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:43:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:43:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:43:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:43:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:43:   code: 'EADDRINUSE',
+2025-11-07T18:20:43:   errno: -48,
+2025-11-07T18:20:43:   syscall: 'listen',
+2025-11-07T18:20:43:   address: '::',
+2025-11-07T18:20:43:   port: 4000
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:43:   "service": "zmart-backend",
+2025-11-07T18:20:43:   "error": {
+2025-11-07T18:20:43:     "code": "EADDRINUSE",
+2025-11-07T18:20:43:     "errno": -48,
+2025-11-07T18:20:43:     "syscall": "listen",
+2025-11-07T18:20:43:     "address": "::",
+2025-11-07T18:20:43:     "port": 4000
+2025-11-07T18:20:43:   }
+2025-11-07T18:20:43: }
+2025-11-07T18:20:44: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:44:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:44:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:44:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:44:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:44:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:44:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:44:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:44:   code: 'EADDRINUSE',
+2025-11-07T18:20:44:   errno: -48,
+2025-11-07T18:20:44:   syscall: 'listen',
+2025-11-07T18:20:44:   address: '::',
+2025-11-07T18:20:44:   port: 4000
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:44:   "service": "zmart-backend",
+2025-11-07T18:20:44:   "error": {
+2025-11-07T18:20:44:     "code": "EADDRINUSE",
+2025-11-07T18:20:44:     "errno": -48,
+2025-11-07T18:20:44:     "syscall": "listen",
+2025-11-07T18:20:44:     "address": "::",
+2025-11-07T18:20:44:     "port": 4000
+2025-11-07T18:20:44:   }
+2025-11-07T18:20:44: }
+2025-11-07T18:20:45: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:45:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:45:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:45:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:45:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:45:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:45:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:45:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:45:   code: 'EADDRINUSE',
+2025-11-07T18:20:45:   errno: -48,
+2025-11-07T18:20:45:   syscall: 'listen',
+2025-11-07T18:20:45:   address: '::',
+2025-11-07T18:20:45:   port: 4000
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:45:   "service": "zmart-backend",
+2025-11-07T18:20:45:   "error": {
+2025-11-07T18:20:45:     "code": "EADDRINUSE",
+2025-11-07T18:20:45:     "errno": -48,
+2025-11-07T18:20:45:     "syscall": "listen",
+2025-11-07T18:20:45:     "address": "::",
+2025-11-07T18:20:45:     "port": 4000
+2025-11-07T18:20:45:   }
+2025-11-07T18:20:45: }
+2025-11-07T18:20:46: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:46:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:46:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:46:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:46:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:46:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:46:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:46:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:46:   code: 'EADDRINUSE',
+2025-11-07T18:20:46:   errno: -48,
+2025-11-07T18:20:46:   syscall: 'listen',
+2025-11-07T18:20:46:   address: '::',
+2025-11-07T18:20:46:   port: 4000
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "error": {
+2025-11-07T18:20:46:     "code": "EADDRINUSE",
+2025-11-07T18:20:46:     "errno": -48,
+2025-11-07T18:20:46:     "syscall": "listen",
+2025-11-07T18:20:46:     "address": "::",
+2025-11-07T18:20:46:     "port": 4000
+2025-11-07T18:20:46:   }
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: Error: listen EADDRINUSE: address already in use :::4000
+2025-11-07T18:20:46:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+2025-11-07T18:20:46:     at listenInCluster (node:net:1996:12)
+2025-11-07T18:20:46:     at Server.listen (node:net:2101:7)
+2025-11-07T18:20:46:     at Function.listen (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/express@4.21.2/node_modules/express/lib/application.js:635:24)
+2025-11-07T18:20:46:     at startServer (/Users/seman/Desktop/zmartV0.69/backend/src/api/server.ts:108:22)
+2025-11-07T18:20:46:     at main (/Users/seman/Desktop/zmartV0.69/backend/src/index.ts:66:25)
+2025-11-07T18:20:46:     at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-11-07T18:20:46:   code: 'EADDRINUSE',
+2025-11-07T18:20:46:   errno: -48,
+2025-11-07T18:20:46:   syscall: 'listen',
+2025-11-07T18:20:46:   address: '::',
+2025-11-07T18:20:46:   port: 4000
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [31merror[39m: Uncaught Exception: {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "error": {
+2025-11-07T18:20:46:     "code": "EADDRINUSE",
+2025-11-07T18:20:46:     "errno": -48,
+2025-11-07T18:20:46:     "syscall": "listen",
+2025-11-07T18:20:46:     "address": "::",
+2025-11-07T18:20:46:     "port": 4000
+2025-11-07T18:20:46:   }
+2025-11-07T18:20:46: }
+2025-11-07T18:25:04: [18:25:04] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:25:04:   "service": "zmart-backend",
+2025-11-07T18:25:04:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:04: }
+2025-11-07T18:25:04: [18:25:04] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466407907-0: this.program.methods.approveMarket is not a function {
+2025-11-07T18:25:04:   "service": "zmart-backend",
+2025-11-07T18:25:04:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:25:04: }
+2025-11-07T18:25:07: [18:25:07] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:25:07:   "service": "zmart-backend",
+2025-11-07T18:25:07:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:07: }
+2025-11-07T18:25:07: [18:25:07] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466407992-1: this.program.methods.approveMarket is not a function {
+2025-11-07T18:25:07:   "service": "zmart-backend",
+2025-11-07T18:25:07:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:25:07: }
+2025-11-07T18:25:10: [18:25:10] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:25:10:   "service": "zmart-backend",
+2025-11-07T18:25:10:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:10: }
+2025-11-07T18:25:10: [18:25:10] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408076-2: this.program.methods.approveMarket is not a function {
+2025-11-07T18:25:10:   "service": "zmart-backend",
+2025-11-07T18:25:10:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:25:10: }
+2025-11-07T18:25:13: [18:25:13] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:25:13:   "service": "zmart-backend",
+2025-11-07T18:25:13:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:13: }
+2025-11-07T18:25:13: [18:25:13] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408162-3: this.program.methods.approveMarket is not a function {
+2025-11-07T18:25:13:   "service": "zmart-backend",
+2025-11-07T18:25:13:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:25:13: }
+2025-11-07T18:25:16: [18:25:16] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:25:16:   "service": "zmart-backend",
+2025-11-07T18:25:16:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:16: }
+2025-11-07T18:25:16: [18:25:16] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408246-4: this.program.methods.approveMarket is not a function {
+2025-11-07T18:25:16:   "service": "zmart-backend",
+2025-11-07T18:25:16:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:25:16: }
+2025-11-07T18:30:04: [18:30:04] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:30:04:   "service": "zmart-backend",
+2025-11-07T18:30:04:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:04: }
+2025-11-07T18:30:04: [18:30:04] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466407907-0: this.program.methods.approveMarket is not a function {
+2025-11-07T18:30:04:   "service": "zmart-backend",
+2025-11-07T18:30:04:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:30:04: }
+2025-11-07T18:30:07: [18:30:07] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:30:07:   "service": "zmart-backend",
+2025-11-07T18:30:07:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:07: }
+2025-11-07T18:30:07: [18:30:07] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466407992-1: this.program.methods.approveMarket is not a function {
+2025-11-07T18:30:07:   "service": "zmart-backend",
+2025-11-07T18:30:07:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:30:07: }
+2025-11-07T18:30:10: [18:30:10] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:30:10:   "service": "zmart-backend",
+2025-11-07T18:30:10:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:10: }
+2025-11-07T18:30:10: [18:30:10] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408076-2: this.program.methods.approveMarket is not a function {
+2025-11-07T18:30:10:   "service": "zmart-backend",
+2025-11-07T18:30:10:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:30:10: }
+2025-11-07T18:30:14: [18:30:14] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:30:14:   "service": "zmart-backend",
+2025-11-07T18:30:14:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:14: }
+2025-11-07T18:30:14: [18:30:14] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408162-3: this.program.methods.approveMarket is not a function {
+2025-11-07T18:30:14:   "service": "zmart-backend",
+2025-11-07T18:30:14:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:30:14: }
+2025-11-07T18:30:17: [18:30:17] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:30:17:   "service": "zmart-backend",
+2025-11-07T18:30:17:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:17: }
+2025-11-07T18:30:17: [18:30:17] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408246-4: this.program.methods.approveMarket is not a function {
+2025-11-07T18:30:17:   "service": "zmart-backend",
+2025-11-07T18:30:17:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:30:17: }
+2025-11-07T18:35:04: [18:35:04] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:35:04:   "service": "zmart-backend",
+2025-11-07T18:35:04:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:04: }
+2025-11-07T18:35:04: [18:35:04] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466407907-0: this.program.methods.approveMarket is not a function {
+2025-11-07T18:35:04:   "service": "zmart-backend",
+2025-11-07T18:35:04:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:35:04: }
+2025-11-07T18:35:07: [18:35:07] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:35:07:   "service": "zmart-backend",
+2025-11-07T18:35:07:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:07: }
+2025-11-07T18:35:07: [18:35:07] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466407992-1: this.program.methods.approveMarket is not a function {
+2025-11-07T18:35:07:   "service": "zmart-backend",
+2025-11-07T18:35:07:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:35:07: }
+2025-11-07T18:35:10: [18:35:10] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:35:10:   "service": "zmart-backend",
+2025-11-07T18:35:10:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:10: }
+2025-11-07T18:35:10: [18:35:10] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408076-2: this.program.methods.approveMarket is not a function {
+2025-11-07T18:35:10:   "service": "zmart-backend",
+2025-11-07T18:35:10:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:35:10: }
+2025-11-07T18:35:13: [18:35:13] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:35:13:   "service": "zmart-backend",
+2025-11-07T18:35:13:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:13: }
+2025-11-07T18:35:13: [18:35:13] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408162-3: this.program.methods.approveMarket is not a function {
+2025-11-07T18:35:13:   "service": "zmart-backend",
+2025-11-07T18:35:13:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:35:13: }
+2025-11-07T18:35:16: [18:35:16] [31merror[39m: All 3 retry attempts failed {
+2025-11-07T18:35:16:   "service": "zmart-backend",
+2025-11-07T18:35:16:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:16: }
+2025-11-07T18:35:16: [18:35:16] [31merror[39m: [ProposalVoteAggregator] Error processing market market-1762466408246-4: this.program.methods.approveMarket is not a function {
+2025-11-07T18:35:16:   "service": "zmart-backend",
+2025-11-07T18:35:16:   "stack": "TypeError: this.program.methods.approveMarket is not a function\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:252:12)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at ProposalVoteAggregator.approveMarketOnChain (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:244:23)\n    at ProposalVoteAggregator.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:167:5)\n    at ProposalVoteAggregator.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/proposal.ts:83:26)\n    at async Promise.all (index 0)\n    at Task._execution (/Users/seman/Desktop/zmartV0.69/backend/src/services/vote-aggregator/index.ts:70:9)"
+2025-11-07T18:35:16: }

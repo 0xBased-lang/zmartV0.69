@@ -1,0 +1,208 @@
+2025-11-07T19:07:38: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:38:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:38:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:38:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:38:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:38:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:38:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:38:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:38:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:38:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:38:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:38:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:38: }
+2025-11-07T19:07:38: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:38:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:38:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:38:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:38:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:38:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:38:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:38:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:38:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:38:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:38:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:38:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:38: }
+2025-11-07T19:07:38: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:38:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:38:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:38:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:38:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:38:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:38:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:38:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:38:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:38:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:38:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:38:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:38: }
+2025-11-07T19:07:38: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:38:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:38:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:38:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:38:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:38:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:38:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:38:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:38:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:38:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:38:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:38:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:38: }
+2025-11-07T19:07:38: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:38:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:38:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:38:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:38:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:38:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:38:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:38:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:38:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:38:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:38:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:38:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:38: }
+2025-11-07T19:07:38: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:38:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:38:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:38:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:38:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:38:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:38:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:38:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:38:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:38:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:38:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:38:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:38: }
+2025-11-07T19:07:38: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:38:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:38:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:38:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:38:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:38:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:38:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:38:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:38:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:38:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:38:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:38:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:38: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
+2025-11-07T19:07:39: Error: No "exports" main defined in /Users/seman/Desktop/zmartV0.69/backend/node_modules/ipfs-http-client/package.json
+2025-11-07T19:07:39:     at exportsNotFound (node:internal/modules/esm/resolve:314:10)
+2025-11-07T19:07:39:     at packageExportsResolve (node:internal/modules/esm/resolve:604:13)
+2025-11-07T19:07:39:     at resolveExports (node:internal/modules/cjs/loader:661:36)
+2025-11-07T19:07:39:     at Function._findPath (node:internal/modules/cjs/loader:753:31)
+2025-11-07T19:07:39:     at Function._resolveFilename (node:internal/modules/cjs/loader:1391:27)
+2025-11-07T19:07:39:     at Module.Hook._require.Module.require (/opt/homebrew/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+2025-11-07T19:07:39:     at require (node:internal/modules/helpers:135:16)
+2025-11-07T19:07:39:     at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/ipfs/snapshot.ts:10:1)
+2025-11-07T19:07:39:     at Module._compile (node:internal/modules/cjs/loader:1734:14)
+2025-11-07T19:07:39:     at Object..js (node:internal/modules/cjs/loader:1899:10) {
+2025-11-07T19:07:39:   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+2025-11-07T19:07:39: }
