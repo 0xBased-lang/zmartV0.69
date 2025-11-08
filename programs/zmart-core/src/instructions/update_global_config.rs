@@ -113,7 +113,7 @@ pub struct ConfigUpdated {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use solana_program::pubkey::Pubkey;
+    use anchor_lang::solana_program::pubkey::Pubkey;
 
     fn create_test_config() -> GlobalConfig {
         GlobalConfig {

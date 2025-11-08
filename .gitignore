@@ -34,6 +34,11 @@ package-lock.json
 *.lcov
 test-results/
 playwright-report/
+.env.test
+playwright/.auth/
+**/test-wallet.json
+test-screenshots/
+test-videos/
 
 # ============================================================
 # Next.js

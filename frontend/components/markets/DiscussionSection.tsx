@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { getDiscussions } from '@/lib/supabase/database';
 
 interface DiscussionSectionProps {
   marketId: string;
@@ -15,34 +17,13 @@ export function DiscussionSection({
   marketId,
   proposalId,
 }: DiscussionSectionProps) {
-  // MOCK: Sample discussion data
-  // TODO: Fetch actual discussions from Supabase
-  const discussions = [
-    {
-      id: '1',
-      author: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp',
-      content:
-        'This market looks interesting. The resolution criteria are clear and the timeframe is reasonable.',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-      votes: 12,
-    },
-    {
-      id: '2',
-      author: '7xKXtg2CW87d97TXJSDpbD5jBkheTqA3',
-      content:
-        'I have concerns about the data source. Is there a backup if the primary source becomes unavailable?',
-      timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000), // 5 hours ago
-      votes: 8,
-    },
-    {
-      id: '3',
-      author: 'C5v68qLr9V7aBkK9dRMZvE4FcA9sPmG4',
-      content:
-        'Great market! The liquidity looks good and the prices seem fair based on current information.',
-      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-      votes: 15,
-    },
-  ];
+  // Fetch real discussions from Supabase
+  const { data: discussions = [], isLoading, error } = useQuery({
+    queryKey: ['discussions', marketId],
+    queryFn: () => getDiscussions(marketId),
+    staleTime: 30 * 1000, // 30 seconds
+    refetchOnWindowFocus: true,
+  });
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -58,9 +39,33 @@ export function DiscussionSection({
         )}
       </div>
 
+      {/* Loading State */}
+      {isLoading && (
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && !isLoading && (
+        <div className="text-center py-8 text-gray-500">
+          <p>Failed to load discussions</p>
+          <p className="text-sm mt-1">Please try refreshing the page</p>
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!isLoading && !error && discussions.length === 0 && (
+        <div className="text-center py-8 text-gray-500">
+          <p>No discussions yet</p>
+          <p className="text-sm mt-1">Be the first to comment on this market</p>
+        </div>
+      )}
+
       {/* Discussion Preview */}
-      <div className="space-y-4">
-        {discussions.map((discussion) => (
+      {!isLoading && !error && discussions.length > 0 && (
+        <div className="space-y-4">
+          {discussions.map((discussion) => (
           <div
             key={discussion.id}
             className="border-l-2 border-gray-200 pl-4 py-2"
@@ -95,10 +100,11 @@ export function DiscussionSection({
             <p className="text-sm text-gray-700">{discussion.content}</p>
           </div>
         ))}
-      </div>
+        </div>
+      )}
 
       {/* View More Link */}
-      {proposalId ? (
+      {!isLoading && !error && discussions.length > 0 && proposalId ? (
         <div className="mt-6 text-center">
           <Link
             href={`/proposals/${proposalId}`}
@@ -120,16 +126,7 @@ export function DiscussionSection({
             </svg>
           </Link>
         </div>
-      ) : (
-        <div className="mt-6 text-center text-sm text-gray-500">
-          No proposal linked to this market
-        </div>
-      )}
-
-      {/* MOCK Indicator */}
-      <p className="text-xs text-gray-500 mt-4 text-center">
-        💬 Mock data - real discussions coming soon
-      </p>
+      ) : null}
     </div>
   );
 }
