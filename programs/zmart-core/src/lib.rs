@@ -199,4 +199,171 @@ pub mod zmart_core {
     ) -> Result<()> {
         withdraw_liquidity::handler(ctx)
     }
+
+    // ============================================================================
+    // Voting Instructions (Phase 1, Week 1)
+    // ============================================================================
+
+    /// Submit a vote on a market proposal (like/dislike)
+    ///
+    /// Creates an on-chain VoteRecord for proof and duplicate prevention.
+    /// Votes are aggregated off-chain by the backend. When 70% approval
+    /// threshold is reached, backend calls approve_proposal.
+    ///
+    /// # Arguments
+    ///
+    /// * `vote` - true for "like" (support), false for "dislike" (oppose)
+    ///
+    /// # Errors
+    ///
+    /// * `ErrorCode::InvalidStateForVoting` - Market not in PROPOSED state
+    /// * `ErrorCode::AlreadyVoted` - User already voted (PDA init fails)
+    pub fn submit_proposal_vote(
+        ctx: Context<SubmitProposalVote>,
+        vote: bool,
+    ) -> Result<()> {
+        submit_proposal_vote::handler(ctx, vote)
+    }
+
+    /// Aggregate proposal votes and check approval threshold
+    ///
+    /// Backend authority aggregates votes off-chain (from VoteRecords) and submits
+    /// final counts. If 70%+ likes, market transitions to APPROVED state.
+    ///
+    /// # Arguments
+    ///
+    /// * `final_likes` - Total number of like votes (from off-chain aggregation)
+    /// * `final_dislikes` - Total number of dislike votes (from off-chain aggregation)
+    ///
+    /// # Behavior
+    ///
+    /// * Records vote counts in MarketAccount
+    /// * Calculates approval percentage
+    /// * If >= 70% likes: transitions to APPROVED state
+    /// * If < 70% likes: stays in PROPOSED (can re-aggregate)
+    /// * Emits ProposalAggregated event
+    ///
+    /// # Errors
+    ///
+    /// * `ErrorCode::Unauthorized` - Caller is not backend authority
+    /// * `ErrorCode::InvalidStateForVoting` - Market not in PROPOSED state
+    /// * `ErrorCode::OverflowError` - Vote count overflow (extremely unlikely)
+    pub fn aggregate_proposal_votes(
+        ctx: Context<AggregateProposalVotes>,
+        final_likes: u32,
+        final_dislikes: u32,
+    ) -> Result<()> {
+        aggregate_proposal_votes::handler(ctx, final_likes, final_dislikes)
+    }
+
+    /// Submit a vote on a market dispute (agree/disagree)
+    ///
+    /// Creates an on-chain VoteRecord for proof and duplicate prevention.
+    /// Votes are aggregated off-chain by the backend. When dispute voting
+    /// concludes, backend calls aggregate_dispute_votes.
+    ///
+    /// # Arguments
+    ///
+    /// * `vote` - true for "agree with dispute" (resolution is wrong),
+    ///            false for "disagree with dispute" (resolution is correct)
+    ///
+    /// # Errors
+    ///
+    /// * `ErrorCode::InvalidStateForVoting` - Market not in DISPUTED state
+    /// * `ErrorCode::AlreadyVoted` - User already voted (PDA init fails)
+    pub fn submit_dispute_vote(
+        ctx: Context<SubmitDisputeVote>,
+        vote: bool,
+    ) -> Result<()> {
+        submit_dispute_vote::handler(ctx, vote)
+    }
+
+    /// Aggregate dispute votes and check dispute threshold
+    ///
+    /// Backend authority aggregates votes off-chain (from VoteRecords) and submits
+    /// final counts. If 60%+ agree with dispute, resolution is rejected and market
+    /// returns to RESOLVING state. If <60%, original resolution stands and market
+    /// transitions to FINALIZED.
+    ///
+    /// # Arguments
+    ///
+    /// * `final_agrees` - Total number of "agree with dispute" votes
+    /// * `final_disagrees` - Total number of "disagree with dispute" votes
+    ///
+    /// # Behavior
+    ///
+    /// * Records vote counts in MarketAccount
+    /// * Calculates agreement percentage
+    /// * If >= 60% agree: transitions to RESOLVING (resolution rejected)
+    /// * If < 60% agree: transitions to FINALIZED (resolution accepted)
+    /// * Emits DisputeAggregated event
+    ///
+    /// # Errors
+    ///
+    /// * `ErrorCode::Unauthorized` - Caller is not backend authority
+    /// * `ErrorCode::InvalidStateForVoting` - Market not in DISPUTED state
+    /// * `ErrorCode::OverflowError` - Vote count overflow (extremely unlikely)
+    pub fn aggregate_dispute_votes(
+        ctx: Context<AggregateDisputeVotes>,
+        final_agrees: u32,
+        final_disagrees: u32,
+    ) -> Result<()> {
+        aggregate_dispute_votes::handler(ctx, final_agrees, final_disagrees)
+    }
+
+    // ============================================================================
+    // Admin Instructions (Phase 1, Week 3)
+    // ============================================================================
+
+    /// Update global protocol configuration parameters
+    ///
+    /// Allows admin to modify fee percentages, voting thresholds, and other
+    /// configuration parameters without redeploying the program.
+    ///
+    /// # Arguments
+    ///
+    /// * `protocol_fee_bps` - Protocol fee in basis points (0-10000)
+    /// * `resolver_reward_bps` - Resolver reward in basis points (0-10000)
+    /// * `liquidity_provider_fee_bps` - LP fee in basis points (0-10000)
+    /// * `proposal_approval_threshold` - Proposal approval threshold (0-10000)
+    /// * `dispute_success_threshold` - Dispute success threshold (0-10000)
+    pub fn update_global_config(
+        ctx: Context<UpdateGlobalConfig>,
+        protocol_fee_bps: u16,
+        resolver_reward_bps: u16,
+        liquidity_provider_fee_bps: u16,
+        proposal_approval_threshold: u16,
+        dispute_success_threshold: u16,
+    ) -> Result<()> {
+        update_global_config::handler(
+            ctx,
+            protocol_fee_bps,
+            resolver_reward_bps,
+            liquidity_provider_fee_bps,
+            proposal_approval_threshold,
+            dispute_success_threshold,
+        )
+    }
+
+    /// Toggle protocol pause state (pause/unpause trading)
+    ///
+    /// Allows admin to pause all trading operations in case of critical bugs,
+    /// exploits, or market instability. Calling when running pauses protocol.
+    /// Calling when paused unpauses protocol. Voting and resolution continue.
+    pub fn emergency_pause(
+        ctx: Context<EmergencyPause>,
+    ) -> Result<()> {
+        emergency_pause::handler(ctx)
+    }
+
+    /// Cancel a market and transition to CANCELLED state
+    ///
+    /// Allows admin to cancel markets that are invalid or fraudulent.
+    /// Only works for PROPOSED or APPROVED markets (cannot cancel active/resolving).
+    /// Sets market to CANCELLED state. Refunds handled by separate instruction.
+    pub fn cancel_market(
+        ctx: Context<CancelMarket>,
+    ) -> Result<()> {
+        cancel_market::handler(ctx)
+    }
 }

@@ -2,8 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
-import { toFixedPoint } from '@/lib/lmsr';
 import { getMarketById } from '@/lib/supabase/database';
+import { useMarketStateWithStatus } from '@/lib/hooks/useMarketState';
 import { MarketHeader } from '@/components/markets/MarketHeader';
 import { PriceChart } from '@/components/markets/PriceChart';
 import { OrderBook } from '@/components/markets/OrderBook';
@@ -28,23 +28,67 @@ export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
     refetchOnWindowFocus: true,
   });
 
-  // Handle loading
-  if (isLoading) {
-    return <div>Loading...</div>;
+  // Fetch on-chain market state
+  const {
+    data: marketState,
+    isLoading: isLoadingState,
+    isError: isStateError,
+    isNotFound: isStateNotFound,
+  } = useMarketStateWithStatus(marketId);
+
+  // Handle loading (wait for both market metadata AND on-chain state)
+  if (isLoading || isLoadingState) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">
+            {isLoading ? 'Loading market data...' : 'Loading market state...'}
+          </p>
+        </div>
+      </div>
+    );
   }
 
-  // Handle error
+  // Handle errors
   if (error || !market) {
     notFound();
   }
 
-  // MOCK: Market state for LMSR calculations
-  // TODO: Fetch actual on-chain state from Solana RPC
-  const marketState = {
-    qYes: toFixedPoint(100), // Mock: 100 YES shares outstanding
-    qNo: toFixedPoint(100), // Mock: 100 NO shares outstanding
-    liquidity: toFixedPoint(1000), // Mock: b = 1000 liquidity parameter
-  };
+  if (isStateNotFound) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-bold">Market Not Found On-Chain</h2>
+          <p className="text-muted-foreground">
+            This market exists in the database but not on Solana.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Market ID: {marketId}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isStateError || !marketState) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-bold">Failed to Load Market State</h2>
+          <p className="text-muted-foreground">
+            Could not fetch market data from Solana blockchain.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

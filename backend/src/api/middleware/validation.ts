@@ -54,6 +54,12 @@ export const schemas = {
     content: Joi.string().min(1).max(1000).required(),
   }),
 
+  // Resolution schemas
+  resolveMarket: Joi.object({
+    outcome: Joi.boolean().allow(null).required(), // true = YES, false = NO, null = INVALID
+    ipfs_evidence_hash: Joi.string().min(46).max(46).required(), // IPFS CID format
+  }),
+
   // User schemas
   userWallet: Joi.object({
     wallet: Joi.string()

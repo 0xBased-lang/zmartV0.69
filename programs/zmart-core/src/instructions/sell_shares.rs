@@ -65,6 +65,9 @@ pub fn handler(
     let position = &mut ctx.accounts.position;
     let config = &ctx.accounts.global_config;
 
+    // Check if protocol is paused (emergency pause active)
+    require!(!config.is_paused, ErrorCode::ProtocolPaused);
+
     // Check user has enough shares
     let user_shares = if outcome { position.shares_yes } else { position.shares_no };
     require!(user_shares >= shares_to_sell, ErrorCode::InsufficientShares);

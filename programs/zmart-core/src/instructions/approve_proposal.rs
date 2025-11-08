@@ -131,8 +131,9 @@ mod tests {
             dispute_total_votes: 0,
             was_disputed: false,
             is_cancelled: false,
+            cancelled_at: None,
             bump: 255,
-            reserved: [0; 128],
+            reserved: [0; 120],
         }
     }
 

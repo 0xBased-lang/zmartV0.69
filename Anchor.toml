@@ -1,16 +1,13 @@
 [workspace]
 members = [
-    "programs/zmart-core",
-    "programs/zmart-proposal"
+    "programs/zmart-core"
 ]
 
 [programs.localnet]
 zmart_core = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
-zmart_proposal = "4fuUiYxTQ6QCrdSq9ouBYcTM7bqSwYTSyLueGZLTy4T4"
 
 [programs.devnet]
 zmart_core = "7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS"
-zmart_proposal = "3XDU9r97qqJRdgqKJEWDYSJesPAUbLqsejXus4WLuhAQ"
 
 [registry]
 url = "https://api.apr.dev"

@@ -10,7 +10,6 @@
 // 3. Supabase database with test data
 // 4. Environment variables set in .env.test
 
-import { describe, it, expect, beforeAll } from "@jest/globals";
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 import { AnchorProvider, Program, Wallet } from "@coral-xyz/anchor";
 import { createClient } from "@supabase/supabase-js";
@@ -34,7 +33,7 @@ describe.skip("Vote Aggregator Integration Tests", () => {
   }
 
   let connection: Connection;
-  let program: Program;
+  let program: Program<any>; // Type parameter required
   let backendKeypair: Keypair;
   let supabase: any;
   let globalConfigPda: PublicKey;
@@ -62,10 +61,17 @@ describe.skip("Vote Aggregator Integration Tests", () => {
     });
 
     // Load program IDL (you'll need to provide the actual IDL)
-    // For now, this is a placeholder
+    // For now, this is a placeholder to prevent TypeScript errors
+    // TODO: Uncomment when IDL is available
     // const idl = JSON.parse(fs.readFileSync("./target/idl/zmart_prediction_market.json", "utf-8"));
-    // const programId = new PublicKey(process.env.PROGRAM_ID!);
+    const programId = new PublicKey(process.env.PROGRAM_ID || "11111111111111111111111111111111");
     // program = new Program(idl, programId, provider);
+
+    // Placeholder program object to fix TypeScript errors
+    program = {
+      programId,
+      provider,
+    } as Program<any>;
 
     // 4. Setup Supabase client
     const supabaseUrl = process.env.SUPABASE_URL;

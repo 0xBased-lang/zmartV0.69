@@ -3,7 +3,13 @@
   "version": "0.69.0",
   "private": true,
   "description": "ZMART - Solana prediction market platform with LMSR",
-  "keywords": ["solana", "prediction-markets", "lmsr", "anchor", "web3"],
+  "keywords": [
+    "solana",
+    "prediction-markets",
+    "lmsr",
+    "anchor",
+    "web3"
+  ],
   "author": "ZMART Team",
   "license": "MIT",
   "workspaces": [
@@ -26,23 +32,35 @@
     "validate-phase": "bash scripts/validate-phase.sh",
     "update-progress": "bash scripts/update-progress.sh",
     "next-tasks": "bash scripts/show-next-tasks.sh",
-    "roadmap-status": "cat docs/25_DAY_PROGRESS_TRACKER.md"
+    "roadmap-status": "cat docs/25_DAY_PROGRESS_TRACKER.md",
+    "test:e2e:real": "playwright test --project=real-blockchain-chromium",
+    "test:e2e:real:ui": "playwright test --project=real-blockchain-chromium --ui",
+    "test:e2e:real:trading": "playwright test tests/e2e/real-trading-flow.spec.ts",
+    "test:e2e:real:validation": "playwright test tests/e2e/real-validation-tests.spec.ts",
+    "test:e2e:real:realtime": "playwright test tests/e2e/real-time-updates.spec.ts",
+    "test:e2e:report": "playwright show-report",
+    "test:wallet:setup": "./scripts/setup-test-wallet.sh",
+    "test:all": "pnpm test && pnpm test:e2e:real"
   },
   "devDependencies": {
     "@coral-xyz/anchor": "^0.29.0",
-    "@solana/web3.js": "^1.87.6",
+    "@playwright/test": "^1.56.1",
     "@solana/spl-token": "^0.3.9",
-    "typescript": "^5.3.3",
-    "ts-mocha": "^10.0.0",
-    "mocha": "^10.2.0",
-    "chai": "^4.3.10",
+    "@solana/web3.js": "^1.87.6",
     "@types/chai": "^4.3.11",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.10.0"
+    "@types/node": "^20.10.0",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@8.12.0"
+  "packageManager": "pnpm@8.12.0",
+  "dependencies": {
+    "@solana/wallet-adapter-backpack": "^0.1.14"
+  }
 }

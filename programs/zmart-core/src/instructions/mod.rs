@@ -17,6 +17,17 @@ pub mod finalize_market;
 pub mod claim_winnings;
 pub mod withdraw_liquidity;
 
+// Voting Instructions (Phase 1, Week 1)
+pub mod submit_proposal_vote;
+pub mod aggregate_proposal_votes;
+pub mod submit_dispute_vote;
+pub mod aggregate_dispute_votes;
+
+// Admin Instructions (Phase 1, Week 3)
+pub mod update_global_config;
+pub mod emergency_pause;
+pub mod cancel_market;
+
 // Re-export instruction handlers
 pub use initialize_global_config::*;
 pub use create_market::*;
@@ -29,3 +40,10 @@ pub use initiate_dispute::*;
 pub use finalize_market::*;
 pub use claim_winnings::*;
 pub use withdraw_liquidity::*;
+pub use submit_proposal_vote::*;
+pub use aggregate_proposal_votes::*;
+pub use submit_dispute_vote::*;
+pub use aggregate_dispute_votes::*;
+pub use update_global_config::*;
+pub use emergency_pause::*;
+pub use cancel_market::*;

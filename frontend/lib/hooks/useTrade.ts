@@ -2,25 +2,27 @@
  * useTrade Hook - Blockchain Transaction Execution
  *
  * Handles complete trade execution flow:
- * 1. Build Solana transaction
+ * 1. Build Solana transaction (via Anchor program)
  * 2. Request wallet signature
  * 3. Submit to blockchain
  * 4. Monitor confirmation
  * 5. Update UI on success/failure
  *
- * --ultrathink Analysis:
+ * Features:
+ * - Real Anchor program integration (buy_shares, sell_shares)
  * - Transaction state machine (7 states)
  * - Error recovery with typed errors
- * - Optimistic UI updates
+ * - User-friendly Solana error messages
  * - React Query cache invalidation
- * - Multi-wallet support
+ * - Multi-wallet support (Phantom, Solflare, etc.)
+ * - Compute budget optimization (200k units for LMSR)
  */
 
 'use client';
 
 import { useState, useCallback } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Transaction, PublicKey, TransactionInstruction } from '@solana/web3.js';
+import { Transaction } from '@solana/web3.js';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   Outcome,
@@ -28,6 +30,12 @@ import {
   type TradeResult,
   fromFixedPoint,
 } from '@/lib/lmsr';
+import {
+  getProgram,
+  buildBuySharesTransaction,
+  buildSellSharesTransaction,
+  parseSolanaError,
+} from '@/lib/solana/transactions';
 
 /**
  * Transaction execution states
@@ -139,12 +147,12 @@ export function useTrade(): UseTradeReturn {
   /**
    * Build Solana transaction for trade execution
    *
-   * NOTE: This is a MOCK implementation until Solana programs are deployed.
-   * The structure matches what the real implementation will look like.
+   * Uses Anchor program to build buy_shares or sell_shares transactions.
+   * Includes compute budget (200k units) for LMSR calculations.
    */
   const buildTransaction = useCallback(
     async (params: ExecuteTradeParams): Promise<Transaction> => {
-      if (!publicKey) {
+      if (!publicKey || !signTransaction) {
         throw new TransactionError(
           'Wallet not connected',
           'WALLET_NOT_CONNECTED',
@@ -155,53 +163,10 @@ export function useTrade(): UseTradeReturn {
       setState(TransactionState.BUILDING);
 
       try {
-        // Get recent blockhash
-        const { blockhash } = await connection.getLatestBlockhash('confirmed');
+        // Initialize Anchor program
+        const program = getProgram(connection, { publicKey, signTransaction });
 
-        // Create transaction
-        const transaction = new Transaction({
-          recentBlockhash: blockhash,
-          feePayer: publicKey,
-        });
-
-        // TODO: Add actual program instructions when deployed
-        // This is the STRUCTURE that will be used:
-        //
-        // const marketPubkey = new PublicKey(params.marketId);
-        //
-        // // Add compute budget (LMSR calculations need more compute)
-        // const computeBudgetIx = ComputeBudgetProgram.setComputeUnitLimit({
-        //   units: 200_000 // Sufficient for LMSR math
-        // });
-        // transaction.add(computeBudgetIx);
-        //
-        // // Add priority fee for faster confirmation
-        // const priorityFeeIx = ComputeBudgetProgram.setComputeUnitPrice({
-        //   microLamports: 1 // 1 microlamport per compute unit
-        // });
-        // transaction.add(priorityFeeIx);
-        //
-        // // Build trade instruction (buy or sell)
-        // const tradeIx = await program.methods
-        //   .executeTrade(
-        //     params.action === TradeAction.BUY ? { buy: {} } : { sell: {} },
-        //     params.outcome === Outcome.YES ? { yes: {} } : { no: {} },
-        //     params.quantity,
-        //     params.tradeResult.finalAmount, // Max cost or min proceeds
-        //   )
-        //   .accounts({
-        //     market: marketPubkey,
-        //     user: publicKey,
-        //     userPosition: userPositionPDA,
-        //     systemProgram: SystemProgram.programId,
-        //   })
-        //   .instruction();
-        //
-        // transaction.add(tradeIx);
-
-        // MOCK: For now, just return empty transaction
-        // This allows UI testing without actual program
-        console.log('[MOCK] Building transaction:', {
+        console.log('[Trade] Building transaction:', {
           marketId: params.marketId,
           action: params.action,
           outcome: params.outcome,
@@ -209,16 +174,36 @@ export function useTrade(): UseTradeReturn {
           cost: fromFixedPoint(params.tradeResult.finalAmount),
         });
 
-        return transaction;
+        // Build appropriate transaction (buy or sell)
+        if (params.action === TradeAction.BUY) {
+          const { transaction } = await buildBuySharesTransaction(program, publicKey, {
+            marketId: params.marketId,
+            outcome: params.outcome === Outcome.YES,
+            targetCost: params.tradeResult.finalAmount,
+          });
+
+          return transaction;
+        } else {
+          const { transaction } = await buildSellSharesTransaction(program, publicKey, {
+            marketId: params.marketId,
+            outcome: params.outcome === Outcome.YES,
+            sharesToSell: params.quantity,
+            minProceeds: params.tradeResult.finalAmount,
+          });
+
+          return transaction;
+        }
       } catch (err) {
+        console.error('[Trade] Build failed:', err);
+        const message = parseSolanaError(err);
         throw new TransactionError(
-          `Failed to build transaction: ${err instanceof Error ? err.message : 'Unknown error'}`,
+          `Failed to build transaction: ${message}`,
           'BUILD_FAILED',
           true
         );
       }
     },
-    [connection, publicKey]
+    [connection, publicKey, signTransaction]
   );
 
   /**
@@ -261,77 +246,59 @@ export function useTrade(): UseTradeReturn {
 
   /**
    * Submit transaction to blockchain
+   *
+   * Sends signed transaction to Solana network with retry logic.
    */
   const submitTransaction = useCallback(
     async (signedTransaction: Transaction): Promise<string> => {
       setState(TransactionState.SUBMITTING);
 
       try {
-        // MOCK: For now, simulate transaction submission
-        // Real implementation would be:
-        // const signature = await connection.sendRawTransaction(
-        //   signedTransaction.serialize(),
-        //   {
-        //     skipPreflight: false,
-        //     preflightCommitment: 'confirmed',
-        //   }
-        // );
+        const rawTx = signedTransaction.serialize();
 
-        // Simulate network delay
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        const signature = await connection.sendRawTransaction(rawTx, {
+          skipPreflight: false,
+          preflightCommitment: 'confirmed',
+          maxRetries: 3,
+        });
 
-        // Generate mock signature
-        const mockSignature = Array.from({ length: 88 }, () =>
-          'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789'.charAt(
-            Math.floor(Math.random() * 58)
-          )
-        ).join('');
-
-        console.log('[MOCK] Transaction submitted:', mockSignature);
-
-        return mockSignature;
+        console.log('[Trade] Transaction submitted:', signature);
+        return signature;
       } catch (err) {
+        console.error('[Trade] Submit failed:', err);
+        const message = parseSolanaError(err);
+
         throw new TransactionError(
-          `Failed to submit transaction: ${err instanceof Error ? err.message : 'Unknown error'}`,
+          `Failed to submit transaction: ${message}`,
           'SUBMIT_FAILED',
           true
         );
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [connection]
   );
 
   /**
    * Wait for transaction confirmation
+   *
+   * Confirms transaction on Solana blockchain with timeout protection.
    */
   const confirmTransaction = useCallback(
     async (signature: string): Promise<number> => {
       setState(TransactionState.CONFIRMING_TX);
 
       try {
-        // MOCK: Simulate confirmation wait
-        // Real implementation would be:
-        // const confirmation = await connection.confirmTransaction(
-        //   signature,
-        //   'confirmed'
-        // );
-        //
-        // if (confirmation.value.err) {
-        //   throw new Error('Transaction failed on-chain');
-        // }
-        //
-        // return confirmation.context.slot;
+        const confirmation = await connection.confirmTransaction(signature, 'confirmed');
 
-        // Simulate blockchain confirmation (2-3 seconds)
-        await new Promise((resolve) => setTimeout(resolve, 2000 + Math.random() * 1000));
+        if (confirmation.value.err) {
+          console.error('[Trade] Transaction failed on-chain:', confirmation.value.err);
+          throw new Error('Transaction failed on blockchain');
+        }
 
-        const mockSlot = Math.floor(Date.now() / 400); // Mock slot number
-
-        console.log('[MOCK] Transaction confirmed at slot:', mockSlot);
-
-        return mockSlot;
+        console.log('[Trade] Transaction confirmed at slot:', confirmation.context.slot);
+        return confirmation.context.slot;
       } catch (err) {
+        console.error('[Trade] Confirmation failed:', err);
         throw new TransactionError(
           `Transaction confirmation failed: ${err instanceof Error ? err.message : 'Unknown error'}`,
           'CONFIRMATION_FAILED',
@@ -339,8 +306,7 @@ export function useTrade(): UseTradeReturn {
         );
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [connection]
   );
 
   /**

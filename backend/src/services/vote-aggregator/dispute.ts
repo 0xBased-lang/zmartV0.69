@@ -126,9 +126,9 @@ export class DisputeVoteAggregator {
   private async getDisputedMarkets(): Promise<any[]> {
     const { data, error } = await this.supabase
       .from("markets")
-      .select("id, on_chain_address, proposed_outcome, dispute_initiated_at")
+      .select("id, on_chain_address, proposed_outcome, resolution_proposed_at")
       .eq("state", "DISPUTED")
-      .order("dispute_initiated_at", { ascending: true });
+      .order("resolution_proposed_at", { ascending: true });
 
     if (error) {
       throw new Error(`Failed to fetch disputed markets: ${error.message}`);
@@ -139,7 +139,7 @@ export class DisputeVoteAggregator {
 
   /**
    * Process a single disputed market:
-   * 1. Check if dispute period ended (3 days from dispute_initiated_at)
+   * 1. Check if dispute period ended (3 days from resolution_proposed_at)
    * 2. Aggregate votes
    * 3. Determine if dispute succeeded (>= 60%)
    * 4. Call on-chain finalize_market
@@ -154,7 +154,7 @@ export class DisputeVoteAggregator {
     disputeSucceeded: boolean;
   }> {
     // 1. Check if dispute period ended (3 days = 259200 seconds)
-    const disputeInitiatedAt = new Date(market.dispute_initiated_at).getTime();
+    const disputeInitiatedAt = new Date(market.resolution_proposed_at).getTime();
     const now = Date.now();
     const disputePeriod = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
 

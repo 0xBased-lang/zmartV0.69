@@ -7,10 +7,17 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@solana/wallet-adapter-backpack':
+        specifier: ^0.1.14
+        version: 0.1.14(@solana/web3.js@1.98.4)
     devDependencies:
       '@coral-xyz/anchor':
         specifier: ^0.29.0
         version: 0.29.0(typescript@5.9.3)
+      '@playwright/test':
+        specifier: ^1.56.1
+        version: 1.56.1
       '@solana/spl-token':
         specifier: ^0.3.9
         version: 0.3.11(@solana/web3.js@1.98.4)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.3)
@@ -42,10 +49,10 @@ importers:
   backend:
     dependencies:
       '@coral-xyz/anchor':
-        specifier: ^0.29.0
-        version: 0.29.0(typescript@5.9.3)
+        specifier: ^0.32.1
+        version: 0.32.1(typescript@5.9.3)
       '@solana/web3.js':
-        specifier: ^1.87.6
+        specifier: ^1.95.0
         version: 1.98.4(typescript@5.9.3)
       '@supabase/supabase-js':
         specifier: ^2.38.0
@@ -195,6 +202,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.90.7
         version: 5.90.7(react@18.3.1)
+      axios:
+        specifier: ^1.13.2
+        version: 1.13.2
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -209,7 +219,7 @@ importers:
         version: 0.294.0(react@18.3.1)
       next:
         specifier: ^14.2.0
-        version: 14.2.33(@babel/core@7.28.5)(react-dom@18.3.1)(react@18.3.1)
+        version: 14.2.33(@babel/core@7.28.5)(@playwright/test@1.56.1)(react-dom@18.3.1)(react@18.3.1)
       react:
         specifier: ^18.3.0
         version: 18.3.1
@@ -225,6 +235,9 @@ importers:
       recharts:
         specifier: ^2.10.3
         version: 2.15.4(react-dom@18.3.1)(react@18.3.1)
+      socket.io-client:
+        specifier: ^4.8.1
+        version: 4.8.1
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0
@@ -238,6 +251,9 @@ importers:
         specifier: ^4.4.7
         version: 4.5.7(@types/react@18.3.26)(react@18.3.1)
     devDependencies:
+      '@playwright/test':
+        specifier: ^1.56.1
+        version: 1.56.1
       '@types/node':
         specifier: ^20.10.0
         version: 20.19.24
@@ -582,6 +598,11 @@ packages:
     engines: {node: '>=0.1.90'}
     dev: false
 
+  /@coral-xyz/anchor-errors@0.31.1:
+    resolution: {integrity: sha512-NhNEku4F3zzUSBtrYz84FzYWm48+9OvmT1Hhnwr6GnPQry2dsEqH/ti/7ASjjpoFTWRnPXrjAIT1qM6Isop+LQ==}
+    engines: {node: '>=10'}
+    dev: false
+
   /@coral-xyz/anchor@0.29.0(typescript@5.9.3):
     resolution: {integrity: sha512-eny6QNG0WOwqV0zQ7cs/b1tIuzZGmP7U7EcH+ogt4Gdbl8HDmIYVMh/9aTmYZPaFWjtUaI8qSn73uYEXWfATdA==}
     engines: {node: '>=11'}
@@ -606,6 +627,30 @@ packages:
       - typescript
       - utf-8-validate
 
+  /@coral-xyz/anchor@0.32.1(typescript@5.9.3):
+    resolution: {integrity: sha512-zAyxFtfeje2FbMA1wzgcdVs7Hng/MijPKpRijoySPCicnvcTQs/+dnPZ/cR+LcXM9v9UYSyW81uRNYZtN5G4yg==}
+    engines: {node: '>=17'}
+    dependencies:
+      '@coral-xyz/anchor-errors': 0.31.1
+      '@coral-xyz/borsh': 0.31.1(@solana/web3.js@1.98.4)
+      '@noble/hashes': 1.8.0
+      '@solana/web3.js': 1.98.4(typescript@5.9.3)
+      bn.js: 5.2.2
+      bs58: 4.0.1
+      buffer-layout: 1.2.2
+      camelcase: 6.3.0
+      cross-fetch: 3.2.0
+      eventemitter3: 4.0.7
+      pako: 2.1.0
+      superstruct: 0.15.5
+      toml: 3.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - typescript
+      - utf-8-validate
+    dev: false
+
   /@coral-xyz/borsh@0.29.0(@solana/web3.js@1.98.4):
     resolution: {integrity: sha512-s7VFVa3a0oqpkuRloWVPdCK7hMbAMY270geZOGfCnaqexrP5dTIpbEHL33req6IYPPJ0hYa71cdvJ1h6V55/oQ==}
     engines: {node: '>=10'}
@@ -615,6 +660,17 @@ packages:
       '@solana/web3.js': 1.98.4(typescript@5.9.3)
       bn.js: 5.2.2
       buffer-layout: 1.2.2
+
+  /@coral-xyz/borsh@0.31.1(@solana/web3.js@1.98.4):
+    resolution: {integrity: sha512-9N8AU9F0ubriKfNE3g1WF0/4dtlGXoBN/hd1PvbNBamBNwRgHxH4P+o3Zt7rSEloW1HUs6LfZEchlx9fW7POYw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@solana/web3.js': ^1.69.0
+    dependencies:
+      '@solana/web3.js': 1.98.4(typescript@5.9.3)
+      bn.js: 5.2.2
+      buffer-layout: 1.2.2
+    dev: false
 
   /@cspotcode/source-map-support@0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1640,6 +1696,13 @@ packages:
     engines: {node: '>=14'}
     requiresBuild: true
     optional: true
+
+  /@playwright/test@1.56.1:
+    resolution: {integrity: sha512-vSMYtL/zOcFpvJCW71Q/OEGQb7KYBPAdKh35WNSkaZA75JlAO8ED8UN6GUNTm3drWomcbcqRPFqQbLae8yBTdg==}
+    engines: {node: '>=18'}
+    hasBin: true
+    dependencies:
+      playwright: 1.56.1
 
   /@project-serum/sol-wallet-adapter@0.2.6(@solana/web3.js@1.98.4):
     resolution: {integrity: sha512-cpIb13aWPW8y4KzkZAPDgw+Kb+DXjCC6rZoH74MGm3I/6e/zKyGnfAuW5olb2zxonFqsYgnv7ev8MQnvSgJ3/g==}
@@ -3673,6 +3736,17 @@ packages:
     engines: {node: '>=20'}
     peerDependencies:
       '@solana/web3.js': ^1.98.0
+    dependencies:
+      '@solana/wallet-adapter-base': 0.9.27(@solana/web3.js@1.98.4)
+      '@solana/web3.js': 1.98.4(typescript@5.9.3)
+    dev: false
+
+  /@solana/wallet-adapter-backpack@0.1.14(@solana/web3.js@1.98.4):
+    resolution: {integrity: sha512-DfNLd5S1P7rmrgqMp+jRd21ryuXUxia1mu4qmZ+cau1NGFO2v5ep14LhzYXmqPde6kgbzPLPkLdRnkffLdI4TA==}
+    engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      '@solana/web3.js': ^1.77.3
     dependencies:
       '@solana/wallet-adapter-base': 0.9.27(@solana/web3.js@1.98.4)
       '@solana/web3.js': 1.98.4(typescript@5.9.3)
@@ -8932,6 +9006,13 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
+  /fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    optional: true
+
   /fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -11245,7 +11326,7 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next@14.2.33(@babel/core@7.28.5)(react-dom@18.3.1)(react@18.3.1):
+  /next@14.2.33(@babel/core@7.28.5)(@playwright/test@1.56.1)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-GiKHLsD00t4ACm1p00VgrI0rUFAC9cRDGReKyERlM57aeEZkOQGcZTpIbsGn0b562FTPJWmYfKwplfO9EaT6ng==}
     engines: {node: '>=18.17.0'}
     hasBin: true
@@ -11264,6 +11345,7 @@ packages:
         optional: true
     dependencies:
       '@next/env': 14.2.33
+      '@playwright/test': 1.56.1
       '@swc/helpers': 0.5.5
       busboy: 1.6.0
       caniuse-lite: 1.0.30001753
@@ -11790,6 +11872,20 @@ packages:
     dependencies:
       find-up: 4.1.0
     dev: true
+
+  /playwright-core@1.56.1:
+    resolution: {integrity: sha512-hutraynyn31F+Bifme+Ps9Vq59hKuUCz7H1kDOcBs+2oGguKkWTU50bBWrtz34OUWmIwpBTWDxaRPXrIXkgvmQ==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  /playwright@1.56.1:
+    resolution: {integrity: sha512-aFi5B0WovBHTEvpM3DzXTUaeN6eN0qWnTkKx4NQaH4Wvcmc153PdaY2UBdSYKaGYw+UyWXSVyxDUg5DoPEttjw==}
+    engines: {node: '>=18'}
+    hasBin: true
+    dependencies:
+      playwright-core: 1.56.1
+    optionalDependencies:
+      fsevents: 2.3.2
 
   /pngjs@5.0.0:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}

@@ -1,0 +1,2752 @@
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "environment": "development",
+2025-11-07T18:20:33:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:33:   "apiPort": 4000,
+2025-11-07T18:20:33:   "wsPort": 4001,
+2025-11-07T18:20:33:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "url": "redis://localhost:6379"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "slot": 419974809
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "environment": "development",
+2025-11-07T18:20:33:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:33:   "apiPort": 4000,
+2025-11-07T18:20:33:   "wsPort": 4001,
+2025-11-07T18:20:33:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:33:   "service": "zmart-backend",
+2025-11-07T18:20:33:   "url": "redis://localhost:6379"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:33: [18:20:33] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:33:   "service": "zmart-backend"
+2025-11-07T18:20:33: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:34:   "service": "zmart-backend",
+2025-11-07T18:20:34:   "slot": 419974811
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:34:   "service": "zmart-backend",
+2025-11-07T18:20:34:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:34:   "service": "zmart-backend",
+2025-11-07T18:20:34:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:34:   "service": "zmart-backend",
+2025-11-07T18:20:34:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:34:   "service": "zmart-backend",
+2025-11-07T18:20:34:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:34:   "service": "zmart-backend",
+2025-11-07T18:20:34:   "environment": "development",
+2025-11-07T18:20:34:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:34:   "apiPort": 4000,
+2025-11-07T18:20:34:   "wsPort": 4001,
+2025-11-07T18:20:34:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:34:   "service": "zmart-backend",
+2025-11-07T18:20:34:   "url": "redis://localhost:6379"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:34: [18:20:34] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:34:   "service": "zmart-backend"
+2025-11-07T18:20:34: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:35:   "service": "zmart-backend",
+2025-11-07T18:20:35:   "slot": 419974813
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:35:   "service": "zmart-backend",
+2025-11-07T18:20:35:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:35:   "service": "zmart-backend",
+2025-11-07T18:20:35:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:35:   "service": "zmart-backend",
+2025-11-07T18:20:35:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:35:   "service": "zmart-backend",
+2025-11-07T18:20:35:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:35:   "service": "zmart-backend",
+2025-11-07T18:20:35:   "environment": "development",
+2025-11-07T18:20:35:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:35:   "apiPort": 4000,
+2025-11-07T18:20:35:   "wsPort": 4001,
+2025-11-07T18:20:35:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:35:   "service": "zmart-backend",
+2025-11-07T18:20:35:   "url": "redis://localhost:6379"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:35: [18:20:35] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:35:   "service": "zmart-backend"
+2025-11-07T18:20:35: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:36:   "service": "zmart-backend",
+2025-11-07T18:20:36:   "slot": 419974816
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:36:   "service": "zmart-backend",
+2025-11-07T18:20:36:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:36:   "service": "zmart-backend",
+2025-11-07T18:20:36:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:36:   "service": "zmart-backend",
+2025-11-07T18:20:36:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:36:   "service": "zmart-backend",
+2025-11-07T18:20:36:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:36:   "service": "zmart-backend",
+2025-11-07T18:20:36:   "environment": "development",
+2025-11-07T18:20:36:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:36:   "apiPort": 4000,
+2025-11-07T18:20:36:   "wsPort": 4001,
+2025-11-07T18:20:36:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:36:   "service": "zmart-backend",
+2025-11-07T18:20:36:   "url": "redis://localhost:6379"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:36: [18:20:36] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:36:   "service": "zmart-backend"
+2025-11-07T18:20:36: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:37:   "service": "zmart-backend",
+2025-11-07T18:20:37:   "slot": 419974818
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:37:   "service": "zmart-backend",
+2025-11-07T18:20:37:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:37:   "service": "zmart-backend",
+2025-11-07T18:20:37:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:37:   "service": "zmart-backend",
+2025-11-07T18:20:37:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:37:   "service": "zmart-backend",
+2025-11-07T18:20:37:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:37:   "service": "zmart-backend",
+2025-11-07T18:20:37:   "environment": "development",
+2025-11-07T18:20:37:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:37:   "apiPort": 4000,
+2025-11-07T18:20:37:   "wsPort": 4001,
+2025-11-07T18:20:37:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:37:   "service": "zmart-backend",
+2025-11-07T18:20:37:   "url": "redis://localhost:6379"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:37: [18:20:37] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:37:   "service": "zmart-backend"
+2025-11-07T18:20:37: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "slot": 419974821
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "environment": "development",
+2025-11-07T18:20:38:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:38:   "apiPort": 4000,
+2025-11-07T18:20:38:   "wsPort": 4001,
+2025-11-07T18:20:38:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "url": "redis://localhost:6379"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:38:   "service": "zmart-backend",
+2025-11-07T18:20:38:   "slot": 419974823
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:38: [18:20:38] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:38:   "service": "zmart-backend"
+2025-11-07T18:20:38: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:39:   "service": "zmart-backend",
+2025-11-07T18:20:39:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:39:   "service": "zmart-backend",
+2025-11-07T18:20:39:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:39:   "service": "zmart-backend",
+2025-11-07T18:20:39:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:39:   "service": "zmart-backend",
+2025-11-07T18:20:39:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:39:   "service": "zmart-backend",
+2025-11-07T18:20:39:   "environment": "development",
+2025-11-07T18:20:39:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:39:   "apiPort": 4000,
+2025-11-07T18:20:39:   "wsPort": 4001,
+2025-11-07T18:20:39:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:39:   "service": "zmart-backend",
+2025-11-07T18:20:39:   "url": "redis://localhost:6379"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:39:   "service": "zmart-backend",
+2025-11-07T18:20:39:   "slot": 419974825
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:39: [18:20:39] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:39:   "service": "zmart-backend"
+2025-11-07T18:20:39: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "environment": "development",
+2025-11-07T18:20:40:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:40:   "apiPort": 4000,
+2025-11-07T18:20:40:   "wsPort": 4001,
+2025-11-07T18:20:40:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "url": "redis://localhost:6379"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "slot": 419974827
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "environment": "development",
+2025-11-07T18:20:40:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:40:   "apiPort": 4000,
+2025-11-07T18:20:40:   "wsPort": 4001,
+2025-11-07T18:20:40:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:40:   "service": "zmart-backend",
+2025-11-07T18:20:40:   "url": "redis://localhost:6379"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:40: [18:20:40] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:40:   "service": "zmart-backend"
+2025-11-07T18:20:40: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:41:   "service": "zmart-backend",
+2025-11-07T18:20:41:   "slot": 419974830
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:41:   "service": "zmart-backend",
+2025-11-07T18:20:41:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:41:   "service": "zmart-backend",
+2025-11-07T18:20:41:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:41:   "service": "zmart-backend",
+2025-11-07T18:20:41:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:41:   "service": "zmart-backend",
+2025-11-07T18:20:41:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:41:   "service": "zmart-backend",
+2025-11-07T18:20:41:   "environment": "development",
+2025-11-07T18:20:41:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:41:   "apiPort": 4000,
+2025-11-07T18:20:41:   "wsPort": 4001,
+2025-11-07T18:20:41:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:41:   "service": "zmart-backend",
+2025-11-07T18:20:41:   "url": "redis://localhost:6379"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:41: [18:20:41] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:41:   "service": "zmart-backend"
+2025-11-07T18:20:41: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:42:   "service": "zmart-backend",
+2025-11-07T18:20:42:   "slot": 419974832
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:42:   "service": "zmart-backend",
+2025-11-07T18:20:42:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:42:   "service": "zmart-backend",
+2025-11-07T18:20:42:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:42:   "service": "zmart-backend",
+2025-11-07T18:20:42:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:42:   "service": "zmart-backend",
+2025-11-07T18:20:42:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:42:   "service": "zmart-backend",
+2025-11-07T18:20:42:   "environment": "development",
+2025-11-07T18:20:42:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:42:   "apiPort": 4000,
+2025-11-07T18:20:42:   "wsPort": 4001,
+2025-11-07T18:20:42:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:42:   "service": "zmart-backend",
+2025-11-07T18:20:42:   "url": "redis://localhost:6379"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:42: [18:20:42] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:42:   "service": "zmart-backend"
+2025-11-07T18:20:42: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:43:   "service": "zmart-backend",
+2025-11-07T18:20:43:   "slot": 419974835
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:43:   "service": "zmart-backend",
+2025-11-07T18:20:43:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:43:   "service": "zmart-backend",
+2025-11-07T18:20:43:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:43:   "service": "zmart-backend",
+2025-11-07T18:20:43:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:43:   "service": "zmart-backend",
+2025-11-07T18:20:43:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:43:   "service": "zmart-backend",
+2025-11-07T18:20:43:   "environment": "development",
+2025-11-07T18:20:43:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:43:   "apiPort": 4000,
+2025-11-07T18:20:43:   "wsPort": 4001,
+2025-11-07T18:20:43:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:43:   "service": "zmart-backend",
+2025-11-07T18:20:43:   "url": "redis://localhost:6379"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:43: [18:20:43] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:43:   "service": "zmart-backend"
+2025-11-07T18:20:43: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:44:   "service": "zmart-backend",
+2025-11-07T18:20:44:   "slot": 419974837
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:44:   "service": "zmart-backend",
+2025-11-07T18:20:44:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:44:   "service": "zmart-backend",
+2025-11-07T18:20:44:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:44:   "service": "zmart-backend",
+2025-11-07T18:20:44:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:44:   "service": "zmart-backend",
+2025-11-07T18:20:44:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:44:   "service": "zmart-backend",
+2025-11-07T18:20:44:   "environment": "development",
+2025-11-07T18:20:44:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:44:   "apiPort": 4000,
+2025-11-07T18:20:44:   "wsPort": 4001,
+2025-11-07T18:20:44:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:44:   "service": "zmart-backend",
+2025-11-07T18:20:44:   "url": "redis://localhost:6379"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:44: [18:20:44] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:44:   "service": "zmart-backend"
+2025-11-07T18:20:44: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:45:   "service": "zmart-backend",
+2025-11-07T18:20:45:   "slot": 419974840
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:45:   "service": "zmart-backend",
+2025-11-07T18:20:45:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:45:   "service": "zmart-backend",
+2025-11-07T18:20:45:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:45:   "service": "zmart-backend",
+2025-11-07T18:20:45:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:45:   "service": "zmart-backend",
+2025-11-07T18:20:45:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:45:   "service": "zmart-backend",
+2025-11-07T18:20:45:   "environment": "development",
+2025-11-07T18:20:45:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:45:   "apiPort": 4000,
+2025-11-07T18:20:45:   "wsPort": 4001,
+2025-11-07T18:20:45:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:45:   "service": "zmart-backend",
+2025-11-07T18:20:45:   "url": "redis://localhost:6379"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:45: [18:20:45] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:45:   "service": "zmart-backend"
+2025-11-07T18:20:45: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "slot": 419974842
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Configuration loaded {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "environment": "development",
+2025-11-07T18:20:46:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:20:46:   "apiPort": 4000,
+2025-11-07T18:20:46:   "wsPort": 4001,
+2025-11-07T18:20:46:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Testing external connections... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "url": "redis://localhost:6379"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Redis client connected {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Redis client ready {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Database connection test successful {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:20:46:   "service": "zmart-backend",
+2025-11-07T18:20:46:   "slot": 419974844
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: All connections successful! {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:20:46: [18:20:46] [32minfo[39m: ============================================================ {
+2025-11-07T18:20:46:   "service": "zmart-backend"
+2025-11-07T18:20:46: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Initializing Supabase client {
+2025-11-07T18:22:02:   "service": "zmart-backend",
+2025-11-07T18:22:02:   "url": "https://tkkqqxepelibqjjhxxct.supabase.co"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Supabase client initialized successfully {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: ============================================================ {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: ZMART Backend Services Starting... {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: ============================================================ {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Initializing Solana connection {
+2025-11-07T18:22:02:   "service": "zmart-backend",
+2025-11-07T18:22:02:   "rpcUrl": "https://api.devnet.solana.com"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Solana connection initialized successfully {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Loading backend keypair {
+2025-11-07T18:22:02:   "service": "zmart-backend",
+2025-11-07T18:22:02:   "path": "/Users/seman/.config/solana/backend-authority.json"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Backend keypair loaded successfully {
+2025-11-07T18:22:02:   "service": "zmart-backend",
+2025-11-07T18:22:02:   "publicKey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Configuration loaded {
+2025-11-07T18:22:02:   "service": "zmart-backend",
+2025-11-07T18:22:02:   "environment": "development",
+2025-11-07T18:22:02:   "solanaRpc": "https://api.devnet.solana.com",
+2025-11-07T18:22:02:   "apiPort": 4000,
+2025-11-07T18:22:02:   "wsPort": 4001,
+2025-11-07T18:22:02:   "backendWallet": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Testing external connections... {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Initializing Redis client {
+2025-11-07T18:22:02:   "service": "zmart-backend",
+2025-11-07T18:22:02:   "url": "redis://localhost:6379"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Redis client connected {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Redis client ready {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Redis connection test successful {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Database connection test successful {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Solana connection test successful {
+2025-11-07T18:22:02:   "service": "zmart-backend",
+2025-11-07T18:22:02:   "slot": 419975042
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: All connections successful! {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: ============================================================ {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Starting Backend Services... {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: ============================================================ {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [1/4] Starting API Server... {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [1/4] ✅ API Server running on port 4000 {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [2/4] Starting WebSocket Service... {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [WebSocketServer] Initialized on port 4001 {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [WebSocketServer] Heartbeat started (interval: 30000ms) {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [WebSocketServer] Started on port 4001 {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [RealtimeEventBroadcaster] Started listening to database changes {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [WebSocket Service] Started successfully {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [2/4] ✅ WebSocket Server running on port 4001 {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [3/4] Starting Vote Aggregator Service... {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Anchor provider initialized successfully {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [VoteAggregatorScheduler] Starting scheduler with interval: */5 * * * * {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [VoteAggregatorScheduler] Scheduler started successfully {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [3/4] ✅ Vote Aggregator running (every 5 min) {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [4/4] IPFS Snapshot Service... {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [33mwarn[39m: [4/4] ⚠️  IPFS Snapshot SKIPPED (ipfs-http-client package issue) {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [33mwarn[39m:   → Will be re-enabled once package compatibility is resolved {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: ============================================================ {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: 🚀 ZMART Backend Services READY {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: ============================================================ {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: API Server: http://localhost:4000 {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: WebSocket: ws://localhost:4001 {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Health Check: http://localhost:4000/health {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: Backend Wallet: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: ============================================================ {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [API Server] Started on port 4000 {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [API Server] Health check: http://localhost:4000/health {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [API Server] API base URL: http://localhost:4000/api {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [API Server] Environment: development {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [RealtimeEventBroadcaster] Markets channel: SUBSCRIBED {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [RealtimeEventBroadcaster] Trades channel: SUBSCRIBED {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [RealtimeEventBroadcaster] Proposal votes channel: SUBSCRIBED {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [RealtimeEventBroadcaster] Dispute votes channel: SUBSCRIBED {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:22:02: [18:22:02] [32minfo[39m: [RealtimeEventBroadcaster] Discussions channel: SUBSCRIBED {
+2025-11-07T18:22:02:   "service": "zmart-backend"
+2025-11-07T18:22:02: }
+2025-11-07T18:25:00: [18:25:00] [32minfo[39m: [VoteAggregatorScheduler] Running scheduled aggregation... {
+2025-11-07T18:25:00:   "service": "zmart-backend"
+2025-11-07T18:25:00: }
+2025-11-07T18:25:00: [18:25:00] [32minfo[39m: [ProposalVoteAggregator] Starting vote aggregation... {
+2025-11-07T18:25:00:   "service": "zmart-backend"
+2025-11-07T18:25:00: }
+2025-11-07T18:25:00: [18:25:00] [32minfo[39m: [DisputeVoteAggregator] Starting dispute vote aggregation... {
+2025-11-07T18:25:00:   "service": "zmart-backend"
+2025-11-07T18:25:00: }
+2025-11-07T18:25:00: [18:25:00] [32minfo[39m: [DisputeVoteAggregator] Found 0 disputed markets {
+2025-11-07T18:25:00:   "service": "zmart-backend"
+2025-11-07T18:25:00: }
+2025-11-07T18:25:00: [18:25:00] [32minfo[39m: [DisputeVoteAggregator] No markets to process {
+2025-11-07T18:25:00:   "service": "zmart-backend"
+2025-11-07T18:25:00: }
+2025-11-07T18:25:00: [18:25:00] [32minfo[39m: [ProposalVoteAggregator] Found 10 proposed markets {
+2025-11-07T18:25:00:   "service": "zmart-backend"
+2025-11-07T18:25:00: }
+2025-11-07T18:25:01: [18:25:01] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:25:01:   "service": "zmart-backend",
+2025-11-07T18:25:01:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:01: }
+2025-11-07T18:25:02: [18:25:02] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:25:02:   "service": "zmart-backend",
+2025-11-07T18:25:02:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:02: }
+2025-11-07T18:25:04: [18:25:04] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:25:04:   "service": "zmart-backend",
+2025-11-07T18:25:04:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:04: }
+2025-11-07T18:25:05: [18:25:05] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:25:05:   "service": "zmart-backend",
+2025-11-07T18:25:05:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:05: }
+2025-11-07T18:25:07: [18:25:07] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:25:07:   "service": "zmart-backend",
+2025-11-07T18:25:07:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:07: }
+2025-11-07T18:25:08: [18:25:08] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:25:08:   "service": "zmart-backend",
+2025-11-07T18:25:08:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:08: }
+2025-11-07T18:25:10: [18:25:10] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:25:10:   "service": "zmart-backend",
+2025-11-07T18:25:10:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:10: }
+2025-11-07T18:25:11: [18:25:11] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:25:11:   "service": "zmart-backend",
+2025-11-07T18:25:11:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:11: }
+2025-11-07T18:25:13: [18:25:13] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:25:13:   "service": "zmart-backend",
+2025-11-07T18:25:13:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:13: }
+2025-11-07T18:25:14: [18:25:14] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:25:14:   "service": "zmart-backend",
+2025-11-07T18:25:14:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:25:14: }
+2025-11-07T18:25:16: [18:25:16] [32minfo[39m: [ProposalVoteAggregator] Completed: 5 processed, 0 approved, 5 errors in 16188ms {
+2025-11-07T18:25:16:   "service": "zmart-backend"
+2025-11-07T18:25:16: }
+2025-11-07T18:25:16: [18:25:16] [32minfo[39m: [VoteAggregatorScheduler] Scheduled aggregation complete {
+2025-11-07T18:25:16:   "service": "zmart-backend"
+2025-11-07T18:25:16: }
+2025-11-07T18:30:00: [18:30:00] [32minfo[39m: [VoteAggregatorScheduler] Running scheduled aggregation... {
+2025-11-07T18:30:00:   "service": "zmart-backend"
+2025-11-07T18:30:00: }
+2025-11-07T18:30:00: [18:30:00] [32minfo[39m: [ProposalVoteAggregator] Starting vote aggregation... {
+2025-11-07T18:30:00:   "service": "zmart-backend"
+2025-11-07T18:30:00: }
+2025-11-07T18:30:00: [18:30:00] [32minfo[39m: [DisputeVoteAggregator] Starting dispute vote aggregation... {
+2025-11-07T18:30:00:   "service": "zmart-backend"
+2025-11-07T18:30:00: }
+2025-11-07T18:30:01: [18:30:01] [32minfo[39m: [ProposalVoteAggregator] Found 10 proposed markets {
+2025-11-07T18:30:01:   "service": "zmart-backend"
+2025-11-07T18:30:01: }
+2025-11-07T18:30:01: [18:30:01] [32minfo[39m: [DisputeVoteAggregator] Found 0 disputed markets {
+2025-11-07T18:30:01:   "service": "zmart-backend"
+2025-11-07T18:30:01: }
+2025-11-07T18:30:01: [18:30:01] [32minfo[39m: [DisputeVoteAggregator] No markets to process {
+2025-11-07T18:30:01:   "service": "zmart-backend"
+2025-11-07T18:30:01: }
+2025-11-07T18:30:01: [18:30:01] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:30:01:   "service": "zmart-backend",
+2025-11-07T18:30:01:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:01: }
+2025-11-07T18:30:02: [18:30:02] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:30:02:   "service": "zmart-backend",
+2025-11-07T18:30:02:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:02: }
+2025-11-07T18:30:04: [18:30:04] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:30:04:   "service": "zmart-backend",
+2025-11-07T18:30:04:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:04: }
+2025-11-07T18:30:05: [18:30:05] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:30:05:   "service": "zmart-backend",
+2025-11-07T18:30:05:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:05: }
+2025-11-07T18:30:07: [18:30:07] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:30:07:   "service": "zmart-backend",
+2025-11-07T18:30:07:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:07: }
+2025-11-07T18:30:08: [18:30:08] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:30:08:   "service": "zmart-backend",
+2025-11-07T18:30:08:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:08: }
+2025-11-07T18:30:11: [18:30:11] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:30:11:   "service": "zmart-backend",
+2025-11-07T18:30:11:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:11: }
+2025-11-07T18:30:12: [18:30:12] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:30:12:   "service": "zmart-backend",
+2025-11-07T18:30:12:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:12: }
+2025-11-07T18:30:14: [18:30:14] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:30:14:   "service": "zmart-backend",
+2025-11-07T18:30:14:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:14: }
+2025-11-07T18:30:15: [18:30:15] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:30:15:   "service": "zmart-backend",
+2025-11-07T18:30:15:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:30:15: }
+2025-11-07T18:30:17: [18:30:17] [32minfo[39m: [ProposalVoteAggregator] Completed: 5 processed, 0 approved, 5 errors in 16137ms {
+2025-11-07T18:30:17:   "service": "zmart-backend"
+2025-11-07T18:30:17: }
+2025-11-07T18:30:17: [18:30:17] [32minfo[39m: [VoteAggregatorScheduler] Scheduled aggregation complete {
+2025-11-07T18:30:17:   "service": "zmart-backend"
+2025-11-07T18:30:17: }
+2025-11-07T18:35:00: [18:35:00] [32minfo[39m: [VoteAggregatorScheduler] Running scheduled aggregation... {
+2025-11-07T18:35:00:   "service": "zmart-backend"
+2025-11-07T18:35:00: }
+2025-11-07T18:35:00: [18:35:00] [32minfo[39m: [ProposalVoteAggregator] Starting vote aggregation... {
+2025-11-07T18:35:00:   "service": "zmart-backend"
+2025-11-07T18:35:00: }
+2025-11-07T18:35:00: [18:35:00] [32minfo[39m: [DisputeVoteAggregator] Starting dispute vote aggregation... {
+2025-11-07T18:35:00:   "service": "zmart-backend"
+2025-11-07T18:35:00: }
+2025-11-07T18:35:00: [18:35:00] [32minfo[39m: [DisputeVoteAggregator] Found 0 disputed markets {
+2025-11-07T18:35:00:   "service": "zmart-backend"
+2025-11-07T18:35:00: }
+2025-11-07T18:35:00: [18:35:00] [32minfo[39m: [DisputeVoteAggregator] No markets to process {
+2025-11-07T18:35:00:   "service": "zmart-backend"
+2025-11-07T18:35:00: }
+2025-11-07T18:35:00: [18:35:00] [32minfo[39m: [ProposalVoteAggregator] Found 10 proposed markets {
+2025-11-07T18:35:00:   "service": "zmart-backend"
+2025-11-07T18:35:00: }
+2025-11-07T18:35:01: [18:35:01] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:35:01:   "service": "zmart-backend",
+2025-11-07T18:35:01:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:01: }
+2025-11-07T18:35:02: [18:35:02] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:35:02:   "service": "zmart-backend",
+2025-11-07T18:35:02:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:02: }
+2025-11-07T18:35:04: [18:35:04] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:35:04:   "service": "zmart-backend",
+2025-11-07T18:35:04:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:04: }
+2025-11-07T18:35:05: [18:35:05] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:35:05:   "service": "zmart-backend",
+2025-11-07T18:35:05:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:05: }
+2025-11-07T18:35:07: [18:35:07] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:35:07:   "service": "zmart-backend",
+2025-11-07T18:35:07:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:07: }
+2025-11-07T18:35:08: [18:35:08] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:35:08:   "service": "zmart-backend",
+2025-11-07T18:35:08:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:08: }
+2025-11-07T18:35:10: [18:35:10] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:35:10:   "service": "zmart-backend",
+2025-11-07T18:35:10:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:10: }
+2025-11-07T18:35:11: [18:35:11] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:35:11:   "service": "zmart-backend",
+2025-11-07T18:35:11:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:11: }
+2025-11-07T18:35:13: [18:35:13] [33mwarn[39m: Retry attempt 1 {
+2025-11-07T18:35:13:   "service": "zmart-backend",
+2025-11-07T18:35:13:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:13: }
+2025-11-07T18:35:14: [18:35:14] [33mwarn[39m: Retry attempt 2 {
+2025-11-07T18:35:14:   "service": "zmart-backend",
+2025-11-07T18:35:14:   "error": "this.program.methods.approveMarket is not a function"
+2025-11-07T18:35:14: }
+2025-11-07T18:35:16: [18:35:16] [32minfo[39m: [ProposalVoteAggregator] Completed: 5 processed, 0 approved, 5 errors in 16441ms {
+2025-11-07T18:35:16:   "service": "zmart-backend"
+2025-11-07T18:35:16: }
+2025-11-07T18:35:16: [18:35:16] [32minfo[39m: [VoteAggregatorScheduler] Scheduled aggregation complete {
+2025-11-07T18:35:16:   "service": "zmart-backend"
+2025-11-07T18:35:16: }

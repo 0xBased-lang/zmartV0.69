@@ -1,11 +1,13 @@
 use anchor_lang::prelude::*;
 use crate::error::ErrorCode;
 
-/// Market lifecycle states (6-state FSM)
+/// Market lifecycle states (7-state FSM)
 ///
 /// State transitions:
 /// PROPOSED → APPROVED → ACTIVE → RESOLVING → DISPUTED → FINALIZED
 ///                              → (skip DISPUTED) → FINALIZED
+/// PROPOSED → CANCELLED (admin only)
+/// APPROVED → CANCELLED (admin only)
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, PartialEq, Eq, Debug)]
 #[repr(u8)]
 pub enum MarketState {
@@ -21,6 +23,8 @@ pub enum MarketState {
     Disputed = 4,
     /// Final outcome set, claims enabled
     Finalized = 5,
+    /// Market cancelled by admin (terminal state)
+    Cancelled = 6,
 }
 
 /// Individual prediction market account
@@ -171,8 +175,11 @@ pub struct MarketAccount {
     /// Market cancellation flag (admin only)
     pub is_cancelled: bool,
 
-    /// Reserved space for future upgrades (128 bytes)
-    pub reserved: [u8; 128],
+    /// Market cancellation timestamp (if cancelled by admin)
+    pub cancelled_at: Option<i64>,
+
+    /// Reserved space for future upgrades (120 bytes)
+    pub reserved: [u8; 120],
 
     /// Bump seed for PDA derivation
     pub bump: u8,
@@ -183,8 +190,8 @@ impl MarketAccount {
     ///
     /// Note: Actual size reported by Anchor compiler including alignment
     ///
-    /// Total: 472 bytes (464 original + 4 fields: 3xu32 + 1xbool = 13 bytes, but alignment = 8 total)
-    pub const LEN: usize = 472;
+    /// Total: 480 bytes (472 original + cancelled_at Option<i64> 16 bytes - reserved 8 bytes = +8 net)
+    pub const LEN: usize = 480;
 
     /// Check if state transition is valid
     ///
@@ -460,7 +467,8 @@ mod tests {
             dispute_total_votes: 0,
             was_disputed: false,
             is_cancelled: false,
-            reserved: [0; 128],
+            cancelled_at: None,
+            reserved: [0; 120],
             bump: 255,
         }
     }

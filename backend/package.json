@@ -12,10 +12,13 @@
     "test:integration": "jest --testPathPattern='__tests__/integration'",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:db": "ts-node scripts/test-db-connection.ts",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write 'src/**/*.ts'",
-    "validate:week2": "ts-node scripts/validate-week2-simple.ts"
+    "validate:week2": "ts-node scripts/validate-week2-simple.ts",
+    "deploy:market-monitor": "ts-node scripts/deploy-market-monitor.ts",
+    "monitor:run": "ts-node -e \"import { MarketMonitor } from './src/services/market-monitor/monitor'; new MarketMonitor(...).run();\""
   },
   "keywords": [
     "solana",
@@ -26,8 +29,8 @@
   "author": "ZMART Team",
   "license": "MIT",
   "dependencies": {
-    "@coral-xyz/anchor": "^0.29.0",
-    "@solana/web3.js": "^1.87.6",
+    "@coral-xyz/anchor": "^0.32.1",
+    "@solana/web3.js": "^1.95.0",
     "@supabase/supabase-js": "^2.38.0",
     "bs58": "^5.0.0",
     "cors": "^2.8.5",

@@ -23,6 +23,10 @@ pub enum ErrorCode {
     #[msg("Global config already initialized")]
     AlreadyInitialized,
 
+    /// 6004: Invalid fee structure (fees sum > 100%)
+    #[msg("Invalid fee structure: total fees exceed 100%")]
+    InvalidFeeStructure,
+
     // ============================================================
     // State Transition Errors (6100-6199)
     // ============================================================
@@ -46,6 +50,14 @@ pub enum ErrorCode {
     /// 6104: Protocol is paused (emergency pause active)
     #[msg("Protocol is paused")]
     ProtocolPaused,
+
+    /// 6105: Cannot cancel market in current state (only PROPOSED/APPROVED)
+    #[msg("Cannot cancel market in current state")]
+    CannotCancelMarket,
+
+    /// 6106: Market is already cancelled
+    #[msg("Market is already cancelled")]
+    MarketAlreadyCancelled,
 
     // ============================================================
     // Trading Errors (6200-6299)
@@ -190,4 +202,16 @@ pub enum ErrorCode {
     /// 6603: Invalid IPFS hash
     #[msg("Invalid IPFS hash")]
     InvalidIpfsHash,
+
+    // ============================================================
+    // Voting Errors (6700-6799)
+    // ============================================================
+
+    /// 6700: User already voted on this proposal or dispute
+    #[msg("User already voted")]
+    AlreadyVoted,
+
+    /// 6701: Market not in correct state for voting
+    #[msg("Invalid state for voting")]
+    InvalidStateForVoting,
 }

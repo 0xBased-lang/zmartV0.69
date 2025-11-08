@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useState, useMemo, useEffect } from 'react';
+import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import {
   Outcome,
   TradeAction,
@@ -38,6 +38,7 @@ interface TradeFormProps {
  */
 export function TradeForm({ marketId, marketState, onTrade, className }: TradeFormProps) {
   const { connected, publicKey } = useWallet();
+  const { connection } = useConnection();
   const { state: txState, signature, error, executeTrade, reset, retry } = useTrade();
 
   // Form state
@@ -46,6 +47,34 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
   const [quantityInput, setQuantityInput] = useState<string>('');
   const [slippage, setSlippage] = useState<number>(1); // 1% default
   const [showSlippage, setShowSlippage] = useState(false);
+
+  // Wallet balance (in lamports)
+  const [solBalance, setSolBalance] = useState<number | null>(null);
+
+  // Fetch SOL balance when wallet connects
+  useEffect(() => {
+    if (!publicKey || !connected) {
+      setSolBalance(null);
+      return;
+    }
+
+    const fetchBalance = async () => {
+      try {
+        const balance = await connection.getBalance(publicKey);
+        setSolBalance(balance);
+      } catch (err) {
+        console.error('Failed to fetch balance:', err);
+        setSolBalance(null);
+      }
+    };
+
+    fetchBalance();
+
+    // Refetch balance every 10 seconds
+    const interval = setInterval(fetchBalance, 10000);
+
+    return () => clearInterval(interval);
+  }, [publicKey, connected, connection]);
 
   // Modal visibility
   const showModal =
@@ -96,6 +125,16 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
     if (!quantityInput) return null;
     if (!quantity) return 'Invalid quantity';
 
+    // Check market state (ACTIVE = 2)
+    // Market states: 0=PROPOSED, 1=APPROVED, 2=ACTIVE, 3=RESOLVING, 4=DISPUTED, 5=FINALIZED
+    if ('state' in marketState) {
+      const state = (marketState as any).state;
+      if (state !== 2) {
+        const stateNames = ['PROPOSED', 'APPROVED', 'ACTIVE', 'RESOLVING', 'DISPUTED', 'FINALIZED'];
+        return `Market is ${stateNames[state] || 'UNKNOWN'}. Trading only allowed in ACTIVE markets.`;
+      }
+    }
+
     if (tradeResult) {
       // Check slippage
       const currentPrice = outcome === Outcome.YES ? currentPrices.yesPrice : currentPrices.noPrice;
@@ -104,12 +143,27 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
         return `Price impact (${slippagePercent.toFixed(2)}%) exceeds slippage tolerance (${slippage}%)`;
       }
 
-      // TODO: Check user balance
-      // TODO: Check market state (must be ACTIVE)
+      // Check user SOL balance
+      if (action === TradeAction.BUY) {
+        const totalCostLamports = Number(tradeResult.totalCost);
+        const TRANSACTION_FEE_BUFFER = 10_000; // 0.00001 SOL buffer for transaction fees
+        const requiredBalance = totalCostLamports + TRANSACTION_FEE_BUFFER;
+
+        if (solBalance !== null && solBalance < requiredBalance) {
+          const requiredSOL = (requiredBalance / 1_000_000_000).toFixed(4);
+          const currentSOL = (solBalance / 1_000_000_000).toFixed(4);
+          return `Insufficient SOL balance. Required: ${requiredSOL} SOL (including fees), Available: ${currentSOL} SOL`;
+        }
+
+        // Still loading balance
+        if (solBalance === null) {
+          return 'Loading balance...';
+        }
+      }
     }
 
     return null;
-  }, [connected, quantityInput, quantity, tradeResult, currentPrices, outcome, slippage]);
+  }, [connected, quantityInput, quantity, tradeResult, currentPrices, outcome, slippage, marketState, action, solBalance]);
 
   const canSubmit = connected && quantity && tradeResult && !validationError;
 
