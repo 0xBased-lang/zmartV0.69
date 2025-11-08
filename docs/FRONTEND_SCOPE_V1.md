@@ -53,17 +53,18 @@
    - Display wallet balance
    - Sign transactions
 
-8. **Discussion System (Minimal)**
-   - Flat comment system (no threading, no nested replies)
-   - Post comment
+8. **Discussion System (Minimal - Database-Only)**
+   - Flat comment system stored in Supabase (NO IPFS in V1)
+   - Post comment (stored in `comments` table with RLS policies)
    - View comments chronologically
    - Simple upvote (no downvote)
+   - Admin-only moderation (flag/hide comments)
 
-9. **Responsive Design**
-   - Mobile-responsive (mobile-first approach)
-   - Desktop optimization
-   - Tablet support
-   - Basic breakpoints only (sm, md, lg)
+9. **Responsive Design (Desktop-Primary)**
+   - Desktop-first approach (60-80% target users)
+   - LMSR curve visualization requires desktop (800x400px minimum)
+   - Mobile-essential support (20-40% users, core trading only)
+   - Responsive breakpoints: Desktop (1024px+) → Tablet (768px+) → Mobile (<768px)
 
 10. **Error Handling**
     - Error boundaries (catch React errors)
@@ -107,9 +108,11 @@
 - **Instead**: Keep transitions simple, CSS transitions only
 - **Rationale**: Framer Motion integration = +1 week
 
-❌ **Real-Time WebSocket Updates**
-- **Instead**: 30-second polling for market data
-- **Rationale**: WebSocket infrastructure = +1 week, adds complexity
+✅ **Real-Time WebSocket Updates (V1 IN SCOPE)**
+- **Implementation**: WebSocket from Day 1 (backend Week 6, frontend Week 2)
+- **Rationale**: Prediction markets need real-time prices (<1s latency)
+- **Fallback**: Automatic switch to polling after 5 failed reconnections
+- **Status**: Frontend client already implemented (593 lines, Nov 7 2025)
 
 ❌ **Advanced Search**
 - **Instead**: Basic text match only

@@ -627,131 +627,264 @@
 
 ---
 
-## Phase 4: Frontend Integration (Weeks 10-12)
+## Phase 4: Frontend Integration (Weeks 10-15) - 6 Weeks
 
-**Objective:** Connect UI to Solana programs and backend
+**Objective:** Build desktop-primary trading UI with real-time WebSocket updates
 
-**Quality Gate:** Users can complete full trading flow in <1 minute
+**Quality Gate:** Users can complete full trading flow in <1 minute, LMSR curve visualized
 
-**Reference:** [IMPLEMENTATION_PHASES.md - Phase 4](./IMPLEMENTATION_PHASES.md#phase-4-frontend-integration-weeks-10-12)
+**Reference:** [docs/FRONTEND_IMPLEMENTATION_PLAN.md](./FRONTEND_IMPLEMENTATION_PLAN.md) - Detailed 42-day plan
 
-### Week 10: Wallet + Transactions
+**Critical Decisions (LOCKED IN):**
+- ✅ Desktop-Primary (60-80% users, LMSR visualization 800x400px)
+- ✅ WebSocket from Day 1 (NOT polling)
+- ✅ Database-Only Discussions (NO IPFS in V1)
+- ✅ LMSR not AMM (correct terminology)
 
-**Status:** 0% Complete
+---
 
-- [ ] Integrate wallet adapters
-  - [ ] Install @solana/wallet-adapter-react
-  - [ ] Support Phantom, Solflare, Backpack
-  - [ ] Wallet selection modal
-- [ ] Implement transaction signing
-  - [ ] Build transactions with @solana/web3.js
-  - [ ] Request wallet signatures
-  - [ ] Send and confirm transactions
-- [ ] Error handling
-  - [ ] Rejected transactions
-  - [ ] Insufficient SOL
-  - [ ] RPC errors with retry
-  - [ ] Timeout handling
-- [ ] Connection state management
-  - [ ] Detect connection/disconnection
-  - [ ] Persist preference (localStorage)
-  - [ ] Auto-reconnect on refresh
-  - [ ] Show connection status
-- [ ] Mobile responsive
-  - [ ] Wallet selection on mobile
-  - [ ] Transaction confirmations
-  - [ ] Deep links to wallet apps
-- [ ] Week 10 Quality Gate
-  - [ ] Users can connect all 3 wallets
-  - [ ] Transactions sign and send successfully
-  - [ ] Error messages clear
-  - [ ] Connection persists across refreshes
-  - [ ] Mobile wallet connections work
+### Week 10: Foundation & Infrastructure
+
+**Status:** 60% Complete (WebSocket, API client, wallet adapters already done Nov 7)
+
+- [x] Next.js 14 setup (App Router, TypeScript, Tailwind) ✅ Already exists
+- [x] Wallet integration (Phantom, Solflare, Backpack, Coinbase, Trust, Torus) ✅ Nov 7
+- [x] WebSocket client service (318 lines, auto-reconnect, fallback) ✅ Nov 7
+- [x] API client with 1-hour token caching (279 lines) ✅ Nov 7
+- [x] WebSocket React hooks (useMarketUpdates, useTradeUpdates, etc.) ✅ Nov 7
+- [ ] Transaction signing flow (build, sign, send utils)
+- [ ] Transaction status modal (pending, confirming, confirmed, error)
+- [ ] Error boundaries and error states
+
+**Week 10 Quality Gate:**
+- [x] All 6 wallets connect successfully ✅
+- [ ] WebSocket connects to backend (pending backend deployment)
+- [ ] API calls work with token caching
+- [ ] Transactions sign on devnet
 
 **Estimated Completion:** Week 10, Day 7
 
 ---
 
-### Week 11: Trading Interface
+### Week 11: LMSR Trading Interface (Desktop-Primary)
 
 **Status:** 0% Complete
 
-- [ ] Implement market list page
-  - [ ] Browse all markets (API integration)
-  - [ ] Search by title/description
-  - [ ] Filter by state
-  - [ ] Sort by volume, date
-  - [ ] Pagination (20 per page)
-- [ ] Implement trading UI
-  - [ ] Market details display
-  - [ ] Buy/Sell interface
-  - [ ] Slippage settings
-  - [ ] Confirm dialog
-  - [ ] Transaction status
-- [ ] Integrate real-time price chart
-  - [ ] WebSocket connection
-  - [ ] Price updates
-  - [ ] Historical data
-  - [ ] Smooth chart updates (60fps)
-- [ ] Implement position view
-  - [ ] User holdings display
-  - [ ] Unrealized P&L calculation
-  - [ ] Claim button (if finalized)
-  - [ ] Portfolio view
-- [ ] Implement voting interface
-  - [ ] Proposal list
-  - [ ] Like/Dislike buttons
-  - [ ] Vote confirmation
-  - [ ] Vote status display
-- [ ] Week 11 Quality Gate
-  - [ ] Users can browse and search markets
-  - [ ] Trading UI functional
-  - [ ] Real-time price updates work
-  - [ ] Position view shows accurate data
-  - [ ] Voting interface allows votes
+- [ ] Market detail page layout
+  - [ ] Desktop: 3-column grid (300px | 1fr | 350px)
+  - [ ] Mobile: Single column stack (simplified)
+  - [ ] Market header, state badge, stats
+- [ ] LMSR bonding curve chart (Desktop-Only)
+  - [ ] Interactive curve visualization (800x400px)
+  - [ ] Recharts implementation
+  - [ ] Current price marker on curve
+  - [ ] Bounded loss annotation (b * ln(2))
+  - [ ] Mobile: Simplified price card (no curve)
+- [ ] LMSR client-side calculations
+  - [ ] Fixed-point math (u64, 9 decimals)
+  - [ ] Cost function: C(q) = b * ln(e^(q_yes/b) + e^(q_no/b))
+  - [ ] Binary search for share calculation
+  - [ ] Price calculation: P(YES) in [0,1]
+- [ ] Trading panel
+  - [ ] YES/NO outcome selector
+  - [ ] Share quantity input (with max button)
+  - [ ] Cost preview (LMSR calculation)
+  - [ ] Slippage protection (>5% warning)
+  - [ ] "Buy Shares" button
+- [ ] WebSocket real-time integration
+  - [ ] Market prices update via WebSocket
+  - [ ] LMSR chart reacts to price changes
+  - [ ] Live trade feed
+  - [ ] Position P&L updates
+- [ ] Optimistic UI with rollback
+  - [ ] Instant feedback on trade
+  - [ ] Automatic rollback on failure
+  - [ ] Transaction history (last 5 trades)
+
+**Week 11 Quality Gate:**
+- [ ] LMSR curve matches on-chain (<0.1% error)
+- [ ] Desktop layout polished (3-column)
+- [ ] Mobile simplified (no curve, core trading only)
+- [ ] WebSocket updates prices in real-time
+- [ ] Trades execute successfully on devnet
 
 **Estimated Completion:** Week 11, Day 7
 
 ---
 
-### Week 12: Claiming + Polish
+### Week 12: Discussion System (Database-Only)
 
 **Status:** 0% Complete
 
-- [ ] Implement claim winnings UI
-  - [ ] Detect claimable markets
-  - [ ] Claim button
-  - [ ] Transaction signing
-  - [ ] Success animation
-- [ ] Implement withdraw liquidity UI
-  - [ ] Detect withdrawable liquidity
-  - [ ] Withdraw button
-  - [ ] Transaction signing
-  - [ ] Success display
-- [ ] Implement user profile
-  - [ ] Trading history
-  - [ ] Win rate calculation
-  - [ ] Total volume display
-  - [ ] Active positions
-- [ ] Implement notifications
-  - [ ] Market resolved notification
-  - [ ] Payout available notification
-  - [ ] Browser + in-app notifications
-  - [ ] Notification preferences
-- [ ] Create help documentation
-  - [ ] How to trade guide
-  - [ ] How to create markets guide
-  - [ ] How to vote guide
-  - [ ] Fee structure explanation
-  - [ ] FAQ
-- [ ] Week 12 Quality Gate
-  - [ ] Users can claim winnings
-  - [ ] Liquidity withdrawal works
-  - [ ] User profile shows accurate stats
-  - [ ] Notifications fire when expected
-  - [ ] Help docs clear and comprehensive
+- [ ] Supabase comments table migration
+  - [ ] Create `comments` table (id, market_id, author, content, parent_id, upvotes, is_flagged)
+  - [ ] RLS policies (users read all, write own, admins moderate)
+  - [ ] Indexes (market_id, author, created_at)
+- [ ] Comment posting UI
+  - [ ] Textarea (max 500 chars, show count)
+  - [ ] "Post Comment" button (requires wallet)
+  - [ ] Success toast on submission
+- [ ] Comment list (Flat, No Threading)
+  - [ ] Chronological display
+  - [ ] Author (first 4 + last 4 chars of wallet)
+  - [ ] Relative timestamp ("5 minutes ago")
+  - [ ] Loading skeleton
+- [ ] Upvote system
+  - [ ] Upvote button (no downvote in V1)
+  - [ ] Upvote count display
+  - [ ] Optimistic UI for votes
+  - [ ] Prevent double voting
+- [ ] WebSocket for live comments
+  - [ ] New comments via WebSocket push
+  - [ ] Live upvote counts
+  - [ ] Toast: "New comment from [user]"
+- [ ] Admin moderation panel
+  - [ ] Flagged comments list (admin route)
+  - [ ] "Hide Comment" action
+  - [ ] RLS check (admins only)
+
+**Week 12 Quality Gate:**
+- [ ] Comments post successfully (Supabase, NO IPFS)
+- [ ] Upvotes work with optimistic UI
+- [ ] New comments appear via WebSocket
+- [ ] Admins can moderate
+- [ ] Mobile layout functional
 
 **Estimated Completion:** Week 12, Day 7
+
+---
+
+### Week 13: Market List & Exploration
+
+**Status:** 0% Complete
+
+- [ ] Market list page layout
+  - [ ] Desktop: 3-column grid
+  - [ ] Mobile: Single column
+  - [ ] Pagination (20 markets per page)
+- [ ] Market card component
+  - [ ] Question (truncate to 2 lines)
+  - [ ] Prices: "YES: 67% | NO: 33%"
+  - [ ] State badge (ACTIVE = green, RESOLVING = yellow)
+  - [ ] Total volume (optional)
+  - [ ] Hover effect (lift card, shadow)
+- [ ] Filtering (State & Category)
+  - [ ] State dropdown (All, Active, Resolving, Finalized)
+  - [ ] Category dropdown (placeholder for V2)
+  - [ ] URL persistence (?state=ACTIVE&category=sports)
+- [ ] Sorting & Search
+  - [ ] Sort dropdown (Volume, Newest, Ending Soon)
+  - [ ] Search input (debounced 500ms)
+  - [ ] Search matches question text
+- [ ] Empty states & error handling
+  - [ ] "No results" state
+  - [ ] "Clear Filters" button
+  - [ ] Error boundary for API failures
+  - [ ] Skeleton loader (3 cards)
+
+**Week 13 Quality Gate:**
+- [ ] Market list loads (20+ markets)
+- [ ] Filtering works (state dropdown)
+- [ ] Sorting works (volume, newest)
+- [ ] Search works (text match)
+- [ ] Mobile grid responsive
+
+**Estimated Completion:** Week 13, Day 7
+
+---
+
+### Week 14: User Dashboard & E2E Testing
+
+**Status:** 0% Complete
+
+- [ ] Portfolio page layout
+  - [ ] Active positions list
+  - [ ] Desktop: 2-column grid
+  - [ ] Mobile: 1-column
+- [ ] Position card component
+  - [ ] Position breakdown (shares YES/NO, avg price)
+  - [ ] Unrealized P&L (green/red indicator)
+  - [ ] "Claim Winnings" button (FINALIZED markets only)
+  - [ ] Expandable details
+- [ ] User stats summary
+  - [ ] Total P&L (realized + unrealized)
+  - [ ] Win rate (% profitable positions)
+  - [ ] Total volume
+  - [ ] Sparkline chart (optional, 7-day P&L)
+- [ ] Claim winnings flow
+  - [ ] Build claim transaction
+  - [ ] Sign and send
+  - [ ] Success toast
+- [ ] E2E testing setup (Playwright)
+  - [ ] Install Playwright
+  - [ ] Configure playwright.config.ts
+  - [ ] Wallet mock utilities
+- [ ] E2E tests
+  - [ ] Test: Wallet connection (tests/e2e/wallet-connection.spec.ts)
+  - [ ] Test: Trading flow (navigate → buy → confirm → verify)
+  - [ ] Test: Discussion flow (post → upvote → verify)
+  - [ ] Run on devnet (real on-chain markets)
+
+**Week 14 Quality Gate:**
+- [ ] Portfolio shows accurate P&L
+- [ ] Claim winnings works on devnet
+- [ ] All E2E tests passing (wallet, trading, discussions)
+- [ ] No console errors
+- [ ] WebSocket connection stable
+
+**Estimated Completion:** Week 14, Day 7
+
+---
+
+### Week 15: Polish & Optimization
+
+**Status:** 0% Complete
+
+- [ ] Loading states & skeletons
+  - [ ] Skeleton loaders (market list, detail, portfolio)
+  - [ ] Loading spinners for actions
+  - [ ] Fade-in animations
+- [ ] Error boundaries & error states
+  - [ ] Global error boundary
+  - [ ] Page-level error states
+  - [ ] User-friendly error messages (401 → "Connect wallet", 404 → "Not found")
+  - [ ] "Retry" button on errors
+- [ ] Performance optimization
+  - [ ] React.memo() for LSMRChart, MarketCard, CommentItem
+  - [ ] Lazy loading (Portfolio, Admin routes)
+  - [ ] Image optimization (next/image)
+  - [ ] Lighthouse audit (target: >95 desktop, >85 mobile)
+- [ ] Accessibility (WCAG 2.1 Level A)
+  - [ ] ARIA labels on all buttons
+  - [ ] Alt text on all images
+  - [ ] Focus indicators visible
+  - [ ] Keyboard navigation (Tab, Enter, Esc)
+  - [ ] axe DevTools audit
+- [ ] Analytics integration (PostHog)
+  - [ ] Install posthog-js
+  - [ ] Initialize in app/layout.tsx
+  - [ ] Track events (wallet connected, trade executed, comment posted)
+- [ ] Error monitoring (Sentry - Optional)
+  - [ ] Install @sentry/nextjs
+  - [ ] Configure sentry.client.config.ts
+  - [ ] Test error reporting
+- [ ] Final QA & launch prep
+  - [ ] Run all E2E tests
+  - [ ] Manual testing (Desktop: Chrome, Firefox, Safari)
+  - [ ] Mobile testing (iOS Safari, Android Chrome)
+  - [ ] Test all 6 wallet adapters
+  - [ ] Verify WebSocket stability
+  - [ ] Update README.md (setup instructions)
+
+**Week 15 Quality Gate:**
+- [ ] All E2E tests passing
+- [ ] Lighthouse score >95 (desktop), >85 (mobile)
+- [ ] No console errors
+- [ ] Tested on 5+ real devices
+- [ ] WebSocket connection stable (no disconnects)
+- [ ] Documentation complete
+
+**Estimated Completion:** Week 15, Day 7
 
 ---
 
@@ -759,39 +892,38 @@
 
 **Must Pass Before Phase 5:**
 
-#### User Flows
-- [ ] Users can connect wallet (<30 seconds)
-- [ ] Users can complete trade (<1 minute)
-- [ ] Users can vote on proposals (<30 seconds)
-- [ ] Users can claim winnings (<30 seconds)
-- [ ] Users can withdraw liquidity (<30 seconds)
+#### Technical Metrics
+- [ ] LMSR calculations match on-chain (<0.1% error)
+- [ ] WebSocket handles 100+ concurrent users
+- [ ] Desktop Lighthouse score >95
+- [ ] Mobile Lighthouse score >85
+- [ ] Average trade execution <500ms
+- [ ] Zero critical bugs in production
+- [ ] WCAG 2.1 Level A compliance
 
-#### UI Quality
-- [ ] All pages mobile responsive
-- [ ] No UI bugs (tested by 5 beta users)
-- [ ] Real-time updates work
-- [ ] Error messages clear
-- [ ] Loading states shown
+#### User Experience
+- [ ] Wallet connection <30 seconds
+- [ ] Trade completion <1 minute end-to-end
+- [ ] LMSR curve understandable (with tooltips)
+- [ ] Discussions load instantly
+- [ ] Mobile features work on 5+ real devices
+- [ ] Real-time updates (<1s latency)
+- [ ] Token caching reduces signing friction (1-hour cache)
 
-#### Performance
-- [ ] Page load time <3 seconds
-- [ ] Interactions responsive (<100ms feedback)
-- [ ] WebSocket stable (no disconnects in 10min)
-- [ ] No memory leaks
+#### Scope Compliance
+- [ ] Desktop-primary approach (LMSR curve 800x400px visible on desktop)
+- [ ] Mobile-essential only (core trading flows, no curve)
+- [ ] WebSocket from Day 1 (not polling)
+- [ ] Database-only discussions (NO IPFS)
+- [ ] LMSR terminology (NOT AMM)
 
-#### Accessibility
-- [ ] Keyboard navigation works
-- [ ] Screen reader compatible
-- [ ] Color contrast meets WCAG AA
-- [ ] Focus indicators visible
+**If Gate Fails:** Fix bugs, improve UX, re-test with users
 
-**If Gate Fails:** Fix UI bugs, improve performance, re-test with users
-
-**Phase 4 Target Completion:** End of Week 12
+**Phase 4 Target Completion:** End of Week 15 (6 weeks total)
 
 ---
 
-## Phase 5: Security + Deployment (Weeks 13-14)
+## Phase 5: Security + Deployment (Weeks 16-17)
 
 **Objective:** Security audit and mainnet launch
 

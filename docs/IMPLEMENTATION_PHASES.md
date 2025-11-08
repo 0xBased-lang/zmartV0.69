@@ -40,15 +40,16 @@
 - All blueprint mechanics (voting, LMSR, resolution, disputes)
 - Proposal voting system (like/dislike, 70% threshold)
 - Off-chain vote aggregation → on-chain recording
-- Minimal discussion system (Supabase + daily IPFS snapshots)
+- Minimal discussion system (Supabase database-only, NO IPFS in V1)
 - Wallet-only auth (SIWE)
 - Basic user profiles (wallet address only)
 
-**❌ Defer to V2 (Social Features):**
+**❌ Defer to V2 (Social Features & Infrastructure):**
 - Twitter OAuth integration
 - Advanced reputation scoring algorithm
 - Community flagging/moderation system
 - Detailed user profiles
+- IPFS snapshots for discussion history archival
 - Governance token
 - Staking mechanics
 - DAO features
