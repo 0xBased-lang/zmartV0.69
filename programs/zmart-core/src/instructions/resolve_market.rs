@@ -38,14 +38,35 @@ pub fn handler(
 ) -> Result<()> {
     let market = &mut ctx.accounts.market;
     let clock = Clock::get()?;
+    let current_time = clock.unix_timestamp;
 
     // SECURITY FIX (Finding #5): Verify market hasn't already been resolved
     require!(market.proposed_outcome.is_none(), ErrorCode::AlreadyResolved);
 
+    // SECURITY FIX (Finding #10): Validate timestamp bounds
+    // Prevents time travel and far-future manipulation attacks
+    require!(
+        current_time >= market.created_at,
+        ErrorCode::InvalidTimestamp
+    );
+
+    // Sanity check: timestamp must be within 10 years of market creation
+    let max_timestamp = market.created_at
+        .checked_add(86400 * 365 * 10)  // 10 years in seconds
+        .ok_or(ErrorCode::OverflowError)?;
+
+    require!(
+        current_time <= max_timestamp,
+        ErrorCode::InvalidTimestamp
+    );
+
+    msg!("Timestamp validation passed: current={}, created={}, activated={}",
+        current_time, market.created_at, market.activated_at);
+
     // SECURITY: Validate timestamp monotonicity (prevents time manipulation)
     // Resolution can only happen after market activation
     require!(
-        clock.unix_timestamp > market.activated_at,
+        current_time > market.activated_at,
         ErrorCode::InvalidTimestamp
     );
 

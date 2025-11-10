@@ -43,11 +43,32 @@ pub fn handler(
     let market = &mut ctx.accounts.market;
     let config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
+    let current_time = clock.unix_timestamp;
+
+    // SECURITY FIX (Finding #10): Validate timestamp bounds
+    // Prevents time travel and far-future manipulation attacks
+    require!(
+        current_time >= market.created_at,
+        ErrorCode::InvalidTimestamp
+    );
+
+    // Sanity check: timestamp must be within 10 years of market creation
+    let max_timestamp = market.created_at
+        .checked_add(86400 * 365 * 10)  // 10 years in seconds
+        .ok_or(ErrorCode::OverflowError)?;
+
+    require!(
+        current_time <= max_timestamp,
+        ErrorCode::InvalidTimestamp
+    );
+
+    msg!("Timestamp validation passed: current={}, created={}, resolution_proposed={}",
+        current_time, market.created_at, market.resolution_proposed_at);
 
     // SECURITY FIX (Finding #5): Validate timestamp monotonicity
     // Finalization can only happen after resolution is proposed
     require!(
-        clock.unix_timestamp > market.resolution_proposed_at,
+        current_time > market.resolution_proposed_at,
         ErrorCode::InvalidTimestamp
     );
 
