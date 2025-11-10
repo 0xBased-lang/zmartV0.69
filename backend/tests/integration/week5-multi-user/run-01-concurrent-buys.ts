@@ -132,52 +132,67 @@ async function runConcurrentBuysTest() {
     console.log('✅ Market created:', createTx.slice(0, 8) + '...\n');
 
     // Submit proposal votes (need 70% approval to proceed)
-    console.log('Submitting proposal votes...');
+    // Each user can only vote once (unique vote record PDA per voter)
+    // With 5 users: 4 likes (80%) > 70% threshold ✅
+    console.log('Submitting proposal votes (4 likes, 1 dislike)...');
 
-    // Submit 8 likes and 2 dislikes (80% approval - exceeds 70% threshold)
-    for (let i = 0; i < 8; i++) {
+    // Submit 4 likes from first 4 test users (80% approval)
+    for (let i = 0; i < 4; i++) {
+      // PDA seeds: ["vote", market_key, user_key, [VoteType::Proposal as u8]]
+      // VoteType::Proposal = 0
       const [voteRecordPda] = anchor.web3.PublicKey.findProgramAddressSync(
-        [Buffer.from('vote-record'), Buffer.from(market.id), testUsers[i % 5].publicKey.toBuffer()],
+        [
+          Buffer.from('vote'),
+          marketPda.toBuffer(),
+          testUsers[i].publicKey.toBuffer(),
+          Buffer.from([0]), // VoteType::Proposal = 0
+        ],
         ctx.program.programId
       );
 
       await ctx.program.methods
-        .submitProposalVote(true) // true = like (only argument is vote boolean)
+        .submitProposalVote(true) // true = like
         .accounts({
-          voter: testUsers[i % 5].publicKey,
+          user: testUsers[i].publicKey, // Account name is "user", not "voter"
           market: marketPda,
-          voteRecord: voteRecordPda,
-          globalConfig: ctx.globalConfigPda,
+          voteRecord: voteRecordPda, // Anchor uses camelCase in TypeScript
           systemProgram: SystemProgram.programId,
         })
-        .signers([testUsers[i % 5].keypair])
+        .signers([testUsers[i].keypair])
         .rpc();
+
+      console.log(`  ✅ ${testUsers[i].label} voted LIKE`);
     }
 
-    for (let i = 0; i < 2; i++) {
-      const [voteRecordPda] = anchor.web3.PublicKey.findProgramAddressSync(
-        [Buffer.from('vote-record'), Buffer.from(market.id), ctx.payer.publicKey.toBuffer()],
-        ctx.program.programId
-      );
+    // Submit 1 dislike from 5th test user (20% disapproval)
+    const [voteRecordPda5] = anchor.web3.PublicKey.findProgramAddressSync(
+      [
+        Buffer.from('vote'),
+        marketPda.toBuffer(),
+        testUsers[4].publicKey.toBuffer(),
+        Buffer.from([0]), // VoteType::Proposal = 0
+      ],
+      ctx.program.programId
+    );
 
-      await ctx.program.methods
-        .submitProposalVote(false) // false = dislike (only argument is vote boolean)
-        .accounts({
-          voter: ctx.payer.publicKey,
-          market: marketPda,
-          voteRecord: voteRecordPda,
-          globalConfig: ctx.globalConfigPda,
-          systemProgram: SystemProgram.programId,
-        })
-        .rpc();
-    }
+    await ctx.program.methods
+      .submitProposalVote(false) // false = dislike
+      .accounts({
+        user: testUsers[4].publicKey, // Account name is "user"
+        market: marketPda,
+        voteRecord: voteRecordPda5, // Anchor uses camelCase in TypeScript
+        systemProgram: SystemProgram.programId,
+      })
+      .signers([testUsers[4].keypair])
+      .rpc();
 
-    console.log('✅ Votes submitted (8 likes, 2 dislikes = 80%)\n');
+    console.log(`  ✅ ${testUsers[4].label} voted DISLIKE`);
+    console.log('✅ Votes submitted (4 likes, 1 dislike = 80%)\n');
 
     // Aggregate votes
     console.log('Aggregating proposal votes...');
     const aggregateTx = await ctx.program.methods
-      .aggregateProposalVotes(8, 2) // final_likes, final_dislikes (no market_id needed)
+      .aggregateProposalVotes(4, 1) // final_likes: 4, final_dislikes: 1 (80% approval)
       .accounts({
         authority: ctx.payer.publicKey,
         market: marketPda,
@@ -186,7 +201,7 @@ async function runConcurrentBuysTest() {
       .rpc();
 
     await ctx.connection.confirmTransaction(aggregateTx, 'confirmed');
-    console.log('✅ Votes aggregated:', aggregateTx.slice(0, 8) + '...\n');
+    console.log('✅ Votes aggregated (4 likes, 1 dislike):', aggregateTx.slice(0, 8) + '...\n');
 
     // Approve proposal
     console.log('Approving proposal...');
@@ -219,8 +234,15 @@ async function runConcurrentBuysTest() {
     // Verify market state
     // @ts-ignore
     const marketAccount = await ctx.program.account.marketAccount.fetch(marketPda);
-    if (marketAccount.state !== 2) { // ACTIVE = 2
-      throw new Error(`Market not in ACTIVE state: ${marketAccount.state}`);
+
+    // Anchor enums are objects like { active: {} }, not numbers
+    // MarketState enum: Proposed (0), Approved (1), Active (2), etc.
+    const isActive = marketAccount.state.active !== undefined ||
+                     (typeof marketAccount.state === 'number' && marketAccount.state === 2);
+
+    if (!isActive) {
+      console.log('Actual state:', JSON.stringify(marketAccount.state, null, 2));
+      throw new Error(`Market not in ACTIVE state: ${JSON.stringify(marketAccount.state)}`);
     }
 
     console.log('✅ Market ready for trading\n');
@@ -331,17 +353,19 @@ async function runConcurrentBuysTest() {
         console.log(`${user.label}:`);
         console.log(`  YES Shares: ${position.sharesYes.toString()}`);
         console.log(`  NO Shares: ${position.sharesNo.toString()}`);
-        console.log(`  Amount Paid: ${(position.amountPaid.toNumber() / 1e9).toFixed(4)} SOL`);
-        console.log(`  Claimed: ${position.claimed}\n`);
+        console.log(`  Total Invested: ${(position.totalInvested.toNumber() / 1e9).toFixed(4)} SOL`);
+        console.log(`  Has Claimed: ${position.hasClaimed}`);
 
         if (position.sharesYes.lte(new anchor.BN(0))) {
           console.log(`  ⚠️  Warning: ${user.label} has 0 YES shares\n`);
         } else {
+          console.log(`  ✅ Position verified!\n`);
           successfulPositions++;
         }
 
       } catch (error: any) {
-        console.log(`  ❌ Position not found for ${user.label}\n`);
+        console.log(`  ❌ Position not found for ${user.label}`);
+        console.log(`     Error: ${error.message}\n`);
       }
     }
 
@@ -363,22 +387,26 @@ async function runConcurrentBuysTest() {
     const finalMarketAccount = await ctx.program.account.marketAccount.fetch(marketPda);
 
     console.log('Market State After Concurrent Trades:');
-    console.log(`- State: ${finalMarketAccount.state} (ACTIVE = 2)`);
-    console.log(`- Quantity YES: ${finalMarketAccount.quantityYes.toString()}`);
-    console.log(`- Quantity NO: ${finalMarketAccount.quantityNo.toString()}`);
-    console.log(`- Liquidity Pool: ${(finalMarketAccount.liquidityPool.toNumber() / 1e9).toFixed(4)} SOL`);
+    console.log(`- State: ${JSON.stringify(finalMarketAccount.state)} ✅`);
+    console.log(`- Shares YES: ${finalMarketAccount.sharesYes.toString()}`);
+    console.log(`- Shares NO: ${finalMarketAccount.sharesNo.toString()}`);
+    console.log(`- Current Liquidity: ${(finalMarketAccount.currentLiquidity.toNumber() / 1e9).toFixed(4)} SOL`);
     console.log(`- Total Volume: ${(finalMarketAccount.totalVolume.toNumber() / 1e9).toFixed(4)} SOL\n`);
 
-    if (finalMarketAccount.state !== 2) {
-      throw new Error(`Market not in ACTIVE state after trades: ${finalMarketAccount.state}`);
+    // Check if market is still ACTIVE after trades
+    const isStillActive = finalMarketAccount.state.active !== undefined ||
+                           (typeof finalMarketAccount.state === 'number' && finalMarketAccount.state === 2);
+
+    if (!isStillActive) {
+      throw new Error(`Market not in ACTIVE state after trades: ${JSON.stringify(finalMarketAccount.state)}`);
     }
 
-    if (finalMarketAccount.quantityYes.lte(new anchor.BN(0))) {
-      throw new Error('Quantity YES should be > 0 after buys');
+    if (finalMarketAccount.sharesYes.lte(new anchor.BN(0))) {
+      throw new Error('Shares YES should be > 0 after buys');
     }
 
-    if (finalMarketAccount.liquidityPool.lte(market.initialLiquidity)) {
-      throw new Error('Liquidity pool should increase after trades');
+    if (finalMarketAccount.currentLiquidity.lte(market.initialLiquidity)) {
+      throw new Error('Liquidity should increase after trades');
     }
 
     console.log('✅ Market state is consistent\n');
