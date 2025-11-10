@@ -3,7 +3,7 @@ import { Connection, Keypair, PublicKey } from '@solana/web3.js';
 import fs from 'fs';
 
 // Constants
-const PROGRAM_ID = new PublicKey('AFFtXXBKgTbSjFFikKG2jQ7qKvLt9mswvhTFSizJyFoH');
+const PROGRAM_ID = new PublicKey('6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw');
 const RPC_URL = 'https://api.devnet.solana.com';
 
 async function reinitializeGlobalConfig() {
