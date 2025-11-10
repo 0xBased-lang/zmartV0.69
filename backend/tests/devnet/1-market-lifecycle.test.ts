@@ -179,6 +179,15 @@ async function runMarketLifecycleTests() {
     console.log('Note: Proposal has 75% approval (>= 70% threshold required).\n');
 
     try {
+      // Fetch market account to check current state
+      // @ts-ignore - Using untyped program for now
+      const marketAccount = await ctx.program.account.marketAccount.fetch(marketPda);
+      console.log('Market state before approval:', marketAccount.state);
+      console.log('Proposal votes - Likes:', marketAccount.proposalLikes.toString());
+      console.log('Proposal votes - Dislikes:', marketAccount.proposalDislikes.toString());
+      console.log('Proposal votes - Total:', marketAccount.proposalTotalVotes.toString());
+      console.log('');
+
       const approveTx = await ctx.program.methods
         .approveProposal()
         .accounts({

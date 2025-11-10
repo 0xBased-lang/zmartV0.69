@@ -66206,3 +66206,549 @@
 2025-11-10T03:36:40:   "service": "zmart-backend",
 2025-11-10T03:36:40:   "error": "Cannot read properties of undefined (reading 'toString')"
 2025-11-10T03:36:40: }
+2025-11-10T03:36:41: [03:36:41] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:36:41:   "service": "zmart-backend",
+2025-11-10T03:36:41:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:36:41: }
+2025-11-10T03:36:44: [03:36:44] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:36:44:   "service": "zmart-backend",
+2025-11-10T03:36:44:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:36:44: }
+2025-11-10T03:36:45: [03:36:45] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:36:45:   "service": "zmart-backend",
+2025-11-10T03:36:45:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:36:45: }
+2025-11-10T03:36:47: [03:36:47] [32minfo[39m: [ProposalVoteAggregator] Completed: 5 processed, 0 approved, 30 errors in 107253ms {
+2025-11-10T03:36:47:   "service": "zmart-backend"
+2025-11-10T03:36:47: }
+2025-11-10T03:36:47: [03:36:47] [32minfo[39m: [VoteAggregatorScheduler] Scheduled aggregation complete {
+2025-11-10T03:36:47:   "service": "zmart-backend"
+2025-11-10T03:36:47: }
+2025-11-10T03:40:00: [03:40:00] [32minfo[39m: [VoteAggregatorScheduler] Running scheduled aggregation... {
+2025-11-10T03:40:00:   "service": "zmart-backend"
+2025-11-10T03:40:00: }
+2025-11-10T03:40:00: [03:40:00] [32minfo[39m: [ProposalVoteAggregator] Starting vote aggregation... {
+2025-11-10T03:40:00:   "service": "zmart-backend"
+2025-11-10T03:40:00: }
+2025-11-10T03:40:00: [03:40:00] [32minfo[39m: [DisputeVoteAggregator] Starting dispute vote aggregation... {
+2025-11-10T03:40:00:   "service": "zmart-backend"
+2025-11-10T03:40:00: }
+2025-11-10T03:40:01: [03:40:01] [32minfo[39m: [ProposalVoteAggregator] Found 35 proposed markets {
+2025-11-10T03:40:01:   "service": "zmart-backend"
+2025-11-10T03:40:01: }
+2025-11-10T03:40:01: [03:40:01] [32minfo[39m: [DisputeVoteAggregator] Found 0 disputed markets {
+2025-11-10T03:40:01:   "service": "zmart-backend"
+2025-11-10T03:40:01: }
+2025-11-10T03:40:01: [03:40:01] [32minfo[39m: [DisputeVoteAggregator] No markets to process {
+2025-11-10T03:40:01:   "service": "zmart-backend"
+2025-11-10T03:40:01: }
+2025-11-10T03:40:02: [03:40:02] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:02:   "service": "zmart-backend",
+2025-11-10T03:40:02:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:02: }
+2025-11-10T03:40:03: [03:40:03] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:03:   "service": "zmart-backend",
+2025-11-10T03:40:03:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:03: }
+2025-11-10T03:40:06: [03:40:06] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:06:   "service": "zmart-backend",
+2025-11-10T03:40:06:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:06: }
+2025-11-10T03:40:07: [03:40:07] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:07:   "service": "zmart-backend",
+2025-11-10T03:40:07:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:07: }
+2025-11-10T03:40:09: [03:40:09] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:09:   "service": "zmart-backend",
+2025-11-10T03:40:09:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:09: }
+2025-11-10T03:40:10: [03:40:10] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:10:   "service": "zmart-backend",
+2025-11-10T03:40:10:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:10: }
+2025-11-10T03:40:13: [03:40:13] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:13:   "service": "zmart-backend",
+2025-11-10T03:40:13:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:13: }
+2025-11-10T03:40:14: [03:40:14] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:14:   "service": "zmart-backend",
+2025-11-10T03:40:14:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:14: }
+2025-11-10T03:40:16: [03:40:16] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:16:   "service": "zmart-backend",
+2025-11-10T03:40:16:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:16: }
+2025-11-10T03:40:17: [03:40:17] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:17:   "service": "zmart-backend",
+2025-11-10T03:40:17:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:17: }
+2025-11-10T03:40:20: [03:40:19] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:20:   "service": "zmart-backend",
+2025-11-10T03:40:20:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:20: }
+2025-11-10T03:40:21: [03:40:21] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:21:   "service": "zmart-backend",
+2025-11-10T03:40:21:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:21: }
+2025-11-10T03:40:23: [03:40:23] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:23:   "service": "zmart-backend",
+2025-11-10T03:40:23:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:23: }
+2025-11-10T03:40:24: [03:40:24] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:24:   "service": "zmart-backend",
+2025-11-10T03:40:24:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:24: }
+2025-11-10T03:40:26: [03:40:26] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:26:   "service": "zmart-backend",
+2025-11-10T03:40:26:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:26: }
+2025-11-10T03:40:28: [03:40:28] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:28:   "service": "zmart-backend",
+2025-11-10T03:40:28:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:28: }
+2025-11-10T03:40:30: [03:40:30] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:30:   "service": "zmart-backend",
+2025-11-10T03:40:30:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:30: }
+2025-11-10T03:40:31: [03:40:31] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:31:   "service": "zmart-backend",
+2025-11-10T03:40:31:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:31: }
+2025-11-10T03:40:34: [03:40:34] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:34:   "service": "zmart-backend",
+2025-11-10T03:40:34:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:34: }
+2025-11-10T03:40:35: [03:40:35] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:35:   "service": "zmart-backend",
+2025-11-10T03:40:35:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:35: }
+2025-11-10T03:40:37: [03:40:37] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:37:   "service": "zmart-backend",
+2025-11-10T03:40:37:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:37: }
+2025-11-10T03:40:38: [03:40:38] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:38:   "service": "zmart-backend",
+2025-11-10T03:40:38:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:38: }
+2025-11-10T03:40:40: [03:40:40] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:40:   "service": "zmart-backend",
+2025-11-10T03:40:40:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:40: }
+2025-11-10T03:40:42: [03:40:42] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:42:   "service": "zmart-backend",
+2025-11-10T03:40:42:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:42: }
+2025-11-10T03:40:44: [03:40:44] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:44:   "service": "zmart-backend",
+2025-11-10T03:40:44:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:44: }
+2025-11-10T03:40:45: [03:40:45] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:45:   "service": "zmart-backend",
+2025-11-10T03:40:45:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:45: }
+2025-11-10T03:40:47: [03:40:47] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:47:   "service": "zmart-backend",
+2025-11-10T03:40:47:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:47: }
+2025-11-10T03:40:48: [03:40:48] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:48:   "service": "zmart-backend",
+2025-11-10T03:40:48:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:48: }
+2025-11-10T03:40:51: [03:40:51] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:51:   "service": "zmart-backend",
+2025-11-10T03:40:51:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:51: }
+2025-11-10T03:40:52: [03:40:52] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:52:   "service": "zmart-backend",
+2025-11-10T03:40:52:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:52: }
+2025-11-10T03:40:54: [03:40:54] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:54:   "service": "zmart-backend",
+2025-11-10T03:40:54:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:54: }
+2025-11-10T03:40:55: [03:40:55] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:55:   "service": "zmart-backend",
+2025-11-10T03:40:55:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:55: }
+2025-11-10T03:40:58: [03:40:58] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:40:58:   "service": "zmart-backend",
+2025-11-10T03:40:58:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:58: }
+2025-11-10T03:40:59: [03:40:59] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:40:59:   "service": "zmart-backend",
+2025-11-10T03:40:59:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:40:59: }
+2025-11-10T03:41:01: [03:41:01] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:01:   "service": "zmart-backend",
+2025-11-10T03:41:01:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:01: }
+2025-11-10T03:41:02: [03:41:02] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:02:   "service": "zmart-backend",
+2025-11-10T03:41:02:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:02: }
+2025-11-10T03:41:05: [03:41:05] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:05:   "service": "zmart-backend",
+2025-11-10T03:41:05:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:05: }
+2025-11-10T03:41:06: [03:41:06] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:06:   "service": "zmart-backend",
+2025-11-10T03:41:06:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:06: }
+2025-11-10T03:41:08: [03:41:08] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:08:   "service": "zmart-backend",
+2025-11-10T03:41:08:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:08: }
+2025-11-10T03:41:09: [03:41:09] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:09:   "service": "zmart-backend",
+2025-11-10T03:41:09:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:09: }
+2025-11-10T03:41:12: [03:41:12] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:12:   "service": "zmart-backend",
+2025-11-10T03:41:12:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:12: }
+2025-11-10T03:41:13: [03:41:13] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:13:   "service": "zmart-backend",
+2025-11-10T03:41:13:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:13: }
+2025-11-10T03:41:15: [03:41:15] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:15:   "service": "zmart-backend",
+2025-11-10T03:41:15:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:15: }
+2025-11-10T03:41:16: [03:41:16] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:16:   "service": "zmart-backend",
+2025-11-10T03:41:16:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:16: }
+2025-11-10T03:41:19: [03:41:19] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:19:   "service": "zmart-backend",
+2025-11-10T03:41:19:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:19: }
+2025-11-10T03:41:20: [03:41:20] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:20:   "service": "zmart-backend",
+2025-11-10T03:41:20:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:20: }
+2025-11-10T03:41:22: [03:41:22] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:22:   "service": "zmart-backend",
+2025-11-10T03:41:22:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:22: }
+2025-11-10T03:41:23: [03:41:23] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:23:   "service": "zmart-backend",
+2025-11-10T03:41:23:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:23: }
+2025-11-10T03:41:26: [03:41:26] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:26:   "service": "zmart-backend",
+2025-11-10T03:41:26:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:26: }
+2025-11-10T03:41:27: [03:41:27] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:27:   "service": "zmart-backend",
+2025-11-10T03:41:27:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:27: }
+2025-11-10T03:41:29: [03:41:29] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:29:   "service": "zmart-backend",
+2025-11-10T03:41:29:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:29: }
+2025-11-10T03:41:30: [03:41:30] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:30:   "service": "zmart-backend",
+2025-11-10T03:41:30:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:30: }
+2025-11-10T03:41:33: [03:41:33] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:33:   "service": "zmart-backend",
+2025-11-10T03:41:33:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:33: }
+2025-11-10T03:41:34: [03:41:34] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:34:   "service": "zmart-backend",
+2025-11-10T03:41:34:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:34: }
+2025-11-10T03:41:36: [03:41:36] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:36:   "service": "zmart-backend",
+2025-11-10T03:41:36:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:36: }
+2025-11-10T03:41:37: [03:41:37] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:37:   "service": "zmart-backend",
+2025-11-10T03:41:37:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:37: }
+2025-11-10T03:41:40: [03:41:40] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:40:   "service": "zmart-backend",
+2025-11-10T03:41:40:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:40: }
+2025-11-10T03:41:41: [03:41:41] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:41:   "service": "zmart-backend",
+2025-11-10T03:41:41:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:41: }
+2025-11-10T03:41:43: [03:41:43] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:41:43:   "service": "zmart-backend",
+2025-11-10T03:41:43:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:43: }
+2025-11-10T03:41:44: [03:41:44] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:41:44:   "service": "zmart-backend",
+2025-11-10T03:41:44:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:41:44: }
+2025-11-10T03:41:46: [03:41:46] [32minfo[39m: [ProposalVoteAggregator] Completed: 5 processed, 0 approved, 30 errors in 106026ms {
+2025-11-10T03:41:46:   "service": "zmart-backend"
+2025-11-10T03:41:46: }
+2025-11-10T03:41:46: [03:41:46] [32minfo[39m: [VoteAggregatorScheduler] Scheduled aggregation complete {
+2025-11-10T03:41:46:   "service": "zmart-backend"
+2025-11-10T03:41:46: }
+2025-11-10T03:45:00: [03:45:00] [32minfo[39m: [VoteAggregatorScheduler] Running scheduled aggregation... {
+2025-11-10T03:45:00:   "service": "zmart-backend"
+2025-11-10T03:45:00: }
+2025-11-10T03:45:00: [03:45:00] [32minfo[39m: [ProposalVoteAggregator] Starting vote aggregation... {
+2025-11-10T03:45:00:   "service": "zmart-backend"
+2025-11-10T03:45:00: }
+2025-11-10T03:45:00: [03:45:00] [32minfo[39m: [DisputeVoteAggregator] Starting dispute vote aggregation... {
+2025-11-10T03:45:00:   "service": "zmart-backend"
+2025-11-10T03:45:00: }
+2025-11-10T03:45:01: [03:45:01] [32minfo[39m: [DisputeVoteAggregator] Found 0 disputed markets {
+2025-11-10T03:45:01:   "service": "zmart-backend"
+2025-11-10T03:45:01: }
+2025-11-10T03:45:01: [03:45:01] [32minfo[39m: [DisputeVoteAggregator] No markets to process {
+2025-11-10T03:45:01:   "service": "zmart-backend"
+2025-11-10T03:45:01: }
+2025-11-10T03:45:01: [03:45:01] [32minfo[39m: [ProposalVoteAggregator] Found 35 proposed markets {
+2025-11-10T03:45:01:   "service": "zmart-backend"
+2025-11-10T03:45:01: }
+2025-11-10T03:45:02: [03:45:02] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:02:   "service": "zmart-backend",
+2025-11-10T03:45:02:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:02: }
+2025-11-10T03:45:03: [03:45:03] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:03:   "service": "zmart-backend",
+2025-11-10T03:45:03:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:03: }
+2025-11-10T03:45:05: [03:45:05] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:05:   "service": "zmart-backend",
+2025-11-10T03:45:05:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:05: }
+2025-11-10T03:45:06: [03:45:06] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:06:   "service": "zmart-backend",
+2025-11-10T03:45:06:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:06: }
+2025-11-10T03:45:09: [03:45:09] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:09:   "service": "zmart-backend",
+2025-11-10T03:45:09:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:09: }
+2025-11-10T03:45:10: [03:45:10] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:10:   "service": "zmart-backend",
+2025-11-10T03:45:10:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:10: }
+2025-11-10T03:45:12: [03:45:12] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:12:   "service": "zmart-backend",
+2025-11-10T03:45:12:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:12: }
+2025-11-10T03:45:13: [03:45:13] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:13:   "service": "zmart-backend",
+2025-11-10T03:45:13:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:13: }
+2025-11-10T03:45:16: [03:45:16] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:16:   "service": "zmart-backend",
+2025-11-10T03:45:16:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:16: }
+2025-11-10T03:45:17: [03:45:17] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:17:   "service": "zmart-backend",
+2025-11-10T03:45:17:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:17: }
+2025-11-10T03:45:19: [03:45:19] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:19:   "service": "zmart-backend",
+2025-11-10T03:45:19:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:19: }
+2025-11-10T03:45:20: [03:45:20] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:20:   "service": "zmart-backend",
+2025-11-10T03:45:20:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:20: }
+2025-11-10T03:45:23: [03:45:23] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:23:   "service": "zmart-backend",
+2025-11-10T03:45:23:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:23: }
+2025-11-10T03:45:24: [03:45:24] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:24:   "service": "zmart-backend",
+2025-11-10T03:45:24:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:24: }
+2025-11-10T03:45:26: [03:45:26] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:26:   "service": "zmart-backend",
+2025-11-10T03:45:26:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:26: }
+2025-11-10T03:45:27: [03:45:27] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:27:   "service": "zmart-backend",
+2025-11-10T03:45:27:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:27: }
+2025-11-10T03:45:30: [03:45:30] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:30:   "service": "zmart-backend",
+2025-11-10T03:45:30:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:30: }
+2025-11-10T03:45:31: [03:45:31] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:31:   "service": "zmart-backend",
+2025-11-10T03:45:31:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:31: }
+2025-11-10T03:45:33: [03:45:33] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:33:   "service": "zmart-backend",
+2025-11-10T03:45:33:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:33: }
+2025-11-10T03:45:34: [03:45:34] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:34:   "service": "zmart-backend",
+2025-11-10T03:45:34:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:34: }
+2025-11-10T03:45:37: [03:45:37] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:37:   "service": "zmart-backend",
+2025-11-10T03:45:37:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:37: }
+2025-11-10T03:45:38: [03:45:38] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:38:   "service": "zmart-backend",
+2025-11-10T03:45:38:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:38: }
+2025-11-10T03:45:40: [03:45:40] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:40:   "service": "zmart-backend",
+2025-11-10T03:45:40:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:40: }
+2025-11-10T03:45:41: [03:45:41] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:41:   "service": "zmart-backend",
+2025-11-10T03:45:41:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:41: }
+2025-11-10T03:45:44: [03:45:44] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:44:   "service": "zmart-backend",
+2025-11-10T03:45:44:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:44: }
+2025-11-10T03:45:45: [03:45:45] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:45:   "service": "zmart-backend",
+2025-11-10T03:45:45:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:45: }
+2025-11-10T03:45:47: [03:45:47] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:47:   "service": "zmart-backend",
+2025-11-10T03:45:47:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:47: }
+2025-11-10T03:45:48: [03:45:48] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:48:   "service": "zmart-backend",
+2025-11-10T03:45:48:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:48: }
+2025-11-10T03:45:51: [03:45:51] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:51:   "service": "zmart-backend",
+2025-11-10T03:45:51:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:51: }
+2025-11-10T03:45:52: [03:45:52] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:52:   "service": "zmart-backend",
+2025-11-10T03:45:52:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:52: }
+2025-11-10T03:45:54: [03:45:54] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:54:   "service": "zmart-backend",
+2025-11-10T03:45:54:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:54: }
+2025-11-10T03:45:55: [03:45:55] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:55:   "service": "zmart-backend",
+2025-11-10T03:45:55:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:55: }
+2025-11-10T03:45:58: [03:45:58] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:45:58:   "service": "zmart-backend",
+2025-11-10T03:45:58:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:58: }
+2025-11-10T03:45:59: [03:45:59] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:45:59:   "service": "zmart-backend",
+2025-11-10T03:45:59:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:45:59: }
+2025-11-10T03:46:01: [03:46:01] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:01:   "service": "zmart-backend",
+2025-11-10T03:46:01:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:01: }
+2025-11-10T03:46:02: [03:46:02] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:02:   "service": "zmart-backend",
+2025-11-10T03:46:02:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:02: }
+2025-11-10T03:46:05: [03:46:05] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:05:   "service": "zmart-backend",
+2025-11-10T03:46:05:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:05: }
+2025-11-10T03:46:06: [03:46:06] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:06:   "service": "zmart-backend",
+2025-11-10T03:46:06:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:06: }
+2025-11-10T03:46:08: [03:46:08] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:08:   "service": "zmart-backend",
+2025-11-10T03:46:08:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:08: }
+2025-11-10T03:46:09: [03:46:09] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:09:   "service": "zmart-backend",
+2025-11-10T03:46:09:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:09: }
+2025-11-10T03:46:12: [03:46:12] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:12:   "service": "zmart-backend",
+2025-11-10T03:46:12:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:12: }
+2025-11-10T03:46:13: [03:46:13] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:13:   "service": "zmart-backend",
+2025-11-10T03:46:13:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:13: }
+2025-11-10T03:46:15: [03:46:15] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:15:   "service": "zmart-backend",
+2025-11-10T03:46:15:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:15: }
+2025-11-10T03:46:16: [03:46:16] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:16:   "service": "zmart-backend",
+2025-11-10T03:46:16:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:16: }
+2025-11-10T03:46:19: [03:46:19] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:19:   "service": "zmart-backend",
+2025-11-10T03:46:19:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:19: }
+2025-11-10T03:46:20: [03:46:20] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:20:   "service": "zmart-backend",
+2025-11-10T03:46:20:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:20: }
+2025-11-10T03:46:22: [03:46:22] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:22:   "service": "zmart-backend",
+2025-11-10T03:46:22:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:22: }
+2025-11-10T03:46:24: [03:46:24] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:24:   "service": "zmart-backend",
+2025-11-10T03:46:24:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:24: }
+2025-11-10T03:46:26: [03:46:26] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:26:   "service": "zmart-backend",
+2025-11-10T03:46:26:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:26: }
+2025-11-10T03:46:27: [03:46:27] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:27:   "service": "zmart-backend",
+2025-11-10T03:46:27:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:27: }
+2025-11-10T03:46:29: [03:46:29] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:29:   "service": "zmart-backend",
+2025-11-10T03:46:29:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:29: }
+2025-11-10T03:46:31: [03:46:31] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:31:   "service": "zmart-backend",
+2025-11-10T03:46:31:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:31: }
+2025-11-10T03:46:33: [03:46:33] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:33:   "service": "zmart-backend",
+2025-11-10T03:46:33:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:33: }
+2025-11-10T03:46:34: [03:46:34] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:34:   "service": "zmart-backend",
+2025-11-10T03:46:34:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:34: }
+2025-11-10T03:46:36: [03:46:36] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:36:   "service": "zmart-backend",
+2025-11-10T03:46:36:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:36: }
+2025-11-10T03:46:38: [03:46:38] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:38:   "service": "zmart-backend",
+2025-11-10T03:46:38:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:38: }
+2025-11-10T03:46:40: [03:46:40] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:40:   "service": "zmart-backend",
+2025-11-10T03:46:40:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:40: }
+2025-11-10T03:46:41: [03:46:41] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:41:   "service": "zmart-backend",
+2025-11-10T03:46:41:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:41: }
+2025-11-10T03:46:43: [03:46:43] [33mwarn[39m: Retry attempt 1 {
+2025-11-10T03:46:43:   "service": "zmart-backend",
+2025-11-10T03:46:43:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:43: }
+2025-11-10T03:46:45: [03:46:45] [33mwarn[39m: Retry attempt 2 {
+2025-11-10T03:46:45:   "service": "zmart-backend",
+2025-11-10T03:46:45:   "error": "Cannot read properties of undefined (reading 'toString')"
+2025-11-10T03:46:45: }
+2025-11-10T03:46:47: [03:46:47] [32minfo[39m: [ProposalVoteAggregator] Completed: 5 processed, 0 approved, 30 errors in 106544ms {
+2025-11-10T03:46:47:   "service": "zmart-backend"
+2025-11-10T03:46:47: }
+2025-11-10T03:46:47: [03:46:47] [32minfo[39m: [VoteAggregatorScheduler] Scheduled aggregation complete {
+2025-11-10T03:46:47:   "service": "zmart-backend"
+2025-11-10T03:46:47: }
