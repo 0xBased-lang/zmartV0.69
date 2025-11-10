@@ -27,6 +27,10 @@ pub enum ErrorCode {
     #[msg("Invalid fee structure: total fees exceed 100%")]
     InvalidFeeStructure,
 
+    /// 6005: Invalid global config PDA (SECURITY: Week 3 Finding #4)
+    #[msg("Invalid global config: must be canonical PDA")]
+    InvalidGlobalConfig,
+
     // ============================================================
     // State Transition Errors (6100-6199)
     // ============================================================

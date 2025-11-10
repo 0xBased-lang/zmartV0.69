@@ -63,8 +63,8 @@ pub fn handler(ctx: Context<InitiateDispute>) -> Result<()> {
     market.dispute_disagree = 0;
     market.dispute_total_votes = 0;
 
-    // Transition state: RESOLVING → DISPUTED
-    market.state = MarketState::Disputed;
+    // Transition state: RESOLVING → DISPUTED (using wrapper for validation)
+    market.transition_state(MarketState::Disputed)?;
 
     // Emit event
     emit!(DisputeInitiated {

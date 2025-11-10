@@ -81,8 +81,8 @@ pub fn handler(
     market.resolution_disagree = 0;
     market.resolution_total_votes = 0;
 
-    // Transition state: ACTIVE → RESOLVING
-    market.state = MarketState::Resolving;
+    // Transition state: ACTIVE → RESOLVING (using wrapper for validation)
+    market.transition_state(MarketState::Resolving)?;
 
     // Emit event
     emit!(MarketResolved {

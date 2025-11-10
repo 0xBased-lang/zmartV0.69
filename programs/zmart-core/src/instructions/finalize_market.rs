@@ -122,9 +122,10 @@ pub fn handler(
         market.proposed_outcome
     };
 
-    // SECURITY FIX (Finding #4): Verify bounded loss protection
+    // SECURITY FIX (Finding #5 - Week 3): Verify bounded loss protection
     // Ensure market creator loss never exceeds b * ln(2) ≈ 0.693 * b
     // This protects against bugs in LMSR implementation or numerical errors
+    // Already implemented, just updating comment for clarity
     verify_bounded_loss(
         market.initial_liquidity,
         market.current_liquidity,
@@ -135,7 +136,9 @@ pub fn handler(
     market.final_outcome = final_outcome;
     market.was_disputed = was_disputed;
     market.finalized_at = clock.unix_timestamp;
-    market.state = MarketState::Finalized;
+
+    // Transition state: RESOLVING → FINALIZED (using wrapper for validation)
+    market.transition_state(MarketState::Finalized)?;
 
     // Emit event
     emit!(MarketFinalized {
