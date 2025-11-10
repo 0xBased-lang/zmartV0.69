@@ -3,11 +3,19 @@
 ## 🔴 IMPORTANT: Current Project Status
 
 **➡️ See [CURRENT_STATUS.md](./CURRENT_STATUS.md) for the single source of truth on project status**
-- Overall: 30% complete
-- Programs: ✅ 100% deployed
-- Backend: 🟡 50% (1 of 6 services deployed)
-- Frontend: ❌ 0% (not started)
-- Timeline: 14 weeks to production (January 15, 2026)
+
+**Overall Progress: 45% Complete** (Phase 3 of 5)
+
+| Component | Status | Progress |
+|-----------|--------|----------|
+| Programs | ✅ DEPLOYED | 100% (zmart-core on devnet: 7h3g...UsJS) |
+| Backend Services | ✅ OPERATIONAL | 100% (4 PM2 services + market-monitor) |
+| Security Audit | ✅ COMPLETE | 100% (12/12 findings resolved) |
+| Integration Tests | 🔄 IN PROGRESS | 65% (E2E suite operational) |
+| Frontend | 🟡 SCAFFOLDED | 15% (exists, not production-ready) |
+| Production Deploy | 🔜 PLANNING | 20% |
+
+**Timeline:** 12 weeks to production (Target: January 29, 2026)
 
 ### ✅ Recent Infrastructure Cleanup (November 10, 2025)
 
@@ -21,9 +29,75 @@
 - ✅ Created 3 deployment scripts (deploy, health-check, backup)
 
 **Current VPS Status:**
-- 4 ZMART services running on devnet (api-gateway, websocket-server, vote-aggregator, event-indexer)
+- 4 PM2 services running on devnet (api-gateway, websocket-server, event-indexer, market-monitor)
 - Clean project structure (/var/www/zmart only)
 - Production-ready deployment automation
+
+---
+
+## 🎯 CURRENT FOCUS: Integration Testing & Validation
+
+**Active Phase:** Week 2 of 12 - Integration Testing on Devnet
+**Priority:** Comprehensive testing before frontend production work
+
+**Active Tasks:**
+- ✅ E2E test suite operational (8 test files, Playwright)
+- ✅ Test data collection working (9 runs recorded)
+- 🔄 Integration testing at 65% complete
+- 🔄 Backend validation (4 services stable on VPS)
+- 🔄 Security fixes verification (12/12 resolved)
+- 📋 Performance benchmarking (pending)
+
+**Why This Matters:**
+- Validate all backend services before frontend integration
+- Ensure program logic matches blueprint specifications
+- Build confidence in core mechanics (LMSR, state transitions, fees)
+- Catch issues early when they're cheaper to fix
+
+**See:** [docs/testing/ON_CHAIN_TESTING_PROTOCOL.md](./docs/testing/ON_CHAIN_TESTING_PROTOCOL.md)
+
+---
+
+## 🚨 CRITICAL: Backend Development Location
+
+**ALL BACKEND WORK HAPPENS ON VPS ONLY (185.202.236.71)**
+
+- ✅ SSH to VPS: `ssh kek`
+- ✅ Backend code location: `/var/www/zmart/backend`
+- ✅ All backend services run via PM2 on VPS
+- ✅ All backend code changes made directly on VPS
+- ✅ All backend testing happens on VPS
+- ❌ NEVER run backend services locally
+- ❌ NEVER shift backend work to local directory
+- ❌ NEVER create local .env for backend
+
+**Frontend ONLY runs locally** (localhost:3000) during development.
+
+**Why VPS-Only:**
+- Consistent environment (Ubuntu Linux, PM2, Redis)
+- Shared state with deployed services
+- Real blockchain connections (devnet SOL, Helius webhooks)
+- No local setup overhead
+
+**Development Workflow:**
+```bash
+# 1. SSH to VPS
+ssh kek
+
+# 2. Navigate to backend
+cd /var/www/zmart/backend
+
+# 3. Make code changes
+nano src/api/routes/markets.ts
+
+# 4. Rebuild and restart
+pnpm build && pm2 restart api-gateway
+
+# 5. Check logs
+pm2 logs api-gateway --lines 50
+```
+
+See [docs/orientation/SERVICE_ARCHITECTURE.md](./docs/orientation/SERVICE_ARCHITECTURE.md) for complete VPS and service architecture documentation.
 
 ---
 
@@ -66,73 +140,7 @@
 
 ---
 
-## Implementation Strategy (Option B)
-
-### V1 MVP Scope
-
-**✅ Implement (Blueprint + Essentials):**
-- All blueprint mechanics (voting, LMSR, resolution, disputes)
-- Proposal voting system (like/dislike, 70% threshold per blueprint)
-- Off-chain vote aggregation → on-chain recording
-- Minimal discussion system (Supabase + daily IPFS snapshots)
-- Wallet-only auth (SIWE)
-- Basic user profiles (wallet address only)
-
-**❌ Defer to V2 (Social Features):**
-- Twitter OAuth integration
-- Advanced reputation scoring algorithm
-- Community flagging/moderation system
-- Detailed user profiles
-- Governance token
-- Staking mechanics
-- DAO features
-
-### Why This Approach
-
-1. **Get to Market Fast** - Essential features only
-2. **Validate Core Mechanics** - Prove LMSR + resolution works
-3. **Clean Architecture** - Easy to add v2 features later
-4. **Reduced Complexity** - Simpler testing and deployment
-5. **Focus on Prediction Markets** - Not social network
-
-### What This Means for Development
-
-- **Programs**: Pure blueprint implementation (no social features)
-- **Backend**: Vote aggregation + minimal discussion storage
-- **Database**: Reserved columns for v2 features (twitter_handle, reputation_score)
-- **Frontend**: Wallet connect + trading + simple discussions
-
-### Frontend Implementation Approach
-
-**Desktop-Primary Strategy** (60-80% users on desktop):
-- **Design Philosophy**: Desktop-first layout decisions optimized for large screens
-- **LMSR Visualization**: Bonding curve charts require 800x400px minimum (desktop-only)
-- **Mobile Support**: Core trading flows only (20-40% users, simplified UI)
-- **Responsive Breakpoints**: Desktop (1024px+) → Tablet (768px+) → Mobile (<768px)
-
-**Key UX Decisions** (LOCKED IN):
-1. **LMSR not AMM**: Always use "LMSR bonding curve" terminology (NOT "AMM mechanics")
-   - Logarithmic probability curve displaying P(YES) and P(NO) in range [0,1]
-   - Bounded loss visualization: b * ln(2) ≈ 0.693 * b
-   - Binary search for share calculation (client-side preview)
-
-2. **Database-Only Discussions**: No IPFS in V1, Supabase PostgreSQL only
-   - Flat comment system (no threading in V1)
-   - RLS policies for security (users read all, write own, admins moderate)
-   - IPFS daily snapshots deferred to V2 for archival/decentralization
-
-3. **Real-Time Updates**: WebSocket from Day 1 (NOT 30-second polling)
-   - Backend WebSocket server: Week 6 (2 days implementation)
-   - Frontend integration: Week 2 Day 6 (1 day integration)
-   - Automatic fallback to polling after 5 failed reconnections
-   - Sub-second latency for price updates, trade executions, and discussions
-
-4. **Token Caching**: 1-hour wallet signature cache
-   - Reduces wallet signing friction (sign once per hour vs every API call)
-   - Automatic silent refresh before expiry
-   - Clear messaging on token expiry ("Please sign to continue")
-
-**See Detailed Plan**: [docs/FRONTEND_IMPLEMENTATION_PLAN.md](./docs/FRONTEND_IMPLEMENTATION_PLAN.md) - 6-week day-by-day breakdown with 42 daily deliverables
+**Historical Note**: Original "Option B" implementation strategy archived at [docs/archive/2025-11/OPTION_B_HISTORICAL.md](./docs/archive/2025-11/OPTION_B_HISTORICAL.md)
 
 ---
 
@@ -146,19 +154,19 @@
    - Critical blockers and next steps
    - **CHECK THIS FIRST for current state**
 
-2. **[IMPLEMENTATION_PHASES.md](./docs/IMPLEMENTATION_PHASES.md)** ⭐ ROADMAP
+2. **[IMPLEMENTATION_PHASES.md](./docs/workflow/IMPLEMENTATION_PHASES.md)** ⭐ ROADMAP
    - 14-week implementation plan (Week-by-week roadmap)
    - Evidence-based (built from actual codebase analysis)
    - Quality gates and success criteria
    - **START HERE for development workflow**
 
-3. **[TODO_CHECKLIST.md](./docs/TODO_CHECKLIST.md)** ⭐ TRACK PROGRESS
+3. **[TODO_CHECKLIST.md](./docs/workflow/TODO_CHECKLIST.md)** ⭐ TRACK PROGRESS
    - Daily task tracking aligned with IMPLEMENTATION_PHASES.md
    - Checkbox-driven progress monitoring
    - Current status of all tasks
    - Dependencies and blockers
 
-4. **[CORE_LOGIC_INVARIANTS.md](./docs/CORE_LOGIC_INVARIANTS.md)** ⭐ BLUEPRINT COMPLIANCE
+4. **[CORE_LOGIC_INVARIANTS.md](./docs/specifications/CORE_LOGIC_INVARIANTS.md)** ⭐ BLUEPRINT COMPLIANCE
    - Pure mechanics extraction from blueprint
    - All formulas, state machines, and rules
    - This is the "spec sheet" - everything derives from this
@@ -179,28 +187,28 @@
 
 **⭐ CRITICAL: These docs prevent confusion about project structure and credentials**
 
-7. **[PROJECT_STRUCTURE.md](./docs/PROJECT_STRUCTURE.md)** ⭐ COMPLETE FILE TREE
+7. **[PROJECT_STRUCTURE.md](./docs/orientation/PROJECT_STRUCTURE.md)** ⭐ COMPLETE FILE TREE
    - Complete file tree of entire codebase with descriptions
    - What each file/directory is responsible for
    - Current status of all components
    - Quick reference by task type ("Where do I find...?")
    - **Use this to understand where everything is located**
 
-8. **[ENVIRONMENT_GUIDE.md](./docs/ENVIRONMENT_GUIDE.md)** ⭐ CREDENTIALS & ENV VARS
+8. **[ENVIRONMENT_GUIDE.md](./docs/orientation/ENVIRONMENT_GUIDE.md)** ⭐ CREDENTIALS & ENV VARS
    - Map of ALL environment files (`.env`, `.env.local`, `.env.example.safe`)
    - Complete reference for all 20+ environment variables
    - **CRITICAL:** Live credentials are in `backend/.env` (NOT `.env.local`)
    - Security best practices and troubleshooting
    - **Use this to understand which credentials go where**
 
-9. **[SERVICE_ARCHITECTURE.md](./docs/SERVICE_ARCHITECTURE.md)** ⭐ HOW SERVICES CONNECT
+9. **[SERVICE_ARCHITECTURE.md](./docs/orientation/SERVICE_ARCHITECTURE.md)** ⭐ HOW SERVICES CONNECT
    - Visual diagrams of complete system architecture
    - Data flow between services (Event Indexer → Supabase, etc.)
    - Service dependencies and communication patterns
    - User interaction flows (buy shares, vote, etc.)
    - **Use this to understand how all the pieces fit together**
 
-10. **[CREDENTIALS_MAP.md](./docs/CREDENTIALS_MAP.md)** ⭐ CREDENTIAL USAGE
+10. **[CREDENTIALS_MAP.md](./docs/orientation/CREDENTIALS_MAP.md)** ⭐ CREDENTIAL USAGE
    - Matrix showing which service uses which credential
    - Security impact analysis (what happens if compromised)
    - Credential rotation procedures
@@ -209,7 +217,7 @@
 
 ### Core Implementation Documents (Option B Complete Set)
 
-11. **[03_SOLANA_PROGRAM_DESIGN.md](./docs/03_SOLANA_PROGRAM_DESIGN.md)** ⭐ CRITICAL
+11. **[03_SOLANA_PROGRAM_DESIGN.md](./docs/specifications/03_SOLANA_PROGRAM_DESIGN.md)** ⭐ CRITICAL
    - Complete Rust/Anchor program with 18 instructions
    - All account structures (GlobalConfig, MarketAccount, UserPosition, VoteRecord)
    - ProposalManager voting system
@@ -217,21 +225,21 @@
    - Resolution + dispute mechanics
    - Complete error codes and security constraints
 
-12. **[05_LMSR_MATHEMATICS.md](./docs/05_LMSR_MATHEMATICS.md)** ⭐ CRITICAL
+12. **[05_LMSR_MATHEMATICS.md](./docs/specifications/05_LMSR_MATHEMATICS.md)** ⭐ CRITICAL
    - Production-ready fixed-point math (u64, 9 decimals)
    - Complete LMSR cost function
    - Binary search for share calculation
    - Numerical stability techniques
    - Worked examples and test cases
 
-13. **[06_STATE_MANAGEMENT.md](./docs/06_STATE_MANAGEMENT.md)** ⭐ CRITICAL
+13. **[06_STATE_MANAGEMENT.md](./docs/specifications/06_STATE_MANAGEMENT.md)** ⭐ CRITICAL
    - 6-state FSM implementation (PROPOSED → FINALIZED)
    - State transition validation logic
    - Automatic transitions (time-based)
    - State-based access control
    - Rust implementation examples
 
-14. **[07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md](./docs/07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md)** ⭐ CRITICAL
+14. **[07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md](./docs/specifications/07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md)** ⭐ CRITICAL
    - Hybrid architecture (on-chain state + off-chain aggregation)
    - ProposalManager vote aggregation workflow
    - Backend services (vote aggregator, market monitor, IPFS service)
@@ -239,7 +247,7 @@
    - Event indexing and API gateway
    - Security considerations
 
-15. **[08_DATABASE_SCHEMA.md](./docs/08_DATABASE_SCHEMA.md)** ⭐ CRITICAL
+15. **[08_DATABASE_SCHEMA.md](./docs/specifications/08_DATABASE_SCHEMA.md)** ⭐ CRITICAL
    - Complete Supabase/PostgreSQL schema
    - All tables with RLS policies
    - Indexes for performance
@@ -247,11 +255,11 @@
 
 ### Supporting Architecture Documents
 
-16. **[EVM_TO_SOLANA_TRANSLATION.md](./docs/EVM_TO_SOLANA_TRANSLATION.md)**
+16. **[EVM_TO_SOLANA_TRANSLATION.md](./docs/specifications/EVM_TO_SOLANA_TRANSLATION.md)**
     - Pattern-by-pattern mapping
     - Why each translation decision was made
 
-17. **[SOLANA_PROGRAM_ARCHITECTURE.md](./docs/SOLANA_PROGRAM_ARCHITECTURE.md)**
+17. **[SOLANA_PROGRAM_ARCHITECTURE.md](./docs/specifications/SOLANA_PROGRAM_ARCHITECTURE.md)**
     - High-level program structure
     - Account design, instruction flow
 
@@ -262,149 +270,12 @@
 
 ---
 
+
 ## Development Workflow
 
-**Primary Reference:** [IMPLEMENTATION_PHASES.md](./docs/IMPLEMENTATION_PHASES.md) - 14-week detailed plan
-
-**Quick Summary:**
-
-### Phase 1: Voting System Foundation (Weeks 1-3)
-
-**Current Phase** - Building voting instructions + ProposalManager program
-
-```bash
-# Week 1: Core Voting Instructions
-1. Create story file: docs/stories/STORY-VOTING-1.md
-2. Set up branch: git checkout -b feature/voting-system
-3. Implement submit_proposal_vote, aggregate_proposal_votes
-4. Implement submit_dispute_vote, aggregate_dispute_votes
-5. Write 20+ unit tests (TDD approach)
-6. Update TODO_CHECKLIST.md daily
-
-# Week 2: ProposalManager Program
-1. Create program scaffold: programs/zmart-proposal/
-2. Define vote tracking accounts (ProposalVote, DisputeVote)
-3. Implement aggregation logic
-4. Write 10+ integration tests
-5. Deploy to devnet and validate
-
-# Week 3: Admin Instructions
-1. Implement update_global_config
-2. Implement emergency_pause
-3. Implement cancel_market
-4. Write 15+ unit tests
-5. Verify all 18 instructions complete
-```
-
-**Quality Gate:** All 18 instructions implemented, vote aggregation working on devnet
-
-**Reference:** [IMPLEMENTATION_PHASES.md - Phase 1](./docs/IMPLEMENTATION_PHASES.md#phase-1-voting-system-foundation-weeks-1-3)
+**See**: [docs/workflow/IMPLEMENTATION_PHASES.md](./docs/workflow/IMPLEMENTATION_PHASES.md) - Complete 14-week implementation plan with week-by-week roadmap, quality gates, and success criteria.
 
 ---
-
-### Phase 2: Backend Services (Weeks 4-7)
-
-**After programs feature-complete**
-
-```bash
-# Week 4: Vote Aggregator Service
-- Vote collection API (POST /votes/proposal, /votes/dispute)
-- Redis caching
-- Aggregation cron job (every 5 min)
-
-# Week 5: Event Indexer + Database
-- Deploy Supabase schema
-- Event listener (Helius webhooks)
-- RLS policies
-
-# Week 6: API Gateway
-- REST endpoints (GET /markets, /positions, /trades)
-- WebSocket server (real-time updates)
-
-# Week 7: Market Monitor Service
-- Auto state transitions (RESOLVING → FINALIZED after 48h)
-- Alert system for stuck markets
-```
-
-**Quality Gate:** All 4 services running, 99% uptime
-
-**Reference:** [IMPLEMENTATION_PHASES.md - Phase 2](./docs/IMPLEMENTATION_PHASES.md#phase-2-backend-services-weeks-4-7)
-
----
-
-### Phase 3: Integration Testing (Weeks 8-9)
-
-**Comprehensive testing before frontend**
-
-```bash
-# Week 8: Full Lifecycle Tests
-- Happy path (create → trade → resolve → claim)
-- Multi-user test (10 users trade simultaneously)
-- Dispute flow test
-- Edge cases (zero trades, max slippage, double claim)
-
-# Week 9: Stress Testing + Bug Fixes
-- Load test (100 users, 1,000 trades)
-- Performance benchmarks
-- Fix all critical/high bugs
-```
-
-**Quality Gate:** 150+ tests passing, >90% coverage, no critical bugs
-
-**Reference:** [IMPLEMENTATION_PHASES.md - Phase 3](./docs/IMPLEMENTATION_PHASES.md#phase-3-integration-testing-weeks-8-9)
-
----
-
-### Phase 4: Frontend Integration (Weeks 10-12)
-
-**Only after backend fully validated**
-
-```bash
-# Week 10: Wallet + Transactions
-- Wallet adapters (Phantom, Solflare, Backpack)
-- Transaction signing flow
-
-# Week 11: Trading Interface
-- Market list + trading UI
-- Real-time price chart (WebSocket)
-- Voting interface
-
-# Week 12: Claiming + Polish
-- Claim winnings UI
-- User profile
-- Help documentation
-```
-
-**Quality Gate:** Users can complete full trading flow in <1 minute
-
-**Reference:** [IMPLEMENTATION_PHASES.md - Phase 4](./docs/IMPLEMENTATION_PHASES.md#phase-4-frontend-integration-weeks-10-12)
-
----
-
-### Phase 5: Security + Deployment (Weeks 13-14)
-
-**Security audit and mainnet launch**
-
-```bash
-# Week 13: Security Audit
-- Self-audit checklist
-- Automated tools (Soteria, Sec3)
-- Penetration testing
-
-# Week 14: Mainnet Deployment
-- Day 1-2: Devnet smoke tests
-- Day 3-4: Community beta (10 users, 20 markets)
-- Day 5: Bug fixes
-- Day 6: Mainnet deployment
-- Day 7: Launch monitoring
-```
-
-**Quality Gate:** No critical security issues, successful mainnet deployment
-
-**Reference:** [IMPLEMENTATION_PHASES.md - Phase 5](./docs/IMPLEMENTATION_PHASES.md#phase-5-security-deployment-weeks-13-14)
-
----
-
 ## Working with Me (Claude Code)
 
 ### Before Starting Any Task
@@ -447,45 +318,94 @@
 
 ## Key Commands
 
-### Solana/Anchor
+### Program Development (Anchor)
 
 ```bash
-# Build program
-anchor build
+# Build Solana programs
+pnpm build              # or: anchor build
 
-# Run tests
-anchor test
+# Run Anchor tests
+pnpm test               # or: anchor test
 
 # Deploy to devnet
-anchor deploy --provider.cluster devnet
+pnpm deploy:devnet      # or: anchor deploy --provider.cluster devnet
 
 # Upgrade program
 anchor upgrade <program-id> --provider.cluster devnet
-
-# Get program logs
-solana logs <program-id>
 ```
 
-### Backend
+### Backend Development (VPS)
+
+**⚠️ IMPORTANT: All backend work happens on VPS via `ssh kek`**
 
 ```bash
-# Install dependencies
-npm install
+# SSH to VPS
+ssh kek
 
-# Run development server
-npm run dev
+# Navigate to backend
+cd /var/www/zmart/backend
 
-# Run tests
-npm run test
+# Make code changes
+nano src/api/routes/markets.ts
 
-# Run linter
-npm run lint
+# Rebuild and restart
+pnpm build && pm2 restart api-gateway
 
-# Build for production
-npm run build
+# Check logs
+pm2 logs api-gateway --lines 50
+
+# View all services
+pm2 list
 ```
 
-### Useful Debugging
+### Frontend Development (Local)
+
+```bash
+# Start Next.js dev server
+cd frontend && pnpm dev
+
+# Build for production
+cd frontend && pnpm build
+
+# Generate Supabase types
+cd frontend && pnpm types:generate
+
+# Type checking
+cd frontend && pnpm type-check
+```
+
+### E2E Testing (Playwright)
+
+```bash
+# Run all E2E tests on devnet
+pnpm test:e2e:real
+
+# Interactive Playwright UI mode
+pnpm test:e2e:real:ui
+
+# Specific test suites
+pnpm test:e2e:real:trading      # Trading flows
+pnpm test:e2e:real:validation   # Data validation
+pnpm test:e2e:real:realtime     # WebSocket updates
+
+# View test report
+pnpm test:e2e:report
+```
+
+### Rust Unit Tests
+
+```bash
+# Run all Rust unit tests (136 tests)
+cargo test
+
+# Run specific test
+cargo test test_lmsr_buy_cost
+
+# Run with output
+cargo test -- --nocapture
+```
+
+### Solana CLI
 
 ```bash
 # Check Solana config
@@ -551,400 +471,23 @@ describe("Market Lifecycle", () => {
 
 ---
 
-## 🔍 On-Chain Testing & Data Collection Protocol
 
-### Philosophy & Purpose
+## Testing Strategy
 
-**CRITICAL REQUIREMENT:** During the building, optimizing, and validating phases, we maintain **ultra-detailed tracking** of ALL on-chain mechanics and transactions. This comprehensive data collection is:
+**E2E Testing with Playwright** - All E2E tests run against actual Solana devnet with comprehensive data collection.
 
-- ✅ **Mandatory** during development and optimization
-- ✅ **Archivable** after system stabilization
-- ✅ **Refinable** to smaller size once patterns are established
-- ✅ **Essential** for debugging, pattern recognition, and quality assurance
-
-**Rationale:** When working with real blockchain transactions, having complete historical context enables:
-1. Faster debugging (complete state at failure point)
-2. Pattern detection (identify recurring issues)
-3. Performance optimization (track regression over time)
-4. Inconsistency detection (find unexpected behaviors)
-5. Long-term quality trends (data-driven decisions)
-
----
-
-### Mandatory Data Collection (15 Categories)
-
-When running any on-chain test or validation, we **MUST** capture:
-
-#### **Network & Communication**
-1. **HTTP Traffic** - Every request/response with timing
-2. **RPC Calls** - All Solana RPC interactions with parameters
-3. **WebSocket Messages** - Real-time data streams (if implemented)
-
-#### **Application State**
-4. **React Query Cache** - Cache state before/after operations
-5. **Wallet State** - Connection status, balance changes, signing events
-6. **Browser Storage** - localStorage/sessionStorage snapshots
-
-#### **Blockchain State**
-7. **On-Chain Snapshots** - Account data before/after transactions
-8. **Transaction Details** - Complete tx metadata (compute units, fees, logs)
-
-#### **Performance**
-9. **Timing Breakdown** - Precise timing for every operation step
-10. **Browser Metrics** - Memory, CPU, network performance
-
-#### **User Context**
-11. **User Actions** - Every interaction with full context
-12. **Test Environment** - Complete environment metadata
-
-#### **Error Handling**
-13. **Enhanced Errors** - Full error context, stack traces, recovery suggestions
-
-#### **Analysis**
-14. **Before/After Comparison** - Structured state change verification
-15. **Historical Trends** - Link to previous runs for regression detection
-
----
-
-### Data Organization Structure
-
-All test data stored in structured format:
-
-```
-test-data/
-├── runs/
-│   └── {timestamp}/
-│       ├── metadata.json              # Run metadata
-│       ├── environment.json           # Environment snapshot
-│       ├── tests/
-│       │   └── {test-name}/
-│       │       ├── console-logs.json
-│       │       ├── network-traffic.json
-│       │       ├── rpc-calls.json
-│       │       ├── react-query-cache.json
-│       │       ├── wallet-state.json
-│       │       ├── on-chain-state.json
-│       │       ├── transaction-details.json
-│       │       ├── timing-breakdown.json
-│       │       ├── performance-metrics.json
-│       │       ├── user-actions.json
-│       │       ├── errors.json
-│       │       ├── comparisons.json
-│       │       ├── screenshots/
-│       │       └── video.webm
-│       └── summary.json
-├── analysis/
-│   ├── trends/
-│   ├── patterns/
-│   └── inconsistencies/
-└── queries/
-```
-
----
-
-### When to Apply This Protocol
-
-#### **MANDATORY (Current Phase - Building/Optimizing/Validating)**
-- ✅ All E2E tests with real blockchain transactions
-- ✅ Integration tests involving on-chain state
-- ✅ Performance benchmarking
-- ✅ Bug reproduction
-- ✅ Feature validation before deployment
-- ✅ Any testing on devnet with real transactions
-- ✅ Manual testing of critical flows
-- ✅ Security audit test runs
-
-#### **OPTIONAL (Future - After Stabilization)**
-- ⚠️ Smoke tests on stable features
-- ⚠️ Regression tests on unchanged code
-- ⚠️ CI/CD quick validation
-
-#### **ARCHIVE CANDIDATES (Post-Launch)**
-Once the system is stable and patterns are well-understood, historical data can be:
-- Compressed and archived (keep last 30 days full detail)
-- Aggregated into trends (monthly summaries)
-- Reduced to critical metrics only (error rates, performance)
-
----
-
-### Running Tests with Full Tracking
-
-All test commands automatically enable comprehensive tracking:
-
+**Key Commands**:
 ```bash
-# Run E2E tests with full tracking (default)
-pnpm test:e2e:real
-
-# All data automatically saved to test-data/{timestamp}/
+pnpm test:e2e:real                # Run all E2E tests
+pnpm test:e2e:real:ui             # Interactive Playwright UI
+pnpm test:e2e:real:trading        # Trading flow tests
 ```
 
-**No special flags required** - comprehensive tracking is the default during development phase.
+**Test Data Collection**: Comprehensive tracking of all on-chain transactions, state changes, and interactions for debugging and analysis.
+
+**See Complete Protocol**: [docs/testing/ON_CHAIN_TESTING_PROTOCOL.md](./docs/testing/ON_CHAIN_TESTING_PROTOCOL.md) - Detailed testing protocol with data collection requirements, retention policies, and debugging workflows.
 
 ---
-
-### Querying Collected Data
-
-Analysis scripts for exploring test data:
-
-```bash
-# Find all failed transactions
-pnpm run analyze:failures --since "7 days ago"
-
-# Performance trends
-pnpm run analyze:performance --metric transactionTime
-
-# Find state inconsistencies
-pnpm run analyze:inconsistencies --type balanceMismatch
-
-# Generate detailed report for specific run
-pnpm run analyze:report --run {timestamp}
-
-# Search console logs
-pnpm run analyze:logs --search "Transaction failed" --run {timestamp}
-
-# Compare two test runs
-pnpm run analyze:compare {run1} {run2}
-
-# Weekly trend analysis
-pnpm run analyze:trends --days 7
-```
-
----
-
-### Data Retention Policy
-
-**During Development (Current Phase):**
-- Keep ALL data for 90 days
-- Archive anything older (compressed)
-- No automatic deletion
-- Review weekly for patterns
-
-**After Stabilization (Future):**
-- Keep full detail for 30 days
-- Keep aggregated trends indefinitely
-- Archive detailed data after 30 days
-- Reduce sampling frequency
-
-**Critical Data (Always Keep):**
-- Production deployment test runs (tagged)
-- Bug reproduction runs (tagged)
-- Performance baseline runs (tagged)
-- Security audit test runs (tagged)
-- Failed test runs (for pattern analysis)
-
----
-
-### Quick Reference Card
-
-**Running Tests:**
-```bash
-pnpm test:e2e:real                    # Full suite with tracking
-pnpm test:e2e:real:trading            # Trading tests only
-pnpm test:e2e:real:validation         # Validation tests
-pnpm test:e2e:real:realtime           # Real-time update tests
-pnpm test:e2e:real --grep "buy"       # Specific test pattern
-pnpm test:e2e:real:ui                 # Interactive debugging mode
-```
-
-**Accessing Raw Data:**
-```bash
-# List all test runs
-ls test-data/runs/
-
-# View run summary
-cat test-data/runs/{timestamp}/summary.json
-
-# Browse test-specific data
-open test-data/runs/{timestamp}/tests/{test-name}/
-
-# View console logs
-cat test-data/runs/{timestamp}/tests/{test-name}/console-logs.json
-
-# Check network traffic
-cat test-data/runs/{timestamp}/tests/{test-name}/network-traffic.json
-
-# Review screenshots
-open test-data/runs/{timestamp}/tests/{test-name}/screenshots/
-```
-
-**Analyzing Data:**
-```bash
-pnpm run analyze:latest               # Analyze most recent run
-pnpm run analyze:summary              # Summary of all recent runs
-pnpm run analyze:errors               # All errors from recent runs
-pnpm run analyze:slow                 # Find slow operations
-```
-
----
-
-### Debugging Workflow with Collected Data
-
-**When Something Goes Wrong:**
-
-1. **Identify the Run**
-   - Note the timestamp from test output
-   - Or use: `pnpm run analyze:latest`
-
-2. **Check Overview**
-   ```bash
-   cat test-data/runs/{timestamp}/summary.json
-   ```
-
-3. **Find Failed Test**
-   ```bash
-   ls test-data/runs/{timestamp}/tests/
-   cd test-data/runs/{timestamp}/tests/{failed-test}/
-   ```
-
-4. **Review Logs**
-   ```bash
-   # Browser console
-   cat console-logs.json | jq '.[] | select(.type=="error")'
-
-   # Network issues
-   cat network-traffic.json | jq '.[] | select(.response.status>=400)'
-
-   # RPC problems
-   cat rpc-calls.json | jq '.[] | select(.success==false)'
-   ```
-
-5. **Check State**
-   ```bash
-   # React Query cache
-   cat react-query-cache.json
-
-   # Wallet state
-   cat wallet-state.json
-
-   # On-chain state
-   cat on-chain-state.json
-   ```
-
-6. **Review Visuals**
-   ```bash
-   # Screenshots
-   open screenshots/
-
-   # Video recording
-   open video.webm
-   ```
-
----
-
-### Examples of What This Data Enables
-
-**Debugging Questions:**
-- "Show me the exact React Query cache state when test X failed"
-- "What was the wallet balance before/after this transaction?"
-- "Which RPC call is taking the longest?"
-- "What network requests happened before the error?"
-- "What was in localStorage when the wallet disconnected?"
-
-**Performance Questions:**
-- "Has buy transaction confirmation time increased this week?"
-- "What's the 95th percentile transaction time?"
-- "Are we making unnecessary RPC calls?"
-- "Which operation is the bottleneck?"
-- "How does performance vary by time of day?"
-
-**Quality Questions:**
-- "Find all cases where balance didn't update correctly"
-- "Show me flaky tests (inconsistent pass/fail)"
-- "What errors have occurred more than 3 times?"
-- "Which tests are slowest on average?"
-- "Are we seeing more failures on certain days?"
-
-**Trend Questions:**
-- "How has test suite duration changed over time?"
-- "Are we getting slower RPC responses?"
-- "What's our transaction success rate trend?"
-- "Is memory usage increasing over time?"
-- "Are error rates going up or down?"
-
----
-
-### Important Considerations
-
-**Storage Requirements:**
-- Each test run: ~100-500 MB (depends on test count)
-- 90 days of daily runs: ~9-45 GB
-- Ensure adequate disk space
-- Clean up manually if needed: `rm -rf test-data/runs/old-timestamp/`
-
-**Performance Impact:**
-- Minimal during test execution
-- Data saved asynchronously
-- No measurable impact on test timing
-- Slightly longer startup (environment validation)
-
-**Security:**
-- Never commit test data to git (already in .gitignore)
-- Sanitize wallet addresses before sharing externally
-- Private keys are NEVER logged
-- Transaction signatures are public (safe to share)
-
-**Maintenance Tasks:**
-- Weekly: Review for anomalies and patterns
-- Monthly: Archive old data to free space
-- As needed: Clean up incomplete runs from crashes
-- Quarterly: Evaluate if tracking can be reduced
-
----
-
-### Transition Strategy (Future)
-
-**Indicators That Tracking Can Be Reduced:**
-1. System has been stable for 30+ consecutive days
-2. All major bugs have been resolved
-3. Performance baselines are well-established
-4. Error patterns are understood
-5. Team has consensus on stability
-
-**How to Gradually Reduce Tracking:**
-1. Start with reducing retention (90d → 30d)
-2. Keep only critical metrics (errors, key performance indicators)
-3. Sample tests instead of tracking all tests (e.g., 1 in 10)
-4. Move detailed logs to archive storage
-5. Keep aggregated trends indefinitely
-
-**What to Always Keep:**
-- Error rates and types
-- Transaction success rates
-- Key performance metrics (p50, p95, p99)
-- Production deployment validation runs
-- Critical bug reproduction data
-
-**This protocol can be revisited and refined as the project matures. The goal is maximum insight during development, transitioning to efficient monitoring in production.**
-
----
-
-### Why This Matters
-
-During the current **building, optimizing, and validating phase**, we are:
-- Discovering edge cases
-- Tuning performance
-- Fixing bugs
-- Understanding patterns
-- Establishing baselines
-
-**Without comprehensive data**, we would:
-- Spend hours reproducing issues
-- Miss performance regressions
-- Lack context for debugging
-- Make decisions based on guesses
-- Repeat the same mistakes
-
-**With comprehensive data**, we can:
-- Debug issues in minutes with full context
-- Detect problems before they reach production
-- Make data-driven optimization decisions
-- Learn from historical patterns
-- Continuously improve quality
-
-**The investment in comprehensive tracking during development pays massive dividends in quality, velocity, and confidence.**
-
----
-
 ## Security Checklist
 
 ### Before Deploying to Devnet
@@ -1031,35 +574,49 @@ During the current **building, optimizing, and validating phase**, we are:
 
 ```
 zmartV0.69/
-├── CLAUDE.md                           # This file
-├── README.md                           # User-facing README
-├── docs/                               # All documentation
-│   ├── 00_MASTER_INDEX.md
-│   ├── CORE_LOGIC_INVARIANTS.md       # ⭐ MOST IMPORTANT
-│   ├── TODO_CHECKLIST.md              # ⭐ TRACK PROGRESS
-│   ├── EVM_TO_SOLANA_TRANSLATION.md
-│   ├── SOLANA_PROGRAM_ARCHITECTURE.md
-│   ├── 03_SOLANA_PROGRAM_DESIGN.md
-│   └── [15+ more docs]
-├── programs/                           # Anchor programs
-│   └── zmart-prediction-market/
-│       ├── Cargo.toml
-│       ├── src/
-│       │   ├── lib.rs
-│       │   ├── state.rs
-│       │   ├── instructions/
-│       │   └── utils/
-│       └── tests/
-├── backend/                            # Node.js services
-│   ├── package.json
-│   ├── src/
-│   │   ├── services/
-│   │   ├── api/
-│   │   └── db/
-│   └── tests/
-└── frontend/                           # Next.js app (Phase 4)
-    └── [TBD after backend validated]
+├── CLAUDE.md                           # Project instructions (this file)
+├── README.md                           # User-facing documentation
+├── CURRENT_STATUS.md                   # Project status (single source of truth)
+├── programs/
+│   └── zmart-core/                    # Main Anchor program (deployed to devnet)
+├── backend/                            # Node.js services (runs on VPS)
+│   ├── api/                           # API Gateway (PM2: api-gateway)
+│   ├── event-indexer/                 # Event indexer (PM2: event-indexer)
+│   ├── vote-aggregator/               # Vote aggregation component
+│   ├── monitoring/                    # Market monitor (PM2: market-monitor)
+│   ├── websocket/                     # WebSocket server (PM2: websocket-server)
+│   ├── scripts/                       # Deployment scripts
+│   └── tests/                         # Backend tests
+├── frontend/                           # Next.js app (runs locally)
+│   ├── app/                           # App router pages
+│   ├── components/                    # React components
+│   ├── hooks/                         # Custom hooks
+│   ├── lib/                           # Libraries
+│   └── stores/                        # State management
+├── tests/
+│   ├── e2e/                           # Playwright E2E tests
+│   ├── integration/                   # Integration tests
+│   └── unit/                          # Unit tests
+├── test-data/                          # Test data collection system
+│   └── runs/                          # Test run data (90-day retention)
+├── docs/
+│   ├── 00_MASTER_INDEX.md             # Navigation hub
+│   ├── orientation/                   # PROJECT_STRUCTURE, SERVICE_ARCHITECTURE, etc.
+│   ├── workflow/                      # IMPLEMENTATION_PHASES, TODO_CHECKLIST, etc.
+│   ├── specifications/                # CORE_LOGIC_INVARIANTS, 03-08 docs, etc.
+│   ├── testing/                       # ON_CHAIN_TESTING_PROTOCOL, etc.
+│   ├── guides/                        # User guides
+│   ├── stories/                       # Story files
+│   └── archive/                       # Historical documentation
+├── scripts/                            # Project-level scripts
+│   ├── deploy-to-vps.sh               # VPS deployment
+│   ├── health-check.sh                # Health checking
+│   └── backup.sh                      # Backup script
+└── supabase/
+    └── migrations/                    # Database migrations
 ```
+
+**See**: [docs/orientation/PROJECT_STRUCTURE.md](./docs/orientation/PROJECT_STRUCTURE.md) for complete file tree with descriptions.
 
 ---
 
@@ -1111,173 +668,20 @@ PROPOSED → APPROVED → ACTIVE → RESOLVING → DISPUTED → FINALIZED
 
 ---
 
-## ✅ Current Project Status
+*Last Updated: November 10, 2025*
+*Project Status: 45% Complete (Phase 3 of 5) - Integration Testing & Validation Phase*
 
-➡️ **See [CURRENT_STATUS.md](./CURRENT_STATUS.md) for live project status**
+**Key Achievements (November 2025)**:
+- ✅ Programs deployed (zmart-core on devnet: 7h3g...UsJS)
+- ✅ Backend fully operational (4 PM2 services + market-monitor on VPS)
+- ✅ Security audit complete (12/12 findings resolved)
+- ✅ E2E test suite operational (8 tests with comprehensive data collection)
+- ✅ VPS infrastructure restructured (devnet migration, documentation reorganized)
+- ✅ Git-based deployment workflow established
 
-**Quick Summary:**
-- **Overall:** 30% complete (not 60% as previously thought)
-- **Programs:** ✅ 100% deployed on devnet
-- **Backend:** 🟡 50% (1 of 6 services deployed)
-- **Frontend:** ❌ 0% (not started)
-- **Timeline:** 14 weeks to production (January 15, 2026)
+**Current Focus: Integration Testing & Validation (65% complete)**
 
-### Next Actions - Phase 1, Week 1, Day 1
-
-**Ready to Start Development**:
-
-See [IMPLEMENTATION_PHASES.md - Week 1 Day 1](./docs/IMPLEMENTATION_PHASES.md#next-steps-after-approval) for complete instructions.
-
-**Quick Start**:
-1. Create story file: `docs/stories/STORY-VOTING-1.md`
-2. Set up branch: `git checkout -b feature/voting-system`
-3. Begin TDD: Write tests for `submit_proposal_vote` first
-4. Implement instruction: `programs/zmart-core/src/instructions/submit_proposal_vote.rs`
-5. Update TODO_CHECKLIST.md daily
-
-**Prerequisites**: All complete ✅
-
-**Timeline**: 14 weeks to production-ready V1 mainnet launch
-
----
-
-## 📖 Complete Documentation Reference
-
-### Essential Reading (Start Here)
-
-1. **[README.md](./README.md)** - Project overview, tech stack, 20-week timeline
-2. **[CLAUDE.md](./CLAUDE.md)** (this file) - Complete project instructions
-3. **[IMPLEMENTATION_PHASES.md](./IMPLEMENTATION_PHASES.md)** - Week-by-week roadmap
-4. **[docs/TODO_CHECKLIST.md](./docs/TODO_CHECKLIST.md)** - Progress tracking
-
-### Core Implementation Specs (Build From These)
-
-5. **[03_SOLANA_PROGRAM_DESIGN.md](./docs/03_SOLANA_PROGRAM_DESIGN.md)** ⭐ - 18 Anchor instructions (64KB)
-6. **[05_LMSR_MATHEMATICS.md](./docs/05_LMSR_MATHEMATICS.md)** ⭐ - Fixed-point math (31KB)
-7. **[06_STATE_MANAGEMENT.md](./docs/06_STATE_MANAGEMENT.md)** ⭐ - 6-state FSM (26KB)
-8. **[07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md](./docs/07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md)** ⭐ - Hybrid arch (35KB)
-9. **[08_DATABASE_SCHEMA.md](./docs/08_DATABASE_SCHEMA.md)** ⭐ - Supabase schema (22KB)
-
-### Development Workflow & Standards (⭐ Critical)
-
-10. **[DEVELOPMENT_WORKFLOW.md](./docs/DEVELOPMENT_WORKFLOW.md)** ⭐ - Git strategy (GitHub Flow), PR process
-11. **[DEFINITION_OF_DONE.md](./docs/DEFINITION_OF_DONE.md)** ⭐ - Tiered DoD (4 tiers, prevents bureaucracy)
-12. **[FRONTEND_SCOPE_V1.md](./docs/FRONTEND_SCOPE_V1.md)** ⭐ - Explicit scope (Pattern #2 prevention)
-13. **[SCHEMA_MANAGEMENT.md](./docs/SCHEMA_MANAGEMENT.md)** ⭐ - Supabase type generation (Pattern #4 prevention)
-14. **[stories/STORY-TEMPLATE.md](./docs/stories/STORY-TEMPLATE.md)** ⭐ - Story file template
-
-### Infrastructure & Operations
-
-15. **.env.example** - Environment variables template
-16. **.git-hooks/pre-commit** - Smart git hook (selective enforcement)
-17. **.github/workflows/ci.yml** - CI/CD with circuit breakers
-
-### Supporting Documentation
-
-18. **[CORE_LOGIC_INVARIANTS.md](./docs/CORE_LOGIC_INVARIANTS.md)** - Blueprint compliance reference
-19. **[EVM_TO_SOLANA_TRANSLATION.md](./docs/EVM_TO_SOLANA_TRANSLATION.md)** - Solana patterns
-20. **[SOLANA_PROGRAM_ARCHITECTURE.md](./docs/SOLANA_PROGRAM_ARCHITECTURE.md)** - Program relationships
-21. **[00_MASTER_INDEX.md](./docs/00_MASTER_INDEX.md)** - Complete navigation hub
-
----
-
-## 🚀 Ready to Start Development
-
-**Status Check**:
-- [x] All 23 documentation files complete or in progress
-- [x] Timeline realistic (20 weeks: 3.2X frontend, 2X backend multipliers)
-- [x] Git hooks ready to install
-- [x] Definition of Done tiered (prevents bureaucracy + abandonment)
-- [x] Testing strategy defined
-- [x] Security checklist comprehensive
-- [x] Lessons learned integrated (6 patterns prevented)
-- [x] Program architecture consistent (2 programs: zmart-core + zmart-proposal)
-- [x] Schema management automated (Supabase type generation)
-
-**Bulletproof Rating**: 94/100 ✅
-
-**Start Development**: See IMPLEMENTATION_PHASES.md Week 1 Day 1
-
----
-
-**Questions or Issues?**
-1. Check CORE_LOGIC_INVARIANTS.md first (mechanics reference)
-2. Search relevant documentation (use 00_MASTER_INDEX.md for navigation)
-3. Review lessons-learned for pattern prevention strategies
-4. Check Definition of Done for appropriate tier
-5. Ask for clarification if still unclear
-
-**Remember**: We're translating blueprint logic to Solana, preserving mechanics while optimizing implementation. Follow the 14-week implementation plan with strict quality gates.
-
----
-
-## 🎯 Implementation Compliance System
-
-### Three-Document System for 100% Compliance
-
-**1. [IMPLEMENTATION_PHASES.md](./docs/IMPLEMENTATION_PHASES.md)** - Strategic Plan
-- 14-week phased roadmap
-- Quality gates between phases
-- Success criteria and metrics
-- Evidence-based timeline
-
-**2. [TODO_CHECKLIST.md](./docs/TODO_CHECKLIST.md)** - Tactical Execution
-- Daily task tracking
-- Checkbox-driven progress
-- Aligned with IMPLEMENTATION_PHASES.md
-- Update daily
-
-**3. [CLAUDE.md](./CLAUDE.md)** - Project Context (This File)
-- Development philosophy
-- Documentation reference
-- Quick navigation
-- Working with Claude Code
-
-### Cross-Reference Validation
-
-**Before Starting Any Task:**
-1. Check IMPLEMENTATION_PHASES.md for current week/phase
-2. Find corresponding section in TODO_CHECKLIST.md
-3. Reference CORE_LOGIC_INVARIANTS.md for blueprint compliance
-4. Create story file if needed
-
-**During Development:**
-1. Follow TDD approach (tests first)
-2. Update TODO_CHECKLIST.md daily
-3. Check quality gate criteria
-4. Commit changes with descriptive messages
-
-**Phase Completion:**
-1. Verify all checklist items complete
-2. Run quality gate validation
-3. Get user approval before next phase
-4. Update progress percentages
-
-### Bulletproof Compliance Metrics
-
-**Current Status:**
-- ✅ Implementation plan complete (14 weeks, evidence-based)
-- ✅ TODO checklist aligned (all 5 phases mapped)
-- ✅ CLAUDE.md cross-references complete
-- ✅ Quality gates defined (5 phases, strict criteria)
-- ✅ 60% foundation complete (LMSR, trading, state, resolution)
-
-**Compliance Rating: 100/100** ✅
-- Strategic plan: 100% complete
-- Tactical tracking: 100% aligned
-- Documentation: 100% cross-referenced
-- Quality gates: 100% defined
-- Foundation: 60% built
-
-**Next Action:** Begin Phase 1, Week 1, Day 1 - Voting System Foundation
-
----
-
-*Last Updated: November 6, 2025 | Project Status: Implementation Plan Complete - Ready to Execute*
-- When doing on chain testing, we need to document everything every detail
-  for every transaction every inconsistency so that we create kind of
-  library a document where we can get back to it in case we have any other
-  inconsistencies a document to solve other stuff easily records of all the
-  information
-- Not only on chain transactions and information should be documented, but actually all kind of inconsistencies and how we fix. It should be documented in our library. The main document we can shift back to if anything any hiccups happen in our frontend backend integration management or Or also related to our on Chain transactions
-- Always use CLI or API to manover supabase instead of human interaction with supabase
+**Important Reminders**:
+- All backend development happens on VPS (`ssh kek`) - NEVER run backend locally
+- Use CLI/API for Supabase operations (not UI)
+- See [docs/testing/ON_CHAIN_TESTING_PROTOCOL.md](./docs/testing/ON_CHAIN_TESTING_PROTOCOL.md) for comprehensive testing requirements
