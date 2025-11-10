@@ -17,7 +17,7 @@ pub struct AggregateProposalVotes<'info> {
 
     /// Global config (contains backend authority)
     #[account(
-        seeds = [b"global_config"],
+        seeds = [b"global-config"],
         bump = global_config.bump,
     )]
     pub global_config: Account<'info, GlobalConfig>,

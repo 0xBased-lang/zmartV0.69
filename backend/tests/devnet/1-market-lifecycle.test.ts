@@ -109,12 +109,74 @@ async function runMarketLifecycleTests() {
     await sleep(1000);
 
     // ========================================================================
-    // TEST 2: Approve Proposal (Admin Only)
+    // TEST 2: Submit & Aggregate Proposal Votes
     // ========================================================================
-    printSection('TEST 2: Approve Proposal');
+    printSection('TEST 2: Submit & Aggregate Proposal Votes');
 
-    console.log('Note: In production, this requires proposal voting to reach 70% approval.');
-    console.log('For testing, we skip voting and directly approve as admin.\n');
+    console.log('Submitting proposal votes (3 likes, 1 dislike = 75% approval)...\n');
+
+    try {
+      // Derive vote record PDA
+      // Seeds: [b"vote", market.key(), user.key(), &[VoteType::Proposal as u8]]
+      // VoteType::Proposal = 0
+      const voter1 = ctx.payer;
+      const [voteRecord1Pda] = anchor.web3.PublicKey.findProgramAddressSync(
+        [
+          Buffer.from('vote'),
+          marketPda.toBuffer(),
+          voter1.publicKey.toBuffer(),
+          Buffer.from([0])  // VoteType::Proposal = 0
+        ],
+        ctx.program.programId
+      );
+
+      // Submit 1 like vote
+      console.log('Submitting like vote...');
+      const voteTx = await (ctx.program.methods as any)
+        .submitProposalVote(true) // true = like
+        .accounts({
+          market: marketPda,
+          voteRecord: voteRecord1Pda,
+          user: voter1.publicKey,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .rpc();
+
+      await ctx.connection.confirmTransaction(voteTx, 'confirmed');
+      console.log('✅ Vote submitted:', voteTx.slice(0, 8) + '...\n');
+
+      // Aggregate votes (backend would do this, but we do it manually for testing)
+      console.log('Aggregating votes...');
+      const aggregateTx = await (ctx.program.methods as any)
+        .aggregateProposalVotes(
+          new anchor.BN(3), // likes
+          new anchor.BN(1)  // dislikes
+        )
+        .accounts({
+          backend: ctx.payer.publicKey,
+          market: marketPda,
+          globalConfig: ctx.globalConfigPda,
+        })
+        .rpc();
+
+      await ctx.connection.confirmTransaction(aggregateTx, 'confirmed');
+      console.log('✅ Votes aggregated:', aggregateTx.slice(0, 8) + '...');
+      console.log('   Likes: 3, Dislikes: 1, Approval: 75%\n');
+
+      printResult('Submit & Aggregate Votes', true, `75% approval (3/4 votes)`);
+    } catch (error: any) {
+      printResult('Submit & Aggregate Votes', false, error.message);
+      throw error;
+    }
+
+    await sleep(1000);
+
+    // ========================================================================
+    // TEST 3: Approve Proposal (Admin Only)
+    // ========================================================================
+    printSection('TEST 3: Approve Proposal');
+
+    console.log('Note: Proposal has 75% approval (>= 70% threshold required).\n');
 
     try {
       const approveTx = await ctx.program.methods
@@ -139,9 +201,9 @@ async function runMarketLifecycleTests() {
     await sleep(1000);
 
     // ========================================================================
-    // TEST 3: Activate Market
+    // TEST 4: Activate Market
     // ========================================================================
-    printSection('TEST 3: Activate Market');
+    printSection('TEST 4: Activate Market');
 
     try {
       const activateTx = await ctx.program.methods
@@ -166,9 +228,9 @@ async function runMarketLifecycleTests() {
     await sleep(1000);
 
     // ========================================================================
-    // TEST 4: Buy YES Shares (Trader 1)
+    // TEST 5: Buy YES Shares (Trader 1)
     // ========================================================================
-    printSection('TEST 4: Buy YES Shares');
+    printSection('TEST 5: Buy YES Shares');
 
     const targetCost = new anchor.BN(50_000_000); // 0.05 SOL
 
@@ -204,9 +266,9 @@ async function runMarketLifecycleTests() {
     await sleep(1000);
 
     // ========================================================================
-    // TEST 5: Buy NO Shares (Creator)
+    // TEST 6: Buy NO Shares (Creator)
     // ========================================================================
-    printSection('TEST 5: Buy NO Shares');
+    printSection('TEST 6: Buy NO Shares');
 
     const targetCost2 = new anchor.BN(30_000_000); // 0.03 SOL
 
@@ -238,9 +300,9 @@ async function runMarketLifecycleTests() {
     await sleep(1000);
 
     // ========================================================================
-    // TEST 6: Resolve Market (YES wins)
+    // TEST 7: Resolve Market (YES wins)
     // ========================================================================
-    printSection('TEST 6: Resolve Market');
+    printSection('TEST 7: Resolve Market');
 
     const ipfsEvidenceHash = createIpfsHash('Evidence: BTC reached $100k');
 
@@ -269,9 +331,9 @@ async function runMarketLifecycleTests() {
     await sleep(1000);
 
     // ========================================================================
-    // TEST 7: Finalize Market (No Dispute)
+    // TEST 8: Finalize Market (No Dispute)
     // ========================================================================
-    printSection('TEST 7: Finalize Market');
+    printSection('TEST 8: Finalize Market');
 
     console.log('Finalizing market (no dispute)...');
     console.log('Note: In production, must wait 48 hours before finalization.\n');
@@ -299,9 +361,9 @@ async function runMarketLifecycleTests() {
     await sleep(1000);
 
     // ========================================================================
-    // TEST 8: Claim Winnings (Trader1 wins)
+    // TEST 9: Claim Winnings (Trader1 wins)
     // ========================================================================
-    printSection('TEST 8: Claim Winnings');
+    printSection('TEST 9: Claim Winnings');
 
     console.log('Trader1 claiming winnings (YES holder)...');
 

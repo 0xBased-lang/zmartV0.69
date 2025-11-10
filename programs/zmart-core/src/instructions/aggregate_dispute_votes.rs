@@ -17,7 +17,7 @@ pub struct AggregateDisputeVotes<'info> {
 
     /// Global config (contains backend authority and dispute threshold)
     #[account(
-        seeds = [b"global_config"],
+        seeds = [b"global-config"],
         bump = global_config.bump,
     )]
     pub global_config: Account<'info, GlobalConfig>,

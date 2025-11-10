@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("8TVi2vkDxbeqETWDCwUtL6RUwFSYyBTaVF4wMMxciz3L");
+declare_id!("3rQhUrqQhHxYCkj3RqTHL1PTrHSnUShMe3z4KdHaHjkz");
 
 // Module declarations
 pub mod error;

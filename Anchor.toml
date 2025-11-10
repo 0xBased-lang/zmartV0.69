@@ -7,7 +7,7 @@ members = [
 zmart_core = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
 
 [programs.devnet]
-zmart_core = "8TVi2vkDxbeqETWDCwUtL6RUwFSYyBTaVF4wMMxciz3L"
+zmart_core = "3rQhUrqQhHxYCkj3RqTHL1PTrHSnUShMe3z4KdHaHjkz"
 
 [registry]
 url = "https://api.apr.dev"
