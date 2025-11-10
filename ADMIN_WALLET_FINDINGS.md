@@ -1,248 +1,260 @@
-# Admin Wallet Findings & Resolution
+# Admin Wallet Investigation - Complete Findings
 
-**Date:** November 10, 2025 (04:00 CET)
-**Status:** ⚠️ Admin Wallet Mismatch Detected
-
----
-
-## 🔍 The Issue
-
-When running devnet tests, we encountered an authorization error during the "Approve Proposal" test. Investigation revealed a mismatch between the GlobalConfig admin and our current wallet.
+**Date:** November 10, 2025
+**Status:** 🔴 **CRITICAL BUGS FOUND**
 
 ---
 
-## 📊 Current State
+## 🐛 Critical Bugs Discovered
 
-### GlobalConfig Account
+### Bug #1: Missing `proposal_total_votes` Field Update
 
-- **Address:** `73ZXQr6GjjD4qnMgsuZNcJsNmd2juUsevXgdAhiKtokz`
-- **Program ID:** `7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS`
-- **Status:** ✅ Initialized and active on devnet
-- **Size:** 206 bytes
-- **Rent:** 0.00232464 SOL
+**Location:** `programs/zmart-core/src/instructions/aggregate_proposal_votes.rs:56-57`
 
-### Admin Wallet Configuration
-
-| Property | Value |
-|----------|-------|
-| **Configured Admin** | `4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye` |
-| **Protocol Fee Wallet** | `4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye` |
-| **Vote Aggregator** | `4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye` |
-| **Current Wallet** | `4MkybTASDtmzQnfUWztHmfgyHgBREw74eTKipVADqQLA` |
-| **Match?** | ❌ **NO** |
-
-### Alternate PDA Derivation
-
-The `check-global-config.ts` script derives a different PDA:
-- **Derived PDA:** `FAfb6HNPePdH7HMzbz9p5Cvxmkiiat1nwcqYL6ayBFJd`
-- **Actual PDA:** `73ZXQr6GjjD4qnMgsuZNcJsNmd2juUsevXgdAhiKtokz`
-
-This suggests the deployed program uses a different seed or derivation method than the current codebase.
-
----
-
-## 🚨 Impact
-
-### What Works ✅
-1. **Market Creation:** Users can create markets (non-admin operation)
-2. **Trading:** Buy/sell shares works (non-admin operation)
-3. **Resolution:** Users can submit votes and proposals
-4. **Claims:** Users can claim winnings
-
-### What's Blocked ❌
-1. **Approve Proposal:** Requires admin signature
-2. **Update Global Config:** Requires admin signature
-3. **Emergency Pause:** Requires admin signature
-4. **Cancel Market:** Requires admin signature
-5. **Update Admin:** Requires current admin signature
-
-**Result:** ~30% of test suite cannot run (6 admin operations out of 22 tests)
-
----
-
-## 🔑 Resolution Options
-
-### Option 1: Find the Original Admin Keypair ⭐ **PREFERRED**
-
-**Locations to check:**
-1. `backend/.env` (ADMIN_WALLET_PRIVATE_KEY)
-2. `.env.local` files
-3. `~/.config/solana/` directory
-4. Project keystore files
-5. Deployment scripts/logs
-6. Git history for the initialization transaction
-
-**If found:**
-- ✅ Can run full test suite
-- ✅ Can update admin to current wallet
-- ✅ Can continue with same GlobalConfig
-- ✅ No downtime or data loss
-
-### Option 2: Re-deploy with New Admin ⚠️
-
-**Steps:**
-1. Deploy program with new program ID
-2. Initialize GlobalConfig with current wallet as admin
-3. Update all tests and scripts with new program ID
-4. Re-run full test suite
-
-**Trade-offs:**
-- ❌ Lose existing test data
-- ❌ Need to update all references
-- ✅ Clean slate with correct admin
-- ⚠️ ~2 hours of work
-
-### Option 3: Skip Admin Tests for Now 🎯 **IMMEDIATE WORKAROUND**
-
-**Approach:**
-- Focus on user-facing functionality first
-- Test non-admin operations (creation, trading, voting, claims)
-- Document admin operations as "tested manually with admin wallet"
-- Defer admin testing until wallet is recovered or program re-deployed
-
-**Trade-offs:**
-- ✅ Can proceed immediately
-- ✅ 70% test coverage still achievable
-- ❌ Admin operations untested
-- ⚠️ May hide admin-specific bugs
-
----
-
-## 📝 Investigation Steps Taken
-
-### 1. Checked Solana Config
-```bash
-solana config get
-# Keypair Path: /Users/seman/.config/solana/id.json
-# Public Key: 4MkybTASDtmzQnfUWztHmfgyHgBREw74eTKipVADqQLA
+**The Issue:**
+```rust
+// EXISTING CODE (BUGGY)
+market.proposal_likes = final_likes;        // ✅ Sets likes
+market.proposal_dislikes = final_dislikes;  // ✅ Sets dislikes
+// ❌ MISSING: proposal_total_votes is NEVER set!
 ```
 
-### 2. Decoded GlobalConfig Account
-```bash
-# Manual deserialization of account data
-# Admin field (bytes 8-40): 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye
+**Evidence:**
+```
+Market state before approval: { approved: {} }
+Proposal votes - Likes: 3
+Proposal votes - Dislikes: 1
+Proposal votes - Total: 0  <-- ❌ SHOULD BE 4!
 ```
 
-### 3. Checked Environment Files
-```bash
-# .env.example contains: ADMIN_WALLET_PUBKEY=4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye
-# But no private key found anywhere
-```
+**Impact:**
+- `proposal_total_votes` stays 0 forever
+- Breaks any logic that relies on total vote count
+- Makes approval validation impossible in `approve_proposal`
 
-### 4. Searched Project Files
-```bash
-# No keypair files found matching the admin public key
-# No references to private key in git history
+**Fix Required:**
+```rust
+market.proposal_likes = final_likes;
+market.proposal_dislikes = final_dislikes;
+market.proposal_total_votes = total_votes;  // ADD THIS LINE
 ```
 
 ---
 
-## 🎯 Recommended Action
+### Bug #2: Auto-Approval Conflict
 
-**Immediate (Next 5 minutes):**
-1. Search deployment logs and terminal history for admin keypair
-2. Check if `4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye` is a known test wallet
-3. Look for keypair in secure storage (password manager, encrypted files)
+**Location:** `programs/zmart-core/src/instructions/aggregate_proposal_votes.rs:78-82`
 
-**If Not Found (Next 1 hour):**
-1. Re-deploy program with current wallet as admin
-2. Update all references in codebase
-3. Re-run full test suite
-4. Document new deployment in DEVNET_DEPLOYMENT_COMPLETE.md
+**The Issue:**
+```rust
+// aggregate_proposal_votes AUTOMATICALLY approves market if threshold met
+if approved {
+    market.state = MarketState::Approved;  // ❌ Auto-transition
+    market.approved_at = clock.unix_timestamp;
+}
+```
 
-**Interim Workaround (Right Now):**
-1. Continue testing non-admin operations
-2. Achieve 70% test coverage (16/22 tests)
-3. Document admin tests as "requires admin wallet"
-4. Mark as blockers for mainnet deployment
+**The Conflict:**
+1. You have a separate `approve_proposal` instruction
+2. But `aggregate_proposal_votes` already does the approval
+3. This makes `approve_proposal` unreachable (market is already Approved)
 
----
-
-## 📈 Test Suite Status with This Limitation
-
-### Lifecycle Tests (6 tests)
-- ✅ Create Market (non-admin)
-- ❌ Approve Proposal (admin-only) **BLOCKED**
-- ❌ Activate Market (admin-only) **BLOCKED**
-- ✅ Buy YES Shares (non-admin)
-- ✅ Buy NO Shares (non-admin)
-- ✅ Resolve Market (creator-only, might work)
-- ✅ Finalize Market (after delay, might work)
-
-**Coverage:** 71% (5/7 tests)
-
-### LMSR Validation Tests (9 tests)
-- ✅ All tests run without admin (non-admin operations)
-
-**Coverage:** 100% (9/9 tests)
-
-### Fee Distribution Tests (7 tests)
-- ✅ All tests run without admin (verification only)
-
-**Coverage:** 100% (7/7 tests)
-
-### Overall Test Suite
-- **Total Tests:** 22
-- **Runnable:** 16 (73%)
-- **Blocked:** 6 (27%)
-- **Admin-Dependent:** 6
+**Evidence:**
+```
+Market created in PROPOSED state  ✅
+Votes aggregated with 75% approval  ✅
+Market automatically transitions to APPROVED  ❌ Unexpected!
+approve_proposal() called  ❌ Fails: InvalidStateTransition
+```
 
 ---
 
-## 🔒 Security Implications
+## 🤔 Design Decision Required
 
-**Good News ✅:**
-- Access control is working perfectly!
-- Admin operations are properly protected
-- No unauthorized access possible
+You have **two conflicting workflows** in your code:
 
-**Concern ⚠️:**
-- If admin keypair is lost, GlobalConfig cannot be updated
-- Emergency pause function inaccessible without admin
-- Protocol fees will accumulate without admin to manage
+### Option A: Manual Approval (Your Documentation Says)
+```
+PROPOSED → aggregate_proposal_votes (records votes) →
+          → approve_proposal (admin reviews) → APPROVED
+          (explicit admin action required)
+```
+- **Pros:**
+  - Admin can review and reject (even if 70%+)
+  - Follows documented 6-state FSM
+  - More control and safety
+- **Cons:** Requires extra transaction
 
-**Mitigation:**
-- For production, implement multi-sig admin
-- Use hardware wallet for admin operations
-- Document key management procedures
-
----
-
-## 📋 Next Steps
-
-**Human Decision Required:**
-
-1. **Do you have the admin wallet keypair for `4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye`?**
-   - If YES → Provide location, we'll configure tests to use it
-   - If NO → Recommend Option 2 (re-deploy) or Option 3 (skip admin tests)
-
-2. **Preferred Resolution:**
-   - Option 1: Find admin keypair (BEST, if possible)
-   - Option 2: Re-deploy with new admin (~2 hours)
-   - Option 3: Skip admin tests for now (fastest)
-
-**Once Decided:**
-- Update test suite accordingly
-- Document decision in DEVNET_TEST_RESULTS.md
-- Proceed with backend integration (Phase 2)
+### Option B: Auto-Approval (Current Implementation)
+```
+PROPOSED → aggregate_proposal_votes (75% approval) → APPROVED
+          (automatic transition if threshold met)
+```
+- **Pros:** Simpler, fewer transactions, faster
+- **Cons:**
+  - No admin oversight/veto power
+  - `approve_proposal` instruction becomes useless
+  - Contradicts 6-state FSM documentation
 
 ---
 
-## 📊 Timeline Impact
+## 📚 What Your Documentation Says
 
-| Option | Time to Resume Testing | Completeness | Risk |
-|--------|------------------------|--------------|------|
-| Option 1 | 5 minutes | 100% | None |
-| Option 2 | 2 hours | 100% | Low |
-| Option 3 | Immediate | 73% | Medium |
+**From CORE_LOGIC_INVARIANTS.md:**
+```markdown
+### State 1: APPROVED
+After proposal voting reaches 70% approval threshold, **admin can approve**
+the market, allowing it to be activated for trading. This instruction
+**validates the voting threshold** and transitions the market state.
+```
 
----
-
-**Status:** ⏸️ **AWAITING DECISION**
-
-**Recommendation:** Try Option 1 (search for keypair) for 30 minutes, then proceed with Option 2 (re-deploy) if not found.
+**This suggests Manual Approval (Option A) is the intended design.**
 
 ---
 
-*Document Created: November 10, 2025*
-*Related: DEVNET_TEST_RESULTS.md, DEVNET_DEPLOYMENT_COMPLETE.md*
+## 🛠️ Recommended Fixes
+
+### Fix #1: Set `proposal_total_votes` Field (CRITICAL)
+```rust
+// In aggregate_proposal_votes.rs, line 57, add:
+market.proposal_total_votes = total_votes;
+```
+**Priority:** CRITICAL - This is a data integrity bug that must be fixed.
+
+---
+
+### Fix #2: Choose Approval Workflow
+
+**Choice A: Manual Approval (RECOMMENDED)**
+```rust
+// Remove auto-approval from aggregate_proposal_votes.rs:78-82
+// DELETE THESE LINES:
+if approved {
+    market.state = MarketState::Approved;
+    market.approved_at = clock.unix_timestamp;
+}
+
+// Keep aggregate_proposal_votes for recording votes only
+// Keep approve_proposal for admin to manually approve if >= 70%
+```
+
+**Choice B: Auto-Approval (Simpler)**
+```rust
+// Keep aggregate_proposal_votes.rs as-is (with auto-approval)
+// Delete approve_proposal.rs entirely
+// Update documentation to reflect auto-approval workflow
+```
+
+---
+
+## ⚖️ My Recommendation: Manual Approval (Option A)
+
+**Why:**
+1. **Follows your blueprint documentation** (admin approval is explicit)
+2. **Safety and control** - Admin can reject even if 70%+
+3. **Matches 6-state FSM design** - PROPOSED → APPROVED is explicit transition
+4. **Better for moderation** - Admin reviews market quality, not just vote count
+
+**Implementation:**
+1. Fix Bug #1 (add `proposal_total_votes` line) - **MUST DO**
+2. Remove lines 78-82 from `aggregate_proposal_votes.rs` (auto-approval)
+3. Keep `approve_proposal` instruction as-is
+4. Test workflow: create → vote → aggregate → admin approve → activate
+
+---
+
+## 🧪 Updated Test Workflow
+
+**After Fix #1 + Fix #2 (Manual Approval):**
+```typescript
+// TEST 1: Create Market (PROPOSED state)
+await createMarket(...);
+
+// TEST 2: Submit & Aggregate Votes
+await submitProposalVote(true);  // Like
+await aggregateProposalVotes(3, 1);  // 75% approval
+// Market stays in PROPOSED state (votes recorded only)
+
+// TEST 3: Admin Approval (PROPOSED → APPROVED)
+await approveProposal();  // Admin explicitly approves
+// Market now in APPROVED state
+
+// TEST 4: Activate Market (APPROVED → ACTIVE)
+await activateMarket();
+// Market now tradeable
+
+// TEST 5-8: Trading, resolution, claiming
+...
+```
+
+---
+
+## 📊 Impact Summary
+
+### Current Status:
+- ❌ Bug #1 breaks all approval logic (proposal_total_votes = 0)
+- ❌ Bug #2 makes approve_proposal unreachable
+- ❌ Tests cannot progress past approval step
+- ❌ Design conflicts with documentation
+
+### After Fixes:
+- ✅ Vote counts accurate (Bug #1 fixed)
+- ✅ Admin approval workflow works (Bug #2 fixed)
+- ✅ Tests can complete full lifecycle
+- ✅ Design matches blueprint documentation
+
+---
+
+## 🚀 Next Steps
+
+1. **User Decision:** Choose Manual Approval (recommended) or Auto-Approval
+2. **Apply Fix #1:** Add `proposal_total_votes` line (MUST DO either way)
+3. **Apply Fix #2:** Remove auto-approval lines OR delete approve_proposal
+4. **Rebuild & Redeploy:** Fresh deployment with fixes
+5. **Run Tests:** Validate complete lifecycle
+
+---
+
+## 📁 Files to Modify
+
+**Fix #1 (CRITICAL):**
+- `programs/zmart-core/src/instructions/aggregate_proposal_votes.rs` (1 line add)
+
+**Fix #2 (Choose one):**
+- **Option A:** Remove lines 78-82 from aggregate_proposal_votes.rs
+- **Option B:** Delete approve_proposal.rs + remove from lib.rs
+
+---
+
+## 💡 Additional Notes
+
+### Why This Wasn't Caught Earlier:
+- Tests didn't check intermediate state (assumed happy path)
+- Auto-approval looked like it was working (it was!)
+- No test explicitly checked `proposal_total_votes` field
+- Documentation didn't clarify manual vs auto-approval
+
+### What We Learned:
+- ✅ Always fetch and validate account state in tests
+- ✅ Check ALL fields after state changes
+- ✅ Test both happy path AND edge cases
+- ✅ Verify design matches documentation
+
+---
+
+## 🎯 Decision Needed
+
+**Question for User:**
+
+Do you want:
+- **A) Manual Approval** (admin must explicitly approve, matches docs)
+- **B) Auto-Approval** (market auto-approves if >= 70%, simpler)
+
+**I recommend A (Manual Approval)** for better control and safety.
+
+---
+
+**Status:** Awaiting user decision before proceeding with fixes.
+
+**All findings committed to:** `security/critical-fixes` branch
+**Ready to fix as soon as you decide which workflow you want!** ✅
