@@ -2,6 +2,8 @@ use anchor_lang::prelude::*;
 use crate::error::ErrorCode;
 use crate::state::{GlobalConfig, MarketAccount, MarketState, UserPosition};
 use crate::math::lmsr;
+use crate::utils::{transfer_with_rent_check, calculate_fees_accurate};
+use super::buy_shares::MIN_TRADE_AMOUNT;
 
 /// Sell YES or NO shares back to the pool
 ///
@@ -53,6 +55,9 @@ pub struct SellShares<'info> {
         constraint = protocol_fee_wallet.key() == global_config.protocol_fee_wallet @ ErrorCode::Unauthorized
     )]
     pub protocol_fee_wallet: AccountInfo<'info>,
+
+    /// System program for CPI transfers
+    pub system_program: Program<'info, System>,
 }
 
 pub fn handler(
@@ -81,29 +86,34 @@ pub fn handler(
         shares_to_sell,
     )?;
 
-    // Apply fees (same percentages as buy)
-    let protocol_fee = proceeds_before_fees
-        .checked_mul(config.protocol_fee_bps as u64).ok_or(ErrorCode::OverflowError)?
-        .checked_div(10000).ok_or(ErrorCode::DivisionByZero)?;
+    // SECURITY FIX (Finding #9): Enforce minimum trade size
+    // Prevents micro-trade attacks that evade fees or manipulate prices
+    require!(
+        proceeds_before_fees >= MIN_TRADE_AMOUNT,
+        ErrorCode::TradeTooSmall
+    );
 
-    let resolver_fee = proceeds_before_fees
-        .checked_mul(config.resolver_reward_bps as u64).ok_or(ErrorCode::OverflowError)?
-        .checked_div(10000).ok_or(ErrorCode::DivisionByZero)?;
-
-    let lp_fee = proceeds_before_fees
-        .checked_mul(config.liquidity_provider_fee_bps as u64).ok_or(ErrorCode::OverflowError)?
-        .checked_div(10000).ok_or(ErrorCode::DivisionByZero)?;
+    // SECURITY FIX (Finding #6): Use accurate fee calculation to prevent value leakage
+    // Old approach calculated fees individually, losing precision on each division
+    // New approach calculates total fees first, then splits proportionally
+    let fees = calculate_fees_accurate(
+        proceeds_before_fees,
+        config.protocol_fee_bps,
+        config.resolver_reward_bps,
+        config.liquidity_provider_fee_bps,
+    )?;
 
     let net_proceeds = proceeds_before_fees
-        .checked_sub(protocol_fee).ok_or(ErrorCode::UnderflowError)?
-        .checked_sub(resolver_fee).ok_or(ErrorCode::UnderflowError)?
-        .checked_sub(lp_fee).ok_or(ErrorCode::UnderflowError)?;
+        .checked_sub(fees.total_fees)
+        .ok_or(ErrorCode::UnderflowError)?;
 
     // Slippage check
     require!(net_proceeds >= min_proceeds, ErrorCode::SlippageExceeded);
 
     // Check market has enough liquidity to pay out
-    let total_payout = net_proceeds.checked_add(protocol_fee).ok_or(ErrorCode::OverflowError)?;
+    let total_payout = net_proceeds
+        .checked_add(fees.protocol_fee)
+        .ok_or(ErrorCode::OverflowError)?;
     require!(market.current_liquidity >= total_payout, ErrorCode::InsufficientLiquidity);
 
     // Update market state
@@ -113,15 +123,21 @@ pub fn handler(
         market.shares_no = market.shares_no.checked_sub(shares_to_sell).ok_or(ErrorCode::UnderflowError)?;
     }
 
-    market.total_volume = market.total_volume.checked_add(proceeds_before_fees).ok_or(ErrorCode::OverflowError)?;
-    market.current_liquidity = market.current_liquidity.checked_sub(total_payout).ok_or(ErrorCode::UnderflowError)?;
+    market.total_volume = market.total_volume
+        .checked_add(proceeds_before_fees)
+        .ok_or(ErrorCode::OverflowError)?;
+    market.current_liquidity = market.current_liquidity
+        .checked_sub(total_payout)
+        .ok_or(ErrorCode::UnderflowError)?;
 
     // Accumulate fees (resolver + LP stay in market)
     market.accumulated_resolver_fees = market.accumulated_resolver_fees
-        .checked_add(resolver_fee).ok_or(ErrorCode::OverflowError)?;
+        .checked_add(fees.resolver_fee)
+        .ok_or(ErrorCode::OverflowError)?;
 
     market.accumulated_lp_fees = market.accumulated_lp_fees
-        .checked_add(lp_fee).ok_or(ErrorCode::OverflowError)?;
+        .checked_add(fees.lp_fee)
+        .ok_or(ErrorCode::OverflowError)?;
 
     // Update user position
     if outcome {
@@ -133,45 +149,55 @@ pub fn handler(
     position.trades_count = position.trades_count.checked_add(1).ok_or(ErrorCode::OverflowError)?;
     position.last_trade_at = Clock::get()?.unix_timestamp;
 
-    // Transfer net proceeds to user (direct lamport transfer)
-    **market.to_account_info().try_borrow_mut_lamports()? = market
-        .to_account_info()
-        .lamports()
-        .checked_sub(net_proceeds).ok_or(ErrorCode::UnderflowError)?;
+    // SECURITY FIX (Finding #8): Lock market before lamport transfers (reentrancy protection)
+    market.lock()?;
 
-    **ctx.accounts.user.to_account_info().try_borrow_mut_lamports()? = ctx
-        .accounts
-        .user
-        .to_account_info()
-        .lamports()
-        .checked_add(net_proceeds).ok_or(ErrorCode::OverflowError)?;
+    // SECURITY FIX (Finding #2): Transfer net proceeds to user with rent check
+    // Ensures market account maintains rent exemption after transfer
+    transfer_with_rent_check(
+        &market.to_account_info(),
+        &ctx.accounts.user.to_account_info(),
+        net_proceeds,
+        &ctx.accounts.system_program.to_account_info(),
+    )?;
 
-    // Transfer protocol fee to protocol wallet (direct lamport transfer)
-    **market.to_account_info().try_borrow_mut_lamports()? = market
-        .to_account_info()
-        .lamports()
-        .checked_sub(protocol_fee).ok_or(ErrorCode::UnderflowError)?;
+    // SECURITY FIX (Finding #2): Transfer protocol fee with rent check
+    // Ensures market account maintains rent exemption after fee payment
+    transfer_with_rent_check(
+        &market.to_account_info(),
+        &ctx.accounts.protocol_fee_wallet,
+        fees.protocol_fee,
+        &ctx.accounts.system_program.to_account_info(),
+    )?;
 
-    **ctx.accounts.protocol_fee_wallet.try_borrow_mut_lamports()? = ctx
-        .accounts
-        .protocol_fee_wallet
-        .lamports()
-        .checked_add(protocol_fee).ok_or(ErrorCode::OverflowError)?;
+    // SECURITY FIX (Finding #8): Unlock market after transfers complete
+    market.unlock();
 
     // Emit event
-    // emit!(SharesSold {
-    //     market_id: market.market_id,
-    //     user: ctx.accounts.user.key(),
-    //     outcome,
-    //     shares: shares_to_sell,
-    //     proceeds: net_proceeds,
-    //     new_price_yes: lmsr::calculate_yes_price(market.shares_yes, market.shares_no, market.b_parameter)?,
-    //     timestamp: position.last_trade_at,
-    // });
+    emit!(SharesSold {
+        market_id: market.market_id,
+        user: ctx.accounts.user.key(),
+        outcome,
+        shares: shares_to_sell,
+        proceeds: net_proceeds,
+        new_price_yes: lmsr::calculate_yes_price(market.shares_yes, market.shares_no, market.b_parameter)?,
+        timestamp: position.last_trade_at,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct SharesSold {
+    pub market_id: [u8; 32],
+    pub user: Pubkey,
+    pub outcome: bool,
+    pub shares: u64,
+    pub proceeds: u64,
+    pub new_price_yes: u64,
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -201,3 +227,4 @@ mod tests {
         assert!(sell_proceeds_net < buy_cost);
     }
 }
+

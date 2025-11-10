@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS market_finalization_errors (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   -- Market References (for investigation)
-  market_id UUID NOT NULL REFERENCES markets(id) ON DELETE CASCADE,
+  market_id TEXT NOT NULL REFERENCES markets(id) ON DELETE CASCADE,
   market_on_chain_address TEXT NOT NULL,
   market_identifier TEXT NOT NULL,
 
@@ -142,11 +142,10 @@ CREATE TRIGGER trigger_update_market_finalization_errors_updated_at
 -- ============================================================
 
 COMMENT ON TABLE market_finalization_errors IS
-  'Tracks failed automatic finalization attempts by Market Monitor service. ' ||
-  'Used for manual review, debugging, and retry workflows.';
+  'Tracks failed automatic finalization attempts by Market Monitor service. Used for manual review, debugging, and retry workflows.';
 
 COMMENT ON COLUMN market_finalization_errors.market_id IS
-  'UUID reference to markets table (CASCADE DELETE if market deleted)';
+  'TEXT reference to markets table (CASCADE DELETE if market deleted)';
 
 COMMENT ON COLUMN market_finalization_errors.market_on_chain_address IS
   'Base58-encoded on-chain market PDA address for investigation';

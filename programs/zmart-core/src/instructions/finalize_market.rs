@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use crate::error::ErrorCode;
 use crate::state::{GlobalConfig, MarketAccount, MarketState};
+use crate::math::verify_bounded_loss;
 
 /// Set final outcome (RESOLVING/DISPUTED → FINALIZED)
 ///
@@ -42,6 +43,34 @@ pub fn handler(
     let market = &mut ctx.accounts.market;
     let config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
+    let current_time = clock.unix_timestamp;
+
+    // SECURITY FIX (Finding #10): Validate timestamp bounds
+    // Prevents time travel and far-future manipulation attacks
+    require!(
+        current_time >= market.created_at,
+        ErrorCode::InvalidTimestamp
+    );
+
+    // Sanity check: timestamp must be within 10 years of market creation
+    let max_timestamp = market.created_at
+        .checked_add(86400 * 365 * 10)  // 10 years in seconds
+        .ok_or(ErrorCode::OverflowError)?;
+
+    require!(
+        current_time <= max_timestamp,
+        ErrorCode::InvalidTimestamp
+    );
+
+    msg!("Timestamp validation passed: current={}, created={}, resolution_proposed={}",
+        current_time, market.created_at, market.resolution_proposed_at);
+
+    // SECURITY FIX (Finding #5): Validate timestamp monotonicity
+    // Finalization can only happen after resolution is proposed
+    require!(
+        current_time > market.resolution_proposed_at,
+        ErrorCode::InvalidTimestamp
+    );
 
     // Record if market was disputed (before state change)
     let was_disputed = market.state == MarketState::Disputed;
@@ -93,6 +122,15 @@ pub fn handler(
         market.proposed_outcome
     };
 
+    // SECURITY FIX (Finding #4): Verify bounded loss protection
+    // Ensure market creator loss never exceeds b * ln(2) ≈ 0.693 * b
+    // This protects against bugs in LMSR implementation or numerical errors
+    verify_bounded_loss(
+        market.initial_liquidity,
+        market.current_liquidity,
+        market.b_parameter,
+    )?;
+
     // Set final outcome and mark as finalized
     market.final_outcome = final_outcome;
     market.was_disputed = was_disputed;
@@ -100,16 +138,24 @@ pub fn handler(
     market.state = MarketState::Finalized;
 
     // Emit event
-    // emit!(MarketFinalized {
-    //     market_id: market.market_id,
-    //     final_outcome,
-    //     was_disputed,
-    //     timestamp: market.finalized_at,
-    // });
+    emit!(MarketFinalized {
+        market_id: market.market_id,
+        final_outcome,
+        was_disputed,
+        timestamp: market.finalized_at,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct MarketFinalized {
+    pub market_id: [u8; 32],
+    pub final_outcome: Option<bool>,
+    pub was_disputed: bool,
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;

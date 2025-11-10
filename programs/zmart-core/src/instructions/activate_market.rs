@@ -77,7 +77,23 @@ pub fn handler(ctx: Context<ActivateMarket>) -> Result<()> {
         is_creator
     );
 
+    // Emit event
+    emit!(MarketActivated {
+        market_id: market.market_id,
+        creator: market.creator,
+        initial_liquidity: market.initial_liquidity,
+        timestamp: market.activated_at,
+    });
+
     Ok(())
+}
+
+#[event]
+pub struct MarketActivated {
+    pub market_id: [u8; 32],
+    pub creator: Pubkey,
+    pub initial_liquidity: u64,
+    pub timestamp: i64,
 }
 
 #[cfg(test)]
@@ -126,7 +142,8 @@ mod tests {
             is_cancelled: false,
             cancelled_at: None,
             bump: 255,
-            reserved: [0; 120],
+            is_locked: false,
+            reserved: [0; 119],
         }
     }
 

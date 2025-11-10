@@ -49,24 +49,27 @@ function createApp() {
         },
     }));
     // Rate limiting (100 requests per 15 minutes per IP)
-    const limiter = (0, express_rate_limit_1.default)({
-        windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100, // Limit each IP to 100 requests per windowMs
-        message: {
-            error: "Too many requests from this IP, please try again later.",
-            status: 429,
-        },
-        standardHeaders: true, // Return rate limit info in RateLimit-* headers
-        legacyHeaders: false, // Disable X-RateLimit-* headers
-    });
-    app.use("/api/", limiter);
+    // Disabled in test environment to allow rapid integration testing
+    if (process.env.NODE_ENV !== 'test') {
+        const limiter = (0, express_rate_limit_1.default)({
+            windowMs: 15 * 60 * 1000, // 15 minutes
+            max: 100, // Limit each IP to 100 requests per windowMs
+            message: {
+                error: "Too many requests from this IP, please try again later.",
+                status: 429,
+            },
+            standardHeaders: true, // Return rate limit info in RateLimit-* headers
+            legacyHeaders: false, // Disable X-RateLimit-* headers
+        });
+        app.use("/api/", limiter);
+    }
     // Health check endpoint
     app.get("/health", (req, res) => {
         res.json({
             status: "healthy",
             timestamp: new Date().toISOString(),
             uptime: process.uptime(),
-            environment: process.env.NODE_ENV || "development",
+            environment: config_1.config.node.env,
         });
     });
     // API routes
@@ -98,7 +101,7 @@ async function startServer() {
         logger_1.default.info(`[API Server] Started on port ${port}`);
         logger_1.default.info(`[API Server] Health check: http://localhost:${port}/health`);
         logger_1.default.info(`[API Server] API base URL: http://localhost:${port}/api`);
-        logger_1.default.info(`[API Server] Environment: ${process.env.NODE_ENV || "development"}`);
+        logger_1.default.info(`[API Server] Environment: ${config_1.config.node.env}`);
     });
     // Graceful shutdown
     process.on("SIGTERM", () => {

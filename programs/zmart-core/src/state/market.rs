@@ -178,8 +178,13 @@ pub struct MarketAccount {
     /// Market cancellation timestamp (if cancelled by admin)
     pub cancelled_at: Option<i64>,
 
-    /// Reserved space for future upgrades (120 bytes)
-    pub reserved: [u8; 120],
+    /// Reentrancy guard (SECURITY: Finding #8)
+    /// Set to true during sensitive operations to prevent concurrent access
+    /// Prevents reentrancy attacks during lamport transfers
+    pub is_locked: bool,
+
+    /// Reserved space for future upgrades (119 bytes, reduced by 1 for is_locked)
+    pub reserved: [u8; 119],
 
     /// Bump seed for PDA derivation
     pub bump: u8,
@@ -192,6 +197,44 @@ impl MarketAccount {
     ///
     /// Total: 480 bytes (472 original + cancelled_at Option<i64> 16 bytes - reserved 8 bytes = +8 net)
     pub const LEN: usize = 480;
+
+    /// Lock the market for reentrancy protection (SECURITY: Finding #8)
+    ///
+    /// This must be called before any sensitive operation that transfers lamports.
+    /// Prevents concurrent or reentrant calls to the same market.
+    ///
+    /// # Errors
+    /// Returns `ErrorCode::Reentrant` if market is already locked
+    pub fn lock(&mut self) -> Result<()> {
+        require!(!self.is_locked, ErrorCode::Reentrant);
+        self.is_locked = true;
+        msg!("Market locked for operation");
+        Ok(())
+    }
+
+    /// Unlock the market after operation completes (SECURITY: Finding #8)
+    ///
+    /// This must be called after the sensitive operation finishes.
+    /// Allows subsequent operations to proceed.
+    pub fn unlock(&mut self) {
+        self.is_locked = false;
+        msg!("Market unlocked");
+    }
+
+    /// Validate reserved fields are zeroed (SECURITY: Finding #12)
+    ///
+    /// Ensures reserved space is properly initialized to zero.
+    /// This protects against potential bugs when adding new fields in future upgrades.
+    ///
+    /// # Errors
+    /// Returns `ErrorCode::InvalidReservedField` if reserved contains non-zero bytes
+    pub fn validate_reserved(&self) -> Result<()> {
+        require!(
+            self.reserved == [0; 119],
+            ErrorCode::InvalidReservedField
+        );
+        Ok(())
+    }
 
     /// Check if state transition is valid
     ///
@@ -468,7 +511,8 @@ mod tests {
             was_disputed: false,
             is_cancelled: false,
             cancelled_at: None,
-            reserved: [0; 120],
+            is_locked: false,
+            reserved: [0; 119],
             bump: 255,
         }
     }

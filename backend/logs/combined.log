@@ -12551,3 +12551,509 @@
 {"level":"info","message":"Redis connection test successful","service":"zmart-backend","timestamp":"2025-11-07 18:29:15"}
 {"level":"info","message":"Database connection test successful","service":"zmart-backend","timestamp":"2025-11-07 18:29:15"}
 {"level":"info","message":"Solana connection test successful","service":"zmart-backend","slot":419976177,"timestamp":"2025-11-07 18:29:16"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615728201 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615728219 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615728220 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615728223 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"warn","message":"[MarketMonitor] Already running, skipping this execution. This may indicate the previous run is taking too long.","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615728225 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-2-1762615728225 (total runs: 2)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615728226 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615728227 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"error","message":"[MarketMonitor] Failed to query markets: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:218:15)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-08 16:28:48"}
+{"level":"error","message":"[MarketMonitor] Fatal error in run run-1-1762615728227: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:233:13)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615728235 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Found 1 market(s) ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Processing market test-market-1 (address: ERe6sUTqmktthS38PjUnq1gkJfbqhxfMwtHCSCSDTTW6)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[MarketMonitor] Finalizing market ERe6sUTqmktthS38PjUnq1gkJfbqhxfMwtHCSCSDTTW6...","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 1 failed for ERe6sUTqmktthS38PjUnq1gkJfbqhxfMwtHCSCSDTTW6: Failed to send finalize_market transaction for ERe6sUTqmktthS38PjUnq1gkJfbqhxfMwtHCSCSDTTW6: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3792","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Started on port 3792","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615728399_nljneolhw from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615728399_nljneolhw disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3377","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Started on port 3377","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615728506_0p6kd200m from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615728506_0p6kd200m disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3242","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Started on port 3242","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615728611_ayly3sa4o from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615728612_owg5bec09 from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615728612_owg5bec09 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615728611_ayly3sa4o disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3586","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Started on port 3586","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615728722_0af0gevja from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615728722_0af0gevja disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3519","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Started on port 3519","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615728884_qez84bkbk from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615728884_qez84bkbk disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3753","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Started on port 3753","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615728993_z9j8m69nz from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615728993_z9j8m69nz disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:48"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3790","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Started on port 3790","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615729100_e9zerr2xi from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615729100_e9zerr2xi disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3222","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Started on port 3222","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615729209_n5p518k23 from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615729209_n5p518k23 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3031","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Started on port 3031","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615729324_splz4sjhh from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615729326_byq3psngy from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615729326_byq3psngy disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615729324_splz4sjhh disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3594","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Started on port 3594","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615729435_oudx1qt7i from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615729437_skywg9s3w from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615729437_skywg9s3w disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615729435_oudx1qt7i disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3342","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Started on port 3342","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762615729645_n36flo8v7 from ::1","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"info","message":"[WebSocketServer] Client client_1762615729645_n36flo8v7 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-08 16:28:49"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 2 failed for ERe6sUTqmktthS38PjUnq1gkJfbqhxfMwtHCSCSDTTW6: Failed to send finalize_market transaction for ERe6sUTqmktthS38PjUnq1gkJfbqhxfMwtHCSCSDTTW6: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-08 16:28:53"}
+{"error":"Failed to send finalize_market transaction for ERe6sUTqmktthS38PjUnq1gkJfbqhxfMwtHCSCSDTTW6: Cannot read properties of undefined (reading 'finalizeMarket')","level":"error","message":"All 3 retry attempts failed","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"error","message":"[MarketMonitor] Failed to finalize market test-market-1: Failed to send finalize_market transaction for ERe6sUTqmktthS38PjUnq1gkJfbqhxfMwtHCSCSDTTW6: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","stack":"TypeError: Cannot read properties of undefined (reading 'finalizeMarket')\n    at sendFinalizeTransaction (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:132:8)\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:55:20)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at finalizeMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:53:21)\n    at MarketMonitor.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:333:20)\n    at MarketMonitor.processMarketWithTimeout (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:260:22)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:142:25)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:374:23)","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Run run-1-1762615728235 complete: 0 succeeded, 1 failed in 15012ms","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: E5hpMAK4rBJ2jH7cvqpHu1zGMWsvyF1LwTeUBWHboW2J","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Connected to Solana (slot: 12345)","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Validation complete ✓","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: HvywF3wcZop4t8jrzkdksztMitcemTeUtdrVSCWKtiG1","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"error","message":"[MarketMonitor] Validation failed: Supabase connection failed: Connection failed","service":"zmart-backend","stack":"Error: Supabase connection failed: Connection failed\n    at MarketMonitor.validate (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:480:15)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:450:7)","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762615743257 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Initiating graceful shutdown...","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Waiting for current run to complete...","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-08 16:29:03"}
+{"level":"info","message":"[MarketMonitor] Shutdown complete","service":"zmart-backend","timestamp":"2025-11-08 16:29:04"}
+2025-11-08T18:35:23.448Z [[31merror[39m]: Failed to list webhooks {"error":"Request failed with status code 429"}
+2025-11-08T19:49:52.580Z [[31merror[39m]: Failed to list webhooks {"error":"Request failed with status code 429"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649922900 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649922908 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649922909 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649922911 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"warn","message":"[MarketMonitor] Already running, skipping this execution. This may indicate the previous run is taking too long.","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649922920 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-2-1762649922920 (total runs: 2)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649922921 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649922923 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"error","message":"[MarketMonitor] Failed to query markets: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:218:15)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-09 01:58:42"}
+{"level":"error","message":"[MarketMonitor] Fatal error in run run-1-1762649922923: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:233:13)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649922935 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Found 1 market(s) ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Processing market test-market-1 (address: 7JY1y1CT3EaHyNYuUn7PRhoxcv1UKYbM9yPB8cBKzGBp)","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"info","message":"[MarketMonitor] Finalizing market 7JY1y1CT3EaHyNYuUn7PRhoxcv1UKYbM9yPB8cBKzGBp...","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 1 failed for 7JY1y1CT3EaHyNYuUn7PRhoxcv1UKYbM9yPB8cBKzGBp: Failed to send finalize_market transaction for 7JY1y1CT3EaHyNYuUn7PRhoxcv1UKYbM9yPB8cBKzGBp: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-09 01:58:42"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 2 failed for 7JY1y1CT3EaHyNYuUn7PRhoxcv1UKYbM9yPB8cBKzGBp: Failed to send finalize_market transaction for 7JY1y1CT3EaHyNYuUn7PRhoxcv1UKYbM9yPB8cBKzGBp: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-09 01:58:47"}
+{"error":"Failed to send finalize_market transaction for 7JY1y1CT3EaHyNYuUn7PRhoxcv1UKYbM9yPB8cBKzGBp: Cannot read properties of undefined (reading 'finalizeMarket')","level":"error","message":"All 3 retry attempts failed","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"error","message":"[MarketMonitor] Failed to finalize market test-market-1: Failed to send finalize_market transaction for 7JY1y1CT3EaHyNYuUn7PRhoxcv1UKYbM9yPB8cBKzGBp: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","stack":"TypeError: Cannot read properties of undefined (reading 'finalizeMarket')\n    at sendFinalizeTransaction (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:134:8)\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:57:20)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at processTimers (node:internal/timers:540:9)\n    at finalizeMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:55:21)\n    at MarketMonitor.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:333:20)\n    at MarketMonitor.processMarketWithTimeout (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:260:22)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:142:25)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:374:23)","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Run run-1-1762649922935 complete: 0 succeeded, 1 failed in 15045ms","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: EK9erqeqpQbAFeWdFBeyByeVvKCgJPbfjrUkhSj2bWK","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Connected to Solana (slot: 12345)","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Validation complete ✓","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: BSPQ3orKzn1TnBV638aXh6VVvTRAJq3T3mpvNsdhfEmq","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"error","message":"[MarketMonitor] Validation failed: Supabase connection failed: Connection failed","service":"zmart-backend","stack":"Error: Supabase connection failed: Connection failed\n    at MarketMonitor.validate (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:480:15)\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at processTimers (node:internal/timers:540:9)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:450:7)","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762649937988 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Initiating graceful shutdown...","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Waiting for current run to complete...","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 01:58:57"}
+{"level":"info","message":"[MarketMonitor] Shutdown complete","service":"zmart-backend","timestamp":"2025-11-09 01:58:58"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653699940 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653699946 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653699949 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653699955 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"warn","message":"[MarketMonitor] Already running, skipping this execution. This may indicate the previous run is taking too long.","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653699959 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-2-1762653699960 (total runs: 2)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653699961 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653699963 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"error","message":"[MarketMonitor] Failed to query markets: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:218:15)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-09 03:01:39"}
+{"level":"error","message":"[MarketMonitor] Fatal error in run run-1-1762653699963: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:233:13)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653699976 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Found 1 market(s) ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Processing market test-market-1 (address: D2spsaNCRbg1vFhyyzPhQV5xgmfeEYgirqAN7yumuj2C)","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"info","message":"[MarketMonitor] Finalizing market D2spsaNCRbg1vFhyyzPhQV5xgmfeEYgirqAN7yumuj2C...","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 1 failed for D2spsaNCRbg1vFhyyzPhQV5xgmfeEYgirqAN7yumuj2C: Failed to send finalize_market transaction for D2spsaNCRbg1vFhyyzPhQV5xgmfeEYgirqAN7yumuj2C: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-09 03:01:39"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 2 failed for D2spsaNCRbg1vFhyyzPhQV5xgmfeEYgirqAN7yumuj2C: Failed to send finalize_market transaction for D2spsaNCRbg1vFhyyzPhQV5xgmfeEYgirqAN7yumuj2C: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-09 03:01:44"}
+{"error":"Failed to send finalize_market transaction for D2spsaNCRbg1vFhyyzPhQV5xgmfeEYgirqAN7yumuj2C: Cannot read properties of undefined (reading 'finalizeMarket')","level":"error","message":"All 3 retry attempts failed","service":"zmart-backend","timestamp":"2025-11-09 03:01:54"}
+{"level":"error","message":"[MarketMonitor] Failed to finalize market test-market-1: Failed to send finalize_market transaction for D2spsaNCRbg1vFhyyzPhQV5xgmfeEYgirqAN7yumuj2C: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","stack":"TypeError: Cannot read properties of undefined (reading 'finalizeMarket')\n    at finalizeMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:134:8)\n    at sendFinalizeTransaction (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:57:20)\n    at fn (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at finalizeMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:55:21)\n    at MarketMonitor.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:333:20)\n    at MarketMonitor.processMarketWithTimeout (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:260:22)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:142:25)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:374:23)","timestamp":"2025-11-09 03:01:54"}
+{"level":"info","message":"[MarketMonitor] Run run-1-1762653699976 complete: 0 succeeded, 1 failed in 15013ms","service":"zmart-backend","timestamp":"2025-11-09 03:01:54"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-09 03:01:54"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: 6qUmkh15XwU5hGSnLvDaW7Gm5ioQHSj7u7wBPqkHVaLt","service":"zmart-backend","timestamp":"2025-11-09 03:01:54"}
+{"level":"info","message":"[MarketMonitor] Connected to Solana (slot: 12345)","service":"zmart-backend","timestamp":"2025-11-09 03:01:54"}
+{"level":"info","message":"[MarketMonitor] Validation complete ✓","service":"zmart-backend","timestamp":"2025-11-09 03:01:54"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-09 03:01:54"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: 6wHFnZ2shSGhYedKm1VhCV8c3VcE2hzB9F27J4AHgT4s","service":"zmart-backend","timestamp":"2025-11-09 03:01:54"}
+{"level":"error","message":"[MarketMonitor] Validation failed: Supabase connection failed: Connection failed","service":"zmart-backend","stack":"Error: Supabase connection failed: Connection failed\n    at MarketMonitor.validate (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:480:15)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:450:7)","timestamp":"2025-11-09 03:01:55"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653715002 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:55"}
+{"level":"info","message":"[MarketMonitor] Initiating graceful shutdown...","service":"zmart-backend","timestamp":"2025-11-09 03:01:55"}
+{"level":"info","message":"[MarketMonitor] Waiting for current run to complete...","service":"zmart-backend","timestamp":"2025-11-09 03:01:55"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:55"}
+{"level":"info","message":"[MarketMonitor] Shutdown complete","service":"zmart-backend","timestamp":"2025-11-09 03:01:56"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653716009 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:56"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:56"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653716014 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:56"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:56"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762653716017 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 03:01:56"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 03:01:56"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: 3GZGkUfEjYYChtyTadSU8nqVhKCe2Vm7WJuD9vj2o4Za","service":"zmart-backend","timestamp":"2025-11-09 03:01:56"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3741","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3741","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653717599_vfk9ro69f from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653717599_vfk9ro69f disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3910","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3910","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653717713_hlh486fog from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653717713_hlh486fog disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3563","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3563","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653717820_l82dr59o8 from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653717822_59ip1xkv7 from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653717822_59ip1xkv7 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653717820_l82dr59o8 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3026","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3026","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653717930_rmiuay5np from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653717930_rmiuay5np disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3661","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3661","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718087_fv8of7gx0 from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718087_fv8of7gx0 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3235","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3235","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718198_h7k4o45fo from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718198_h7k4o45fo disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3052","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3052","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718309_nibz9rmgy from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718309_nibz9rmgy disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3887","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3887","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718415_cn195s7ew from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718415_cn195s7ew disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3020","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3020","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718524_zchbcorxe from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718528_v3b0qz1v7 from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718528_v3b0qz1v7 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718524_zchbcorxe disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3193","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3193","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718638_bbp1oqrvf from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718639_u9lnudxly from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718639_u9lnudxly disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718638_bbp1oqrvf disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3429","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3429","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762653718845_i94pzrkg8 from ::1","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762653718845_i94pzrkg8 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 03:01:58"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: BsJFZNGpSpNF3k3TjpooPuF8TW1iV2ExSTTvvtfDZt8n","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665040936 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665040938 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665040938 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665040939 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"warn","message":"[MarketMonitor] Already running, skipping this execution. This may indicate the previous run is taking too long.","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665040940 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-2-1762665040940 (total runs: 2)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665040941 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665040942 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"error","message":"[MarketMonitor] Failed to query markets: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:218:15)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-09 06:10:40"}
+{"level":"error","message":"[MarketMonitor] Fatal error in run run-1-1762665040942: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:233:13)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665040951 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Found 1 market(s) ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Processing market test-market-1 (address: Hf49V8m9mCyj45NaGKvZVY8QhxoLV2KUFRa4frrffiVU)","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"info","message":"[MarketMonitor] Finalizing market Hf49V8m9mCyj45NaGKvZVY8QhxoLV2KUFRa4frrffiVU...","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 1 failed for Hf49V8m9mCyj45NaGKvZVY8QhxoLV2KUFRa4frrffiVU: Failed to send finalize_market transaction for Hf49V8m9mCyj45NaGKvZVY8QhxoLV2KUFRa4frrffiVU: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-09 06:10:40"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 2 failed for Hf49V8m9mCyj45NaGKvZVY8QhxoLV2KUFRa4frrffiVU: Failed to send finalize_market transaction for Hf49V8m9mCyj45NaGKvZVY8QhxoLV2KUFRa4frrffiVU: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-09 06:10:45"}
+{"error":"Failed to send finalize_market transaction for Hf49V8m9mCyj45NaGKvZVY8QhxoLV2KUFRa4frrffiVU: Cannot read properties of undefined (reading 'finalizeMarket')","level":"error","message":"All 3 retry attempts failed","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"error","message":"[MarketMonitor] Failed to finalize market test-market-1: Failed to send finalize_market transaction for Hf49V8m9mCyj45NaGKvZVY8QhxoLV2KUFRa4frrffiVU: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","stack":"TypeError: Cannot read properties of undefined (reading 'finalizeMarket')\n    at sendFinalizeTransaction (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:134:8)\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:57:20)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at finalizeMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:55:21)\n    at MarketMonitor.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:333:20)\n    at MarketMonitor.processMarketWithTimeout (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:260:22)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:142:25)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:374:23)","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Run run-1-1762665040951 complete: 0 succeeded, 1 failed in 15008ms","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: Ez2TmhWpG6PLatEuXCLCR6kDLMNsEjNqbc9e1b8fzvMm","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Connected to Solana (slot: 12345)","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Validation complete ✓","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: 76dtpiXDKGV45VZQXYzQ22kCuCjTLJ347Zy5UnNZtdLn","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"error","message":"[MarketMonitor] Validation failed: Supabase connection failed: Connection failed","service":"zmart-backend","stack":"Error: Supabase connection failed: Connection failed\n    at MarketMonitor.validate (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:480:15)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:450:7)","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665055967 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Initiating graceful shutdown...","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Waiting for current run to complete...","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:55"}
+{"level":"info","message":"[MarketMonitor] Shutdown complete","service":"zmart-backend","timestamp":"2025-11-09 06:10:56"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665056970 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:56"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:56"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665056974 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:56"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:56"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665056976 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:10:56"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:10:56"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3176","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3176","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665057493_ss9kult8k from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665057493_ss9kult8k disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3951","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3951","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665057601_0e4f3bb5w from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665057601_0e4f3bb5w disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3085","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3085","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665057705_25ydyv1p1 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665057705_bmfzb2uic from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665057705_25ydyv1p1 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665057705_bmfzb2uic disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3697","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3697","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665057810_zzk3dmm48 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665057810_zzk3dmm48 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3404","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Started on port 3404","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665057966_73abhqi2d from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665057966_73abhqi2d disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:57"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3043","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3043","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665058071_kwi135l1e from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665058071_kwi135l1e disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3599","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3599","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665058176_rpa7ijz6d from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665058176_rpa7ijz6d disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3423","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3423","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665058281_jtmeclytr from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665058281_jtmeclytr disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3497","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3497","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665058388_0zvb0thf0 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665058389_y75k4eexf from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665058389_y75k4eexf disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665058388_0zvb0thf0 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3661","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3661","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665058493_6cjtz0ac6 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665058494_p676nsa50 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665058494_p676nsa50 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665058493_6cjtz0ac6 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3383","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Started on port 3383","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665058699_vadtvo5uv from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665058699_vadtvo5uv disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:10:58"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: BDpDdYkm88kz3ERDetsahaWTXAFMQoMFBpxnhjfqQbxe","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665155958 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665155961 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665155962 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665155966 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"warn","message":"[MarketMonitor] Already running, skipping this execution. This may indicate the previous run is taking too long.","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665155968 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-2-1762665155969 (total runs: 2)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665155970 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665155972 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"error","message":"[MarketMonitor] Failed to query markets: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:218:15)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-09 06:12:35"}
+{"level":"error","message":"[MarketMonitor] Fatal error in run run-1-1762665155972: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed","service":"zmart-backend","stack":"Error: Failed to fetch markets from Supabase: Supabase query failed: Database connection failed\n    at MarketMonitor.getMarketsReadyForFinalization (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:233:13)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:125:23)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:328:7)","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665155981 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Found 1 market(s) ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Processing market test-market-1 (address: CBwpuKmmJigTHNjSNt4vNFDESrafMA2hvBmZoEzeH19w)","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"info","message":"[MarketMonitor] Finalizing market CBwpuKmmJigTHNjSNt4vNFDESrafMA2hvBmZoEzeH19w...","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 1 failed for CBwpuKmmJigTHNjSNt4vNFDESrafMA2hvBmZoEzeH19w: Failed to send finalize_market transaction for CBwpuKmmJigTHNjSNt4vNFDESrafMA2hvBmZoEzeH19w: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-09 06:12:35"}
+{"level":"warn","message":"[MarketMonitor] Finalization attempt 2 failed for CBwpuKmmJigTHNjSNt4vNFDESrafMA2hvBmZoEzeH19w: Failed to send finalize_market transaction for CBwpuKmmJigTHNjSNt4vNFDESrafMA2hvBmZoEzeH19w: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","timestamp":"2025-11-09 06:12:40"}
+{"error":"Failed to send finalize_market transaction for CBwpuKmmJigTHNjSNt4vNFDESrafMA2hvBmZoEzeH19w: Cannot read properties of undefined (reading 'finalizeMarket')","level":"error","message":"All 3 retry attempts failed","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"error","message":"[MarketMonitor] Failed to finalize market test-market-1: Failed to send finalize_market transaction for CBwpuKmmJigTHNjSNt4vNFDESrafMA2hvBmZoEzeH19w: Cannot read properties of undefined (reading 'finalizeMarket')","service":"zmart-backend","stack":"TypeError: Cannot read properties of undefined (reading 'finalizeMarket')\n    at sendFinalizeTransaction (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:134:8)\n    at signature.maxAttempts (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:57:20)\n    at withRetry (/Users/seman/Desktop/zmartV0.69/backend/src/utils/retry.ts:44:20)\n    at finalizeMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/finalization.ts:55:21)\n    at MarketMonitor.processMarket (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:333:20)\n    at MarketMonitor.processMarketWithTimeout (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:260:22)\n    at MarketMonitor.run (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:142:25)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:374:23)","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Run run-1-1762665155981 complete: 0 succeeded, 1 failed in 15006ms","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: x5sVxrR4AJsVRev7d6fzg1iSsTQCHnpuTxp2BaEXmia","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Connected to Solana (slot: 12345)","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Validation complete ✓","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Validating service configuration...","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Backend authority validated: G1cPuTJ2Sq9MYp3zuGRNFTPmthjtisJZZu5NKUQoTBX8","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"error","message":"[MarketMonitor] Validation failed: Supabase connection failed: Connection failed","service":"zmart-backend","stack":"Error: Supabase connection failed: Connection failed\n    at MarketMonitor.validate (/Users/seman/Desktop/zmartV0.69/backend/src/services/market-monitor/monitor.ts:480:15)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/__tests__/services/market-monitor/monitor.test.ts:450:7)","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665170995 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Initiating graceful shutdown...","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Waiting for current run to complete...","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:50"}
+{"level":"info","message":"[MarketMonitor] Shutdown complete","service":"zmart-backend","timestamp":"2025-11-09 06:12:51"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665171999 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:51"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:51"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665172002 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[MarketMonitor] Starting monitoring run run-1-1762665172004 (total runs: 1)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[MarketMonitor] No markets ready for finalization","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3696","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Started on port 3696","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665172252_69ffgqlgm from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665172252_69ffgqlgm disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3943","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Started on port 3943","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665172360_w1c3wvy42 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665172360_w1c3wvy42 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3293","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Started on port 3293","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665172465_yx84safq8 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665172466_a2ycj4ww3 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665172466_a2ycj4ww3 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665172465_yx84safq8 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3627","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Started on port 3627","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665172582_kh58ss2n5 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665172582_kh58ss2n5 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3537","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Started on port 3537","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665172738_ti8ngq00v from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665172738_ti8ngq00v disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3242","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Started on port 3242","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665172843_3n1ic8ic4 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665172843_3n1ic8ic4 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3205","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Started on port 3205","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665172948_hbkcy8cqd from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665172948_hbkcy8cqd disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:52"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3387","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Started on port 3387","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665173053_o45q5i8tu from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665173053_o45q5i8tu disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3660","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Started on port 3660","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665173159_3er5njtf4 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665173160_ud0gkgh29 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665173160_ud0gkgh29 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665173159_3er5njtf4 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3612","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Started on port 3612","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665173264_fimvlolju from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665173265_207gjlyi8 from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665173265_207gjlyi8 disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665173264_fimvlolju disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Initialized on port 3216","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Heartbeat started (interval: 30000ms)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Started on port 3216","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] New connection: client_1762665173469_wkh20foww from ::1","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Stopped","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}
+{"level":"info","message":"[WebSocketServer] Client client_1762665173469_wkh20foww disconnected (code: 1005, reason: none)","service":"zmart-backend","timestamp":"2025-11-09 06:12:53"}

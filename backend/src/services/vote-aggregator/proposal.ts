@@ -164,7 +164,7 @@ export class ProposalVoteAggregator {
     }
 
     // 3. Call on-chain approve_market with retry
-    await this.approveMarketOnChain(
+    await this.approveProposalOnChain(
       market.on_chain_address,
       aggregation.likes,
       aggregation.dislikes
@@ -233,7 +233,7 @@ export class ProposalVoteAggregator {
   /**
    * Call on-chain approve_market instruction with retry logic
    */
-  private async approveMarketOnChain(
+  private async approveProposalOnChain(
     marketAddress: string,
     finalLikes: number,
     finalDislikes: number
@@ -244,16 +244,17 @@ export class ProposalVoteAggregator {
     const signature = await retryWithBackoff(
       async () => {
         logger.debug(
-          `[ProposalVoteAggregator] Calling approve_market: ${marketAddress} ` +
+          `[ProposalVoteAggregator] Calling approve_proposal: ${marketAddress} ` +
           `(likes: ${finalLikes}, dislikes: ${finalDislikes})`
         );
 
+        // approve_proposal takes NO arguments, only accounts
         const tx = await this.program.methods
-          .approveMarket(finalLikes, finalDislikes)
+          .approveProposal()
           .accounts({
-            globalConfig: this.globalConfigPda,
+            admin: this.backendKeypair.publicKey,
             market: marketPda,
-            backendAuthority: this.backendKeypair.publicKey,
+            globalConfig: this.globalConfigPda,
           })
           .signers([this.backendKeypair])
           .rpc();

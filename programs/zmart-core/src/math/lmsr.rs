@@ -306,9 +306,36 @@ fn fixed_exp(x: u64) -> Result<u64> {
         .checked_add(x2 / 12).ok_or(ErrorCode::OverflowError)?;
 
     // Denominator: 1 - x/2 + x²/12
-    let denom = PRECISION
-        .checked_sub(x / 2).ok_or(ErrorCode::UnderflowError)?
-        .checked_add(x2 / 12).ok_or(ErrorCode::OverflowError)?;
+    // CRITICAL FIX: When x >= 2*PRECISION, x/2 >= PRECISION, causing underflow
+    // Rewrite to avoid subtraction: denom = PRECISION - x/2 + x²/12
+    //                                     = PRECISION + x²/12 - x/2
+    // Check if x/2 can be safely subtracted
+    let x_half = x / 2;
+    let x2_term = x2 / 12;
+
+    // If x_half > PRECISION, we need to restructure the calculation
+    // denom = (PRECISION + x²/12) - x/2
+    let denom = if x_half <= PRECISION {
+        // Safe subtraction: 1 - x/2 is positive
+        PRECISION
+            .checked_sub(x_half).ok_or(ErrorCode::UnderflowError)?
+            .checked_add(x2_term).ok_or(ErrorCode::OverflowError)?
+    } else {
+        // x_half > PRECISION, so we need: (x²/12) - (x/2 - PRECISION)
+        // = x²/12 - x/2 + PRECISION
+        // But x/2 might still be > x²/12 + PRECISION for large x
+        // Let's compute: PRECISION + x²/12, then check if >= x_half
+        let sum = PRECISION.checked_add(x2_term).ok_or(ErrorCode::OverflowError)?;
+
+        if sum >= x_half {
+            sum.checked_sub(x_half).ok_or(ErrorCode::UnderflowError)?
+        } else {
+            // This would give negative denominator, which means e^x approximation breaks down
+            // For very large x, use alternative: e^x ≈ e^10 * e^(x-10) recursively
+            // Or just return a very large value as upper bound
+            return Ok(u64::MAX); // Conservative fallback
+        }
+    };
 
     fixed_div(num, denom)
 }

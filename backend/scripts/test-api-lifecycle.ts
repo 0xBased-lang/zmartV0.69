@@ -4,18 +4,24 @@
 // Purpose: Test complete market lifecycle through API endpoints
 // Usage: ts-node scripts/test-api-lifecycle.ts
 
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 import { Program, AnchorProvider, Wallet, BN } from "@coral-xyz/anchor";
-import { readFileSync } from "fs";
-import path from "path";
-import dotenv from "dotenv";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import {
+  getScriptConfig,
+  validateScriptRequirements,
+  loadKeypair,
+  loadIDL,
+  loadProgramId,
+  getSolanaRpcUrl
+} from "./utils/scriptConfig";
 
-// Load environment variables
-dotenv.config({ path: path.join(__dirname, "../.env") });
+// Load and validate configuration
+const config = getScriptConfig();
+validateScriptRequirements(['supabase']);
 
-const RPC_URL = process.env.SOLANA_RPC_URL || "https://api.devnet.solana.com";
-const PROGRAM_ID = new PublicKey(process.env.SOLANA_PROGRAM_ID_CORE!);
+const RPC_URL = getSolanaRpcUrl();
+const PROGRAM_ID = loadProgramId('SOLANA_PROGRAM_ID_CORE');
 
 // ============================================================
 // Test Configuration
@@ -100,28 +106,20 @@ function printSummary() {
 // ============================================================
 // Setup Functions
 // ============================================================
-
-function loadKeypair(): Keypair {
-  const keypairPath = process.env.BACKEND_KEYPAIR_PATH || path.join(process.env.HOME!, ".config/solana/id.json");
-  const keypairData = JSON.parse(readFileSync(keypairPath, "utf-8"));
-  return Keypair.fromSecretKey(new Uint8Array(keypairData));
-}
-
-function loadIDL(): any {
-  const idlPath = path.join(__dirname, "../../target/idl/zmart_core.json");
-  return JSON.parse(readFileSync(idlPath, "utf-8"));
-}
+// Helper functions now imported from shared utilities
+// ============================================================
 
 function getSupabaseClient(): SupabaseClient {
-  const supabaseUrl = process.env.SUPABASE_URL!;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!; // Use service role key for admin operations
-
-  return createClient(supabaseUrl, supabaseKey, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  });
+  return createClient(
+    config.supabase!.url,
+    config.supabase!.serviceRoleKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
 }
 
 // ============================================================
@@ -311,7 +309,7 @@ async function main() {
       preflightCommitment: "confirmed",
     });
 
-    const idl = loadIDL();
+    const idl = loadIDL('zmart_core');
     program = new Program(idl, provider);
     supabase = getSupabaseClient();
 

@@ -12,6 +12,7 @@ import {
   type TradeResult,
 } from '@/lib/lmsr';
 import { useTrade, TransactionState } from '@/lib/hooks/useTrade';
+import { useTradeUpdates } from '@/hooks/useWebSocket';
 import { OutcomeSelector } from './OutcomeSelector';
 import { QuantityInput } from './QuantityInput';
 import { CostBreakdown } from './CostBreakdown';
@@ -41,12 +42,35 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
   const { connection } = useConnection();
   const { state: txState, signature, error, executeTrade, reset, retry } = useTrade();
 
+  // Real-time trade updates
+  const { latestTrade } = useTradeUpdates(marketId);
+
   // Form state
   const [outcome, setOutcome] = useState<Outcome>(Outcome.YES);
   const [action, setAction] = useState<TradeAction>(TradeAction.BUY);
   const [quantityInput, setQuantityInput] = useState<string>('');
   const [slippage, setSlippage] = useState<number>(1); // 1% default
   const [showSlippage, setShowSlippage] = useState(false);
+
+  // Show toast notifications for other users' trades
+  useEffect(() => {
+    if (latestTrade && publicKey) {
+      // Only show notifications for OTHER users' trades (not your own)
+      if (latestTrade.trader !== publicKey.toBase58()) {
+        const shares = (Number(latestTrade.shares) / 1_000_000_000).toFixed(2);
+        const direction = latestTrade.outcome === 'YES' ? '📈' : '📉';
+
+        toast(
+          `${direction} ${latestTrade.trader.slice(0, 4)}...${latestTrade.trader.slice(-4)} traded ${shares} ${latestTrade.outcome}`,
+          {
+            duration: 3000,
+            icon: '💸',
+            position: 'top-right',
+          }
+        );
+      }
+    }
+  }, [latestTrade, publicKey]);
 
   // Wallet balance (in lamports)
   const [solBalance, setSolBalance] = useState<number | null>(null);

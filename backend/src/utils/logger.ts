@@ -6,10 +6,11 @@
 
 import winston from "winston";
 import path from "path";
+import { config } from "../config/env";
 
-// Get log level from environment (will be set by config/env.ts)
-const logLevel = process.env.LOG_LEVEL || "info";
-const isDevelopment = process.env.NODE_ENV === "development";
+// Get log level from validated config
+const logLevel = config.logging.level;
+const isDevelopment = config.node.isDevelopment;
 
 // Custom format for development
 const devFormat = winston.format.combine(

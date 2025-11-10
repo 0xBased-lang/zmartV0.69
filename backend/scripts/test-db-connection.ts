@@ -6,11 +6,11 @@
  */
 
 import { createClient } from "@supabase/supabase-js";
-import dotenv from "dotenv";
-import path from "path";
+import { getScriptConfig, validateScriptRequirements } from "./utils/scriptConfig";
 
-// Load environment variables
-dotenv.config({ path: path.join(__dirname, "../.env") });
+// Load and validate configuration
+const config = getScriptConfig();
+validateScriptRequirements(['supabase']);
 
 const REQUIRED_ENV_VARS = [
   "SUPABASE_URL",
@@ -83,16 +83,16 @@ async function runTests(): Promise<void> {
   let supabase: ReturnType<typeof createClient>;
   try {
     supabase = createClient(
-      process.env.SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
+      config.supabase!.url,
+      config.supabase!.serviceRoleKey
     );
     results.push({
       name: "Supabase Client",
       status: "✅ PASS",
-      details: `Connected to ${process.env.SUPABASE_URL}`,
+      details: `Connected to ${config.supabase!.url}`,
     });
     console.log("✅ PASS");
-    console.log(`   URL: ${process.env.SUPABASE_URL}`);
+    console.log(`   URL: ${config.supabase!.url}`);
     console.log();
   } catch (error: any) {
     results.push({

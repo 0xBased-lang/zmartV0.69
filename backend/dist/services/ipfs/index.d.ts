@@ -32,7 +32,7 @@ export declare class IPFSSnapshotScheduler {
         pruningCronSchedule: string;
         snapshotService: {
             isRunning: boolean;
-            ipfsGateway: string;
+            ipfsGateway: string | undefined;
         };
     };
     /**

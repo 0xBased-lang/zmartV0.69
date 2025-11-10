@@ -45,6 +45,8 @@ pub fn handler(
     liquidity_provider_fee_bps: u16,
     proposal_approval_threshold: u16,
     dispute_success_threshold: u16,
+    min_resolution_delay: Option<i64>,
+    dispute_period: Option<i64>,
 ) -> Result<()> {
     let config = &mut ctx.accounts.global_config;
 
@@ -70,12 +72,28 @@ pub fn handler(
         ErrorCode::InvalidThreshold
     );
 
+    // Validate time limits if provided
+    if let Some(delay) = min_resolution_delay {
+        require!(delay > 0, ErrorCode::InvalidTimeLimit);
+    }
+    if let Some(period) = dispute_period {
+        require!(period > 0, ErrorCode::InvalidTimeLimit);
+    }
+
     // Update configuration fields
     config.protocol_fee_bps = protocol_fee_bps;
     config.resolver_reward_bps = resolver_reward_bps;
     config.liquidity_provider_fee_bps = liquidity_provider_fee_bps;
     config.proposal_approval_threshold = proposal_approval_threshold;
     config.dispute_success_threshold = dispute_success_threshold;
+
+    // Update time parameters if provided
+    if let Some(delay) = min_resolution_delay {
+        config.min_resolution_delay = delay;
+    }
+    if let Some(period) = dispute_period {
+        config.dispute_period = period;
+    }
 
     // Emit event with updated configuration
     emit!(ConfigUpdated {
@@ -84,6 +102,8 @@ pub fn handler(
         liquidity_provider_fee_bps,
         proposal_approval_threshold,
         dispute_success_threshold,
+        min_resolution_delay: config.min_resolution_delay,
+        dispute_period: config.dispute_period,
         timestamp: Clock::get()?.unix_timestamp,
     });
 
@@ -96,6 +116,13 @@ pub fn handler(
         dispute_success_threshold / 100
     );
 
+    if let Some(delay) = min_resolution_delay {
+        msg!("  min_resolution_delay: {} seconds", delay);
+    }
+    if let Some(period) = dispute_period {
+        msg!("  dispute_period: {} seconds", period);
+    }
+
     Ok(())
 }
 
@@ -107,6 +134,8 @@ pub struct ConfigUpdated {
     pub liquidity_provider_fee_bps: u16,
     pub proposal_approval_threshold: u16,
     pub dispute_success_threshold: u16,
+    pub min_resolution_delay: i64,
+    pub dispute_period: i64,
     pub timestamp: i64,
 }
 

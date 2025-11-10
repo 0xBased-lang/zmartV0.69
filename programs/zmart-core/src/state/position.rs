@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use crate::error::ErrorCode;
 
 /// User's position in a specific market
 ///
@@ -59,6 +60,21 @@ impl UserPosition {
         + 8                         // claimed_amount (u64)
         + 64                        // reserved ([u8; 64])
         + 1;                        // bump (u8)
+
+    /// Validate reserved fields are zeroed (SECURITY: Finding #12)
+    ///
+    /// Ensures reserved space is properly initialized to zero.
+    /// This protects against potential bugs when adding new fields in future upgrades.
+    ///
+    /// # Errors
+    /// Returns `ErrorCode::InvalidReservedField` if reserved contains non-zero bytes
+    pub fn validate_reserved(&self) -> Result<()> {
+        require!(
+            self.reserved == [0; 64],
+            ErrorCode::InvalidReservedField
+        );
+        Ok(())
+    }
 
     /// Calculate potential winnings for a given outcome
     ///

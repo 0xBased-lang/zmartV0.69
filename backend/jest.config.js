@@ -2,11 +2,14 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>/src', '<rootDir>/tests'],
   testMatch: [
     '**/__tests__/**/*.test.ts',
-    '**/?(*.)+(spec|test).ts'
+    '**/?(*.)+(spec|test).ts',
+    '**/tests/**/*.test.ts'
   ],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup/global-setup.ts'],
+  maxWorkers: 1, // Sequential execution for on-chain tests
   transform: {
     '^.+\\.ts$': ['ts-jest', {
       tsconfig: 'tsconfig.json',
@@ -28,5 +31,6 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   verbose: true,
-  testTimeout: 10000,
+  testTimeout: 300000, // 5 minutes for on-chain operations
+  bail: false, // Continue on failures to see all issues
 };

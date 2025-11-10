@@ -30,8 +30,11 @@ const envSchema = Joi.object({
     .required()
     .description("zmart-proposal program ID"),
   BACKEND_KEYPAIR_PATH: Joi.string()
-    .required()
-    .description("Path to backend authority keypair"),
+    .optional()
+    .description("Path to backend authority keypair (alternative to BACKEND_AUTHORITY_PRIVATE_KEY)"),
+  BACKEND_AUTHORITY_PRIVATE_KEY: Joi.string()
+    .optional()
+    .description("Backend authority private key in base58 format (alternative to BACKEND_KEYPAIR_PATH)"),
 
   // Supabase Configuration
   SUPABASE_URL: Joi.string().uri().required().description("Supabase project URL"),
@@ -112,6 +115,25 @@ const envSchema = Joi.object({
     .default(0.6)
     .description("Dispute threshold (60%)"),
 
+  // Market Monitor Configuration
+  MARKET_MONITOR_ENABLED: Joi.boolean()
+    .default(false)
+    .description("Enable Market Monitor service"),
+  MARKET_MONITOR_CRON_SCHEDULE: Joi.string()
+    .default("*/5 * * * *")
+    .description("Market Monitor cron schedule (every 5 minutes)"),
+  MARKET_MONITOR_BATCH_SIZE: Joi.number()
+    .min(1)
+    .max(100)
+    .default(10)
+    .description("Maximum markets to process per run"),
+  MARKET_MONITOR_DEBUG: Joi.boolean()
+    .default(false)
+    .description("Enable Market Monitor debug logging"),
+  MARKET_MONITOR_DRY_RUN: Joi.boolean()
+    .default(false)
+    .description("Market Monitor dry run mode (no transactions)"),
+
   // Logging
   LOG_LEVEL: Joi.string()
     .valid("error", "warn", "info", "debug")
@@ -124,6 +146,15 @@ const { error, value: envVars } = envSchema.validate(process.env);
 
 if (error) {
   throw new Error(`Config validation error: ${error.message}`);
+}
+
+// Custom validation: At least one backend keypair source must be provided
+if (!envVars.BACKEND_KEYPAIR_PATH && !envVars.BACKEND_AUTHORITY_PRIVATE_KEY) {
+  throw new Error(
+    'Backend keypair configuration required: ' +
+    'Must provide either BACKEND_KEYPAIR_PATH or BACKEND_AUTHORITY_PRIVATE_KEY. ' +
+    'See .env.example for details.'
+  );
 }
 
 // Type-safe configuration export
@@ -140,7 +171,8 @@ export const config = {
       core: envVars.SOLANA_PROGRAM_ID_CORE as string,
       proposal: envVars.SOLANA_PROGRAM_ID_PROPOSAL as string,
     },
-    backendKeypairPath: envVars.BACKEND_KEYPAIR_PATH as string,
+    backendKeypairPath: envVars.BACKEND_KEYPAIR_PATH as string | undefined,
+    backendAuthorityPrivateKey: envVars.BACKEND_AUTHORITY_PRIVATE_KEY as string | undefined,
   },
   supabase: {
     url: envVars.SUPABASE_URL as string,
@@ -151,9 +183,14 @@ export const config = {
     url: envVars.REDIS_URL as string,
   },
   ipfs: {
-    projectId: envVars.IPFS_PROJECT_ID as string,
-    projectSecret: envVars.IPFS_PROJECT_SECRET as string,
-    gatewayUrl: envVars.IPFS_GATEWAY_URL as string,
+    // Infura IPFS (optional)
+    projectId: envVars.IPFS_PROJECT_ID as string | undefined,
+    projectSecret: envVars.IPFS_PROJECT_SECRET as string | undefined,
+    gatewayUrl: envVars.IPFS_GATEWAY_URL as string | undefined,
+    // Pinata (optional - preferred for IPFS service)
+    pinataApiKey: envVars.PINATA_API_KEY as string | undefined,
+    pinataSecretKey: envVars.PINATA_SECRET_KEY as string | undefined,
+    pinataGatewayUrl: envVars.PINATA_GATEWAY_URL as string | undefined,
   },
   api: {
     port: envVars.API_PORT as number,
@@ -169,6 +206,13 @@ export const config = {
     minProposalVotes: envVars.MIN_PROPOSAL_VOTES as number,
     proposalApprovalThreshold: envVars.PROPOSAL_APPROVAL_THRESHOLD as number,
     disputeThreshold: envVars.DISPUTE_THRESHOLD as number,
+  },
+  marketMonitor: {
+    enabled: envVars.MARKET_MONITOR_ENABLED as boolean,
+    cronSchedule: envVars.MARKET_MONITOR_CRON_SCHEDULE as string,
+    batchSize: envVars.MARKET_MONITOR_BATCH_SIZE as number,
+    debugMode: envVars.MARKET_MONITOR_DEBUG as boolean,
+    dryRun: envVars.MARKET_MONITOR_DRY_RUN as boolean,
   },
   logging: {
     level: envVars.LOG_LEVEL as string,

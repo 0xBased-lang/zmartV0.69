@@ -10,7 +10,7 @@ import { PublicKey } from "@solana/web3.js";
 // Mock dependencies
 const mockProgram: any = {
   methods: {
-    approveMarket: jest.fn().mockReturnValue({
+    approveProposal: jest.fn().mockReturnValue({
       accounts: jest.fn().mockReturnThis(),
       signers: jest.fn().mockReturnThis(),
       rpc: jest.fn().mockResolvedValue("mock-signature"),

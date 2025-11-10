@@ -87,7 +87,7 @@ export class APIClient {
 
   constructor(baseURL: string) {
     this.client = axios.create({
-      baseURL,
+      baseURL: baseURL + '/api', // Add /api prefix to all requests
       timeout: 30000, // 30 seconds
       headers: {
         'Content-Type': 'application/json',
@@ -101,14 +101,15 @@ export class APIClient {
    * Setup request/response interceptors
    */
   private setupInterceptors(): void {
-    // Request interceptor - inject token
+    // Request interceptor - inject authentication
     this.client.interceptors.request.use(
       async (config: InternalAxiosRequestConfig) => {
         const walletAddress = this.getCurrentWalletAddress();
         if (walletAddress) {
-          const token = await this.getOrRefreshToken(walletAddress);
-          if (token && config.headers) {
-            config.headers.Authorization = `Bearer ${token}`;
+          const authValue = await this.getOrRefreshToken(walletAddress);
+          if (authValue && config.headers) {
+            // SIWE-style: "Signature message=...&signature=...&wallet=..."
+            config.headers.Authorization = authValue;
           }
         }
         return config;
@@ -166,7 +167,8 @@ export class APIClient {
   }
 
   /**
-   * Request wallet signature for authentication
+   * Request wallet signature for authentication (SIWE pattern)
+   * Returns Authorization header value, not a token
    */
   private async requestWalletToken(walletAddress: string): Promise<string | null> {
     if (typeof window === 'undefined') return null;
@@ -179,17 +181,23 @@ export class APIClient {
     }
 
     try {
-      const message = `Sign this message to authenticate with ZMART.\n\nWallet: ${walletAddress}\nTimestamp: ${Date.now()}`;
-      const signature = await signMessage(message);
+      const timestamp = Date.now();
+      const message = `Sign in to ZMART\nTimestamp: ${timestamp}`;
+      const messageBytes = new TextEncoder().encode(message);
 
-      // Exchange signature for JWT token
-      const response = await this.client.post('/auth/wallet', {
-        walletAddress,
-        message,
-        signature,
-      });
+      // Get signature from wallet
+      const signatureBytes = await signMessage(messageBytes);
 
-      return response.data.token;
+      // Convert to base58 (Solana standard)
+      const bs58 = await import('bs58');
+      const signatureBase58 = bs58.default.encode(signatureBytes);
+
+      // Return SIWE-style authorization header value
+      // Format: Signature message=<urlencoded>&signature=<base58>&wallet=<address>
+      const authValue = `Signature message=${encodeURIComponent(message)}&signature=${signatureBase58}&wallet=${walletAddress}`;
+
+      console.log('[API] Generated wallet signature (valid for 1 hour)');
+      return authValue;
     } catch (error) {
       console.error('[API] Wallet authentication failed:', error);
       return null;
@@ -247,20 +255,21 @@ export class APIClient {
    */
   async getMarkets(params?: {
     state?: Market['state'];
+    category?: string;
     creator?: string;
     limit?: number;
     offset?: number;
-  }): Promise<Market[]> {
+  }): Promise<{ markets: any[]; count: number; offset: number; limit: number }> {
     const response = await this.client.get('/markets', { params });
-    return response.data;
+    return response.data; // Returns { markets: [...], count, offset, limit }
   }
 
   /**
    * Get single market by ID
    */
-  async getMarket(marketId: string): Promise<Market> {
+  async getMarket(marketId: string): Promise<any> {
     const response = await this.client.get(`/markets/${marketId}`);
-    return response.data;
+    return response.data; // Returns single market object
   }
 
   /**
@@ -379,7 +388,7 @@ let apiClient: APIClient | null = null;
  */
 export function getAPIClient(): APIClient {
   if (!apiClient) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
     apiClient = new APIClient(apiUrl);
   }
   return apiClient;

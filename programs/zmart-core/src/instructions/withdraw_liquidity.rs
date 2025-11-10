@@ -24,10 +24,15 @@ pub struct WithdrawLiquidity<'info> {
 pub fn handler(ctx: Context<WithdrawLiquidity>) -> Result<()> {
     let market = &mut ctx.accounts.market;
 
-    // Calculate withdrawable amount (balance - rent reserve)
+    // Calculate withdrawable amount (balance - rent reserve - safety margin)
     let remaining_balance = market.to_account_info().lamports();
-    let reserved_for_rent = Rent::get()?.minimum_balance(MarketAccount::LEN);
-    let withdrawable = remaining_balance.saturating_sub(reserved_for_rent);
+    let account_info = market.to_account_info();
+    let rent = Rent::get()?;
+    let reserved_for_rent = rent.minimum_balance(account_info.data_len());
+
+    // Add 10,000 lamports safety margin (~0.00001 SOL) to ensure account stays rent-exempt
+    let safe_reserve = reserved_for_rent.saturating_add(10_000);
+    let withdrawable = remaining_balance.saturating_sub(safe_reserve);
 
     require!(withdrawable > 0, ErrorCode::InsufficientLiquidity);
 
@@ -40,16 +45,24 @@ pub fn handler(ctx: Context<WithdrawLiquidity>) -> Result<()> {
     market.accumulated_lp_fees = 0;
 
     // Emit event
-    // emit!(LiquidityWithdrawn {
-    //     market_id: market.market_id,
-    //     creator: market.creator,
-    //     amount: withdrawable,
-    //     timestamp: Clock::get()?.unix_timestamp,
-    // });
+    emit!(LiquidityWithdrawn {
+        market_id: market.market_id,
+        creator: market.creator,
+        amount: withdrawable,
+        timestamp: Clock::get()?.unix_timestamp,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct LiquidityWithdrawn {
+    pub market_id: [u8; 32],
+    pub creator: Pubkey,
+    pub amount: u64,
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;

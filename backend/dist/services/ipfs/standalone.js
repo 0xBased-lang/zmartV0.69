@@ -19,9 +19,9 @@ async function main() {
     logger_1.default.info('Starting IPFS Snapshot Service');
     logger_1.default.info('============================================================');
     try {
-        // Validate required configuration
-        const pinataApiKey = process.env.PINATA_API_KEY;
-        const pinataSecretKey = process.env.PINATA_SECRET_KEY;
+        // Validate required configuration (from centralized config)
+        const pinataApiKey = config_1.config.ipfs.pinataApiKey;
+        const pinataSecretKey = config_1.config.ipfs.pinataSecretKey;
         if (!pinataApiKey || pinataApiKey === 'YOUR_PINATA_API_KEY') {
             logger_1.default.error('Missing Pinata API configuration');
             logger_1.default.error('Required: PINATA_API_KEY, PINATA_SECRET_KEY');
@@ -57,7 +57,7 @@ async function main() {
         logger_1.default.info('============================================================');
         logger_1.default.info(`Snapshot Schedule: ${config_1.config.services.ipfsSnapshotCron}`);
         logger_1.default.info('Pruning Schedule: 30 0 * * * (12:30 AM UTC)');
-        logger_1.default.info('Gateway URL:', process.env.PINATA_GATEWAY_URL || 'https://gateway.pinata.cloud');
+        logger_1.default.info('Gateway URL:', config_1.config.ipfs.pinataGatewayUrl || 'https://gateway.pinata.cloud');
         logger_1.default.info('============================================================');
         // Log scheduler status
         const status = scheduler.getStatus();

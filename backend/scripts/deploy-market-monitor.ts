@@ -8,13 +8,19 @@
 //   3. Validate finalization works end-to-end
 // Usage: ts-node scripts/deploy-market-monitor.ts
 
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 import { Program, AnchorProvider, Wallet } from "@coral-xyz/anchor";
 import { createClient } from "@supabase/supabase-js";
 import { MarketMonitor } from "../src/services/market-monitor/monitor";
 import dotenv from "dotenv";
 import path from "path";
-import { readFileSync } from "fs";
+import {
+  loadKeypair,
+  loadIDL,
+  validateEnvVars,
+  loadProgramId,
+  getSolanaRpcUrl
+} from "./utils";
 
 // Load environment variables
 dotenv.config({ path: path.join(__dirname, "../.env") });
@@ -23,31 +29,17 @@ dotenv.config({ path: path.join(__dirname, "../.env") });
 // Configuration
 // ============================================================
 
-const RPC_URL = process.env.SOLANA_RPC_URL || "https://api.devnet.solana.com";
-const PROGRAM_ID = new PublicKey(process.env.SOLANA_PROGRAM_ID_CORE!);
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+// Validate required environment variables first
+validateEnvVars([
+  'SOLANA_PROGRAM_ID_CORE',
+  'SUPABASE_URL',
+  'SUPABASE_SERVICE_ROLE_KEY'
+]);
 
-// Load backend keypair
-function loadKeypair(): Keypair {
-  const keypairPath =
-    process.env.BACKEND_KEYPAIR_PATH ||
-    path.join(process.env.HOME!, ".config/solana/id.json");
-  const keypairData = JSON.parse(readFileSync(keypairPath, "utf-8"));
-  return Keypair.fromSecretKey(new Uint8Array(keypairData));
-}
-
-// Load IDL
-function loadIDL(): any {
-  const idlPath = path.join(__dirname, "../../target/idl/zmart_core.json");
-  try {
-    return JSON.parse(readFileSync(idlPath, "utf-8"));
-  } catch (error) {
-    console.error("❌ Failed to load IDL. Make sure program is built:");
-    console.error("   cd programs/zmart-core && anchor build");
-    throw error;
-  }
-}
+const RPC_URL = getSolanaRpcUrl();
+const PROGRAM_ID = loadProgramId('SOLANA_PROGRAM_ID_CORE');
+const SUPABASE_URL = process.env.SUPABASE_URL!; // Validated above
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!; // Validated above
 
 // ============================================================
 // Main Deployment Flow
@@ -122,7 +114,7 @@ async function main() {
     }
 
     // Load program
-    const idl = loadIDL();
+    const idl = loadIDL('zmart_core');
     const program = new Program(idl, provider);
     console.log(`\n📦 Program:`);
     console.log(`   Program ID: ${program.programId.toBase58()}`);

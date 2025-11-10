@@ -9,6 +9,7 @@ import { AnchorProvider, Program, Wallet } from "@coral-xyz/anchor";
 import { config } from "./env";
 import logger from "../utils/logger";
 import fs from "fs";
+import bs58 from "bs58";
 
 // Singleton instances
 let connection: Connection | null = null;
@@ -37,30 +38,50 @@ export function getConnection(): Connection {
 }
 
 /**
- * Load backend authority keypair from file
+ * Load backend authority keypair from file or environment variable
  * @returns Backend keypair
  */
 export function getBackendKeypair(): Keypair {
   if (!backendKeypair) {
     try {
-      logger.info("Loading backend keypair", {
-        path: config.solana.backendKeypairPath,
-      });
+      // Option 1: Load from file path
+      if (config.solana.backendKeypairPath) {
+        logger.info("Loading backend keypair from file", {
+          path: config.solana.backendKeypairPath,
+        });
 
-      const keypairData = fs.readFileSync(
-        config.solana.backendKeypairPath,
-        "utf-8"
-      );
-      const secretKey = Uint8Array.from(JSON.parse(keypairData));
-      backendKeypair = Keypair.fromSecretKey(secretKey);
+        const keypairData = fs.readFileSync(
+          config.solana.backendKeypairPath,
+          "utf-8"
+        );
+        const secretKey = Uint8Array.from(JSON.parse(keypairData));
+        backendKeypair = Keypair.fromSecretKey(secretKey);
 
-      logger.info("Backend keypair loaded successfully", {
-        publicKey: backendKeypair.publicKey.toBase58(),
-      });
+        logger.info("Backend keypair loaded from file successfully", {
+          publicKey: backendKeypair.publicKey.toBase58(),
+        });
+      }
+      // Option 2: Load from base58 private key
+      else if (config.solana.backendAuthorityPrivateKey) {
+        logger.info("Loading backend keypair from environment variable");
+
+        const secretKey = bs58.decode(config.solana.backendAuthorityPrivateKey);
+        backendKeypair = Keypair.fromSecretKey(secretKey);
+
+        logger.info("Backend keypair loaded from environment successfully", {
+          publicKey: backendKeypair.publicKey.toBase58(),
+        });
+      }
+      // Neither provided - should never happen due to env validation
+      else {
+        throw new Error(
+          "No backend keypair configuration found. Must provide either BACKEND_KEYPAIR_PATH or BACKEND_AUTHORITY_PRIVATE_KEY"
+        );
+      }
     } catch (error) {
       logger.error("Failed to load backend keypair", { error });
       throw new Error(
-        `Failed to load backend keypair from ${config.solana.backendKeypairPath}`
+        `Failed to load backend keypair: ${error instanceof Error ? error.message : "Unknown error"}`
       );
     }
   }

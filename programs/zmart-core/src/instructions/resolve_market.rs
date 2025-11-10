@@ -37,9 +37,38 @@ pub fn handler(
     ipfs_evidence_hash: [u8; 46],
 ) -> Result<()> {
     let market = &mut ctx.accounts.market;
+    let clock = Clock::get()?;
+    let current_time = clock.unix_timestamp;
 
-    // Verify market hasn't already been resolved
+    // SECURITY FIX (Finding #5): Verify market hasn't already been resolved
     require!(market.proposed_outcome.is_none(), ErrorCode::AlreadyResolved);
+
+    // SECURITY FIX (Finding #10): Validate timestamp bounds
+    // Prevents time travel and far-future manipulation attacks
+    require!(
+        current_time >= market.created_at,
+        ErrorCode::InvalidTimestamp
+    );
+
+    // Sanity check: timestamp must be within 10 years of market creation
+    let max_timestamp = market.created_at
+        .checked_add(86400 * 365 * 10)  // 10 years in seconds
+        .ok_or(ErrorCode::OverflowError)?;
+
+    require!(
+        current_time <= max_timestamp,
+        ErrorCode::InvalidTimestamp
+    );
+
+    msg!("Timestamp validation passed: current={}, created={}, activated={}",
+        current_time, market.created_at, market.activated_at);
+
+    // SECURITY: Validate timestamp monotonicity (prevents time manipulation)
+    // Resolution can only happen after market activation
+    require!(
+        current_time > market.activated_at,
+        ErrorCode::InvalidTimestamp
+    );
 
     // Record resolution proposal
     market.proposed_outcome = Some(proposed_outcome);
@@ -56,17 +85,26 @@ pub fn handler(
     market.state = MarketState::Resolving;
 
     // Emit event
-    // emit!(MarketResolved {
-    //     market_id: market.market_id,
-    //     resolver: market.resolver,
-    //     outcome,
-    //     evidence_hash: ipfs_evidence_hash,
-    //     timestamp: market.resolution_proposed_at,
-    // });
+    emit!(MarketResolved {
+        market_id: market.market_id,
+        resolver: market.resolver,
+        outcome: proposed_outcome,
+        evidence_hash: ipfs_evidence_hash,
+        timestamp: market.resolution_proposed_at,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct MarketResolved {
+    pub market_id: [u8; 32],
+    pub resolver: Pubkey,
+    pub outcome: bool,
+    pub evidence_hash: [u8; 46],
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;

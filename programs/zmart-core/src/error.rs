@@ -83,6 +83,10 @@ pub enum ErrorCode {
     #[msg("Invalid liquidity amount")]
     InvalidLiquidity,
 
+    /// 6205: Trade amount below minimum (SECURITY: Finding #9)
+    #[msg("Trade amount below minimum (0.00001 SOL)")]
+    TradeTooSmall,
+
     // ============================================================
     // Resolution Errors (6300-6399)
     // ============================================================
@@ -183,6 +187,10 @@ pub enum ErrorCode {
     #[msg("Invalid input value")]
     InvalidInput,
 
+    /// 6508: LMSR bounded loss exceeded (SECURITY: Finding #4)
+    #[msg("Market loss exceeds theoretical maximum of b * ln(2)")]
+    BoundedLossExceeded,
+
     // ============================================================
     // Validation Errors (6600-6699)
     // ============================================================
@@ -202,6 +210,22 @@ pub enum ErrorCode {
     /// 6603: Invalid IPFS hash
     #[msg("Invalid IPFS hash")]
     InvalidIpfsHash,
+
+    /// 6604: Insufficient funds for operation
+    #[msg("Insufficient funds")]
+    InsufficientFunds,
+
+    /// 6605: Transfer would break rent exemption (SECURITY: Finding #2)
+    #[msg("Transfer would leave account below rent-exempt minimum")]
+    WouldBreakRentExemption,
+
+    /// 6606: Reentrancy detected (SECURITY: Finding #8)
+    #[msg("Reentrancy detected - operation already in progress")]
+    Reentrant,
+
+    /// 6607: Reserved fields must be zero (SECURITY: Finding #12)
+    #[msg("Reserved fields must be zero")]
+    InvalidReservedField,
 
     // ============================================================
     // Voting Errors (6700-6799)

@@ -51,16 +51,33 @@ router.get(
   asyncHandler(async (req: Request, res: Response) => {
     const { state, category, limit = 20, offset = 0 } = req.query;
 
+    // PERFORMANCE: Select only necessary fields instead of *
+    // This reduces data transfer and speeds up queries significantly
+    const selectFields = [
+      'id',
+      'on_chain_address',
+      'question',
+      'description',
+      'category',
+      'state',
+      'creator_wallet',
+      'liquidity_parameter',
+      'yes_shares',
+      'no_shares',
+      'created_at',
+      'end_date'
+    ].join(',');
+
     let query = supabase
       .from("markets")
-      .select("*")
+      .select(selectFields, { count: 'exact' }) // Get accurate count for pagination
       .order("created_at", { ascending: false })
       .range(
         parseInt(offset as string),
         parseInt(offset as string) + parseInt(limit as string) - 1
       );
 
-    // Apply filters
+    // Apply filters (order matters for index usage)
     if (state) {
       query = query.eq("state", state);
     }
@@ -69,7 +86,7 @@ router.get(
       query = query.eq("category", category);
     }
 
-    const { data, error } = await query;
+    const { data, error, count } = await query;
 
     if (error) {
       throw new ApiError(500, `Failed to fetch markets: ${error.message}`);
@@ -77,7 +94,7 @@ router.get(
 
     res.json({
       markets: data || [],
-      count: data?.length || 0,
+      count: count || 0, // Total count from database
       offset: parseInt(offset as string),
       limit: parseInt(limit as string),
     });
@@ -86,18 +103,38 @@ router.get(
 
 /**
  * GET /api/markets/:id
- * Get market details by ID
+ * Get market details by ID (on-chain address or database id)
  */
 router.get(
   "/:id",
   asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const { data, error } = await supabase
-      .from("markets")
-      .select("*")
-      .eq("id", id)
-      .single();
+    // Try to query by on_chain_address first (for Solana public keys),
+    // fall back to database id for internal IDs
+    let data, error;
+
+    // Check if this looks like a Solana public key (44 characters, base58)
+    if (id.length === 44 || id.length === 43) {
+      const result = await supabase
+        .from("markets")
+        .select("*")
+        .eq("on_chain_address", id)
+        .maybeSingle();
+      data = result.data;
+      error = result.error;
+    }
+
+    // If not found by on_chain_address, try by database id
+    if (!data && !error) {
+      const result = await supabase
+        .from("markets")
+        .select("*")
+        .eq("id", id)
+        .single();
+      data = result.data;
+      error = result.error;
+    }
 
     if (error) {
       if (error.code === "PGRST116") {

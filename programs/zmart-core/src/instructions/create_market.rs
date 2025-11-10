@@ -89,8 +89,15 @@ pub fn handler(
     market.b_parameter = b_parameter;
     market.initial_liquidity = initial_liquidity;
     market.current_liquidity = initial_liquidity;
-    market.shares_yes = 0;
-    market.shares_no = 0;
+
+    // CRITICAL FIX: Initialize with small equal shares to create 50/50 starting price
+    // Use a small fraction of b (liquidity depth) rather than initial_liquidity
+    // Formula: initial_shares = b / 1000 gives reasonable starting point
+    // This keeps initial cost = b * ln(2 * e^0.001) ≈ b * 0.694 manageable
+    // Setting shares_yes = shares_no creates P(YES) = P(NO) = 0.5
+    let initial_shares = b_parameter / 1000;
+    market.shares_yes = initial_shares;
+    market.shares_no = initial_shares;
     market.total_volume = 0;
 
     // Set timestamps (only created_at initially)
@@ -125,10 +132,14 @@ pub fn handler(
 
     // Initialize state flags
     market.is_cancelled = false;
+    market.is_locked = false;  // SECURITY FIX (Finding #8): Initialize reentrancy guard
     market.bump = ctx.bumps.market;
 
-    // Initialize reserved space
-    market.reserved = [0; 120];
+    // Initialize reserved space (119 bytes, 1 byte used by is_locked)
+    market.reserved = [0; 119];
+
+    // SECURITY FIX (Finding #12): Validate reserved fields are zeroed
+    market.validate_reserved()?;
 
     msg!(
         "Market created: {:?} by creator: {} with b={}, liquidity={}",
@@ -138,7 +149,25 @@ pub fn handler(
         initial_liquidity
     );
 
+    // Emit event
+    emit!(MarketCreated {
+        market_id,
+        creator: ctx.accounts.creator.key(),
+        b_parameter,
+        state: market.state as u8,
+        timestamp: market.created_at,
+    });
+
     Ok(())
+}
+
+#[event]
+pub struct MarketCreated {
+    pub market_id: [u8; 32],
+    pub creator: Pubkey,
+    pub b_parameter: u64,
+    pub state: u8,
+    pub timestamp: i64,
 }
 
 #[cfg(test)]
@@ -188,7 +217,8 @@ mod tests {
             is_cancelled: false,
             cancelled_at: None,
             bump: 255,
-            reserved: [0; 120],
+            is_locked: false,
+            reserved: [0; 119],
         }
     }
 
@@ -287,7 +317,7 @@ mod tests {
         assert_eq!(market.is_cancelled, false);
 
         // Reserved space should be zeroed
-        assert_eq!(market.reserved, [0; 120]);
+        assert_eq!(market.reserved, [0; 119]);
     }
 
     #[test]

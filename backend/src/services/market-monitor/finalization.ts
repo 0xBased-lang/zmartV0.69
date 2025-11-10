@@ -8,9 +8,11 @@
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
 import { Program } from '@coral-xyz/anchor';
 import bs58 from 'bs58';
+import fs from 'fs';
 import logger from '../../utils/logger';
 import { withRetry, sleep } from '../../utils/retry';
 import MARKET_MONITOR_CONFIG from './config';
+import { config } from '../../config/env';
 
 /**
  * Finalization result returned after successful transaction
@@ -251,40 +253,58 @@ export function deriveMarketPda(
 }
 
 /**
- * Load backend authority keypair from environment variable
+ * Load backend authority keypair from centralized config
  *
- * Environment Variable: BACKEND_AUTHORITY_PRIVATE_KEY
- * Format: Base58-encoded private key (64 bytes)
+ * Supports two loading methods (from centralized config):
+ * 1. BACKEND_AUTHORITY_PRIVATE_KEY: Base58-encoded private key (production)
+ * 2. BACKEND_KEYPAIR_PATH: Path to keypair JSON file (development)
  *
  * @returns Backend authority keypair
- * @throws Error if environment variable not found or invalid
+ * @throws Error if keypair cannot be loaded
  */
 export function loadBackendKeypair(): Keypair {
-  const privateKeyBase58 = process.env.BACKEND_AUTHORITY_PRIVATE_KEY;
+  // Method 1: Load from base58 private key (preferred for production)
+  const privateKeyBase58 = config.solana.backendAuthorityPrivateKey;
 
-  if (!privateKeyBase58) {
-    throw new Error(
-      'BACKEND_AUTHORITY_PRIVATE_KEY environment variable not found. ' +
-      'Please set this to your backend authority keypair in base58 format.'
-    );
-  }
+  if (privateKeyBase58) {
+    try {
+      const privateKeyBytes = bs58.decode(privateKeyBase58);
 
-  try {
-    const privateKeyBytes = bs58.decode(privateKeyBase58);
+      if (privateKeyBytes.length !== 64) {
+        throw new Error(
+          `Invalid private key length: expected 64 bytes, got ${privateKeyBytes.length}`
+        );
+      }
 
-    if (privateKeyBytes.length !== 64) {
+      return Keypair.fromSecretKey(privateKeyBytes);
+    } catch (error: any) {
       throw new Error(
-        `Invalid private key length: expected 64 bytes, got ${privateKeyBytes.length}`
+        `Failed to load backend authority keypair from BACKEND_AUTHORITY_PRIVATE_KEY: ${error.message}. ` +
+        'Ensure it is a valid base58-encoded private key.'
       );
     }
-
-    return Keypair.fromSecretKey(privateKeyBytes);
-  } catch (error: any) {
-    throw new Error(
-      `Failed to load backend authority keypair: ${error.message}. ` +
-      'Ensure BACKEND_AUTHORITY_PRIVATE_KEY is a valid base58-encoded private key.'
-    );
   }
+
+  // Method 2: Load from file path (fallback for development)
+  const keypairPath = config.solana.backendKeypairPath;
+
+  if (keypairPath) {
+    try {
+      const keypairData = JSON.parse(fs.readFileSync(keypairPath, 'utf-8'));
+      return Keypair.fromSecretKey(new Uint8Array(keypairData));
+    } catch (error: any) {
+      throw new Error(
+        `Failed to load backend authority keypair from ${keypairPath}: ${error.message}. ` +
+        'Ensure the file exists and contains a valid Solana keypair.'
+      );
+    }
+  }
+
+  // Should never reach here due to validation in config/env.ts
+  throw new Error(
+    'Backend keypair configuration missing. ' +
+    'Must provide either BACKEND_AUTHORITY_PRIVATE_KEY or BACKEND_KEYPAIR_PATH.'
+  );
 }
 
 /**

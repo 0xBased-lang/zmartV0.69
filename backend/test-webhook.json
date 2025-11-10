@@ -1,0 +1,18 @@
+{
+  "type": "TRANSACTION",
+  "signature": "TestSig_DevMode_12345",
+  "slot": 12345,
+  "timestamp": 1731097200,
+  "nativeTransfers": [],
+  "tokenTransfers": [],
+  "accountData": [],
+  "transactionError": null,
+  "instructions": [
+    {
+      "programId": "7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS",
+      "data": "test",
+      "accounts": []
+    }
+  ],
+  "events": {}
+}

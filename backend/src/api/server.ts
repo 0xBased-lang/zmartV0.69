@@ -53,17 +53,20 @@ export function createApp(): Express {
   );
 
   // Rate limiting (100 requests per 15 minutes per IP)
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
-    message: {
-      error: "Too many requests from this IP, please try again later.",
-      status: 429,
-    },
-    standardHeaders: true, // Return rate limit info in RateLimit-* headers
-    legacyHeaders: false, // Disable X-RateLimit-* headers
-  });
-  app.use("/api/", limiter);
+  // Disabled in test environment to allow rapid integration testing
+  if (process.env.NODE_ENV !== 'test') {
+    const limiter = rateLimit({
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      max: 100, // Limit each IP to 100 requests per windowMs
+      message: {
+        error: "Too many requests from this IP, please try again later.",
+        status: 429,
+      },
+      standardHeaders: true, // Return rate limit info in RateLimit-* headers
+      legacyHeaders: false, // Disable X-RateLimit-* headers
+    });
+    app.use("/api/", limiter);
+  }
 
   // Health check endpoint
   app.get("/health", (req: Request, res: Response) => {
@@ -71,7 +74,7 @@ export function createApp(): Express {
       status: "healthy",
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
-      environment: process.env.NODE_ENV || "development",
+      environment: config.node.env,
     });
   });
 
@@ -109,7 +112,7 @@ export async function startServer(): Promise<void> {
     logger.info(`[API Server] Started on port ${port}`);
     logger.info(`[API Server] Health check: http://localhost:${port}/health`);
     logger.info(`[API Server] API base URL: http://localhost:${port}/api`);
-    logger.info(`[API Server] Environment: ${process.env.NODE_ENV || "development"}`);
+    logger.info(`[API Server] Environment: ${config.node.env}`);
   });
 
   // Graceful shutdown

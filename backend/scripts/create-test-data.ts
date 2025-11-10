@@ -6,29 +6,23 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { Keypair } from "@solana/web3.js";
-import dotenv from "dotenv";
-import path from "path";
+import { getScriptConfig, validateScriptRequirements } from "./utils/scriptConfig";
 
-// Load environment variables
-dotenv.config({ path: path.join(__dirname, "../.env") });
-
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  console.error("❌ Missing Supabase credentials");
-  console.error("   SUPABASE_URL:", SUPABASE_URL ? "✅" : "❌");
-  console.error("   SUPABASE_SERVICE_ROLE_KEY:", SUPABASE_SERVICE_ROLE_KEY ? "✅" : "❌");
-  process.exit(1);
-}
+// Load and validate configuration
+const config = getScriptConfig();
+validateScriptRequirements(['supabase']);
 
 // Use service role key to bypass RLS for admin operations
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  },
-});
+const supabase = createClient(
+  config.supabase!.url,
+  config.supabase!.serviceRoleKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
+);
 
 // ============================================================
 // Test Data Configuration
@@ -251,6 +245,85 @@ async function main() {
     }
 
     console.log(`   ✅ Created ${discussionCount} discussion comments`);
+
+    // ========================================
+    // 5. Create E2E Test Market
+    // ========================================
+    console.log("\n[5/5] Creating E2E test market...");
+
+    // Real on-chain market created with create-market-onchain.ts
+    const TEST_MARKET_ID = 'F6fBnfJwVeLBkp1TFfwetG7Q7ffnYUuLc4awdyYWnnoT';
+    const TEST_WALLET = '4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye'; // Actual test wallet that created the market
+
+    // First, ensure test wallet user exists
+    const { data: testUser, error: testUserError } = await supabase
+      .from("users")
+      .upsert(
+        {
+          wallet: TEST_WALLET,
+          created_at: new Date().toISOString(),
+          last_seen_at: new Date().toISOString(),
+        },
+        { onConflict: "wallet" }
+      )
+      .select()
+      .single();
+
+    if (testUserError) {
+      console.error(`   ❌ Failed to create test user:`, testUserError.message);
+    } else {
+      console.log(`   ✅ Test user ensured: ${TEST_WALLET.slice(0,8)}...`);
+    }
+
+    // Check if test market already exists
+    const { data: existingTestMarket } = await supabase
+      .from("markets")
+      .select("on_chain_address, question")
+      .eq("on_chain_address", TEST_MARKET_ID)
+      .maybeSingle();
+
+    if (existingTestMarket) {
+      console.log(`   ℹ️  E2E test market already exists: ${existingTestMarket.question}`);
+    } else {
+      const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
+
+      const { data: testMarket, error: testMarketError } = await supabase
+        .from("markets")
+        .insert({
+          id: `e2e-test-market-${Date.now()}`,
+          on_chain_address: TEST_MARKET_ID,
+          question: 'Test Market for WebSocket E2E Tests',
+          description: 'Automated E2E testing market - tests real-time WebSocket updates, trading, and state changes',
+          creator_wallet: TEST_WALLET,
+          resolver_wallet: TEST_WALLET,
+          category: 'crypto',
+          state: 'ACTIVE',
+          b_parameter: '1000000000', // 1 SOL
+          initial_liquidity: '1000000000',
+          current_liquidity: '1000000000',
+          shares_yes: '0',
+          shares_no: '0',
+          current_price_yes: '50',
+          current_price_no: '50',
+          total_volume: '0',
+          proposal_likes: 0,
+          proposal_dislikes: 0,
+          dispute_agree: 0,
+          dispute_disagree: 0,
+          created_at: new Date().toISOString(),
+          activated_at: new Date().toISOString(),
+          is_cancelled: false
+        })
+        .select()
+        .single();
+
+      if (testMarketError) {
+        console.error(`   ❌ Failed to create E2E test market:`, testMarketError.message);
+      } else {
+        console.log(`   ✅ Created E2E test market: ${testMarket.question}`);
+        console.log(`   ✅ On-chain address: ${testMarket.on_chain_address}`);
+      }
+    }
 
     // ========================================
     // Summary

@@ -1,0 +1,126 @@
+🔒 Starting Security Pre-Check Automation...
+Date: So  9 Nov 2025 18:36:15 CET
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 1: NPM Dependency Vulnerabilities[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running npm audit...
+npm error code ENOLOCK
+npm error audit This command requires an existing lockfile.
+npm error audit Try creating one first with: npm i --package-lock-only
+npm error audit Original error: loadVirtual requires existing shrinkwrap file
+npm error A complete log of this run can be found in: /Users/seman/.npm/_logs/2025-11-09T17_36_15_989Z-debug-0.log
+[0;32m✅ PASS:[0m No moderate or higher vulnerabilities found in dependencies
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 2: Environment Variable Leaks[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Scanning for hardcoded secrets...
+[0;31m❌ HIGH:[0m Found potential hardcoded secrets in source code:
+src/config/solana.js:                const secretKey = Uint8Array.from(JSON.parse(keypairData));
+src/config/solana.js:                const secretKey = bs58_1.default.decode(env_1.config.solana.backendAuthorityPrivateKey);
+src/config/solana.ts:        const secretKey = Uint8Array.from(JSON.parse(keypairData));
+src/config/solana.ts:        const secretKey = bs58.decode(config.solana.backendAuthorityPrivateKey);
+src/services/ipfs/standalone.ts:    const pinataSecretKey = config.ipfs.pinataSecretKey;
+src/services/ipfs/standalone.ts:    if (!pinataSecretKey || pinataSecretKey === 'YOUR_PINATA_SECRET_KEY') {
+[0;31m🚨 CRITICAL:[0m .env file is tracked by git (contains secrets!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 3: Hardcoded Credentials[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Scanning for hardcoded credentials...
+[0;32m✅ PASS:[0m No hardcoded passwords found
+[0;32m✅ PASS:[0m No private keys found in source code
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 4: SQL Injection Risks[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Scanning for SQL injection vulnerabilities...
+[1;33m⚠️  MEDIUM:[0m Found raw SQL queries (verify parameterization):
+src/services/market-monitor/monitor.ts:        throw new Error(`Supabase query failed: ${error.message}`);
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 5: CORS Configuration[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking CORS configuration...
+[0;32m✅ PASS:[0m No wildcard CORS configuration found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 6: Authentication Bypass Risks[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking for authentication bypass vulnerabilities...
+[0;32m✅ PASS:[0m No authentication bypass flags found
+[0;32m✅ PASS:[0m No commented-out authentication middleware found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 7: Rate Limiting Protection[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking for rate limiting implementation...
+[0;32m✅ PASS:[0m Rate limiting middleware found
+src/api/server.ts:import rateLimit from "express-rate-limit";
+src/api/server.ts:    const limiter = rateLimit({
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 8: Input Validation Coverage[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking input validation coverage...
+[0;32m✅ PASS:[0m All 6 routes have input validation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 9: Error Handling Security[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking for information disclosure in error messages...
+[0;32m✅ PASS:[0m No exposed stack traces found in routes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 10: File Upload Security[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking file upload configurations...
+[0;32m✅ PASS:[0m No file upload handlers found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 11: JWT/Token Security[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking JWT/token security...
+[0;32m✅ PASS:[0m No weak JWT secrets found in code
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 12: Logging Security[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking for sensitive data in logs...
+[0;32m✅ PASS:[0m No sensitive data logging found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 13: XSS Prevention[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking for XSS vulnerabilities...
+[0;32m✅ PASS:[0m No direct HTML injection found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 14: Prototype Pollution Protection[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking for prototype pollution vulnerabilities...
+[0;32m✅ PASS:[0m No obvious prototype pollution vectors found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mCHECK 15: Security Headers[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Checking security headers implementation...
+[0;32m✅ PASS:[0m Security headers middleware found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;34mSECURITY PRE-CHECK SUMMARY[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Total Checks Performed: 15
+
+[0;32m✅ Passed: 15[0m
+[0;31m🚨 Critical Issues: 1[0m
+[0;31m❌ High Priority Issues: 1[0m
+[1;33m⚠️  Medium Priority Issues: 1[0m
+[1;33m📋 Low Priority Issues: 0[0m
+
+Security Score: 100/100
+
+[0;31m⚠️  CRITICAL ISSUES FOUND - IMMEDIATE ACTION REQUIRED[0m
