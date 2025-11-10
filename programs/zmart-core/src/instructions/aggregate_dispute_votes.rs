@@ -38,6 +38,20 @@ pub fn handler(
     let global_config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
 
+    // SECURITY FIX (Finding #3): Explicit authority validation (defense-in-depth)
+    // Belt-and-suspenders approach: verify authority even though Anchor constraints also check
+    require!(
+        ctx.accounts.backend_authority.key() == global_config.backend_authority,
+        ErrorCode::Unauthorized
+    );
+
+    // SECURITY: Verify transaction was actually signed by backend authority
+    // Signer<'info> type already enforces this, but we verify explicitly for clarity
+    require!(
+        ctx.accounts.backend_authority.is_signer,
+        ErrorCode::Unauthorized
+    );
+
     // Record vote counts on-chain
     market.dispute_agree = final_agrees;
     market.dispute_disagree = final_disagrees;

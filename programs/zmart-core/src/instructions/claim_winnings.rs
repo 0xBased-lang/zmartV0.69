@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use crate::error::ErrorCode;
 use crate::state::{GlobalConfig, MarketAccount, MarketState, UserPosition};
+use crate::utils::transfer_with_rent_check;
 
 /// Claim winnings after market finalized
 ///
@@ -45,6 +46,9 @@ pub struct ClaimWinnings<'info> {
         constraint = resolver.key() == market.resolver @ ErrorCode::InvalidResolver
     )]
     pub resolver: AccountInfo<'info>,
+
+    /// System program for CPI transfers
+    pub system_program: Program<'info, System>,
 }
 
 pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
@@ -74,15 +78,27 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
         ErrorCode::InsufficientLiquidity
     );
 
-    // Transfer winnings to user
-    **market.to_account_info().try_borrow_mut_lamports()? -= winnings;
-    **ctx.accounts.user.to_account_info().try_borrow_mut_lamports()? += winnings;
+    // SECURITY FIX (Finding #2): Transfer winnings with rent check
+    // Ensures market account maintains rent exemption after transfer
+    transfer_with_rent_check(
+        &market.to_account_info(),
+        &ctx.accounts.user.to_account_info(),
+        winnings,
+        &ctx.accounts.system_program.to_account_info(),
+    )?;
 
-    // Pay resolver (only if outcome is valid and fees accumulated)
+    // SECURITY FIX (Finding #2): Pay resolver with rent check
+    // Only if outcome is valid and fees accumulated
     if market.final_outcome.is_some() && market.accumulated_resolver_fees > 0 {
         let resolver_fee = market.accumulated_resolver_fees;
-        **market.to_account_info().try_borrow_mut_lamports()? -= resolver_fee;
-        **ctx.accounts.resolver.try_borrow_mut_lamports()? += resolver_fee;
+
+        transfer_with_rent_check(
+            &market.to_account_info(),
+            &ctx.accounts.resolver,
+            resolver_fee,
+            &ctx.accounts.system_program.to_account_info(),
+        )?;
+
         market.accumulated_resolver_fees = 0; // Paid out, prevent double-pay
     }
 

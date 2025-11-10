@@ -31,9 +31,16 @@ pub fn handler(ctx: Context<InitiateDispute>) -> Result<()> {
     let config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
 
-    // Verify within dispute window
+    // SECURITY FIX (Finding #5): Validate timestamp monotonicity
+    // Dispute can only be initiated after resolution is proposed
+    require!(
+        clock.unix_timestamp > market.resolution_proposed_at,
+        ErrorCode::InvalidTimestamp
+    );
+
+    // SECURITY: Verify within dispute window (time-based state transition validation)
     let dispute_deadline = market.resolution_proposed_at
-        .checked_add(config.dispute_period)
+        .checked_add(config.dispute_period as i64)
         .ok_or(ErrorCode::OverflowError)?;
 
     require!(

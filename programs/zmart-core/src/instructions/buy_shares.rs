@@ -3,6 +3,7 @@ use anchor_lang::system_program;
 use crate::error::ErrorCode;
 use crate::state::{GlobalConfig, MarketAccount, MarketState, UserPosition};
 use crate::math::lmsr;
+use crate::utils::calculate_fees_accurate;
 
 /// Buy YES or NO shares using LMSR formula
 ///
@@ -38,8 +39,10 @@ pub struct BuyShares<'info> {
     )]
     pub market: Account<'info, MarketAccount>,
 
+    // SECURITY FIX (Finding #1): Changed from init to init_if_needed
+    // Prevents account aliasing and allows multiple purchases
     #[account(
-        init,
+        init_if_needed,
         payer = user,
         space = UserPosition::LEN,
         seeds = [b"position", market.key().as_ref(), user.key().as_ref()],
@@ -82,29 +85,27 @@ pub fn handler(
         target_cost,
     )?;
 
-    // Apply fees (3% + 2% + 5% = 10%)
-    let protocol_fee = cost_before_fees
-        .checked_mul(config.protocol_fee_bps as u64).ok_or(ErrorCode::OverflowError)?
-        .checked_div(10000).ok_or(ErrorCode::DivisionByZero)?;
-
-    let resolver_fee = cost_before_fees
-        .checked_mul(config.resolver_reward_bps as u64).ok_or(ErrorCode::OverflowError)?
-        .checked_div(10000).ok_or(ErrorCode::DivisionByZero)?;
-
-    let lp_fee = cost_before_fees
-        .checked_mul(config.liquidity_provider_fee_bps as u64).ok_or(ErrorCode::OverflowError)?
-        .checked_div(10000).ok_or(ErrorCode::DivisionByZero)?;
+    // SECURITY FIX (Finding #6): Use accurate fee calculation to prevent value leakage
+    // Old approach calculated fees individually, losing precision on each division
+    // New approach calculates total fees first, then splits proportionally
+    let fees = calculate_fees_accurate(
+        cost_before_fees,
+        config.protocol_fee_bps,
+        config.resolver_reward_bps,
+        config.liquidity_provider_fee_bps,
+    )?;
 
     let total_cost = cost_before_fees
-        .checked_add(protocol_fee).ok_or(ErrorCode::OverflowError)?
-        .checked_add(resolver_fee).ok_or(ErrorCode::OverflowError)?
-        .checked_add(lp_fee).ok_or(ErrorCode::OverflowError)?;
+        .checked_add(fees.total_fees)
+        .ok_or(ErrorCode::OverflowError)?;
 
     // Slippage check (total cost must not exceed user's max)
     require!(total_cost <= target_cost, ErrorCode::SlippageExceeded);
 
     // Transfer cost from user to market (minus protocol fee which goes directly)
-    let market_transfer = total_cost.checked_sub(protocol_fee).ok_or(ErrorCode::UnderflowError)?;
+    let market_transfer = total_cost
+        .checked_sub(fees.protocol_fee)
+        .ok_or(ErrorCode::UnderflowError)?;
 
     system_program::transfer(
         CpiContext::new(
@@ -126,7 +127,7 @@ pub fn handler(
                 to: ctx.accounts.protocol_fee_wallet.to_account_info(),
             },
         ),
-        protocol_fee,
+        fees.protocol_fee,
     )?;
 
     // Update market state
@@ -136,39 +137,70 @@ pub fn handler(
         market.shares_no = market.shares_no.checked_add(shares_bought).ok_or(ErrorCode::OverflowError)?;
     }
 
-    market.total_volume = market.total_volume.checked_add(total_cost).ok_or(ErrorCode::OverflowError)?;
+    market.total_volume = market.total_volume
+        .checked_add(total_cost)
+        .ok_or(ErrorCode::OverflowError)?;
 
     // Fees stay in market (resolver gets on claim, LP withdrawn by creator)
     market.current_liquidity = market.current_liquidity
-        .checked_add(resolver_fee).ok_or(ErrorCode::OverflowError)?
-        .checked_add(lp_fee).ok_or(ErrorCode::OverflowError)?;
+        .checked_add(fees.resolver_fee)
+        .ok_or(ErrorCode::OverflowError)?
+        .checked_add(fees.lp_fee)
+        .ok_or(ErrorCode::OverflowError)?;
 
     market.accumulated_resolver_fees = market.accumulated_resolver_fees
-        .checked_add(resolver_fee).ok_or(ErrorCode::OverflowError)?;
+        .checked_add(fees.resolver_fee)
+        .ok_or(ErrorCode::OverflowError)?;
 
     market.accumulated_lp_fees = market.accumulated_lp_fees
-        .checked_add(lp_fee).ok_or(ErrorCode::OverflowError)?;
+        .checked_add(fees.lp_fee)
+        .ok_or(ErrorCode::OverflowError)?;
 
-    // Initialize position (first buy for this user on this market)
-    position.market = market.key();
-    position.user = ctx.accounts.user.key();
-    position.shares_yes = 0;
-    position.shares_no = 0;
-    position.total_invested = 0;
-    position.trades_count = 0;
-    position.has_claimed = false;
-    position.last_trade_at = Clock::get()?.unix_timestamp;
-    position.bump = ctx.bumps.position;
+    // SECURITY FIX (Finding #1): Check if this is a newly initialized account
+    let is_first_purchase = position.trades_count == 0;
 
-    // Add shares
-    if outcome {
-        position.shares_yes = shares_bought;
+    if is_first_purchase {
+        // Initialize position for first buy
+        position.market = market.key();
+        position.user = ctx.accounts.user.key();
+        position.shares_yes = 0;
+        position.shares_no = 0;
+        position.total_invested = 0;
+        position.trades_count = 0;
+        position.has_claimed = false;
+        position.bump = ctx.bumps.position;
     } else {
-        position.shares_no = shares_bought;
+        // SECURITY: Validate ownership for existing accounts
+        // This prevents account aliasing where attacker creates position with victim's address
+        require!(
+            position.user == ctx.accounts.user.key(),
+            ErrorCode::Unauthorized
+        );
+        require!(
+            position.market == market.key(),
+            ErrorCode::InvalidMarketId
+        );
     }
 
-    position.total_invested = total_cost;
-    position.trades_count = 1;
+    // Add shares (works for both first and subsequent purchases)
+    if outcome {
+        position.shares_yes = position.shares_yes
+            .checked_add(shares_bought)
+            .ok_or(ErrorCode::OverflowError)?;
+    } else {
+        position.shares_no = position.shares_no
+            .checked_add(shares_bought)
+            .ok_or(ErrorCode::OverflowError)?;
+    }
+
+    // Update position stats
+    position.total_invested = position.total_invested
+        .checked_add(total_cost)
+        .ok_or(ErrorCode::OverflowError)?;
+    position.trades_count = position.trades_count
+        .checked_add(1)
+        .ok_or(ErrorCode::OverflowError)?;
+    position.last_trade_at = Clock::get()?.unix_timestamp;
 
     // Emit event (events defined in state.rs)
     // emit!(SharesBought {

@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use crate::error::ErrorCode;
 use crate::state::{GlobalConfig, MarketAccount, MarketState};
+use crate::math::verify_bounded_loss;
 
 /// Set final outcome (RESOLVING/DISPUTED → FINALIZED)
 ///
@@ -42,6 +43,13 @@ pub fn handler(
     let market = &mut ctx.accounts.market;
     let config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
+
+    // SECURITY FIX (Finding #5): Validate timestamp monotonicity
+    // Finalization can only happen after resolution is proposed
+    require!(
+        clock.unix_timestamp > market.resolution_proposed_at,
+        ErrorCode::InvalidTimestamp
+    );
 
     // Record if market was disputed (before state change)
     let was_disputed = market.state == MarketState::Disputed;
@@ -92,6 +100,15 @@ pub fn handler(
         // Keep proposed outcome (no dispute)
         market.proposed_outcome
     };
+
+    // SECURITY FIX (Finding #4): Verify bounded loss protection
+    // Ensure market creator loss never exceeds b * ln(2) ≈ 0.693 * b
+    // This protects against bugs in LMSR implementation or numerical errors
+    verify_bounded_loss(
+        market.initial_liquidity,
+        market.current_liquidity,
+        market.b_parameter,
+    )?;
 
     // Set final outcome and mark as finalized
     market.final_outcome = final_outcome;

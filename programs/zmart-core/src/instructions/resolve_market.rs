@@ -37,9 +37,17 @@ pub fn handler(
     ipfs_evidence_hash: [u8; 46],
 ) -> Result<()> {
     let market = &mut ctx.accounts.market;
+    let clock = Clock::get()?;
 
-    // Verify market hasn't already been resolved
+    // SECURITY FIX (Finding #5): Verify market hasn't already been resolved
     require!(market.proposed_outcome.is_none(), ErrorCode::AlreadyResolved);
+
+    // SECURITY: Validate timestamp monotonicity (prevents time manipulation)
+    // Resolution can only happen after market activation
+    require!(
+        clock.unix_timestamp > market.activated_at,
+        ErrorCode::InvalidTimestamp
+    );
 
     // Record resolution proposal
     market.proposed_outcome = Some(proposed_outcome);

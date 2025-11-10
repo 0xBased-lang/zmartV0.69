@@ -183,6 +183,10 @@ pub enum ErrorCode {
     #[msg("Invalid input value")]
     InvalidInput,
 
+    /// 6508: LMSR bounded loss exceeded (SECURITY: Finding #4)
+    #[msg("Market loss exceeds theoretical maximum of b * ln(2)")]
+    BoundedLossExceeded,
+
     // ============================================================
     // Validation Errors (6600-6699)
     // ============================================================
@@ -202,6 +206,14 @@ pub enum ErrorCode {
     /// 6603: Invalid IPFS hash
     #[msg("Invalid IPFS hash")]
     InvalidIpfsHash,
+
+    /// 6604: Insufficient funds for operation
+    #[msg("Insufficient funds")]
+    InsufficientFunds,
+
+    /// 6605: Transfer would break rent exemption (SECURITY: Finding #2)
+    #[msg("Transfer would leave account below rent-exempt minimum")]
+    WouldBreakRentExemption,
 
     // ============================================================
     // Voting Errors (6700-6799)

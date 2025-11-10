@@ -2,9 +2,11 @@
 
 pub mod fixed_point;
 pub mod lmsr;
+pub mod bounded_loss;
 
 pub use fixed_point::*;
 pub use lmsr::*;
+pub use bounded_loss::*;
 
 /// Fixed-point precision: 9 decimals (matches SOL lamports)
 ///
