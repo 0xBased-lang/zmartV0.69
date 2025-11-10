@@ -3,7 +3,7 @@ import { Connection, Keypair, PublicKey } from '@solana/web3.js';
 import fs from 'fs';
 
 // Constants
-const PROGRAM_ID = new PublicKey('7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS');
+const PROGRAM_ID = new PublicKey('AFFtXXBKgTbSjFFikKG2jQ7qKvLt9mswvhTFSizJyFoH');
 const RPC_URL = 'https://api.devnet.solana.com';
 
 async function reinitializeGlobalConfig() {
@@ -32,7 +32,7 @@ async function reinitializeGlobalConfig() {
 
   // Derive PDAs
   const [globalConfigPda] = PublicKey.findProgramAddressSync(
-    [Buffer.from('global_config')],
+    [Buffer.from('global-config')],
     PROGRAM_ID
   );
 
@@ -73,24 +73,12 @@ async function reinitializeGlobalConfig() {
   try {
     const tx = await program.methods
       .initializeGlobalConfig(
-        new anchor.BN(300),           // trading_fee_bps = 3%
-        new anchor.BN(200),           // creator_fee_bps = 2%
-        new anchor.BN(500),           // staker_fee_bps = 5%
-        new anchor.BN(6_000),         // min_b_parameter = 6000 (0.000006 SOL)
-        new anchor.BN(100_000_000),   // max_b_parameter = 100 SOL
-        new anchor.BN(100_000_000),   // max_initial_liquidity = 100 SOL
-        new anchor.BN(172_800),       // resolution_delay = 48h
-        new anchor.BN(86_400),        // dispute_period = 24h
-        new anchor.BN(1),             // min_liquidity_ratio (not used yet)
-        new anchor.BN(1),             // max_slippage_bps (not used yet)
-        new anchor.BN(8_000),         // min_proposal_votes = 80%
-        false                         // paused = false
+        payer.publicKey  // backend_authority (only argument now)
       )
       .accounts({
-        globalConfig: globalConfigPda,
         admin: payer.publicKey,
+        globalConfig: globalConfigPda,
         protocolFeeWallet: payer.publicKey,
-        voteAggregator: payer.publicKey,
         systemProgram: anchor.web3.SystemProgram.programId,
       })
       .signers([payer])
