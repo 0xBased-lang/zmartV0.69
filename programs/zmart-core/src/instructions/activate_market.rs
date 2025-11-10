@@ -62,8 +62,8 @@ pub fn handler(ctx: Context<ActivateMarket>) -> Result<()> {
         ErrorCode::InsufficientLiquidity
     );
 
-    // Transition to ACTIVE state
-    market.state = MarketState::Active;
+    // Transition to ACTIVE state (using wrapper for validation)
+    market.transition_state(MarketState::Active)?;
 
     // Set activated_at timestamp
     let clock = Clock::get()?;

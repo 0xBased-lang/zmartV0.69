@@ -258,6 +258,35 @@ impl MarketAccount {
         )
     }
 
+    /// SECURITY FIX (Finding #6 - Week 3): Transition state with validation
+    ///
+    /// Wrapper around state transitions that enforces the state machine.
+    /// Prevents invalid state transitions that could bypass the 6-state FSM.
+    ///
+    /// Valid transitions:
+    /// - PROPOSED → APPROVED
+    /// - APPROVED → ACTIVE
+    /// - ACTIVE → RESOLVING
+    /// - RESOLVING → DISPUTED
+    /// - RESOLVING → FINALIZED
+    /// - DISPUTED → FINALIZED
+    ///
+    /// # Arguments
+    /// * `new_state` - The target state to transition to
+    ///
+    /// # Returns
+    /// * `Ok(())` if transition is valid
+    /// * `Err(ErrorCode::InvalidStateTransition)` if transition is not allowed
+    pub fn transition_state(&mut self, new_state: MarketState) -> Result<()> {
+        require!(
+            self.can_transition_to(new_state),
+            ErrorCode::InvalidStateTransition
+        );
+        msg!("State transition: {:?} -> {:?}", self.state, new_state);
+        self.state = new_state;
+        Ok(())
+    }
+
     /// Check if proposal voting passed the threshold
     ///
     /// Requires: proposal_total_votes > 0

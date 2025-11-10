@@ -38,6 +38,17 @@ pub fn handler(
     let global_config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
 
+    // SECURITY FIX (Finding #4 - Week 3): Verify canonical global config PDA
+    // Prevents attacker from creating fake global_config with their own backend_authority
+    let (canonical_config, _) = Pubkey::find_program_address(
+        &[b"global-config"],
+        ctx.program_id
+    );
+    require!(
+        ctx.accounts.global_config.key() == canonical_config,
+        ErrorCode::InvalidGlobalConfig
+    );
+
     // SECURITY FIX (Finding #3): Explicit authority validation (defense-in-depth)
     // Belt-and-suspenders approach: verify authority even though Anchor constraints also check
     require!(

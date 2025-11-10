@@ -68,8 +68,8 @@ pub fn handler(ctx: Context<ApproveProposal>) -> Result<()> {
         ErrorCode::InsufficientVotes
     );
 
-    // Transition to APPROVED state
-    market.state = MarketState::Approved;
+    // Transition to APPROVED state (using wrapper for validation)
+    market.transition_state(MarketState::Approved)?;
 
     // Set approved_at timestamp
     let clock = Clock::get()?;

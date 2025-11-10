@@ -38,6 +38,17 @@ pub fn handler(
     let global_config = &ctx.accounts.global_config;
     let clock = Clock::get()?;
 
+    // SECURITY FIX (Finding #4 - Week 3): Verify canonical global config PDA
+    // Prevents attacker from creating fake global_config with their own backend_authority
+    let (canonical_config, _) = Pubkey::find_program_address(
+        &[b"global-config"],
+        ctx.program_id
+    );
+    require!(
+        ctx.accounts.global_config.key() == canonical_config,
+        ErrorCode::InvalidGlobalConfig
+    );
+
     // SECURITY FIX (Finding #3): Explicit authority validation (defense-in-depth)
     // Belt-and-suspenders approach: verify authority even though Anchor constraints also check
     require!(
@@ -77,15 +88,18 @@ pub fn handler(
         0u8 // Zero votes = 0% agreement = dispute fails
     };
 
-    // State transition based on dispute outcome
+    // State transition based on dispute outcome (using wrapper for validation)
     if dispute_succeeded {
         // >=60% agree: Resolution rejected, return to RESOLVING
+        // Note: DISPUTED → RESOLVING is NOT a valid transition in can_transition_to()
+        // This is a special case - dispute succeeded means we go back to allow re-resolution
+        // We must use direct assignment here as it's outside the normal FSM
         market.state = MarketState::Resolving;
         market.was_disputed = true;
         // Note: resolution_proposed_at remains set (for dispute period calculation)
     } else {
         // <60% agree: Original resolution accepted, finalize market
-        market.state = MarketState::Finalized;
+        market.transition_state(MarketState::Finalized)?;
         market.resolved_at = clock.unix_timestamp;
         market.was_disputed = true;
     }
