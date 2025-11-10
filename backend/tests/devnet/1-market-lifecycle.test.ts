@@ -247,13 +247,18 @@ async function runMarketLifecycleTests() {
     console.log('- Target Cost:', lamportsToSol(targetCost.toNumber()), 'SOL');
 
     try {
+      // Get protocol_fee_wallet from GlobalConfig
+      // @ts-ignore
+      const globalConfig = await ctx.program.account.globalConfig.fetch(ctx.globalConfigPda);
+
       const buyTx = await ctx.program.methods
         .buyShares(true, targetCost) // true = YES
         .accounts({
-          user: trader1.publicKey,
-          market: marketPda,
-          userPosition: trader1PositionPda,
           globalConfig: ctx.globalConfigPda,
+          market: marketPda,
+          position: trader1PositionPda,
+          user: trader1.publicKey,
+          protocolFeeWallet: (globalConfig as any).protocolFeeWallet,
           systemProgram: SystemProgram.programId,
         })
         .signers([trader1])
@@ -285,13 +290,18 @@ async function runMarketLifecycleTests() {
     console.log('- Target Cost:', lamportsToSol(targetCost2.toNumber()), 'SOL');
 
     try {
+      // Get protocol_fee_wallet from GlobalConfig
+      // @ts-ignore
+      const globalConfig = await ctx.program.account.globalConfig.fetch(ctx.globalConfigPda);
+
       const buyTx = await ctx.program.methods
         .buyShares(false, targetCost2) // false = NO
         .accounts({
-          user: ctx.payer.publicKey,
-          market: marketPda,
-          userPosition: creatorPositionPda,
           globalConfig: ctx.globalConfigPda,
+          market: marketPda,
+          position: creatorPositionPda,
+          user: ctx.payer.publicKey,
+          protocolFeeWallet: (globalConfig as any).protocolFeeWallet,
           systemProgram: SystemProgram.programId,
         })
         .rpc();

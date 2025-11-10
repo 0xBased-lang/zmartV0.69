@@ -1,4 +1,5 @@
 import { setupTestContext } from './setup';
+import * as anchor from '@coral-xyz/anchor';
 
 async function initializeGlobalConfig() {
   console.log('================================================================================');
@@ -20,9 +21,17 @@ async function initializeGlobalConfig() {
     console.log('Not initialized, creating...\n');
   }
 
-  // Initialize (let Anchor auto-resolve accounts)
+  // Initialize with all required accounts and arguments
   const tx = await (ctx.program.methods as any)
-    .initializeGlobalConfig()
+    .initializeGlobalConfig(
+      ctx.payer.publicKey  // backend_authority (using admin as backend authority for now)
+    )
+    .accounts({
+      admin: ctx.payer.publicKey,
+      globalConfig: ctx.globalConfigPda,
+      protocolFeeWallet: ctx.payer.publicKey,  // Using admin wallet as fee wallet for testing
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
     .rpc();
 
   await ctx.connection.confirmTransaction(tx, 'confirmed');
