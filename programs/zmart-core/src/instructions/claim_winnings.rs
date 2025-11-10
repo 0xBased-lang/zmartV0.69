@@ -135,13 +135,6 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
     let needed = winnings.checked_add(market.accumulated_resolver_fees)
         .ok_or(ErrorCode::OverflowError)?;
 
-    msg!("DEBUG claim_winnings:");
-    msg!("  market_balance: {} lamports", market_balance);
-    msg!("  winnings: {} lamports", winnings);
-    msg!("  accumulated_resolver_fees: {} lamports", market.accumulated_resolver_fees);
-    msg!("  needed total: {} lamports", needed);
-    msg!("  sufficient? {}", market_balance >= needed);
-
     require!(
         market_balance >= needed,
         ErrorCode::InsufficientLiquidity
