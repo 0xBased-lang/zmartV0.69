@@ -61,6 +61,9 @@ pub fn handler(
         .checked_add(final_dislikes)
         .ok_or(ErrorCode::OverflowError)?;
 
+    // FIX #1: Record total votes (was missing, causing proposal_total_votes to stay 0)
+    market.proposal_total_votes = total_votes;
+
     // Calculate approval percentage in basis points (0-10000)
     // Formula: (likes / total) * 10000
     let likes_bps = if total_votes > 0 {
@@ -75,12 +78,9 @@ pub fn handler(
     // Check threshold from GlobalConfig (default 7000 = 70%)
     let approved = likes_bps >= global_config.proposal_approval_threshold as u64;
 
-    if approved {
-        // Transition to APPROVED state
-        market.state = MarketState::Approved;
-        market.approved_at = clock.unix_timestamp;
-    }
-    // else: stays in PROPOSED (can re-aggregate later)
+    // FIX #2: Remove auto-approval - market stays in PROPOSED state
+    // Admin must explicitly call approve_proposal() to transition to APPROVED
+    // This gives admin veto power even if votes reach 70%+ threshold
 
     // Calculate display percentage (0-100) for event
     let approval_percentage = (likes_bps / 100) as u8;
