@@ -54,6 +54,24 @@ export interface BrowserStorage {
 }
 
 /**
+ * WebSocket connection state snapshot
+ */
+export interface WebSocketState {
+  timestamp: string;
+  connected: boolean;
+  url: string | null;
+  readyState: 'CONNECTING' | 'OPEN' | 'CLOSING' | 'CLOSED' | 'NONE';
+  totalConnections: number;
+  activeConnections: number;
+  messagesSent: number;
+  messagesReceived: number;
+  avgLatency: number;
+  reconnectionCount: number;
+  errorCount: number;
+  totalDataTransferred: number;
+}
+
+/**
  * On-chain account state
  */
 export interface OnChainState {
@@ -245,6 +263,62 @@ export async function captureBrowserStorage(page: Page): Promise<BrowserStorage>
 }
 
 /**
+ * Capture WebSocket connection state
+ *
+ * Uses enhanced tracking to get WebSocket stats if available
+ */
+export async function captureWebSocketState(): Promise<WebSocketState> {
+  try {
+    // Import dynamically to avoid circular dependencies
+    const { getWebSocketStats, isWebSocketConnected } = await import('./websocket-tracker');
+
+    const stats = getWebSocketStats();
+    const connected = isWebSocketConnected();
+
+    // Determine readyState
+    let readyState: WebSocketState['readyState'] = 'NONE';
+    if (stats.totalConnections > 0) {
+      if (connected) {
+        readyState = 'OPEN';
+      } else if (stats.activeConnections === 0 && stats.totalConnections > 0) {
+        readyState = 'CLOSED';
+      }
+    }
+
+    return {
+      timestamp: new Date().toISOString(),
+      connected,
+      url: connected ? 'ws://localhost:4001' : null, // From env
+      readyState,
+      totalConnections: stats.totalConnections,
+      activeConnections: stats.activeConnections,
+      messagesSent: stats.messagesSent,
+      messagesReceived: stats.messagesReceived,
+      avgLatency: stats.avgLatency,
+      reconnectionCount: stats.reconnectionCount,
+      errorCount: stats.errorCount,
+      totalDataTransferred: stats.totalDataTransferred,
+    };
+  } catch (error) {
+    // WebSocket tracking may not be initialized
+    return {
+      timestamp: new Date().toISOString(),
+      connected: false,
+      url: null,
+      readyState: 'NONE',
+      totalConnections: 0,
+      activeConnections: 0,
+      messagesSent: 0,
+      messagesReceived: 0,
+      avgLatency: 0,
+      reconnectionCount: 0,
+      errorCount: 0,
+      totalDataTransferred: 0,
+    };
+  }
+}
+
+/**
  * Capture on-chain account state
  *
  * @param connection - Solana connection instance
@@ -342,15 +416,17 @@ export interface ComprehensiveState {
   reactQuery: ReactQueryCache;
   wallet: WalletState;
   storage: BrowserStorage;
+  websocket: WebSocketState;
 }
 
 export async function captureComprehensiveState(page: Page): Promise<ComprehensiveState> {
-  console.log('📸 Capturing comprehensive application state...');
+  console.log('📸 Capturing comprehensive application state (+ WebSocket)...');
 
-  const [reactQuery, wallet, storage] = await Promise.all([
+  const [reactQuery, wallet, storage, websocket] = await Promise.all([
     captureReactQueryCache(page),
     captureWalletState(page),
     captureBrowserStorage(page),
+    captureWebSocketState(),
   ]);
 
   return {
@@ -358,6 +434,7 @@ export async function captureComprehensiveState(page: Page): Promise<Comprehensi
     reactQuery,
     wallet,
     storage,
+    websocket,
   };
 }
 

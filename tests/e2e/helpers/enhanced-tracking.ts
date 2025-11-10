@@ -93,6 +93,29 @@ export {
   type EnvironmentSnapshot,
 } from './data-manager';
 
+// WebSocket Tracking
+export {
+  trackWebSocketConnections,
+  clearWebSocketTracking,
+  getCapturedWebSocketConnections,
+  getCapturedWebSocketMessages,
+  getCapturedWebSocketStateChanges,
+  getCapturedWebSocketErrors,
+  getWebSocketStats,
+  filterWebSocketMessages,
+  getMessagesByEvent,
+  getLatestMessage,
+  waitForWebSocketEvent,
+  isWebSocketConnected,
+  getConnectionUptime,
+  printWebSocketSummary,
+  getWebSocketDataForSaving,
+  type WebSocketConnection,
+  type WebSocketMessage,
+  type WebSocketStateChange,
+  type WebSocketStats,
+} from './websocket-tracker';
+
 /**
  * Initialize all enhanced tracking on a page
  *
@@ -105,13 +128,14 @@ export {
 import { Page } from '@playwright/test';
 import { captureNetworkTraffic } from './network-logger';
 import { trackRPCCalls } from './rpc-tracker';
+import { trackWebSocketConnections } from './websocket-tracker';
 import { TestDataManager } from './data-manager';
 
 export async function initializeEnhancedTracking(
   page: Page,
   testName: string
 ): Promise<TestDataManager> {
-  console.log('\n🔍 Initializing Enhanced Tracking System...');
+  console.log('\n🔍 Initializing Enhanced Tracking System (+ WebSocket)...');
 
   // Create data manager
   const dataManager = new TestDataManager(testName);
@@ -122,10 +146,13 @@ export async function initializeEnhancedTracking(
   // Enable RPC tracking
   await trackRPCCalls(page);
 
+  // Enable WebSocket tracking
+  await trackWebSocketConnections(page);
+
   // Save environment snapshot
   await dataManager.saveEnvironment();
 
-  console.log('✅ Enhanced Tracking Initialized\n');
+  console.log('✅ Enhanced Tracking Initialized (Network + RPC + WebSocket)\n');
 
   return dataManager;
 }
@@ -142,6 +169,7 @@ export async function saveAllTrackingData(dataManager: TestDataManager): Promise
 
   const { getCapturedTraffic, getTrafficSummary } = await import('./network-logger');
   const { getCapturedRPCCalls, getRPCCallStats } = await import('./rpc-tracker');
+  const { getWebSocketDataForSaving } = await import('./websocket-tracker');
 
   // Save network traffic
   try {
@@ -167,6 +195,19 @@ export async function saveAllTrackingData(dataManager: TestDataManager): Promise
     console.error('   ❌ Failed to save RPC calls:', error);
   }
 
+  // Save WebSocket data
+  try {
+    const wsData = getWebSocketDataForSaving();
+
+    await dataManager.saveData('websocket-connections', wsData.connections);
+    await dataManager.saveData('websocket-messages', wsData.messages);
+    await dataManager.saveData('websocket-state-changes', wsData.stateChanges);
+    await dataManager.saveData('websocket-stats', wsData.stats);
+    console.log(`   ✅ WebSocket data saved (${wsData.messages.length} messages)`);
+  } catch (error) {
+    console.error('   ❌ Failed to save WebSocket data:', error);
+  }
+
   console.log(`✅ All tracking data saved to: ${dataManager.getDataPath()}\n`);
 }
 
@@ -180,6 +221,7 @@ export async function printTrackingSummary(): Promise<void> {
 
   const { printTrafficSummary } = await import('./network-logger');
   const { printRPCCallSummary } = await import('./rpc-tracker');
+  const { printWebSocketSummary } = await import('./websocket-tracker');
 
   try {
     printTrafficSummary();
@@ -191,6 +233,12 @@ export async function printTrackingSummary(): Promise<void> {
     printRPCCallSummary();
   } catch (error) {
     console.error('Failed to print RPC summary:', error);
+  }
+
+  try {
+    printWebSocketSummary();
+  } catch (error) {
+    console.error('Failed to print WebSocket summary:', error);
   }
 
   console.log('\n📊 === END SUMMARY ===\n');
