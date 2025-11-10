@@ -1654,3 +1654,6 @@
 2025-11-10T02:50:00: [02:50:00] [32minfo[39m: [MarketMonitor] Received SIGINT, shutting down... {
   "service": "zmart-backend"
 }
+2025-11-10T02:55:00: [02:55:00] [32minfo[39m: [MarketMonitor] Received SIGINT, shutting down... {
+  "service": "zmart-backend"
+}
