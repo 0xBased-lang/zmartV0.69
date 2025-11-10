@@ -89,8 +89,15 @@ pub fn handler(
     market.b_parameter = b_parameter;
     market.initial_liquidity = initial_liquidity;
     market.current_liquidity = initial_liquidity;
-    market.shares_yes = 0;
-    market.shares_no = 0;
+
+    // CRITICAL FIX: Initialize with small equal shares to create 50/50 starting price
+    // Use a small fraction of b (liquidity depth) rather than initial_liquidity
+    // Formula: initial_shares = b / 1000 gives reasonable starting point
+    // This keeps initial cost = b * ln(2 * e^0.001) ≈ b * 0.694 manageable
+    // Setting shares_yes = shares_no creates P(YES) = P(NO) = 0.5
+    let initial_shares = b_parameter / 1000;
+    market.shares_yes = initial_shares;
+    market.shares_no = initial_shares;
     market.total_volume = 0;
 
     // Set timestamps (only created_at initially)

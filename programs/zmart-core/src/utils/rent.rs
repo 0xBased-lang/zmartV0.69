@@ -82,6 +82,58 @@ pub fn transfer_with_rent_check<'info>(
     )
 }
 
+/// Safely transfer SOL from a PDA with data while maintaining rent exemption
+///
+/// PDAs with data cannot use system_program::transfer. This function manually
+/// adjusts lamports on both accounts instead.
+///
+/// # Arguments
+///
+/// * `from` - Source PDA account with data (must be mutable)
+/// * `to` - Destination account
+/// * `amount` - Amount to transfer in lamports
+///
+/// # Example
+///
+/// ```rust
+/// transfer_from_pda_with_data(
+///     &ctx.accounts.market.to_account_info(),
+///     &ctx.accounts.user.to_account_info(),
+///     winnings,
+/// )?;
+/// ```
+pub fn transfer_from_pda_with_data<'info>(
+    from: &AccountInfo<'info>,
+    to: &AccountInfo<'info>,
+    amount: u64,
+) -> Result<()> {
+    // Get current rent exemption requirement for sender's account size
+    let rent = Rent::get()?;
+    let rent_exempt_minimum = rent.minimum_balance(from.data_len());
+
+    // Calculate sender's balance after transfer (checked arithmetic)
+    let from_balance_after = from
+        .lamports()
+        .checked_sub(amount)
+        .ok_or(ErrorCode::InsufficientFunds)?;
+
+    // SECURITY CHECK: Ensure sender maintains rent exemption
+    require!(
+        from_balance_after >= rent_exempt_minimum,
+        ErrorCode::WouldBreakRentExemption
+    );
+
+    // Manually transfer lamports by adjusting account balances
+    // This is the only way to transfer from a PDA with data
+    **from.try_borrow_mut_lamports()? = from_balance_after;
+    **to.try_borrow_mut_lamports()? = to
+        .lamports()
+        .checked_add(amount)
+        .ok_or(ErrorCode::OverflowError)?;
+
+    Ok(())
+}
+
 /// Check if an account has sufficient balance for rent exemption
 ///
 /// Used for validation before operations that might reduce account balance.

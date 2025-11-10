@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use crate::error::ErrorCode;
 use crate::state::{GlobalConfig, MarketAccount, MarketState, UserPosition};
-use crate::utils::transfer_with_rent_check;
+use crate::utils::transfer_from_pda_with_data;
 
 /// Claim winnings after market finalized
 ///
@@ -55,16 +55,78 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
     let market = &mut ctx.accounts.market;
     let position = &mut ctx.accounts.position;
 
-    // Calculate winnings based on final outcome
-    let winnings = match market.final_outcome {
-        Some(true) => position.shares_yes,   // YES won
-        Some(false) => position.shares_no,   // NO won
+    // BLUEPRINT PAYOUT FORMULA (CORE_LOGIC_INVARIANTS.md Section 8):
+    // user_payout = (user_winning_shares / total_winning_shares) * totalDeposits
+    //
+    // Where:
+    // - totalDeposits = current_liquidity (all deposits minus fees already distributed)
+    // - total_winning_shares = market.shares_yes (if YES won) or market.shares_no (if NO won)
+    // - user_winning_shares = position.shares_yes (if YES won) or position.shares_no (if NO won)
+
+    let (user_winning_shares, total_winning_shares) = match market.final_outcome {
+        Some(true) => {
+            // YES outcome won
+            require!(position.shares_yes > 0, ErrorCode::NoWinnings);
+            (position.shares_yes, market.shares_yes)
+        },
+        Some(false) => {
+            // NO outcome won
+            require!(position.shares_no > 0, ErrorCode::NoWinnings);
+            (position.shares_no, market.shares_no)
+        },
         None => {
-            // INVALID outcome → full refund (all shares)
-            position.shares_yes.checked_add(position.shares_no)
-                .ok_or(ErrorCode::OverflowError)?
+            // INVALID outcome → pro-rata refund based on total invested
+            // Formula: user_refund = (user.totalInvested / market.totalDeposits) * market.totalDeposits
+            // Simplifies to: user_refund = user.totalInvested
+            require!(position.total_invested > 0, ErrorCode::NoWinnings);
+
+            // For INVALID, we just return what the user invested (no proportional calc needed)
+            let winnings = position.total_invested;
+
+            // Check market has sufficient balance
+            let market_balance = market.to_account_info().lamports();
+            require!(
+                market_balance >= winnings,
+                ErrorCode::InsufficientLiquidity
+            );
+
+            // Early return for INVALID case
+            market.lock()?;
+
+            // Transfer from market PDA (PDAs with data require manual lamport transfer)
+            transfer_from_pda_with_data(
+                &market.to_account_info(),
+                &ctx.accounts.user.to_account_info(),
+                winnings,
+            )?;
+
+            market.unlock();
+            position.has_claimed = true;
+            position.claimed_amount = winnings;
+
+            emit!(WinningsClaimed {
+                market: market.key(),
+                user: ctx.accounts.user.key(),
+                outcome: None,
+                amount: winnings,
+                timestamp: Clock::get()?.unix_timestamp,
+            });
+
+            return Ok(());
         }
     };
+
+    // Calculate proportional payout for YES/NO outcomes
+    // Formula: (user_shares / total_shares) * total_deposits
+    require!(total_winning_shares > 0, ErrorCode::DivisionByZero);
+
+    // Use 128-bit arithmetic to prevent overflow in multiplication
+    let total_deposits = market.current_liquidity;
+    let winnings = (user_winning_shares as u128)
+        .checked_mul(total_deposits as u128)
+        .ok_or(ErrorCode::OverflowError)?
+        .checked_div(total_winning_shares as u128)
+        .ok_or(ErrorCode::DivisionByZero)? as u64;
 
     require!(winnings > 0, ErrorCode::NoWinnings);
 
@@ -72,6 +134,13 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
     let market_balance = market.to_account_info().lamports();
     let needed = winnings.checked_add(market.accumulated_resolver_fees)
         .ok_or(ErrorCode::OverflowError)?;
+
+    msg!("DEBUG claim_winnings:");
+    msg!("  market_balance: {} lamports", market_balance);
+    msg!("  winnings: {} lamports", winnings);
+    msg!("  accumulated_resolver_fees: {} lamports", market.accumulated_resolver_fees);
+    msg!("  needed total: {} lamports", needed);
+    msg!("  sufficient? {}", market_balance >= needed);
 
     require!(
         market_balance >= needed,
@@ -83,11 +152,11 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
 
     // SECURITY FIX (Finding #2): Transfer winnings with rent check
     // Ensures market account maintains rent exemption after transfer
-    transfer_with_rent_check(
+    // Uses manual lamport transfer since market is a PDA with data
+    transfer_from_pda_with_data(
         &market.to_account_info(),
         &ctx.accounts.user.to_account_info(),
         winnings,
-        &ctx.accounts.system_program.to_account_info(),
     )?;
 
     // SECURITY FIX (Finding #2): Pay resolver with rent check
@@ -95,11 +164,10 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
     if market.final_outcome.is_some() && market.accumulated_resolver_fees > 0 {
         let resolver_fee = market.accumulated_resolver_fees;
 
-        transfer_with_rent_check(
+        transfer_from_pda_with_data(
             &market.to_account_info(),
             &ctx.accounts.resolver,
             resolver_fee,
-            &ctx.accounts.system_program.to_account_info(),
         )?;
 
         market.accumulated_resolver_fees = 0; // Paid out, prevent double-pay
@@ -114,10 +182,10 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
 
     // Emit event
     emit!(WinningsClaimed {
-        market_id: market.market_id,
+        market: market.key(),
         user: ctx.accounts.user.key(),
+        outcome: market.final_outcome,
         amount: winnings,
-        resolver_fee: market.accumulated_resolver_fees,
         timestamp: Clock::get()?.unix_timestamp,
     });
 
@@ -126,10 +194,10 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
 
 #[event]
 pub struct WinningsClaimed {
-    pub market_id: [u8; 32],
+    pub market: Pubkey,
     pub user: Pubkey,
+    pub outcome: Option<bool>,
     pub amount: u64,
-    pub resolver_fee: u64,
     pub timestamp: i64,
 }
 

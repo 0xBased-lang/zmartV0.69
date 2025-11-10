@@ -1421,7 +1421,9 @@
         "* `resolver_reward_bps` - Resolver reward in basis points (0-10000)",
         "* `liquidity_provider_fee_bps` - LP fee in basis points (0-10000)",
         "* `proposal_approval_threshold` - Proposal approval threshold (0-10000)",
-        "* `dispute_success_threshold` - Dispute success threshold (0-10000)"
+        "* `dispute_success_threshold` - Dispute success threshold (0-10000)",
+        "* `min_resolution_delay` - Optional minimum resolution delay in seconds",
+        "* `dispute_period` - Optional dispute period duration in seconds"
       ],
       "discriminator": [
         164,
@@ -1491,6 +1493,18 @@
         {
           "name": "dispute_success_threshold",
           "type": "u16"
+        },
+        {
+          "name": "min_resolution_delay",
+          "type": {
+            "option": "i64"
+          }
+        },
+        {
+          "name": "dispute_period",
+          "type": {
+            "option": "i64"
+          }
         }
       ]
     },
@@ -2104,6 +2118,14 @@
           {
             "name": "dispute_success_threshold",
             "type": "u16"
+          },
+          {
+            "name": "min_resolution_delay",
+            "type": "i64"
+          },
+          {
+            "name": "dispute_period",
+            "type": "i64"
           },
           {
             "name": "timestamp",

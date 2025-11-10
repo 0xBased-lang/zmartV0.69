@@ -329,6 +329,8 @@ pub mod zmart_core {
     /// * `liquidity_provider_fee_bps` - LP fee in basis points (0-10000)
     /// * `proposal_approval_threshold` - Proposal approval threshold (0-10000)
     /// * `dispute_success_threshold` - Dispute success threshold (0-10000)
+    /// * `min_resolution_delay` - Optional minimum resolution delay in seconds
+    /// * `dispute_period` - Optional dispute period duration in seconds
     pub fn update_global_config(
         ctx: Context<UpdateGlobalConfig>,
         protocol_fee_bps: u16,
@@ -336,6 +338,8 @@ pub mod zmart_core {
         liquidity_provider_fee_bps: u16,
         proposal_approval_threshold: u16,
         dispute_success_threshold: u16,
+        min_resolution_delay: Option<i64>,
+        dispute_period: Option<i64>,
     ) -> Result<()> {
         update_global_config::handler(
             ctx,
@@ -344,6 +348,8 @@ pub mod zmart_core {
             liquidity_provider_fee_bps,
             proposal_approval_threshold,
             dispute_success_threshold,
+            min_resolution_delay,
+            dispute_period,
         )
     }
 

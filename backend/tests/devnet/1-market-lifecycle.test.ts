@@ -69,11 +69,47 @@ async function runMarketLifecycleTests() {
     console.log('');
 
     // ========================================================================
+    // SETUP: Update GlobalConfig for Fast Testing
+    // ========================================================================
+    printSection('SETUP: Configure Short Dispute Period for Testing');
+
+    console.log('Updating GlobalConfig to use 2-minute dispute period...');
+    console.log('Note: This allows us to test market finalization without waiting 48 hours');
+
+    try {
+      const updateConfigTx = await ctx.program.methods
+        .updateGlobalConfig(
+          300,   // protocol_fee_bps (3%)
+          200,   // resolver_reward_bps (2%)
+          500,   // liquidity_provider_fee_bps (5%)
+          7000,  // proposal_approval_threshold (70%)
+          6000,  // dispute_success_threshold (60%)
+          new anchor.BN(30),    // min_resolution_delay: 30 seconds (was 24 hours)
+          new anchor.BN(120),   // dispute_period: 2 minutes (was 3 days)
+        )
+        .accounts({
+          admin: ctx.payer.publicKey,
+          globalConfig: ctx.globalConfigPda,
+        })
+        .rpc();
+
+      await ctx.connection.confirmTransaction(updateConfigTx, 'confirmed');
+      console.log('✅ GlobalConfig updated:', updateConfigTx.slice(0, 8) + '...');
+      console.log('   Dispute period: 120 seconds (2 minutes)');
+      console.log('   Min resolution delay: 30 seconds');
+      console.log('');
+    } catch (error: any) {
+      console.log('❌ Failed to update GlobalConfig');
+      console.log('Error:', error.message);
+      throw error;
+    }
+
+    // ========================================================================
     // TEST 1: Create Market
     // ========================================================================
     printSection('TEST 1: Create Market');
 
-    const bParameter = new anchor.BN(1_000_000_000_000); // 1,000 SOL
+    const bParameter = new anchor.BN(100_000_000_000); // 100 SOL (minimum b parameter)
     const initialLiquidity = new anchor.BN(100_000_000); // 0.1 SOL
     const ipfsQuestionHash = createIpfsHash('Will BTC reach $100k by 2025?');
 
@@ -241,7 +277,7 @@ async function runMarketLifecycleTests() {
     // ========================================================================
     printSection('TEST 5: Buy YES Shares');
 
-    const targetCost = new anchor.BN(50_000_000); // 0.05 SOL
+    const targetCost = new anchor.BN(1_000_000_000); // 1 SOL (1% of b parameter)
 
     console.log('Trader1 buying YES shares...');
     console.log('- Target Cost:', lamportsToSol(targetCost.toNumber()), 'SOL');
@@ -284,7 +320,7 @@ async function runMarketLifecycleTests() {
     // ========================================================================
     printSection('TEST 6: Buy NO Shares');
 
-    const targetCost2 = new anchor.BN(30_000_000); // 0.03 SOL
+    const targetCost2 = new anchor.BN(500_000_000); // 0.5 SOL (0.5% of b parameter)
 
     console.log('Creator buying NO shares...');
     console.log('- Target Cost:', lamportsToSol(targetCost2.toNumber()), 'SOL');
@@ -355,7 +391,14 @@ async function runMarketLifecycleTests() {
     printSection('TEST 8: Finalize Market');
 
     console.log('Finalizing market (no dispute)...');
-    console.log('Note: In production, must wait 48 hours before finalization.\n');
+    console.log('Note: Dispute period is 2 minutes (configured for testing)');
+    console.log('Waiting 2 minutes + 10 seconds buffer for dispute period to end...\n');
+
+    // Wait for dispute period to end (120 seconds + 10 second buffer)
+    const waitTime = 130 * 1000; // 2 minutes 10 seconds in milliseconds
+    console.log('⏰ Waiting', waitTime / 1000, 'seconds...');
+    await sleep(waitTime);
+    console.log('✅ Dispute period ended, proceeding with finalization\n');
 
     try {
       const finalizeTx = await ctx.program.methods
@@ -395,8 +438,9 @@ async function runMarketLifecycleTests() {
         .accounts({
           user: trader1.publicKey,
           market: marketPda,
-          userPosition: trader1PositionPda,
+          position: trader1PositionPda,
           globalConfig: ctx.globalConfigPda,
+          resolver: ctx.payer.publicKey, // Resolver who will receive accumulated fees
           systemProgram: SystemProgram.programId,
         })
         .signers([trader1])
