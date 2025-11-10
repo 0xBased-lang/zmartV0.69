@@ -12,13 +12,13 @@ pub const MIN_TRADE_AMOUNT: u64 = 10_000;
 
 /// Buy YES or NO shares using LMSR formula
 ///
-/// Users specify a target cost (max they're willing to spend) and receive
-/// shares calculated by the LMSR algorithm. Fees are applied on top of the
-/// base cost: 3% protocol + 2% resolver + 5% LP = 10% total.
+/// Users specify a target cost (max they're willing to spend TOTAL) and receive
+/// shares calculated by the LMSR algorithm. Fees are included in the target cost:
+/// 3% protocol + 2% resolver + 5% LP = 10% total.
 ///
 /// # Arguments
 /// * `outcome` - true for YES, false for NO
-/// * `target_cost` - Maximum amount user is willing to pay (before fees)
+/// * `target_cost` - Maximum amount user is willing to pay (TOTAL, including fees)
 ///
 /// # State Changes
 /// * Market: shares_yes/shares_no increased, liquidity increased by fees
@@ -88,13 +88,25 @@ pub fn handler(
         ErrorCode::TradeTooSmall
     );
 
-    // Calculate shares user gets for their target cost (using LMSR)
+    // SEMANTIC FIX: target_cost represents the TOTAL amount user is willing to pay (after fees)
+    // But LMSR calculates cost BEFORE fees, so we need to adjust the target.
+    // With 10% fees, if user wants to spend X total, LMSR should target X/1.1 before fees.
+    //
+    // Formula: max_cost_before_fees = target_cost * 10000 / 11000
+    // This ensures: cost_before_fees + 10% fees <= target_cost
+    let max_cost_before_fees = target_cost
+        .checked_mul(10000)
+        .ok_or(ErrorCode::OverflowError)?
+        .checked_div(11000)
+        .ok_or(ErrorCode::DivisionByZero)?;
+
+    // Calculate shares user gets for their adjusted target cost (using LMSR)
     let (cost_before_fees, shares_bought) = lmsr::calculate_buy_cost(
         market.shares_yes,
         market.shares_no,
         market.b_parameter,
         outcome,
-        target_cost,
+        max_cost_before_fees,
     )?;
 
     // SECURITY FIX (Finding #6): Use accurate fee calculation to prevent value leakage
