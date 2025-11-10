@@ -16,7 +16,7 @@ import {
   deriveMarketPda,
   deriveUserPositionPda,
   TestContext,
-} from '../devnet/setup';
+} from '../../devnet/setup';
 
 describe('Week 5: Concurrent Buys Test', () => {
   let ctx: TestContext;
