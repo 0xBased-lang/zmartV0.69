@@ -1,5 +1,5 @@
 {
-  "address": "B5LimwoBn4aAqFmJsV1KtrxDbtEjaZ9WeNrfDWmJc42Z",
+  "address": "AFFtXXBKgTbSjFFikKG2jQ7qKvLt9mswvhTFSizJyFoH",
   "metadata": {
     "name": "zmart_core",
     "version": "0.69.0",
@@ -1861,231 +1861,236 @@
     },
     {
       "code": 6005,
+      "name": "InvalidGlobalConfig",
+      "msg": "Invalid global config: must be canonical PDA"
+    },
+    {
+      "code": 6006,
       "name": "InvalidStateTransition",
       "msg": "Invalid state transition"
     },
     {
-      "code": 6006,
+      "code": 6007,
       "name": "InvalidMarketState",
       "msg": "Market not in required state"
     },
     {
-      "code": 6007,
+      "code": 6008,
       "name": "MarketPaused",
       "msg": "Market is paused"
     },
     {
-      "code": 6008,
+      "code": 6009,
       "name": "MarketCancelled",
       "msg": "Market is cancelled"
     },
     {
-      "code": 6009,
+      "code": 6010,
       "name": "ProtocolPaused",
       "msg": "Protocol is paused"
     },
     {
-      "code": 6010,
+      "code": 6011,
       "name": "CannotCancelMarket",
       "msg": "Cannot cancel market in current state"
     },
     {
-      "code": 6011,
+      "code": 6012,
       "name": "MarketAlreadyCancelled",
       "msg": "Market is already cancelled"
     },
     {
-      "code": 6012,
+      "code": 6013,
       "name": "ZeroAmount",
       "msg": "Trading amount must be greater than zero"
     },
     {
-      "code": 6013,
+      "code": 6014,
       "name": "InsufficientShares",
       "msg": "Insufficient shares to sell"
     },
     {
-      "code": 6014,
+      "code": 6015,
       "name": "SlippageExceeded",
       "msg": "Slippage tolerance exceeded"
     },
     {
-      "code": 6015,
+      "code": 6016,
       "name": "InsufficientLiquidity",
       "msg": "Insufficient liquidity"
     },
     {
-      "code": 6016,
+      "code": 6017,
       "name": "InvalidLiquidity",
       "msg": "Invalid liquidity amount"
     },
     {
-      "code": 6017,
+      "code": 6018,
       "name": "TradeTooSmall",
       "msg": "Trade amount below minimum (0.00001 SOL)"
     },
     {
-      "code": 6018,
+      "code": 6019,
       "name": "ResolutionPeriodNotEnded",
       "msg": "Resolution period not ended"
     },
     {
-      "code": 6019,
+      "code": 6020,
       "name": "DisputePeriodEnded",
       "msg": "Dispute period ended"
     },
     {
-      "code": 6020,
+      "code": 6021,
       "name": "NoResolutionProposed",
       "msg": "No resolution proposed"
     },
     {
-      "code": 6021,
+      "code": 6022,
       "name": "AlreadyClaimed",
       "msg": "Winnings already claimed"
     },
     {
-      "code": 6022,
+      "code": 6023,
       "name": "NoWinnings",
       "msg": "No winnings to claim"
     },
     {
-      "code": 6023,
+      "code": 6024,
       "name": "NoVotesRecorded",
       "msg": "No votes recorded"
     },
     {
-      "code": 6024,
+      "code": 6025,
       "name": "InsufficientVotes",
       "msg": "Insufficient votes to meet threshold"
     },
     {
-      "code": 6025,
+      "code": 6026,
       "name": "AlreadyResolved",
       "msg": "Market already resolved"
     },
     {
-      "code": 6026,
+      "code": 6027,
       "name": "DisputePeriodNotEnded",
       "msg": "Dispute period not ended"
     },
     {
-      "code": 6027,
+      "code": 6028,
       "name": "AlreadyDisputed",
       "msg": "Already disputed"
     },
     {
-      "code": 6028,
+      "code": 6029,
       "name": "Unauthorized",
       "msg": "Unauthorized"
     },
     {
-      "code": 6029,
+      "code": 6030,
       "name": "InvalidAdmin",
       "msg": "Invalid admin"
     },
     {
-      "code": 6030,
+      "code": 6031,
       "name": "InvalidResolver",
       "msg": "Invalid resolver"
     },
     {
-      "code": 6031,
+      "code": 6032,
       "name": "InsufficientReputation",
       "msg": "Insufficient reputation"
     },
     {
-      "code": 6032,
+      "code": 6033,
       "name": "OverflowError",
       "msg": "Arithmetic overflow"
     },
     {
-      "code": 6033,
+      "code": 6034,
       "name": "UnderflowError",
       "msg": "Arithmetic underflow"
     },
     {
-      "code": 6034,
+      "code": 6035,
       "name": "DivisionByZero",
       "msg": "Division by zero"
     },
     {
-      "code": 6035,
+      "code": 6036,
       "name": "InvalidFixedPoint",
       "msg": "Invalid fixed-point value"
     },
     {
-      "code": 6036,
+      "code": 6037,
       "name": "InvalidLogarithm",
       "msg": "Logarithm of non-positive number"
     },
     {
-      "code": 6037,
+      "code": 6038,
       "name": "ExponentialOverflow",
       "msg": "Exponential overflow"
     },
     {
-      "code": 6038,
+      "code": 6039,
       "name": "ExponentTooLarge",
       "msg": "Exponent too large"
     },
     {
-      "code": 6039,
+      "code": 6040,
       "name": "InvalidInput",
       "msg": "Invalid input value"
     },
     {
-      "code": 6040,
+      "code": 6041,
       "name": "BoundedLossExceeded",
       "msg": "Market loss exceeds theoretical maximum of b * ln(2)"
     },
     {
-      "code": 6041,
+      "code": 6042,
       "name": "InvalidBParameter",
       "msg": "Invalid LMSR b parameter"
     },
     {
-      "code": 6042,
+      "code": 6043,
       "name": "InvalidMarketId",
       "msg": "Invalid market ID"
     },
     {
-      "code": 6043,
+      "code": 6044,
       "name": "InvalidTimestamp",
       "msg": "Invalid timestamp"
     },
     {
-      "code": 6044,
+      "code": 6045,
       "name": "InvalidIpfsHash",
       "msg": "Invalid IPFS hash"
     },
     {
-      "code": 6045,
+      "code": 6046,
       "name": "InsufficientFunds",
       "msg": "Insufficient funds"
     },
     {
-      "code": 6046,
+      "code": 6047,
       "name": "WouldBreakRentExemption",
       "msg": "Transfer would leave account below rent-exempt minimum"
     },
     {
-      "code": 6047,
+      "code": 6048,
       "name": "Reentrant",
       "msg": "Reentrancy detected - operation already in progress"
     },
     {
-      "code": 6048,
+      "code": 6049,
       "name": "InvalidReservedField",
       "msg": "Reserved fields must be zero"
     },
     {
-      "code": 6049,
+      "code": 6050,
       "name": "AlreadyVoted",
       "msg": "User already voted"
     },
     {
-      "code": 6050,
+      "code": 6051,
       "name": "InvalidStateForVoting",
       "msg": "Invalid state for voting"
     }
@@ -3358,24 +3363,21 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "market_id",
-            "type": {
-              "array": [
-                "u8",
-                32
-              ]
-            }
+            "name": "market",
+            "type": "pubkey"
           },
           {
             "name": "user",
             "type": "pubkey"
           },
           {
-            "name": "amount",
-            "type": "u64"
+            "name": "outcome",
+            "type": {
+              "option": "bool"
+            }
           },
           {
-            "name": "resolver_fee",
+            "name": "amount",
             "type": "u64"
           },
           {
