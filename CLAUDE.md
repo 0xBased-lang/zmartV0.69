@@ -8,7 +8,7 @@
 
 | Component | Status | Progress |
 |-----------|--------|----------|
-| Programs | ✅ DEPLOYED | 100% (zmart-core on devnet: 7h3g...UsJS) |
+| Programs | ✅ DEPLOYED | 100% (zmart-core on devnet: 6s8b...rxw) |
 | Backend Services | ✅ OPERATIONAL | 100% (4 PM2 services + market-monitor) |
 | Security Audit | ✅ COMPLETE | 100% (12/12 findings resolved) |
 | Integration Tests | 🔄 IN PROGRESS | 65% (E2E suite operational) |
@@ -181,7 +181,7 @@ See [docs/orientation/SERVICE_ARCHITECTURE.md](./docs/orientation/SERVICE_ARCHIT
                             │                                          │
                             │  ┌────────────────────────────────────┐ │
                             │  │  zmart-core Program                │ │
-                            │  │  (7h3gXfBfYFueFVLYyfL5Qo1QGsf4...)  │ │
+                            │  │  (6s8bbbCS7oNYNnTUHgrPDHG4...)     │ │
                             │  │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │ │
                             │  │  • GlobalConfig Account            │ │
                             │  │  • MarketAccount (per market)      │ │
@@ -787,7 +787,7 @@ PROPOSED → APPROVED → ACTIVE → RESOLVING → DISPUTED → FINALIZED
 *Project Status: 45% Complete (Phase 3 of 5) - Integration Testing & Validation Phase*
 
 **Key Achievements (November 2025)**:
-- ✅ Programs deployed (zmart-core on devnet: 7h3g...UsJS)
+- ✅ Programs deployed (zmart-core on devnet: 6s8b...rxw, slot 420641215)
 - ✅ Backend fully operational (4 PM2 services + market-monitor on VPS)
 - ✅ Security audit complete (12/12 findings resolved)
 - ✅ E2E test suite operational (8 tests with comprehensive data collection)

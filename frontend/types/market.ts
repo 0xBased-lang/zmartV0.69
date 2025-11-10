@@ -1,6 +1,7 @@
 /**
  * Market state enum (matches Solana program)
- * From 06_STATE_MANAGEMENT.md - 6-state FSM
+ * From 06_STATE_MANAGEMENT.md - 7-state FSM
+ * Updated: November 10, 2025 - Added Cancelled state
  */
 export enum MarketState {
   PROPOSED = 0,
@@ -9,6 +10,7 @@ export enum MarketState {
   RESOLVING = 3,
   DISPUTED = 4,
   FINALIZED = 5,
+  CANCELLED = 6,
 }
 
 /**
@@ -21,6 +23,7 @@ export const MARKET_STATE_LABELS: Record<MarketState, string> = {
   [MarketState.RESOLVING]: 'Resolving',
   [MarketState.DISPUTED]: 'Disputed',
   [MarketState.FINALIZED]: 'Finalized',
+  [MarketState.CANCELLED]: 'Cancelled',
 };
 
 /**
@@ -33,6 +36,7 @@ export const MARKET_STATE_COLORS: Record<MarketState, string> = {
   [MarketState.RESOLVING]: 'bg-orange-100 text-orange-800',
   [MarketState.DISPUTED]: 'bg-red-100 text-red-800',
   [MarketState.FINALIZED]: 'bg-gray-100 text-gray-800',
+  [MarketState.CANCELLED]: 'bg-red-100 text-red-800 line-through',
 };
 
 /**
