@@ -5,9 +5,9 @@
  * Handles wallet creation, funding, and balance tracking.
  */
 
-import { Keypair, Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
-import fs from 'fs';
-import path from 'path';
+import { Keypair, Connection, PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana/web3.js';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export interface WalletInfo {
   keypair: Keypair;
@@ -143,8 +143,8 @@ export class TestWalletManager {
   private async transferFunds(from: Keypair, to: PublicKey, amount: number): Promise<void> {
     const lamports = amount * LAMPORTS_PER_SOL;
 
-    const transaction = new anchor.web3.Transaction().add(
-      anchor.web3.SystemProgram.transfer({
+    const transaction = new Transaction().add(
+      SystemProgram.transfer({
         fromPubkey: from.publicKey,
         toPubkey: to,
         lamports,

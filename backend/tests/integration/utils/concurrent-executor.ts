@@ -155,7 +155,7 @@ export class ConcurrentExecutor {
         }
 
         // Get recent blockhash
-        const { blockhash } = await this.connection.getLatestBlockhash(this.commitment);
+        const { blockhash, lastValidBlockHeight } = await this.connection.getLatestBlockhash(this.commitment);
         transaction.recentBlockhash = blockhash;
         transaction.feePayer = task.signers[0].publicKey;
 
@@ -168,6 +168,7 @@ export class ConcurrentExecutor {
           {
             skipPreflight: false,
             preflightCommitment: this.commitment,
+            maxRetries: 0, // We handle retries ourselves
           }
         );
 

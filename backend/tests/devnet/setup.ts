@@ -4,7 +4,7 @@ import { PublicKey, Keypair, Connection, LAMPORTS_PER_SOL } from '@solana/web3.j
 import fs from 'fs';
 import path from 'path';
 
-export const PROGRAM_ID = new PublicKey('B5LimwoBn4aAqFmJsV1KtrxDbtEjaZ9WeNrfDWmJc42Z');
+export const PROGRAM_ID = new PublicKey('AFFtXXBKgTbSjFFikKG2jQ7qKvLt9mswvhTFSizJyFoH');
 export const DEVNET_URL = 'https://api.devnet.solana.com';
 
 // Load IDL
