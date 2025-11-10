@@ -542,7 +542,7 @@ export class IPFSSnapshotService {
    */
   getStatus(): {
     isRunning: boolean;
-    ipfsGateway: string;
+    ipfsGateway: string | undefined;
   } {
     return {
       isRunning: this.isRunning,

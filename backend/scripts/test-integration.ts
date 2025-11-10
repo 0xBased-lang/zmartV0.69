@@ -6,17 +6,17 @@
 
 import axios from "axios";
 import { createClient } from "@supabase/supabase-js";
-import dotenv from "dotenv";
-import path from "path";
+import { getScriptConfig, validateScriptRequirements } from "./utils/scriptConfig";
 
-// Load environment variables
-dotenv.config({ path: path.join(__dirname, "../.env") });
+// Load and validate configuration
+const config = getScriptConfig();
+validateScriptRequirements(['supabase']);
 
-const API_BASE_URL = `http://localhost:${process.env.API_PORT || 4000}`;
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+const API_BASE_URL = `http://localhost:${config.api.port}`;
+const supabase = createClient(
+  config.supabase!.url,
+  config.supabase!.serviceRoleKey
+);
 
 // ============================================================
 // Test Configuration
@@ -213,7 +213,7 @@ async function runTests() {
     logTest(
       "WebSocket Connection",
       "✅ PASS",
-      "WebSocket server running on port " + (process.env.WS_PORT || 4001),
+      "WebSocket server running on port " + config.websocket.port,
       Date.now() - t8
     );
   } catch (error: any) {

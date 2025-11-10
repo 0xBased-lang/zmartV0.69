@@ -8,6 +8,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MARKET_MONITOR_CONFIG = void 0;
 exports.validateConfig = validateConfig;
+const env_1 = require("../../config/env");
 /**
  * Market Monitor Service Configuration
  *
@@ -23,14 +24,14 @@ exports.MARKET_MONITOR_CONFIG = {
     /**
      * Cron schedule for monitoring runs
      * Format: "minute hour day month weekday"
-     * Default: Every 5 minutes
+     * Default: Every 5 minutes (from centralized config)
      *
      * Examples:
      * - Every 5 minutes: "star-slash-5 star star star star" (replace star with *)
      * - Every 15 minutes: "star-slash-15 star star star star"
      * - Every hour at :00: "0 star star star star"
      */
-    CRON_SCHEDULE: process.env.MARKET_MONITOR_CRON_SCHEDULE || '*/5 * * * *',
+    CRON_SCHEDULE: env_1.config.marketMonitor.cronSchedule,
     /**
      * Dispute window duration (Blueprint requirement: 48 hours)
      *
@@ -48,7 +49,7 @@ exports.MARKET_MONITOR_CONFIG = {
      */
     DISPUTE_WINDOW_SECONDS: 48 * 60 * 60, // 172,800 seconds
     /**
-     * Maximum markets to process per run
+     * Maximum markets to process per run (from centralized config)
      *
      * Rationale:
      * - Prevent overwhelming RPC with too many transactions
@@ -56,7 +57,7 @@ exports.MARKET_MONITOR_CONFIG = {
      * - 10 markets = ~5-20 seconds total processing time
      * - Fits within 5-minute cron window
      */
-    BATCH_SIZE: parseInt(process.env.MARKET_MONITOR_BATCH_SIZE || '10', 10),
+    BATCH_SIZE: env_1.config.marketMonitor.batchSize,
     /**
      * Maximum retry attempts for failed transactions
      *
@@ -103,10 +104,10 @@ exports.MARKET_MONITOR_CONFIG = {
      */
     COMMITMENT: 'confirmed',
     /**
-     * Enable/disable service
+     * Enable/disable service (from centralized config)
      * Useful for deployment control and testing
      */
-    ENABLED: process.env.MARKET_MONITOR_ENABLED === 'true',
+    ENABLED: env_1.config.marketMonitor.enabled,
     /**
      * Minimum time before finalization (safety buffer)
      *
@@ -125,15 +126,15 @@ exports.MARKET_MONITOR_CONFIG = {
      */
     MAX_PROCESSING_TIME_PER_MARKET_MS: 30000, // 30 seconds
     /**
-     * Enable detailed debug logging
+     * Enable detailed debug logging (from centralized config)
      * Useful for troubleshooting but increases log volume
      */
-    DEBUG_MODE: process.env.MARKET_MONITOR_DEBUG === 'true',
+    DEBUG_MODE: env_1.config.marketMonitor.debugMode,
     /**
-     * Dry run mode (don't send transactions)
-     * Useful for testing query logic without on-chain modifications
+     * Dry run mode (from centralized config)
+     * Don't send transactions - useful for testing query logic
      */
-    DRY_RUN: process.env.MARKET_MONITOR_DRY_RUN === 'true',
+    DRY_RUN: env_1.config.marketMonitor.dryRun,
 };
 /**
  * Validate configuration on import

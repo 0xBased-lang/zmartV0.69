@@ -83,15 +83,10 @@ async function runLmsrValidationTests() {
     // Setup
     ctx = await setupTestContext();
 
-    // Create trader
-    trader = Keypair.generate();
-    console.log('Trader:', trader.publicKey.toString());
-
-    // Airdrop to trader
-    console.log('💰 Airdropping SOL to trader...');
-    const airdropSig = await ctx.connection.requestAirdrop(trader.publicKey, 5e9);
-    await ctx.connection.confirmTransaction(airdropSig, 'confirmed');
-    console.log('✅ Airdrop confirmed\n');
+    // For testing, use payer wallet as trader (avoids airdrop issues)
+    trader = ctx.payer;
+    console.log('Trader (using payer):', trader.publicKey.toString());
+    console.log('');
 
     // ========================================================================
     // TEST 1: Create Market with Known Parameters
@@ -163,7 +158,7 @@ async function runLmsrValidationTests() {
     // ========================================================================
     printSection('TEST 2: Validate Initial LMSR State');
 
-    const marketBefore = await ctx.program.account.market.fetch(marketPda);
+    const marketBefore: any = await ctx.(program.account as any).market.fetch(marketPda);
     const qYesBefore = Number((marketBefore as any).quantityYes);
     const qNoBefore = Number((marketBefore as any).quantityNo);
     const b = Number((marketBefore as any).bParameter);
@@ -223,7 +218,7 @@ async function runLmsrValidationTests() {
       console.log('✅ Purchase complete:', buyTx);
 
       // Get market state after purchase
-      const marketAfter = await ctx.program.account.market.fetch(marketPda);
+      const marketAfter: any = await ctx.(program.account as any).market.fetch(marketPda);
       const qYesAfter = Number((marketAfter as any).quantityYes);
       const qNoAfter = Number((marketAfter as any).quantityNo);
 
@@ -268,7 +263,7 @@ async function runLmsrValidationTests() {
     // ========================================================================
     printSection('TEST 4: Validate Price Calculation');
 
-    const marketCurrent = await ctx.program.account.market.fetch(marketPda);
+    const marketCurrent: any = await ctx.(program.account as any).market.fetch(marketPda);
     const qYesCurrent = Number((marketCurrent as any).quantityYes);
     const qNoCurrent = Number((marketCurrent as any).quantityNo);
 
@@ -321,7 +316,7 @@ async function runLmsrValidationTests() {
     const targetCost2 = new anchor.BN(150_000_000); // 0.15 SOL
     console.log('Buying NO shares with target cost:', lamportsToSol(targetCost2.toNumber()), 'SOL');
 
-    const marketBeforeNo = await ctx.program.account.market.fetch(marketPda);
+    const marketBeforeNo: any = await ctx.(program.account as any).market.fetch(marketPda);
     const qYesBeforeNo = Number((marketBeforeNo as any).quantityYes);
     const qNoBeforeNo = Number((marketBeforeNo as any).quantityNo);
     const yesPriceBefore = calculateYesPrice(qYesBeforeNo, qNoBeforeNo, b);
@@ -342,7 +337,7 @@ async function runLmsrValidationTests() {
       await ctx.connection.confirmTransaction(buyNoTx, 'confirmed');
       console.log('✅ NO shares purchased:', buyNoTx);
 
-      const marketAfterNo = await ctx.program.account.market.fetch(marketPda);
+      const marketAfterNo: any = await ctx.(program.account as any).market.fetch(marketPda);
       const qYesAfterNo = Number((marketAfterNo as any).quantityYes);
       const qNoAfterNo = Number((marketAfterNo as any).quantityNo);
       const yesPriceAfter = calculateYesPrice(qYesAfterNo, qNoAfterNo, b);

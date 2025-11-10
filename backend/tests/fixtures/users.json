@@ -1,0 +1,81 @@
+{
+  "users": [
+    {
+      "role": "admin",
+      "wallet_file": "admin.json",
+      "initial_balance_sol": 5,
+      "username": "admin_test",
+      "bio": "Test admin account"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user1.json",
+      "initial_balance_sol": 2,
+      "username": "alice_trader",
+      "bio": "Bullish on crypto markets"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user2.json",
+      "initial_balance_sol": 2,
+      "username": "bob_skeptic",
+      "bio": "Generally bearish, loves NO shares"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user3.json",
+      "initial_balance_sol": 2,
+      "username": "charlie_whale",
+      "bio": "High-volume trader"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user4.json",
+      "initial_balance_sol": 2,
+      "username": "diana_arbitrageur",
+      "bio": "Market maker and liquidity provider"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user5.json",
+      "initial_balance_sol": 2,
+      "username": "eric_researcher",
+      "bio": "Data-driven trader"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user6.json",
+      "initial_balance_sol": 2,
+      "username": "frank_casual",
+      "bio": "Casual prediction market enthusiast"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user7.json",
+      "initial_balance_sol": 2,
+      "username": "grace_expert",
+      "bio": "Crypto domain expert"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user8.json",
+      "initial_balance_sol": 2,
+      "username": "henry_long",
+      "bio": "Long-term position holder"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user9.json",
+      "initial_balance_sol": 2,
+      "username": "iris_swing",
+      "bio": "Swing trader"
+    },
+    {
+      "role": "user",
+      "wallet_file": "user10.json",
+      "initial_balance_sol": 2,
+      "username": "jack_tester",
+      "bio": "Testing edge cases"
+    }
+  ]
+}

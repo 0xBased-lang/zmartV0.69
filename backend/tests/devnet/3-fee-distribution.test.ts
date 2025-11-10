@@ -43,25 +43,17 @@ async function runFeeDistributionTests() {
     ctx = await setupTestContext();
 
     // Get protocol fee wallet from GlobalConfig
-    const globalConfig = await ctx.program.account.globalConfig.fetch(ctx.globalConfigPda);
+    const globalConfig: any = await ctx.(program.account as any).globalConfig.fetch(ctx.globalConfigPda);
     const protocolFeeWallet = (globalConfig as any).protocolFeeWallet as PublicKey;
     console.log('Protocol Fee Wallet:', protocolFeeWallet.toString());
     console.log('');
 
-    // Create traders
-    trader1 = Keypair.generate();
-    trader2 = Keypair.generate();
-    console.log('Trader1:', trader1.publicKey.toString());
-    console.log('Trader2:', trader2.publicKey.toString());
+    // For testing, use payer wallet as both traders (avoids airdrop issues)
+    trader1 = ctx.payer;
+    trader2 = ctx.payer;
+    console.log('Trader1 (using payer):', trader1.publicKey.toString());
+    console.log('Trader2 (using payer):', trader2.publicKey.toString());
     console.log('');
-
-    // Airdrop to traders
-    console.log('💰 Airdropping SOL to traders...');
-    const airdrop1 = await ctx.connection.requestAirdrop(trader1.publicKey, 3e9);
-    const airdrop2 = await ctx.connection.requestAirdrop(trader2.publicKey, 3e9);
-    await ctx.connection.confirmTransaction(airdrop1, 'confirmed');
-    await ctx.connection.confirmTransaction(airdrop2, 'confirmed');
-    console.log('✅ Airdrops confirmed\n');
 
     // ========================================================================
     // TEST 1: Create Market and Track Initial Balances
@@ -262,7 +254,7 @@ async function runFeeDistributionTests() {
     // ========================================================================
     printSection('TEST 4: Validate Resolver Reward Accumulation (2%)');
 
-    const marketBeforeResolve = await ctx.program.account.market.fetch(marketPda);
+    const marketBeforeResolve: any = await ctx.(program.account as any).market.fetch(marketPda);
     const resolverRewardAccumulated = Number((marketBeforeResolve as any).resolverRewardAccumulated);
 
     const totalTradingVolume = targetCost1.toNumber() + targetCost2.toNumber();

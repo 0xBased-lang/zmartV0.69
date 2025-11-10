@@ -7,12 +7,14 @@ pub mod error;
 pub mod instructions;
 pub mod math;
 pub mod state;
+pub mod utils;
 
 // Re-exports for convenience
 pub use error::*;
 pub use instructions::*;
 pub use math::*;
 pub use state::*;
+pub use utils::*;
 
 #[program]
 pub mod zmart_core {

@@ -1,5 +1,16 @@
 # ZMART V0.69 - Claude Code Project Instructions
 
+## 🔴 IMPORTANT: Current Project Status
+
+**➡️ See [CURRENT_STATUS.md](./CURRENT_STATUS.md) for the single source of truth on project status**
+- Overall: 30% complete
+- Programs: ✅ 100% deployed
+- Backend: 🟡 50% (1 of 6 services deployed)
+- Frontend: ❌ 0% (not started)
+- Timeline: 14 weeks to production (January 15, 2026)
+
+---
+
 ## Project Overview
 
 **Project:** ZMART V0.69 - Solana Prediction Market Platform
@@ -113,38 +124,76 @@
 
 ### Foundation Documents (Read First)
 
-1. **[IMPLEMENTATION_PHASES.md](./docs/IMPLEMENTATION_PHASES.md)** ⭐ MOST CRITICAL
+1. **[CURRENT_STATUS.md](./CURRENT_STATUS.md)** ⭐ PROJECT STATUS
+   - Single source of truth for project status
+   - Real-time completion percentages
+   - Critical blockers and next steps
+   - **CHECK THIS FIRST for current state**
+
+2. **[IMPLEMENTATION_PHASES.md](./docs/IMPLEMENTATION_PHASES.md)** ⭐ ROADMAP
    - 14-week implementation plan (Week-by-week roadmap)
    - Evidence-based (built from actual codebase analysis)
    - Quality gates and success criteria
    - **START HERE for development workflow**
 
-2. **[TODO_CHECKLIST.md](./docs/TODO_CHECKLIST.md)** ⭐ TRACK PROGRESS
+3. **[TODO_CHECKLIST.md](./docs/TODO_CHECKLIST.md)** ⭐ TRACK PROGRESS
    - Daily task tracking aligned with IMPLEMENTATION_PHASES.md
    - Checkbox-driven progress monitoring
    - Current status of all tasks
    - Dependencies and blockers
 
-3. **[CORE_LOGIC_INVARIANTS.md](./docs/CORE_LOGIC_INVARIANTS.md)** ⭐ BLUEPRINT COMPLIANCE
+4. **[CORE_LOGIC_INVARIANTS.md](./docs/CORE_LOGIC_INVARIANTS.md)** ⭐ BLUEPRINT COMPLIANCE
    - Pure mechanics extraction from blueprint
    - All formulas, state machines, and rules
    - This is the "spec sheet" - everything derives from this
    - **Reference for all logic questions**
 
-4. **[README.md](./README.md)** ⭐ PROJECT OVERVIEW
+5. **[README.md](./README.md)** ⭐ PROJECT OVERVIEW
    - User-facing project documentation
    - Quick start guides
    - Tech stack and structure
    - FAQ and success metrics
 
-5. **[Blueprint Directory](../blueprint/)** ⭐ SOURCE OF TRUTH
+6. **[Blueprint Directory](../blueprint/)** ⭐ SOURCE OF TRUTH
    - Original KEKTECH 3.0 theoretical specifications
    - Reference for all logic questions
    - Contains 18 blockchain-agnostic documents
 
+### Project Structure Documentation (NEW - Nov 8, 2025)
+
+**⭐ CRITICAL: These docs prevent confusion about project structure and credentials**
+
+7. **[PROJECT_STRUCTURE.md](./docs/PROJECT_STRUCTURE.md)** ⭐ COMPLETE FILE TREE
+   - Complete file tree of entire codebase with descriptions
+   - What each file/directory is responsible for
+   - Current status of all components
+   - Quick reference by task type ("Where do I find...?")
+   - **Use this to understand where everything is located**
+
+8. **[ENVIRONMENT_GUIDE.md](./docs/ENVIRONMENT_GUIDE.md)** ⭐ CREDENTIALS & ENV VARS
+   - Map of ALL environment files (`.env`, `.env.local`, `.env.example.safe`)
+   - Complete reference for all 20+ environment variables
+   - **CRITICAL:** Live credentials are in `backend/.env` (NOT `.env.local`)
+   - Security best practices and troubleshooting
+   - **Use this to understand which credentials go where**
+
+9. **[SERVICE_ARCHITECTURE.md](./docs/SERVICE_ARCHITECTURE.md)** ⭐ HOW SERVICES CONNECT
+   - Visual diagrams of complete system architecture
+   - Data flow between services (Event Indexer → Supabase, etc.)
+   - Service dependencies and communication patterns
+   - User interaction flows (buy shares, vote, etc.)
+   - **Use this to understand how all the pieces fit together**
+
+10. **[CREDENTIALS_MAP.md](./docs/CREDENTIALS_MAP.md)** ⭐ CREDENTIAL USAGE
+   - Matrix showing which service uses which credential
+   - Security impact analysis (what happens if compromised)
+   - Credential rotation procedures
+   - Troubleshooting credential issues
+   - **Use this when rotating credentials or debugging auth failures**
+
 ### Core Implementation Documents (Option B Complete Set)
 
-5. **[03_SOLANA_PROGRAM_DESIGN.md](./docs/03_SOLANA_PROGRAM_DESIGN.md)** ⭐ CRITICAL
+11. **[03_SOLANA_PROGRAM_DESIGN.md](./docs/03_SOLANA_PROGRAM_DESIGN.md)** ⭐ CRITICAL
    - Complete Rust/Anchor program with 18 instructions
    - All account structures (GlobalConfig, MarketAccount, UserPosition, VoteRecord)
    - ProposalManager voting system
@@ -152,21 +201,21 @@
    - Resolution + dispute mechanics
    - Complete error codes and security constraints
 
-6. **[05_LMSR_MATHEMATICS.md](./docs/05_LMSR_MATHEMATICS.md)** ⭐ CRITICAL
+12. **[05_LMSR_MATHEMATICS.md](./docs/05_LMSR_MATHEMATICS.md)** ⭐ CRITICAL
    - Production-ready fixed-point math (u64, 9 decimals)
    - Complete LMSR cost function
    - Binary search for share calculation
    - Numerical stability techniques
    - Worked examples and test cases
 
-7. **[06_STATE_MANAGEMENT.md](./docs/06_STATE_MANAGEMENT.md)** ⭐ CRITICAL
+13. **[06_STATE_MANAGEMENT.md](./docs/06_STATE_MANAGEMENT.md)** ⭐ CRITICAL
    - 6-state FSM implementation (PROPOSED → FINALIZED)
    - State transition validation logic
    - Automatic transitions (time-based)
    - State-based access control
    - Rust implementation examples
 
-8. **[07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md](./docs/07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md)** ⭐ CRITICAL
+14. **[07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md](./docs/07_ON_CHAIN_OFF_CHAIN_INTEGRATION.md)** ⭐ CRITICAL
    - Hybrid architecture (on-chain state + off-chain aggregation)
    - ProposalManager vote aggregation workflow
    - Backend services (vote aggregator, market monitor, IPFS service)
@@ -174,7 +223,7 @@
    - Event indexing and API gateway
    - Security considerations
 
-9. **[08_DATABASE_SCHEMA.md](./docs/08_DATABASE_SCHEMA.md)** ⭐ CRITICAL
+15. **[08_DATABASE_SCHEMA.md](./docs/08_DATABASE_SCHEMA.md)** ⭐ CRITICAL
    - Complete Supabase/PostgreSQL schema
    - All tables with RLS policies
    - Indexes for performance
@@ -182,15 +231,15 @@
 
 ### Supporting Architecture Documents
 
-10. **[EVM_TO_SOLANA_TRANSLATION.md](./docs/EVM_TO_SOLANA_TRANSLATION.md)**
+16. **[EVM_TO_SOLANA_TRANSLATION.md](./docs/EVM_TO_SOLANA_TRANSLATION.md)**
     - Pattern-by-pattern mapping
     - Why each translation decision was made
 
-11. **[SOLANA_PROGRAM_ARCHITECTURE.md](./docs/SOLANA_PROGRAM_ARCHITECTURE.md)**
+17. **[SOLANA_PROGRAM_ARCHITECTURE.md](./docs/SOLANA_PROGRAM_ARCHITECTURE.md)**
     - High-level program structure
     - Account design, instruction flow
 
-12. **[00_MASTER_INDEX.md](./docs/00_MASTER_INDEX.md)**
+18. **[00_MASTER_INDEX.md](./docs/00_MASTER_INDEX.md)**
     - Complete navigation hub for all documentation
     - Quick start guides by role
     - Document relationships
@@ -1048,34 +1097,14 @@ PROPOSED → APPROVED → ACTIVE → RESOLVING → DISPUTED → FINALIZED
 
 ## ✅ Current Project Status
 
-**Implementation Plan**: ✅ COMPLETE - [IMPLEMENTATION_PHASES.md](./docs/IMPLEMENTATION_PHASES.md)
-**Current Phase**: Ready for Phase 1, Week 1 - Voting System Foundation
-**Timeline**: 14 weeks to mainnet launch (evidence-based, realistic)
-**Last Updated**: November 6, 2025
-**Overall Completion**: 60% (foundation built, 40% remaining)
+➡️ **See [CURRENT_STATUS.md](./CURRENT_STATUS.md) for live project status**
 
-### Documentation Suite Complete (23 files)
-
-**Foundation & Specs** (9 docs):
-- ✅ README.md, CLAUDE.md, IMPLEMENTATION_PHASES.md, TODO_CHECKLIST.md
-- ✅ 5 critical implementation specs (03, 05, 06, 07, 08)
-
-**Methodology & Workflow** (14 docs):
-- ✅ DEVELOPMENT_WORKFLOW.md, DEFINITION_OF_DONE.md, FRONTEND_SCOPE_V1.md
-- ✅ SCHEMA_MANAGEMENT.md, Story template, Git hooks
-- ✅ Testing, security, operational procedures (in progress)
-
-### Lessons Learned Integration ✅
-
-All 6 patterns from previous Zmart project prevented:
-1. ✅ **Methodology Abandonment** → Smart git hooks enforce story-first
-2. ✅ **Scope Creep** → Explicit "Not In Scope" list + 3.2X multiplier
-3. ✅ **Reactive Crisis Loop** → Tiered DoD + circuit breakers
-4. ✅ **Schema Drift** → Supabase type generation automated
-5. ✅ **Documentation Explosion** → Single living documents
-6. ✅ **Performance/Security Afterthought** → In DoD from start
-
-See `/Users/seman/Desktop/Zmart-BMADFULL/LESSONS-LEARNED-ZMART.md` for complete analysis.
+**Quick Summary:**
+- **Overall:** 30% complete (not 60% as previously thought)
+- **Programs:** ✅ 100% deployed on devnet
+- **Backend:** 🟡 50% (1 of 6 services deployed)
+- **Frontend:** ❌ 0% (not started)
+- **Timeline:** 14 weeks to production (January 15, 2026)
 
 ### Next Actions - Phase 1, Week 1, Day 1
 
@@ -1229,3 +1258,10 @@ See [IMPLEMENTATION_PHASES.md - Week 1 Day 1](./docs/IMPLEMENTATION_PHASES.md#ne
 ---
 
 *Last Updated: November 6, 2025 | Project Status: Implementation Plan Complete - Ready to Execute*
+- When doing on chain testing, we need to document everything every detail
+  for every transaction every inconsistency so that we create kind of
+  library a document where we can get back to it in case we have any other
+  inconsistencies a document to solve other stuff easily records of all the
+  information
+- Not only on chain transactions and information should be documented, but actually all kind of inconsistencies and how we fix. It should be documented in our library. The main document we can shift back to if anything any hiccups happen in our frontend backend integration management or Or also related to our on Chain transactions
+- Always use CLI or API to manover supabase instead of human interaction with supabase

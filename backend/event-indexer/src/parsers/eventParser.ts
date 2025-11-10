@@ -5,6 +5,7 @@
  */
 
 import { logger } from '../utils/logger';
+import { config } from '../../../src/config/env';
 import {
   ProgramEvent,
   MarketCreatedEvent,
@@ -28,8 +29,8 @@ export function parseHeliusWebhook(payload: HeliusWebhookPayload): ProgramEvent[
   try {
     const { signature, slot, timestamp, instructions } = payload;
 
-    // Find our program instructions
-    const programId = process.env.PROGRAM_ID!;
+    // Find our program instructions (from centralized config)
+    const programId = config.solana.programIds.core;
     const programInstructions = instructions.filter(ix => ix.programId === programId);
 
     for (const instruction of programInstructions) {

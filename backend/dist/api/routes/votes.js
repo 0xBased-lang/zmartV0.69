@@ -19,6 +19,18 @@ const supabase = (0, database_1.getSupabaseClient)();
 router.post("/proposal", auth_1.requireAuth, (0, validation_1.validate)(validation_1.schemas.proposalVote), (0, error_handler_1.asyncHandler)(async (req, res) => {
     const { market_id, vote } = req.body;
     const user_wallet = req.user.wallet;
+    // CRITICAL: Ensure user record exists to prevent FK constraint violation
+    // This auto-creates user if they don't exist (upsert pattern)
+    await supabase
+        .from("users")
+        .upsert({
+        wallet: user_wallet,
+        display_name: `User ${user_wallet.substring(0, 8)}`,
+        created_at: new Date().toISOString(),
+    }, {
+        onConflict: "wallet",
+        ignoreDuplicates: false,
+    });
     // Check for duplicate vote
     const { data: existing } = await supabase
         .from("proposal_votes")
@@ -36,16 +48,23 @@ router.post("/proposal", auth_1.requireAuth, (0, validation_1.validate)(validati
         market_id,
         user_wallet,
         vote,
-        created_at: new Date().toISOString(),
+        // voted_at has DEFAULT NOW() in schema, no need to set it
     })
         .select()
         .single();
     if (error) {
         throw new error_handler_1.ApiError(500, `Failed to submit vote: ${error.message}`);
     }
+    // STANDARDIZED: Use wrapper object format for consistency
     res.status(201).json({
-        message: "Proposal vote submitted successfully",
-        vote: data,
+        data: [data], // Wrap single vote in array for consistency
+        count: 1,
+        metadata: {
+            message: "Proposal vote submitted successfully",
+            market_id,
+            vote_type: 'proposal',
+            user_wallet,
+        },
     });
 }));
 /**
@@ -55,6 +74,18 @@ router.post("/proposal", auth_1.requireAuth, (0, validation_1.validate)(validati
 router.post("/dispute", auth_1.requireAuth, (0, validation_1.validate)(validation_1.schemas.disputeVote), (0, error_handler_1.asyncHandler)(async (req, res) => {
     const { market_id, vote } = req.body;
     const user_wallet = req.user.wallet;
+    // CRITICAL: Ensure user record exists to prevent FK constraint violation
+    // This auto-creates user if they don't exist (upsert pattern)
+    await supabase
+        .from("users")
+        .upsert({
+        wallet: user_wallet,
+        display_name: `User ${user_wallet.substring(0, 8)}`,
+        created_at: new Date().toISOString(),
+    }, {
+        onConflict: "wallet",
+        ignoreDuplicates: false,
+    });
     // Check for duplicate vote
     const { data: existing } = await supabase
         .from("dispute_votes")
@@ -72,16 +103,23 @@ router.post("/dispute", auth_1.requireAuth, (0, validation_1.validate)(validatio
         market_id,
         user_wallet,
         vote,
-        created_at: new Date().toISOString(),
+        // voted_at has DEFAULT NOW() in schema, no need to set it
     })
         .select()
         .single();
     if (error) {
         throw new error_handler_1.ApiError(500, `Failed to submit dispute vote: ${error.message}`);
     }
+    // STANDARDIZED: Use wrapper object format for consistency
     res.status(201).json({
-        message: "Dispute vote submitted successfully",
-        vote: data,
+        data: [data], // Wrap single vote in array for consistency
+        count: 1,
+        metadata: {
+            message: "Dispute vote submitted successfully",
+            market_id,
+            vote_type: 'dispute',
+            user_wallet,
+        },
     });
 }));
 exports.default = router;

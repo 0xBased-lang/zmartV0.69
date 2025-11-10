@@ -1,0 +1,160 @@
+{
+  "scenarios": [
+    {
+      "name": "simple_buy_yes",
+      "description": "Single user buys YES shares",
+      "trades": [
+        {
+          "user": "user1",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 100000000,
+          "max_slippage_bps": 500
+        }
+      ]
+    },
+    {
+      "name": "simple_buy_no",
+      "description": "Single user buys NO shares",
+      "trades": [
+        {
+          "user": "user2",
+          "action": "buy",
+          "outcome": "no",
+          "amount_lamports": 100000000,
+          "max_slippage_bps": 500
+        }
+      ]
+    },
+    {
+      "name": "both_sides_trading",
+      "description": "Multiple users trade both YES and NO",
+      "trades": [
+        {
+          "user": "user1",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 200000000,
+          "max_slippage_bps": 500
+        },
+        {
+          "user": "user2",
+          "action": "buy",
+          "outcome": "no",
+          "amount_lamports": 150000000,
+          "max_slippage_bps": 500
+        },
+        {
+          "user": "user3",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 300000000,
+          "max_slippage_bps": 500
+        },
+        {
+          "user": "user4",
+          "action": "buy",
+          "outcome": "no",
+          "amount_lamports": 250000000,
+          "max_slippage_bps": 500
+        }
+      ]
+    },
+    {
+      "name": "buy_then_sell",
+      "description": "User buys shares then sells them",
+      "trades": [
+        {
+          "user": "user1",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 500000000,
+          "max_slippage_bps": 500
+        },
+        {
+          "user": "user1",
+          "action": "sell",
+          "outcome": "yes",
+          "shares_to_sell": 250000000,
+          "min_proceeds_lamports": 200000000
+        }
+      ]
+    },
+    {
+      "name": "concurrent_trading",
+      "description": "10 users trade simultaneously (stress test)",
+      "trades": [
+        {
+          "user": "user1",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 100000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user2",
+          "action": "buy",
+          "outcome": "no",
+          "amount_lamports": 100000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user3",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 150000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user4",
+          "action": "buy",
+          "outcome": "no",
+          "amount_lamports": 150000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user5",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 200000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user6",
+          "action": "buy",
+          "outcome": "no",
+          "amount_lamports": 200000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user7",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 100000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user8",
+          "action": "buy",
+          "outcome": "no",
+          "amount_lamports": 100000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user9",
+          "action": "buy",
+          "outcome": "yes",
+          "amount_lamports": 300000000,
+          "max_slippage_bps": 1000
+        },
+        {
+          "user": "user10",
+          "action": "buy",
+          "outcome": "no",
+          "amount_lamports": 300000000,
+          "max_slippage_bps": 1000
+        }
+      ]
+    }
+  ]
+}

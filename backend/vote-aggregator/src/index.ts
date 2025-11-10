@@ -10,7 +10,6 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import { createClient } from 'redis';
 import { Connection, Keypair } from '@solana/web3.js';
 import { createVoteRoutes } from './routes/voteRoutes';
@@ -19,44 +18,31 @@ import { CronService } from './services/cronService';
 import { createCacheMiddleware, createCacheInvalidationMiddleware } from './middleware/cacheMiddleware';
 import { logger } from './utils/logger';
 import bs58 from 'bs58';
-
-// Load environment variables
-dotenv.config();
+import { config } from '../../src/config/env';
 
 const app: Application = express();
-const PORT = process.env.PORT || 3001;
+const PORT = config.api.port + 1; // Vote aggregator runs on API port + 1
 
-// Redis client
+// Redis client (from centralized config)
 const redisClient = createClient({
-  socket: {
-    host: process.env.REDIS_HOST || 'localhost',
-    port: parseInt(process.env.REDIS_PORT || '6379')
-  },
-  password: process.env.REDIS_PASSWORD || undefined,
-  database: parseInt(process.env.REDIS_DB || '0')
+  url: config.redis.url
 });
 
-// Solana connection
-const connection = new Connection(
-  process.env.SOLANA_RPC_URL || 'https://api.devnet.solana.com',
-  'confirmed'
-);
+// Solana connection (from centralized config)
+const connection = new Connection(config.solana.rpcUrl, 'confirmed');
 
-// Load deployer keypair from environment
-const DEPLOYER_SECRET_KEY = process.env.DEPLOYER_SECRET_KEY;
+// Load deployer keypair from centralized config
+const DEPLOYER_SECRET_KEY = config.solana.backendAuthorityPrivateKey;
 if (!DEPLOYER_SECRET_KEY) {
-  throw new Error('DEPLOYER_SECRET_KEY environment variable is required');
+  throw new Error('Backend authority private key is required (BACKEND_AUTHORITY_PRIVATE_KEY)');
 }
 
 const deployerKeypair = Keypair.fromSecretKey(
   bs58.decode(DEPLOYER_SECRET_KEY)
 );
 
-// Program ID
-const PROGRAM_ID = process.env.PROGRAM_ID || '';
-if (!PROGRAM_ID) {
-  throw new Error('PROGRAM_ID environment variable is required');
-}
+// Program ID (from centralized config)
+const PROGRAM_ID = config.solana.programIds.core;
 
 // Initialize services
 let aggregationService: AggregationService;
@@ -65,15 +51,16 @@ let cronService: CronService;
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN?.split(',') || '*',
+  origin: config.api.corsOrigins,
   credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Cache middleware (must be before routes)
-app.use(createCacheMiddleware(redisClient));
-app.use(createCacheInvalidationMiddleware(redisClient));
+// Type assertion needed due to Redis type conflicts between local and root installations
+app.use(createCacheMiddleware(redisClient as any));
+app.use(createCacheInvalidationMiddleware(redisClient as any));
 
 // Health check endpoint
 app.get('/health', async (req, res) => {
@@ -131,7 +118,8 @@ app.post('/api/trigger-aggregation', async (req, res) => {
 });
 
 // Vote routes
-app.use('/api/votes', createVoteRoutes(redisClient));
+// Type assertion needed due to Redis type conflicts
+app.use('/api/votes', createVoteRoutes(redisClient as any));
 
 // 404 handler
 app.use((req, res) => {
@@ -151,7 +139,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 
   res.status(500).json({
     error: 'Internal server error',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    message: config.node.isDevelopment ? err.message : undefined
   });
 });
 
@@ -160,24 +148,24 @@ async function start() {
   try {
     // Connect to Redis
     logger.info('Connecting to Redis...', {
-      host: process.env.REDIS_HOST || 'localhost',
-      port: process.env.REDIS_PORT || '6379'
+      url: config.redis.url
     });
 
     await redisClient.connect();
 
     logger.info('Redis connected successfully');
 
-    // Initialize aggregation service
+    // Initialize aggregation service (using centralized config)
+    // Type assertion needed due to Redis type conflicts
     aggregationService = new AggregationService(
-      redisClient,
+      redisClient as any,
       connection,
       PROGRAM_ID,
       deployerKeypair,
       {
-        proposalThreshold: parseInt(process.env.PROPOSAL_THRESHOLD || '70'),
-        disputeThreshold: parseInt(process.env.DISPUTE_THRESHOLD || '60'),
-        minVotesRequired: parseInt(process.env.MIN_VOTES_REQUIRED || '10')
+        proposalThreshold: config.services.proposalApprovalThreshold * 100, // Convert 0.7 to 70
+        disputeThreshold: config.services.disputeThreshold * 100, // Convert 0.6 to 60
+        minVotesRequired: config.services.minProposalVotes
       }
     );
 
@@ -189,12 +177,17 @@ async function start() {
 
     logger.info('Cron service started');
 
+    // Derive network from RPC URL
+    const network = config.solana.rpcUrl.includes('devnet') ? 'devnet' :
+                   config.solana.rpcUrl.includes('testnet') ? 'testnet' :
+                   config.solana.rpcUrl.includes('localhost') ? 'localnet' : 'mainnet';
+
     // Start HTTP server
     app.listen(PORT, () => {
       logger.info('Vote Aggregator Service started', {
         port: PORT,
-        environment: process.env.NODE_ENV,
-        network: process.env.SOLANA_NETWORK,
+        environment: config.node.env,
+        network: network,
         programId: PROGRAM_ID,
         deployerPubkey: deployerKeypair.publicKey.toBase58(),
         healthCheck: `http://localhost:${PORT}/health`,

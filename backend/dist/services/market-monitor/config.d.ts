@@ -13,7 +13,7 @@ export declare const MARKET_MONITOR_CONFIG: {
     /**
      * Cron schedule for monitoring runs
      * Format: "minute hour day month weekday"
-     * Default: Every 5 minutes
+     * Default: Every 5 minutes (from centralized config)
      *
      * Examples:
      * - Every 5 minutes: "star-slash-5 star star star star" (replace star with *)
@@ -38,7 +38,7 @@ export declare const MARKET_MONITOR_CONFIG: {
      */
     DISPUTE_WINDOW_SECONDS: number;
     /**
-     * Maximum markets to process per run
+     * Maximum markets to process per run (from centralized config)
      *
      * Rationale:
      * - Prevent overwhelming RPC with too many transactions
@@ -93,7 +93,7 @@ export declare const MARKET_MONITOR_CONFIG: {
      */
     COMMITMENT: "confirmed";
     /**
-     * Enable/disable service
+     * Enable/disable service (from centralized config)
      * Useful for deployment control and testing
      */
     ENABLED: boolean;
@@ -115,13 +115,13 @@ export declare const MARKET_MONITOR_CONFIG: {
      */
     MAX_PROCESSING_TIME_PER_MARKET_MS: number;
     /**
-     * Enable detailed debug logging
+     * Enable detailed debug logging (from centralized config)
      * Useful for troubleshooting but increases log volume
      */
     DEBUG_MODE: boolean;
     /**
-     * Dry run mode (don't send transactions)
-     * Useful for testing query logic without on-chain modifications
+     * Dry run mode (from centralized config)
+     * Don't send transactions - useful for testing query logic
      */
     DRY_RUN: boolean;
 };

@@ -8,32 +8,25 @@ import { Router, Request, Response } from 'express';
 import { parseHeliusWebhook } from '../parsers/eventParser';
 import { processEvent } from '../services/eventProcessor';
 import { logger } from '../utils/logger';
-import crypto from 'crypto';
+import { verifyHeliusSignature, rateLimitWebhooks } from '../middleware/verifyHelius';
 
 export function createWebhookRoutes(): Router {
   const router = Router();
+
+  // Apply middleware to all webhook routes
+  // 1. Rate limiting (100 req/min per IP)
+  // 2. Signature verification (HMAC-SHA256)
+  router.use(rateLimitWebhooks);
+  router.use(verifyHeliusSignature);
 
   /**
    * POST /api/webhooks/helius
    *
    * Receives webhook events from Helius
+   * Note: Signature already verified by middleware
    */
   router.post('/helius', async (req: Request, res: Response) => {
     try {
-      // Verify webhook signature
-      const isValid = verifyHeliusSignature(req);
-
-      if (!isValid) {
-        logger.warn('Invalid Helius webhook signature', {
-          ip: req.ip,
-          headers: req.headers
-        });
-
-        return res.status(401).json({
-          error: 'Invalid signature'
-        });
-      }
-
       const payload = req.body;
 
       logger.info('Received Helius webhook', {
@@ -100,42 +93,6 @@ export function createWebhookRoutes(): Router {
   });
 
   return router;
-}
-
-/**
- * Verify Helius webhook signature
- */
-function verifyHeliusSignature(req: Request): boolean {
-  const webhookSecret = process.env.HELIUS_WEBHOOK_SECRET;
-
-  if (!webhookSecret) {
-    logger.warn('HELIUS_WEBHOOK_SECRET not set, skipping signature verification');
-    return true; // Allow in development
-  }
-
-  const signature = req.headers['x-helius-signature'] as string;
-
-  if (!signature) {
-    logger.warn('Missing x-helius-signature header');
-    return false;
-  }
-
-  const body = JSON.stringify(req.body);
-  const expectedSignature = crypto
-    .createHmac('sha256', webhookSecret)
-    .update(body)
-    .digest('hex');
-
-  const isValid = signature === expectedSignature;
-
-  if (!isValid) {
-    logger.warn('Signature mismatch', {
-      expected: expectedSignature.substring(0, 10) + '...',
-      received: signature.substring(0, 10) + '...'
-    });
-  }
-
-  return isValid;
 }
 
 /**

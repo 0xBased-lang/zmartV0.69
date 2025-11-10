@@ -108,7 +108,7 @@ export declare class IPFSSnapshotService {
      */
     getStatus(): {
         isRunning: boolean;
-        ipfsGateway: string;
+        ipfsGateway: string | undefined;
     };
 }
 //# sourceMappingURL=snapshot.d.ts.map

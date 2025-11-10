@@ -172,17 +172,17 @@ async function processMarketCreated(event: MarketCreatedEvent): Promise<void> {
   const { error } = await supabase
     .from('markets')
     .upsert({
-      pubkey: event.marketPubkey,
-      creator: event.creator,
+      on_chain_address: event.marketPubkey,
+      creator_wallet: event.creator,
       question: event.question,
       description: event.description,
       state: 'PROPOSED',
-      liquidity: event.liquidity,
+      initial_liquidity: event.liquidity,
       shares_yes: event.initialSharesYes,
       shares_no: event.initialSharesNo,
       created_at: new Date(event.timestamp * 1000)
     }, {
-      onConflict: 'pubkey',
+      onConflict: 'on_chain_address',
       ignoreDuplicates: true
     });
 
@@ -192,8 +192,8 @@ async function processMarketCreated(event: MarketCreatedEvent): Promise<void> {
   }
 
   logger.info('Market created', {
-    pubkey: event.marketPubkey,
-    creator: event.creator,
+    on_chain_address: event.marketPubkey,
+    creator_wallet: event.creator,
     question: event.question
   });
 }
@@ -207,24 +207,22 @@ async function processTradeExecuted(event: TradeExecutedEvent): Promise<void> {
   // Ensure user exists
   await ensureUser(event.trader);
 
-  // Insert trade
+  // Insert trade (map to schema column names)
   const { error: tradeError } = await supabase
     .from('trades')
     .upsert({
-      tx_signature: event.txSignature,
-      market_pubkey: event.marketPubkey,
-      trader_pubkey: event.trader,
-      side: event.side,
-      outcome: event.outcome,
+      id: event.txSignature, // Use tx_signature as primary key
+      market_id: event.marketPubkey, // Will need to resolve to market.id later
+      user_wallet: event.trader,
+      trade_type: event.side.toLowerCase(), // 'BUY' -> 'buy', 'SELL' -> 'sell'
+      outcome: event.outcome === 'YES', // Convert to boolean
       shares: event.shares,
       cost: event.cost,
-      price_before: event.priceBefore,
       price_after: event.priceAfter,
-      fee_protocol: event.feeProtocol,
-      fee_creator: event.feeCreator,
-      fee_stakers: event.feeStakers,
-      timestamp: new Date(event.timestamp * 1000),
-      slot: event.slot
+      tx_signature: event.txSignature,
+      block_time: new Date(event.timestamp * 1000),
+      trader_pubkey: event.trader, // Add new column
+      market_pubkey: event.marketPubkey // Add new column
     }, {
       onConflict: 'tx_signature',
       ignoreDuplicates: true
@@ -279,12 +277,11 @@ async function processMarketResolved(event: MarketResolvedEvent): Promise<void> 
     .from('markets')
     .update({
       state: 'RESOLVING',
-      outcome: event.outcome,
-      resolver: event.resolver,
-      resolving_at: new Date(event.resolvingAt * 1000),
-      resolved_at: new Date(event.timestamp * 1000)
+      proposed_outcome: event.outcome === 'YES' ? true : event.outcome === 'NO' ? false : null,
+      resolver_wallet: event.resolver,
+      resolution_proposed_at: new Date(event.resolvingAt * 1000)
     })
-    .eq('pubkey', event.marketPubkey);
+    .eq('on_chain_address', event.marketPubkey);
 
   if (marketError) {
     logger.error('Error updating market state', { error: marketError.message });
@@ -333,7 +330,7 @@ async function processDisputeRaised(event: DisputeRaisedEvent): Promise<void> {
   const { error: marketError } = await supabase
     .from('markets')
     .update({ state: 'DISPUTED' })
-    .eq('pubkey', event.marketPubkey);
+    .eq('on_chain_address', event.marketPubkey);
 
   if (marketError) {
     logger.error('Error updating market to disputed', { error: marketError.message });
@@ -381,13 +378,13 @@ async function processDisputeResolved(event: DisputeResolvedEvent): Promise<void
   // Update market state
   const updateData: any = { state: 'FINALIZED' };
   if (event.outcomeChanged && event.newOutcome) {
-    updateData.outcome = event.newOutcome;
+    updateData.final_outcome = event.newOutcome === 'YES' ? true : event.newOutcome === 'NO' ? false : null;
   }
 
   const { error: marketError } = await supabase
     .from('markets')
     .update(updateData)
-    .eq('pubkey', event.marketPubkey);
+    .eq('on_chain_address', event.marketPubkey);
 
   if (marketError) {
     logger.error('Error finalizing market', { error: marketError.message });
@@ -490,16 +487,29 @@ async function processWinningsClaimed(event: WinningsClaimedEvent): Promise<void
   // Ensure user exists
   await ensureUser(event.user);
 
+  // Get market_id from on_chain_address
+  const { data: marketData } = await supabase
+    .from('markets')
+    .select('id')
+    .eq('on_chain_address', event.marketPubkey)
+    .single();
+
+  if (!marketData) {
+    logger.error('Market not found for winnings claim', { marketPubkey: event.marketPubkey });
+    throw new Error(`Market not found: ${event.marketPubkey}`);
+  }
+
   // Update position (mark as claimed)
   const { error } = await supabase
     .from('positions')
     .update({
-      claimed: event.amount,
+      has_claimed: true,
+      claimed_amount: event.amount,
       shares_yes: '0',
       shares_no: '0'
     })
-    .eq('user_pubkey', event.user)
-    .eq('market_pubkey', event.marketPubkey);
+    .eq('user_wallet', event.user)
+    .eq('market_id', marketData.id);
 
   if (error) {
     logger.error('Error updating position claimed', { error: error.message });
@@ -522,9 +532,9 @@ async function ensureUser(walletAddress: string): Promise<void> {
   const { error } = await supabase
     .from('users')
     .upsert({
-      wallet_address: walletAddress
+      wallet: walletAddress
     }, {
-      onConflict: 'wallet_address',
+      onConflict: 'wallet',
       ignoreDuplicates: true
     });
 
@@ -547,17 +557,31 @@ async function updatePosition(
 ): Promise<void> {
   const supabase = getSupabase();
 
+  // First, get market_id from on_chain_address
+  const { data: marketData } = await supabase
+    .from('markets')
+    .select('id')
+    .eq('on_chain_address', marketPubkey)
+    .single();
+
+  if (!marketData) {
+    logger.error('Market not found', { marketPubkey });
+    throw new Error(`Market not found: ${marketPubkey}`);
+  }
+
+  const marketId = marketData.id;
+
   // Get current position
   const { data: existing } = await supabase
     .from('positions')
     .select('*')
-    .eq('user_pubkey', userPubkey)
-    .eq('market_pubkey', marketPubkey)
+    .eq('user_wallet', userPubkey)
+    .eq('market_id', marketId)
     .single();
 
   const currentSharesYes = BigInt(existing?.shares_yes || 0);
   const currentSharesNo = BigInt(existing?.shares_no || 0);
-  const currentInvested = BigInt(existing?.invested || 0);
+  const currentInvested = BigInt(existing?.total_invested || existing?.invested || 0);
 
   // Calculate new values
   let newSharesYes = currentSharesYes;
@@ -584,13 +608,16 @@ async function updatePosition(
   const { error } = await supabase
     .from('positions')
     .upsert({
-      user_pubkey: userPubkey,
-      market_pubkey: marketPubkey,
+      market_id: marketId,
+      user_wallet: userPubkey,
+      user_pubkey: userPubkey, // New column from migration
+      market_pubkey: marketPubkey, // New column from migration
       shares_yes: newSharesYes.toString(),
       shares_no: newSharesNo.toString(),
-      invested: newInvested.toString()
+      total_invested: newInvested.toString(),
+      invested: newInvested.toString() // New column from migration
     }, {
-      onConflict: 'user_pubkey,market_pubkey'
+      onConflict: 'market_id,user_wallet'
     });
 
   if (error) {
@@ -608,7 +635,7 @@ async function updateUserStats(userPubkey: string, volume: bigint): Promise<void
   const { data: user } = await supabase
     .from('users')
     .select('total_trades, total_volume')
-    .eq('wallet_address', userPubkey)
+    .eq('wallet', userPubkey)
     .single();
 
   const newTotalTrades = (user?.total_trades || 0) + 1;
@@ -620,7 +647,7 @@ async function updateUserStats(userPubkey: string, volume: bigint): Promise<void
       total_trades: newTotalTrades,
       total_volume: newTotalVolume.toString()
     })
-    .eq('wallet_address', userPubkey);
+    .eq('wallet', userPubkey);
 
   if (error) {
     logger.error('Error updating user stats', { error: error.message });
@@ -642,7 +669,7 @@ async function updateMarketShares(
   const { data: market } = await supabase
     .from('markets')
     .select('shares_yes, shares_no')
-    .eq('pubkey', marketPubkey)
+    .eq('on_chain_address', marketPubkey)
     .single();
 
   let newSharesYes = BigInt(market?.shares_yes || 0);
@@ -668,7 +695,7 @@ async function updateMarketShares(
       shares_yes: newSharesYes.toString(),
       shares_no: newSharesNo.toString()
     })
-    .eq('pubkey', marketPubkey);
+    .eq('on_chain_address', marketPubkey);
 
   if (error) {
     logger.error('Error updating market shares', { error: error.message });

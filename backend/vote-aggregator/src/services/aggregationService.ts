@@ -10,6 +10,7 @@ import { RedisClientType } from 'redis';
 import { logger } from '../utils/logger';
 import { Program, AnchorProvider, web3 } from '@coral-xyz/anchor';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
+import { AnchorClient } from './anchorClient';
 
 /**
  * Vote tally result
@@ -68,6 +69,7 @@ export class AggregationService {
   private programId: PublicKey;
   private payer: Keypair;
   private config: AggregationConfig;
+  private anchorClient: AnchorClient;
 
   constructor(
     redis: RedisClientType,
@@ -81,6 +83,13 @@ export class AggregationService {
     this.programId = new PublicKey(programId);
     this.payer = payerKeypair;
     this.config = { ...DEFAULT_CONFIG, ...config };
+
+    // Initialize Anchor client for on-chain interactions
+    this.anchorClient = new AnchorClient(
+      connection,
+      payerKeypair,
+      programId
+    );
 
     logger.info('AggregationService initialized', {
       network: connection.rpcEndpoint,
@@ -282,8 +291,9 @@ export class AggregationService {
     let rejectVotes = 0;
 
     for (const [voter, choice] of Object.entries(votes)) {
-      if (choice === 'support') supportVotes++;
-      else if (choice === 'reject') rejectVotes++;
+      // FIX: Changed from 'support'/'reject' to match vote submission terminology
+      if (choice === 'agree') supportVotes++;
+      else if (choice === 'disagree') rejectVotes++;
     }
 
     const totalVotes = supportVotes + rejectVotes;
@@ -444,15 +454,13 @@ export class AggregationService {
   /**
    * Build proposal aggregation transaction
    *
-   * This will call the aggregate_proposal_votes instruction on the zmart-proposal program
+   * Calls the aggregate_proposal_votes instruction on the zmart-core program
+   * via the AnchorClient. If 70%+ approval, market transitions PROPOSED → APPROVED.
    */
   private async buildProposalAggregationTx(
     proposalId: string,
     tally: VoteTally
   ): Promise<string> {
-    // TODO: Implement actual Anchor instruction call
-    // For now, return a mock transaction signature
-
     logger.info('Building proposal aggregation transaction', {
       proposalId,
       likes: tally.likes,
@@ -460,24 +468,34 @@ export class AggregationService {
       totalVotes: tally.totalVotes
     });
 
-    // Simulate transaction
-    const signature = 'MOCK_TX_' + Date.now();
+    // Convert proposalId (market pubkey string) to PublicKey
+    const marketPubkey = new PublicKey(proposalId);
 
-    return signature;
+    // Call Anchor instruction via AnchorClient
+    const result = await this.anchorClient.aggregateProposalVotes(
+      marketPubkey,
+      tally.likes || 0,
+      tally.dislikes || 0
+    );
+
+    if (!result.success) {
+      throw new Error(result.error || 'Transaction failed');
+    }
+
+    return result.signature;
   }
 
   /**
    * Build dispute aggregation transaction
    *
-   * This will call the aggregate_dispute_votes instruction on the zmart-proposal program
+   * Calls the aggregate_dispute_votes instruction on the zmart-core program
+   * via the AnchorClient. If 60%+ agree, market returns to RESOLVING state.
+   * Otherwise, market transitions to FINALIZED.
    */
   private async buildDisputeAggregationTx(
     marketPubkey: string,
     tally: VoteTally
   ): Promise<string> {
-    // TODO: Implement actual Anchor instruction call
-    // For now, return a mock transaction signature
-
     logger.info('Building dispute aggregation transaction', {
       marketPubkey,
       supportVotes: tally.supportVotes,
@@ -485,10 +503,21 @@ export class AggregationService {
       totalVotes: tally.totalVotes
     });
 
-    // Simulate transaction
-    const signature = 'MOCK_TX_' + Date.now();
+    // Convert marketPubkey string to PublicKey
+    const marketPda = new PublicKey(marketPubkey);
 
-    return signature;
+    // Call Anchor instruction via AnchorClient
+    const result = await this.anchorClient.aggregateDisputeVotes(
+      marketPda,
+      tally.supportVotes || 0,
+      tally.rejectVotes || 0
+    );
+
+    if (!result.success) {
+      throw new Error(result.error || 'Transaction failed');
+    }
+
+    return result.signature;
   }
 
   /**

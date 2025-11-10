@@ -1,9 +1,11 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { notFound } from 'next/navigation';
-import { getMarketById } from '@/lib/supabase/database';
+import { useQueryClient } from '@tanstack/react-query';
+import { useMarket } from '@/lib/hooks/useMarket';
 import { useMarketStateWithStatus } from '@/lib/hooks/useMarketState';
+import { useMarketUpdates, useTradeUpdates, useMarketStateChanges } from '@/hooks/useWebSocket';
 import { MarketHeader } from '@/components/markets/MarketHeader';
 import { PriceChart } from '@/components/markets/PriceChart';
 import { OrderBook } from '@/components/markets/OrderBook';
@@ -20,13 +22,10 @@ interface MarketDetailContentProps {
  * Client component for React Query integration
  */
 export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
-  // Fetch market data
-  const { data: market, isLoading, error } = useQuery({
-    queryKey: ['market', marketId],
-    queryFn: () => getMarketById(marketId),
-    staleTime: 30 * 1000, // 30 seconds
-    refetchOnWindowFocus: true,
-  });
+  const queryClient = useQueryClient();
+
+  // Fetch market data from backend API
+  const { data: market, isLoading, error } = useMarket(marketId);
 
   // Fetch on-chain market state
   const {
@@ -35,6 +34,39 @@ export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
     isError: isStateError,
     isNotFound: isStateNotFound,
   } = useMarketStateWithStatus(marketId);
+
+  // Real-time WebSocket updates
+  const { latestUpdate: marketUpdate } = useMarketUpdates(marketId);
+  const { latestTrade } = useTradeUpdates(marketId);
+  const { latestChange: stateChange } = useMarketStateChanges(marketId);
+
+  // Invalidate queries when real-time updates arrive
+  useEffect(() => {
+    if (marketUpdate) {
+      console.log('[Real-time] Market price updated:', marketUpdate);
+      // Invalidate market data to refetch with new prices
+      queryClient.invalidateQueries({ queryKey: ['market', marketId] });
+      queryClient.invalidateQueries({ queryKey: ['market-state', marketId] });
+    }
+  }, [marketUpdate, marketId, queryClient]);
+
+  useEffect(() => {
+    if (latestTrade) {
+      console.log('[Real-time] New trade executed:', latestTrade);
+      // Invalidate market data and trades
+      queryClient.invalidateQueries({ queryKey: ['market', marketId] });
+      queryClient.invalidateQueries({ queryKey: ['trades', marketId] });
+    }
+  }, [latestTrade, marketId, queryClient]);
+
+  useEffect(() => {
+    if (stateChange) {
+      console.log('[Real-time] Market state changed:', stateChange);
+      // Invalidate market state
+      queryClient.invalidateQueries({ queryKey: ['market', marketId] });
+      queryClient.invalidateQueries({ queryKey: ['market-state', marketId] });
+    }
+  }, [stateChange, marketId, queryClient]);
 
   // Handle loading (wait for both market metadata AND on-chain state)
   if (isLoading || isLoadingState) {

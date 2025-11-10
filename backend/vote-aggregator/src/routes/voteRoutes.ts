@@ -10,14 +10,18 @@ import { RedisClientType } from 'redis';
 import { logger } from '../utils/logger';
 import rateLimit from 'express-rate-limit';
 
+// Rate limiting configuration (constant defaults)
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 100; // 100 requests per window
+
 export function createVoteRoutes(redisClient: RedisClientType): Router {
   const router = Router();
   const voteService = new VoteService(redisClient);
 
   // Rate limiting: 100 requests per minute per IP
   const limiter = rateLimit({
-    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '60000'),
-    max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'),
+    windowMs: RATE_LIMIT_WINDOW_MS,
+    max: RATE_LIMIT_MAX_REQUESTS,
     message: 'Too many requests from this IP, please try again later',
     standardHeaders: true,
     legacyHeaders: false

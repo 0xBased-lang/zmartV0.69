@@ -56,7 +56,7 @@ export declare class ProposalVoteAggregator {
     /**
      * Call on-chain approve_market instruction with retry logic
      */
-    private approveMarketOnChain;
+    private approveProposalOnChain;
     /**
      * Update market state in Supabase after on-chain approval
      */

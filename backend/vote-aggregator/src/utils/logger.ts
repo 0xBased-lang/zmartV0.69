@@ -5,9 +5,10 @@
  */
 
 import winston from 'winston';
+import { config } from '../../../src/config/env';
 
-const logLevel = process.env.LOG_LEVEL || 'info';
-const logFormat = process.env.LOG_FORMAT || 'json';
+const logLevel = config.logging.level;
+const logFormat = config.node.isDevelopment ? 'pretty' : 'json';
 
 const formats = {
   json: winston.format.combine(

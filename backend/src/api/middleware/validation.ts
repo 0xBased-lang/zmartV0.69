@@ -39,12 +39,12 @@ export const schemas = {
 
   // Vote schemas
   proposalVote: Joi.object({
-    market_id: Joi.string().uuid().required(),
+    market_id: Joi.string().required(), // Accept any string ID (UUID or custom ID)
     vote: Joi.boolean().required(), // true = like, false = dislike
   }),
 
   disputeVote: Joi.object({
-    market_id: Joi.string().uuid().required(),
+    market_id: Joi.string().required(), // Accept any string ID (UUID or custom ID)
     vote: Joi.boolean().required(), // true = agree with resolution, false = disagree
   }),
 

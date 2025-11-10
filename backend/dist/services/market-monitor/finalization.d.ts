@@ -48,13 +48,14 @@ export declare function deriveGlobalConfigPda(programId: PublicKey): [PublicKey,
  */
 export declare function deriveMarketPda(programId: PublicKey, marketId: Buffer): [PublicKey, number];
 /**
- * Load backend authority keypair from environment variable
+ * Load backend authority keypair from centralized config
  *
- * Environment Variable: BACKEND_AUTHORITY_PRIVATE_KEY
- * Format: Base58-encoded private key (64 bytes)
+ * Supports two loading methods (from centralized config):
+ * 1. BACKEND_AUTHORITY_PRIVATE_KEY: Base58-encoded private key (production)
+ * 2. BACKEND_KEYPAIR_PATH: Path to keypair JSON file (development)
  *
  * @returns Backend authority keypair
- * @throws Error if environment variable not found or invalid
+ * @throws Error if keypair cannot be loaded
  */
 export declare function loadBackendKeypair(): Keypair;
 /**

@@ -37,7 +37,7 @@ export function OutcomeSelector({
         )}
       >
         <div className="text-sm font-semibold">YES</div>
-        <div className="text-2xl font-bold mt-1">{yesPrice.toFixed(1)}%</div>
+        <div className="text-2xl font-bold mt-1" data-testid="market-price">{yesPrice.toFixed(1)}%</div>
       </button>
 
       {/* NO Tab */}

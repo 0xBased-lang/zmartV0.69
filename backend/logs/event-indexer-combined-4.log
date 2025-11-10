@@ -222,3 +222,72 @@
 2025-11-07T19:07:29:   "service": "zmart-backend",
 2025-11-07T19:07:29:   "stack": "Error: Non-base58 character\n    at Object.decode (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/base-x@3.0.11/node_modules/base-x/src/index.js:115:11)\n    at new PublicKey (/Users/seman/Desktop/zmartV0.69/node_modules/.pnpm/@solana+web3.js@1.98.4_typescript@5.9.3/node_modules/@solana/web3.js/src/publickey.ts:63:30)\n    at new EventParser (/Users/seman/Desktop/zmartV0.69/backend/src/services/event-indexer/parsers/event-parser.ts:80:22)\n    at EventIndexerService.initialize (/Users/seman/Desktop/zmartV0.69/backend/src/services/event-indexer/index.ts:92:24)\n    at main (/Users/seman/Desktop/zmartV0.69/backend/src/services/event-indexer/standalone.ts:41:19)\n    at Object.<anonymous> (/Users/seman/Desktop/zmartV0.69/backend/src/services/event-indexer/standalone.ts:75:1)\n    at Module._compile (node:internal/modules/cjs/loader:1734:14)\n    at Object..js (node:internal/modules/cjs/loader:1899:10)\n    at Module.load (node:internal/modules/cjs/loader:1469:32)\n    at Function._load (node:internal/modules/cjs/loader:1286:12)"
 2025-11-07T19:07:29: }
+2025-11-08T22:28:35: 2025-11-08T21:28:35.523Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-08T22:28:35: 2025-11-08T21:28:35.536Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-08T22:28:35: 2025-11-08T21:28:35.741Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-08T22:28:35: 2025-11-08T21:28:35.742Z [[32minfo[39m]: Database connection successful 
+2025-11-08T22:28:35: 2025-11-08T21:28:35.745Z [[32minfo[39m]: Event Indexer Service started {"port":4002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:4002/health","webhookEndpoint":"http://localhost:4002/api/webhooks/helius"}
+2025-11-08T22:29:04: 2025-11-08T21:29:04.885Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-08T22:29:04: 2025-11-08T21:29:04.887Z [[32minfo[39m]: HTTP request {"method":"GET","path":"/health","status":200,"duration":"158ms","ip":"::1"}
+2025-11-08T22:31:40: 2025-11-08T21:31:40.539Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-08T22:31:40: 2025-11-08T21:31:40.541Z [[32minfo[39m]: HTTP request {"method":"GET","path":"/health","status":200,"duration":"761ms","ip":"::1"}
+2025-11-09T16:51:08: 2025-11-09T15:51:08.433Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T16:51:08: 2025-11-09T15:51:08.439Z [[32minfo[39m]: HTTP request {"method":"GET","path":"/health","status":200,"duration":"300ms","ip":"::1"}
+2025-11-09T16:51:08: 2025-11-09T15:51:08.598Z [[33mwarn[39m]: [DEV MODE] Skipping webhook signature verification {"path":"/health","ip":"::1","env":"development"}
+2025-11-09T16:51:08: 2025-11-09T15:51:08.600Z [[32minfo[39m]: HTTP request {"method":"GET","path":"/health","status":200,"duration":"8ms","ip":"::1"}
+2025-11-09T17:06:47: 2025-11-09T16:06:47.814Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T17:06:54: 2025-11-09T16:06:54.625Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T17:06:54: 2025-11-09T16:06:54.638Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T17:06:55: 2025-11-09T16:06:55.180Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T17:06:55: 2025-11-09T16:06:55.180Z [[32minfo[39m]: Database connection successful 
+2025-11-09T17:06:55: 2025-11-09T16:06:55.184Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}
+2025-11-09T17:10:54: 2025-11-09T16:10:54.698Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T17:10:56: 2025-11-09T16:10:56.704Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T17:10:56: 2025-11-09T16:10:56.715Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T17:10:58: 2025-11-09T16:10:58.382Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T17:10:58: 2025-11-09T16:10:58.383Z [[32minfo[39m]: Database connection successful 
+2025-11-09T17:10:58: 2025-11-09T16:10:58.388Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}
+2025-11-09T17:11:34: 2025-11-09T16:11:34.274Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T17:11:34: 2025-11-09T16:11:34.276Z [[32minfo[39m]: HTTP request {"method":"GET","path":"/health","status":200,"duration":"409ms","ip":"::1"}
+2025-11-09T19:12:51: 2025-11-09T18:12:51.267Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T19:12:54: 2025-11-09T18:12:54.611Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T19:12:54: 2025-11-09T18:12:54.637Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T19:12:56: 2025-11-09T18:12:56.565Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T19:12:56: 2025-11-09T18:12:56.566Z [[32minfo[39m]: Database connection successful 
+2025-11-09T19:12:56: 2025-11-09T18:12:56.568Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}
+2025-11-09T19:15:37: 2025-11-09T18:15:37.505Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T19:15:39: 2025-11-09T18:15:39.636Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T19:15:39: 2025-11-09T18:15:39.655Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T19:15:40: 2025-11-09T18:15:40.486Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T19:15:40: 2025-11-09T18:15:40.486Z [[32minfo[39m]: Database connection successful 
+2025-11-09T19:15:40: 2025-11-09T18:15:40.487Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}
+2025-11-09T19:26:59: 2025-11-09T18:26:59.482Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T19:27:03: 2025-11-09T18:27:03.196Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T19:27:03: 2025-11-09T18:27:03.211Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T19:27:05: 2025-11-09T18:27:05.460Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T19:27:05: 2025-11-09T18:27:05.463Z [[32minfo[39m]: Database connection successful 
+2025-11-09T19:27:05: 2025-11-09T18:27:05.469Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}
+2025-11-09T19:56:09: 2025-11-09T18:56:09.304Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T19:56:11: 2025-11-09T18:56:11.456Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T19:56:11: 2025-11-09T18:56:11.478Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T19:56:12: 2025-11-09T18:56:12.400Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T19:56:12: 2025-11-09T18:56:12.400Z [[32minfo[39m]: Database connection successful 
+2025-11-09T19:56:12: 2025-11-09T18:56:12.401Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}
+2025-11-09T20:08:58: 2025-11-09T19:08:58.497Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T20:09:02: 2025-11-09T19:09:02.212Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T20:09:02: 2025-11-09T19:09:02.246Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T20:09:04: 2025-11-09T19:09:04.949Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T20:09:04: 2025-11-09T19:09:04.949Z [[32minfo[39m]: Database connection successful 
+2025-11-09T20:09:04: 2025-11-09T19:09:04.952Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}
+2025-11-09T20:36:20: 2025-11-09T19:36:20.424Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T20:36:23: 2025-11-09T19:36:23.668Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T20:36:23: 2025-11-09T19:36:23.683Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T20:36:24: 2025-11-09T19:36:24.807Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T20:36:24: 2025-11-09T19:36:24.807Z [[32minfo[39m]: Database connection successful 
+2025-11-09T20:36:24: 2025-11-09T19:36:24.812Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}
+2025-11-09T20:42:41: 2025-11-09T19:42:41.181Z [[32minfo[39m]: Shutting down gracefully... 
+2025-11-09T20:42:44: 2025-11-09T19:42:44.706Z [[32minfo[39m]: Initializing Supabase connection... 
+2025-11-09T20:42:44: 2025-11-09T19:42:44.724Z [[32minfo[39m]: Supabase client initialized {"url":"https://tkkqqxepelibqjjhxxct.supabase.co","keyType":"service_role"}
+2025-11-09T20:42:49: 2025-11-09T19:42:49.245Z [[32minfo[39m]: Database connection successful {"schemaVersion":"v0.69.0"}
+2025-11-09T20:42:49: 2025-11-09T19:42:49.247Z [[32minfo[39m]: Database connection successful 
+2025-11-09T20:42:49: 2025-11-09T19:42:49.254Z [[32minfo[39m]: Event Indexer Service started {"port":3002,"environment":"development","network":"devnet","programId":"7h3gXfBfYFueFVLYyfL5Qo1QGsf4GQUfW96FKVgnUsJS","healthCheck":"http://localhost:3002/health","webhookEndpoint":"http://localhost:3002/api/webhooks/helius"}

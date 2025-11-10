@@ -10,21 +10,18 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import { createWebhookRoutes } from './routes/webhookRoutes';
 import { initSupabase, testConnection } from './services/supabaseClient';
 import { logger } from './utils/logger';
-
-// Load environment variables
-dotenv.config();
+import { config } from '../../src/config/env';
 
 const app: Application = express();
-const PORT = process.env.PORT || 3002;
+const PORT = config.api.port + 2; // Event indexer runs on API port + 2 (e.g., 3002 if API is 3000)
 
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN?.split(',') || '*',
+  origin: config.api.corsOrigins,
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' })); // Helius webhooks can be large
@@ -94,7 +91,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 
   res.status(500).json({
     error: 'Internal server error',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    message: config.node.isDevelopment ? err.message : undefined
   });
 });
 
@@ -117,11 +114,16 @@ async function start() {
 
     // Start HTTP server
     app.listen(PORT, () => {
+      // Derive network from RPC URL
+      const network = config.solana.rpcUrl.includes('devnet') ? 'devnet' :
+                     config.solana.rpcUrl.includes('testnet') ? 'testnet' :
+                     config.solana.rpcUrl.includes('localhost') ? 'localnet' : 'mainnet';
+
       logger.info('Event Indexer Service started', {
         port: PORT,
-        environment: process.env.NODE_ENV,
-        network: process.env.SOLANA_NETWORK,
-        programId: process.env.PROGRAM_ID,
+        environment: config.node.env,
+        network: network,
+        programId: config.solana.programIds.core,
         healthCheck: `http://localhost:${PORT}/health`,
         webhookEndpoint: `http://localhost:${PORT}/api/webhooks/helius`
       });

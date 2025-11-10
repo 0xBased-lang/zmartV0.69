@@ -130,7 +130,7 @@ class ProposalVoteAggregator {
             };
         }
         // 3. Call on-chain approve_market with retry
-        await this.approveMarketOnChain(market.on_chain_address, aggregation.likes, aggregation.dislikes);
+        await this.approveProposalOnChain(market.on_chain_address, aggregation.likes, aggregation.dislikes);
         // 4. Update Supabase state
         await this.updateMarketState(market.id, "APPROVED", aggregation);
         return {
@@ -185,18 +185,19 @@ class ProposalVoteAggregator {
     /**
      * Call on-chain approve_market instruction with retry logic
      */
-    async approveMarketOnChain(marketAddress, finalLikes, finalDislikes) {
+    async approveProposalOnChain(marketAddress, finalLikes, finalDislikes) {
         const marketPda = new web3_js_1.PublicKey(marketAddress);
         // Retry with exponential backoff
         const signature = await (0, retry_1.retryWithBackoff)(async () => {
-            logger_1.default.debug(`[ProposalVoteAggregator] Calling approve_market: ${marketAddress} ` +
+            logger_1.default.debug(`[ProposalVoteAggregator] Calling approve_proposal: ${marketAddress} ` +
                 `(likes: ${finalLikes}, dislikes: ${finalDislikes})`);
+            // approve_proposal takes NO arguments, only accounts
             const tx = await this.program.methods
-                .approveMarket(finalLikes, finalDislikes)
+                .approveProposal()
                 .accounts({
-                globalConfig: this.globalConfigPda,
+                admin: this.backendKeypair.publicKey,
                 market: marketPda,
-                backendAuthority: this.backendKeypair.publicKey,
+                globalConfig: this.globalConfigPda,
             })
                 .signers([this.backendKeypair])
                 .rpc();

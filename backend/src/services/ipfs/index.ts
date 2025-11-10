@@ -100,7 +100,7 @@ export class IPFSSnapshotScheduler {
     isRunning: boolean;
     snapshotCronSchedule: string;
     pruningCronSchedule: string;
-    snapshotService: { isRunning: boolean; ipfsGateway: string };
+    snapshotService: { isRunning: boolean; ipfsGateway: string | undefined };
   } {
     return {
       isRunning: this.snapshotCronJob !== null && this.pruningCronJob !== null,

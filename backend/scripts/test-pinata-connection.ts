@@ -6,20 +6,19 @@
  * and can authenticate with Pinata IPFS service
  */
 
-import dotenv from 'dotenv';
-import path from 'path';
-
-// Load .env file
-dotenv.config({ path: path.join(__dirname, '../.env') });
+import { getScriptConfig, printScriptConfig } from './utils/scriptConfig';
 
 async function testPinataConnection() {
   console.log('🔍 Testing Pinata API connection...\n');
 
   try {
-    // Check if credentials are configured (use env vars directly)
-    const apiKey = process.env.PINATA_API_KEY || '';
-    const secretKey = process.env.PINATA_SECRET_KEY || '';
-    const gatewayUrl = process.env.PINATA_GATEWAY_URL || 'https://gateway.pinata.cloud/ipfs/';
+    // Load configuration (validates all env vars)
+    const config = getScriptConfig();
+
+    // Check if Pinata credentials are configured
+    const apiKey = config.ipfs?.pinatApiKey || '';
+    const secretKey = config.ipfs?.pinataSecretKey || '';
+    const gatewayUrl = config.ipfs?.pinatApiKey || 'https://gateway.pinata.cloud/ipfs/';
 
     if (!apiKey || apiKey === 'YOUR_PINATA_API_KEY') {
       console.error('❌ Pinata API Key not configured in .env');

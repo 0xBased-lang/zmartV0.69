@@ -42,11 +42,12 @@ module.exports = {
       time: true,
     },
 
-    // Service 3: Vote Aggregator (cron: every 5 minutes)
+    // Service 3: Vote Aggregator (HTTP server + cron: every 5 minutes)
     {
       name: 'vote-aggregator',
-      script: './dist/services/vote-aggregator/index.js',
-      cwd: '/Users/seman/Desktop/zmartV0.69/backend',
+      script: './dist/index.js',
+      cwd: '/Users/seman/Desktop/zmartV0.69/backend/vote-aggregator',
+      exec_mode: 'fork',
       instances: 1,
       autorestart: true,
       watch: false,
@@ -56,9 +57,9 @@ module.exports = {
         NODE_ENV: 'development',
         VOTE_AGGREGATION_INTERVAL: 300000,
       },
-      error_file: './logs/vote-aggregator-error.log',
-      out_file: './logs/vote-aggregator-out.log',
-      log_file: './logs/vote-aggregator-combined.log',
+      error_file: '../logs/vote-aggregator-error.log',
+      out_file: '../logs/vote-aggregator-out.log',
+      log_file: '../logs/vote-aggregator-combined.log',
       time: true,
     },
 
@@ -81,28 +82,29 @@ module.exports = {
       time: true,
     },
 
-    // Service 5: Event Indexer (Helius webhook listener)
-    // ❌ DISABLED FOR MVP - Not needed for core functionality
-    // Reason: Backend updates database directly when transactions occur
-    // Can be re-enabled later if real-time blockchain event monitoring needed
-    // {
-    //   name: 'event-indexer',
-    //   script: './dist/services/event-indexer/standalone.js',
-    //   cwd: '/Users/seman/Desktop/zmartV0.69/backend',
-    //   exec_mode: 'fork',
-    //   instances: 1,
-    //   autorestart: true,
-    //   watch: false,
-    //   max_memory_restart: '500M',
-    //   env: {
-    //     NODE_ENV: 'development',
-    //     PORT: 3001,
-    //   },
-    //   error_file: './logs/event-indexer-error.log',
-    //   out_file: './logs/event-indexer-out.log',
-    //   log_file: './logs/event-indexer-combined.log',
-    //   time: true,
-    // },
+    // Service 5: Event Indexer (Helius webhook listener) - Week 5
+    // ✅ ENABLED - Real-time blockchain event monitoring
+    // Receives webhooks from Helius and indexes on-chain events to Supabase
+    {
+      name: 'event-indexer',
+      script: './src/index.ts',
+      cwd: '/Users/seman/Desktop/zmartV0.69/backend/event-indexer',
+      exec_mode: 'fork',
+      interpreter: 'node',
+      interpreter_args: '--require ts-node/register',
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '500M',
+      env: {
+        NODE_ENV: 'development',
+        PORT: 4002,
+      },
+      error_file: '../logs/event-indexer-error.log',
+      out_file: '../logs/event-indexer-out.log',
+      log_file: '../logs/event-indexer-combined.log',
+      time: true,
+    },
 
     // Service 6: IPFS Snapshot Service (cron: daily at midnight UTC)
     // ❌ DISABLED FOR MVP - Not needed for core functionality

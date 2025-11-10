@@ -42,11 +42,11 @@ exports.schemas = {
     }),
     // Vote schemas
     proposalVote: joi_1.default.object({
-        market_id: joi_1.default.string().uuid().required(),
+        market_id: joi_1.default.string().required(), // Accept any string ID (UUID or custom ID)
         vote: joi_1.default.boolean().required(), // true = like, false = dislike
     }),
     disputeVote: joi_1.default.object({
-        market_id: joi_1.default.string().uuid().required(),
+        market_id: joi_1.default.string().required(), // Accept any string ID (UUID or custom ID)
         vote: joi_1.default.boolean().required(), // true = agree with resolution, false = disagree
     }),
     // Discussion schemas

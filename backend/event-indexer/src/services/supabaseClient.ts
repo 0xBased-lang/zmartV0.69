@@ -6,22 +6,24 @@
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { logger } from '../utils/logger';
+import { config } from '../../../src/config/env';
 
 let supabaseClient: SupabaseClient | null = null;
 
 /**
- * Initialize Supabase client
+ * Initialize Supabase client (from centralized config)
  */
 export function initSupabase(): SupabaseClient {
   if (supabaseClient) {
     return supabaseClient;
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = config.supabase.url;
+  const supabaseKey = config.supabase.serviceRoleKey;
 
+  // Config validation ensures these are set, but double-check for safety
   if (!supabaseUrl || !supabaseKey) {
-    throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set');
+    throw new Error('Supabase configuration missing - check .env file');
   }
 
   supabaseClient = createClient(supabaseUrl, supabaseKey, {
