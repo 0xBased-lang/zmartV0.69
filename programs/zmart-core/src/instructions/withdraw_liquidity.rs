@@ -40,16 +40,24 @@ pub fn handler(ctx: Context<WithdrawLiquidity>) -> Result<()> {
     market.accumulated_lp_fees = 0;
 
     // Emit event
-    // emit!(LiquidityWithdrawn {
-    //     market_id: market.market_id,
-    //     creator: market.creator,
-    //     amount: withdrawable,
-    //     timestamp: Clock::get()?.unix_timestamp,
-    // });
+    emit!(LiquidityWithdrawn {
+        market_id: market.market_id,
+        creator: market.creator,
+        amount: withdrawable,
+        timestamp: Clock::get()?.unix_timestamp,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct LiquidityWithdrawn {
+    pub market_id: [u8; 32],
+    pub creator: Pubkey,
+    pub amount: u64,
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -83,7 +83,21 @@ pub fn handler(ctx: Context<ApproveProposal>) -> Result<()> {
         market.proposal_total_votes
     );
 
+    // Emit event
+    emit!(ProposalApproved {
+        market_id: market.market_id,
+        approved_by: ctx.accounts.admin.key(),
+        timestamp: market.approved_at,
+    });
+
     Ok(())
+}
+
+#[event]
+pub struct ProposalApproved {
+    pub market_id: [u8; 32],
+    pub approved_by: Pubkey,
+    pub timestamp: i64,
 }
 
 #[cfg(test)]

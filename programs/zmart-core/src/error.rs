@@ -223,6 +223,10 @@ pub enum ErrorCode {
     #[msg("Reentrancy detected - operation already in progress")]
     Reentrant,
 
+    /// 6607: Reserved fields must be zero (SECURITY: Finding #12)
+    #[msg("Reserved fields must be zero")]
+    InvalidReservedField,
+
     // ============================================================
     // Voting Errors (6700-6799)
     // ============================================================

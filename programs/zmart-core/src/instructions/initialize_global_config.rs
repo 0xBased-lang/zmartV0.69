@@ -100,7 +100,23 @@ pub fn handler(
         ctx.accounts.admin.key()
     );
 
+    // Emit event
+    emit!(GlobalConfigInitialized {
+        admin: ctx.accounts.admin.key(),
+        backend_authority: global_config.backend_authority,
+        protocol_fee_bps: global_config.protocol_fee_bps,
+        timestamp: Clock::get()?.unix_timestamp,
+    });
+
     Ok(())
+}
+
+#[event]
+pub struct GlobalConfigInitialized {
+    pub admin: Pubkey,
+    pub backend_authority: Pubkey,
+    pub protocol_fee_bps: u16,
+    pub timestamp: i64,
 }
 
 #[cfg(test)]

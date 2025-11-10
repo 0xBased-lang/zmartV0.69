@@ -138,16 +138,24 @@ pub fn handler(
     market.state = MarketState::Finalized;
 
     // Emit event
-    // emit!(MarketFinalized {
-    //     market_id: market.market_id,
-    //     final_outcome,
-    //     was_disputed,
-    //     timestamp: market.finalized_at,
-    // });
+    emit!(MarketFinalized {
+        market_id: market.market_id,
+        final_outcome,
+        was_disputed,
+        timestamp: market.finalized_at,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct MarketFinalized {
+    pub market_id: [u8; 32],
+    pub final_outcome: Option<bool>,
+    pub was_disputed: bool,
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;

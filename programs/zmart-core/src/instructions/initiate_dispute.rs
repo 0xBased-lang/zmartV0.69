@@ -67,16 +67,24 @@ pub fn handler(ctx: Context<InitiateDispute>) -> Result<()> {
     market.state = MarketState::Disputed;
 
     // Emit event
-    // emit!(DisputeInitiated {
-    //     market_id: market.market_id,
-    //     initiator: market.dispute_initiator,
-    //     disputed_outcome: market.proposed_outcome,
-    //     timestamp: market.dispute_initiated_at,
-    // });
+    emit!(DisputeInitiated {
+        market_id: market.market_id,
+        initiator: market.dispute_initiator,
+        disputed_outcome: market.proposed_outcome,
+        timestamp: market.dispute_initiated_at,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct DisputeInitiated {
+    pub market_id: [u8; 32],
+    pub initiator: Pubkey,
+    pub disputed_outcome: Option<bool>,
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;

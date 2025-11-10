@@ -174,19 +174,30 @@ pub fn handler(
     market.unlock();
 
     // Emit event
-    // emit!(SharesSold {
-    //     market_id: market.market_id,
-    //     user: ctx.accounts.user.key(),
-    //     outcome,
-    //     shares: shares_to_sell,
-    //     proceeds: net_proceeds,
-    //     new_price_yes: lmsr::calculate_yes_price(market.shares_yes, market.shares_no, market.b_parameter)?,
-    //     timestamp: position.last_trade_at,
-    // });
+    emit!(SharesSold {
+        market_id: market.market_id,
+        user: ctx.accounts.user.key(),
+        outcome,
+        shares: shares_to_sell,
+        proceeds: net_proceeds,
+        new_price_yes: lmsr::calculate_yes_price(market.shares_yes, market.shares_no, market.b_parameter)?,
+        timestamp: position.last_trade_at,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct SharesSold {
+    pub market_id: [u8; 32],
+    pub user: Pubkey,
+    pub outcome: bool,
+    pub shares: u64,
+    pub proceeds: u64,
+    pub new_price_yes: u64,
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -216,3 +227,4 @@ mod tests {
         assert!(sell_proceeds_net < buy_cost);
     }
 }
+

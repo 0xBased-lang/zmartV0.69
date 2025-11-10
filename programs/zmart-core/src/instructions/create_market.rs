@@ -131,6 +131,9 @@ pub fn handler(
     // Initialize reserved space (119 bytes, 1 byte used by is_locked)
     market.reserved = [0; 119];
 
+    // SECURITY FIX (Finding #12): Validate reserved fields are zeroed
+    market.validate_reserved()?;
+
     msg!(
         "Market created: {:?} by creator: {} with b={}, liquidity={}",
         market_id,
@@ -139,7 +142,25 @@ pub fn handler(
         initial_liquidity
     );
 
+    // Emit event
+    emit!(MarketCreated {
+        market_id,
+        creator: ctx.accounts.creator.key(),
+        b_parameter,
+        state: market.state as u8,
+        timestamp: market.created_at,
+    });
+
     Ok(())
+}
+
+#[event]
+pub struct MarketCreated {
+    pub market_id: [u8; 32],
+    pub creator: Pubkey,
+    pub b_parameter: u64,
+    pub state: u8,
+    pub timestamp: i64,
 }
 
 #[cfg(test)]

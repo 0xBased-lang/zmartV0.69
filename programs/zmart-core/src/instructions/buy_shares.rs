@@ -215,17 +215,28 @@ pub fn handler(
     position.last_trade_at = Clock::get()?.unix_timestamp;
 
     // Emit event (events defined in state.rs)
-    // emit!(SharesBought {
-    //     market_id: market.market_id,
-    //     user: ctx.accounts.user.key(),
-    //     outcome,
-    //     shares: shares_bought,
-    //     cost: total_cost,
-    //     new_price_yes: lmsr::calculate_yes_price(market.shares_yes, market.shares_no, market.b_parameter)?,
-    //     timestamp: position.last_trade_at,
-    // });
+    emit!(SharesBought {
+        market_id: market.market_id,
+        user: ctx.accounts.user.key(),
+        outcome,
+        shares: shares_bought,
+        cost: total_cost,
+        new_price_yes: lmsr::calculate_yes_price(market.shares_yes, market.shares_no, market.b_parameter)?,
+        timestamp: position.last_trade_at,
+    });
 
     Ok(())
+}
+
+#[event]
+pub struct SharesBought {
+    pub market_id: [u8; 32],
+    pub user: Pubkey,
+    pub outcome: bool,
+    pub shares: u64,
+    pub cost: u64,
+    pub new_price_yes: u64,
+    pub timestamp: i64,
 }
 
 #[cfg(test)]

@@ -221,6 +221,21 @@ impl MarketAccount {
         msg!("Market unlocked");
     }
 
+    /// Validate reserved fields are zeroed (SECURITY: Finding #12)
+    ///
+    /// Ensures reserved space is properly initialized to zero.
+    /// This protects against potential bugs when adding new fields in future upgrades.
+    ///
+    /// # Errors
+    /// Returns `ErrorCode::InvalidReservedField` if reserved contains non-zero bytes
+    pub fn validate_reserved(&self) -> Result<()> {
+        require!(
+            self.reserved == [0; 119],
+            ErrorCode::InvalidReservedField
+        );
+        Ok(())
+    }
+
     /// Check if state transition is valid
     ///
     /// Valid transitions:

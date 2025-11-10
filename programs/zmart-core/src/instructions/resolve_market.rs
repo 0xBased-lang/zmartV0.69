@@ -85,17 +85,26 @@ pub fn handler(
     market.state = MarketState::Resolving;
 
     // Emit event
-    // emit!(MarketResolved {
-    //     market_id: market.market_id,
-    //     resolver: market.resolver,
-    //     outcome,
-    //     evidence_hash: ipfs_evidence_hash,
-    //     timestamp: market.resolution_proposed_at,
-    // });
+    emit!(MarketResolved {
+        market_id: market.market_id,
+        resolver: market.resolver,
+        outcome: proposed_outcome,
+        evidence_hash: ipfs_evidence_hash,
+        timestamp: market.resolution_proposed_at,
+    });
 
     Ok(())
 }
 
+
+#[event]
+pub struct MarketResolved {
+    pub market_id: [u8; 32],
+    pub resolver: Pubkey,
+    pub outcome: bool,
+    pub evidence_hash: [u8; 46],
+    pub timestamp: i64,
+}
 #[cfg(test)]
 mod tests {
     use super::*;

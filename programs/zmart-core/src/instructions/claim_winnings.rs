@@ -113,15 +113,24 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
     position.claimed_amount = winnings;
 
     // Emit event
-    // emit!(WinningsClaimed {
-    //     market_id: market.market_id,
-    //     user: ctx.accounts.user.key(),
-    //     amount: winnings,
-    //     resolver_fee: market.accumulated_resolver_fees,
-    //     timestamp: position.claimed_at,
-    // });
+    emit!(WinningsClaimed {
+        market_id: market.market_id,
+        user: ctx.accounts.user.key(),
+        amount: winnings,
+        resolver_fee: market.accumulated_resolver_fees,
+        timestamp: Clock::get()?.unix_timestamp,
+    });
 
     Ok(())
+}
+
+#[event]
+pub struct WinningsClaimed {
+    pub market_id: [u8; 32],
+    pub user: Pubkey,
+    pub amount: u64,
+    pub resolver_fee: u64,
+    pub timestamp: i64,
 }
 
 #[cfg(test)]
