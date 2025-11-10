@@ -13,6 +13,8 @@ module.exports = {
       autorestart: true,
       watch: false,
       max_memory_restart: '500M',
+      max_restarts: 10,
+      min_uptime: '10s',
       env: {
         NODE_ENV: 'development',
         API_PORT: 4000,
@@ -32,6 +34,8 @@ module.exports = {
       autorestart: true,
       watch: false,
       max_memory_restart: '500M',
+      max_restarts: 10,
+      min_uptime: '10s',
       env: {
         NODE_ENV: 'development',
         WS_PORT: 4001,
@@ -96,6 +100,8 @@ module.exports = {
       autorestart: true,
       watch: false,
       max_memory_restart: '500M',
+      max_restarts: 10,
+      min_uptime: '10s',
       env: {
         NODE_ENV: 'development',
         PORT: 4002,
