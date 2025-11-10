@@ -219,6 +219,10 @@ pub enum ErrorCode {
     #[msg("Transfer would leave account below rent-exempt minimum")]
     WouldBreakRentExemption,
 
+    /// 6606: Reentrancy detected (SECURITY: Finding #8)
+    #[msg("Reentrancy detected - operation already in progress")]
+    Reentrant,
+
     // ============================================================
     // Voting Errors (6700-6799)
     // ============================================================

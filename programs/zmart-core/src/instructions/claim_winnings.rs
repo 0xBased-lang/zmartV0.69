@@ -78,6 +78,9 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
         ErrorCode::InsufficientLiquidity
     );
 
+    // SECURITY FIX (Finding #8): Lock market before lamport transfers (reentrancy protection)
+    market.lock()?;
+
     // SECURITY FIX (Finding #2): Transfer winnings with rent check
     // Ensures market account maintains rent exemption after transfer
     transfer_with_rent_check(
@@ -101,6 +104,9 @@ pub fn handler(ctx: Context<ClaimWinnings>) -> Result<()> {
 
         market.accumulated_resolver_fees = 0; // Paid out, prevent double-pay
     }
+
+    // SECURITY FIX (Finding #8): Unlock market after transfers complete
+    market.unlock();
 
     // Mark position as claimed
     position.has_claimed = true;

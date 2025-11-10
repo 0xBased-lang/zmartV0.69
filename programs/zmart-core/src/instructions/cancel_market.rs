@@ -129,7 +129,8 @@ mod tests {
             was_disputed: false,
             is_cancelled: false,
             cancelled_at: None,
-            reserved: [0; 120],
+            is_locked: false,
+            reserved: [0; 119],
             bump: 255,
         }
     }

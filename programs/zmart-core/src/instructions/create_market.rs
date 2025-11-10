@@ -125,10 +125,11 @@ pub fn handler(
 
     // Initialize state flags
     market.is_cancelled = false;
+    market.is_locked = false;  // SECURITY FIX (Finding #8): Initialize reentrancy guard
     market.bump = ctx.bumps.market;
 
-    // Initialize reserved space
-    market.reserved = [0; 120];
+    // Initialize reserved space (119 bytes, 1 byte used by is_locked)
+    market.reserved = [0; 119];
 
     msg!(
         "Market created: {:?} by creator: {} with b={}, liquidity={}",
@@ -188,7 +189,8 @@ mod tests {
             is_cancelled: false,
             cancelled_at: None,
             bump: 255,
-            reserved: [0; 120],
+            is_locked: false,
+            reserved: [0; 119],
         }
     }
 
@@ -287,7 +289,7 @@ mod tests {
         assert_eq!(market.is_cancelled, false);
 
         // Reserved space should be zeroed
-        assert_eq!(market.reserved, [0; 120]);
+        assert_eq!(market.reserved, [0; 119]);
     }
 
     #[test]

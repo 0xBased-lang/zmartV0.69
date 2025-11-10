@@ -149,6 +149,9 @@ pub fn handler(
     position.trades_count = position.trades_count.checked_add(1).ok_or(ErrorCode::OverflowError)?;
     position.last_trade_at = Clock::get()?.unix_timestamp;
 
+    // SECURITY FIX (Finding #8): Lock market before lamport transfers (reentrancy protection)
+    market.lock()?;
+
     // SECURITY FIX (Finding #2): Transfer net proceeds to user with rent check
     // Ensures market account maintains rent exemption after transfer
     transfer_with_rent_check(
@@ -166,6 +169,9 @@ pub fn handler(
         fees.protocol_fee,
         &ctx.accounts.system_program.to_account_info(),
     )?;
+
+    // SECURITY FIX (Finding #8): Unlock market after transfers complete
+    market.unlock();
 
     // Emit event
     // emit!(SharesSold {
