@@ -316,13 +316,13 @@ export class MarketGenerator {
   /**
    * Create IPFS hash from string (mock)
    * @param text Text to hash
-   * @returns 32-byte hash
+   * @returns 46-byte hash (IPFS CIDv0 format)
    */
   private createIpfsHash(text: string): number[] {
-    const hash = new Array(32).fill(0);
+    const hash = new Array(46).fill(0);
 
     // Simple hash: use text length and first characters
-    for (let i = 0; i < Math.min(text.length, 32); i++) {
+    for (let i = 0; i < Math.min(text.length, 46); i++) {
       hash[i] = text.charCodeAt(i) % 256;
     }
 

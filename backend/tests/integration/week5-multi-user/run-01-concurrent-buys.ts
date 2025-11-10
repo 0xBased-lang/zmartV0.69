@@ -86,13 +86,29 @@ async function runConcurrentBuysTest() {
     console.log('STEP 2: Create and Activate Market');
     console.log('──────────────────────────────────────────────────────────────\n');
 
+    // Generate unique market ID using timestamp to avoid account collisions
+    const uniqueMarketId = new Array(32).fill(0);
+    const timestamp = Date.now();
+    uniqueMarketId[0] = (timestamp >> 24) & 0xFF;
+    uniqueMarketId[1] = (timestamp >> 16) & 0xFF;
+    uniqueMarketId[2] = (timestamp >> 8) & 0xFF;
+    uniqueMarketId[3] = timestamp & 0xFF;
+    uniqueMarketId[4] = Math.floor(Math.random() * 256);
+
     market = marketGenerator.generateMarket({
       bParameter: new anchor.BN(100_000_000_000), // 100 SOL
       initialLiquidity: new anchor.BN(100_000_000), // 0.1 SOL
       question: 'Will 5 users buy shares concurrently without conflicts?',
     });
 
-    marketPda = market.pda;
+    // Override the market ID and PDA with unique values
+    market.id = uniqueMarketId;
+    const [uniqueMarketPda] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from('market'), Buffer.from(uniqueMarketId)],
+      ctx.program.programId
+    );
+    market.pda = uniqueMarketPda;
+    marketPda = uniqueMarketPda;
 
     console.log('Market Details:');
     console.log(`- PDA: ${marketPda.toString()}`);
@@ -114,6 +130,63 @@ async function runConcurrentBuysTest() {
 
     await ctx.connection.confirmTransaction(createTx, 'confirmed');
     console.log('✅ Market created:', createTx.slice(0, 8) + '...\n');
+
+    // Submit proposal votes (need 70% approval to proceed)
+    console.log('Submitting proposal votes...');
+
+    // Submit 8 likes and 2 dislikes (80% approval - exceeds 70% threshold)
+    for (let i = 0; i < 8; i++) {
+      const [voteRecordPda] = anchor.web3.PublicKey.findProgramAddressSync(
+        [Buffer.from('vote-record'), Buffer.from(market.id), testUsers[i % 5].publicKey.toBuffer()],
+        ctx.program.programId
+      );
+
+      await ctx.program.methods
+        .submitProposalVote(true) // true = like (only argument is vote boolean)
+        .accounts({
+          voter: testUsers[i % 5].publicKey,
+          market: marketPda,
+          voteRecord: voteRecordPda,
+          globalConfig: ctx.globalConfigPda,
+          systemProgram: SystemProgram.programId,
+        })
+        .signers([testUsers[i % 5].keypair])
+        .rpc();
+    }
+
+    for (let i = 0; i < 2; i++) {
+      const [voteRecordPda] = anchor.web3.PublicKey.findProgramAddressSync(
+        [Buffer.from('vote-record'), Buffer.from(market.id), ctx.payer.publicKey.toBuffer()],
+        ctx.program.programId
+      );
+
+      await ctx.program.methods
+        .submitProposalVote(false) // false = dislike (only argument is vote boolean)
+        .accounts({
+          voter: ctx.payer.publicKey,
+          market: marketPda,
+          voteRecord: voteRecordPda,
+          globalConfig: ctx.globalConfigPda,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
+    }
+
+    console.log('✅ Votes submitted (8 likes, 2 dislikes = 80%)\n');
+
+    // Aggregate votes
+    console.log('Aggregating proposal votes...');
+    const aggregateTx = await ctx.program.methods
+      .aggregateProposalVotes(8, 2) // final_likes, final_dislikes (no market_id needed)
+      .accounts({
+        authority: ctx.payer.publicKey,
+        market: marketPda,
+        globalConfig: ctx.globalConfigPda,
+      })
+      .rpc();
+
+    await ctx.connection.confirmTransaction(aggregateTx, 'confirmed');
+    console.log('✅ Votes aggregated:', aggregateTx.slice(0, 8) + '...\n');
 
     // Approve proposal
     console.log('Approving proposal...');
