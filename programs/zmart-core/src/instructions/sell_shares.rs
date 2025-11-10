@@ -3,6 +3,7 @@ use crate::error::ErrorCode;
 use crate::state::{GlobalConfig, MarketAccount, MarketState, UserPosition};
 use crate::math::lmsr;
 use crate::utils::{transfer_with_rent_check, calculate_fees_accurate};
+use super::buy_shares::MIN_TRADE_AMOUNT;
 
 /// Sell YES or NO shares back to the pool
 ///
@@ -84,6 +85,13 @@ pub fn handler(
         outcome,
         shares_to_sell,
     )?;
+
+    // SECURITY FIX (Finding #9): Enforce minimum trade size
+    // Prevents micro-trade attacks that evade fees or manipulate prices
+    require!(
+        proceeds_before_fees >= MIN_TRADE_AMOUNT,
+        ErrorCode::TradeTooSmall
+    );
 
     // SECURITY FIX (Finding #6): Use accurate fee calculation to prevent value leakage
     // Old approach calculated fees individually, losing precision on each division

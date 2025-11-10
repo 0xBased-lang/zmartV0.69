@@ -83,6 +83,10 @@ pub enum ErrorCode {
     #[msg("Invalid liquidity amount")]
     InvalidLiquidity,
 
+    /// 6205: Trade amount below minimum (SECURITY: Finding #9)
+    #[msg("Trade amount below minimum (0.00001 SOL)")]
+    TradeTooSmall,
+
     // ============================================================
     // Resolution Errors (6300-6399)
     // ============================================================

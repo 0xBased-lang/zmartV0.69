@@ -5,6 +5,11 @@ use crate::state::{GlobalConfig, MarketAccount, MarketState, UserPosition};
 use crate::math::lmsr;
 use crate::utils::calculate_fees_accurate;
 
+/// Minimum trade amount to prevent fee evasion through micro-trades
+/// 0.00001 SOL = 10,000 lamports
+/// SECURITY: Finding #9 - Prevents micro-trade attacks that bypass fee mechanics
+pub const MIN_TRADE_AMOUNT: u64 = 10_000;
+
 /// Buy YES or NO shares using LMSR formula
 ///
 /// Users specify a target cost (max they're willing to spend) and receive
@@ -75,6 +80,13 @@ pub fn handler(
 
     // Check if protocol is paused (emergency pause active)
     require!(!config.is_paused, ErrorCode::ProtocolPaused);
+
+    // SECURITY FIX (Finding #9): Enforce minimum trade size
+    // Prevents micro-trade attacks that evade fees or manipulate prices
+    require!(
+        target_cost >= MIN_TRADE_AMOUNT,
+        ErrorCode::TradeTooSmall
+    );
 
     // Calculate shares user gets for their target cost (using LMSR)
     let (cost_before_fees, shares_bought) = lmsr::calculate_buy_cost(
