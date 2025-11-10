@@ -39,13 +39,21 @@ use super::{LN_2, PRECISION};
 pub fn calculate_max_loss(b_parameter: u64) -> Result<u64> {
     // Formula: max_loss = b * ln(2)
     // Since both b and LN_2 are in fixed-point (9 decimals), we need to divide by PRECISION
-    let max_loss = b_parameter
-        .checked_mul(LN_2)
+
+    // Use u128 to prevent overflow for large b values
+    let b_wide = b_parameter as u128;
+    let ln2_wide = LN_2 as u128;
+    let precision_wide = PRECISION as u128;
+
+    let max_loss_wide = b_wide
+        .checked_mul(ln2_wide)
         .ok_or(ErrorCode::OverflowError)?
-        .checked_div(PRECISION)
+        .checked_div(precision_wide)
         .ok_or(ErrorCode::DivisionByZero)?;
 
-    Ok(max_loss)
+    // Convert back to u64 (should always fit since max_loss < b)
+    u64::try_from(max_loss_wide)
+        .map_err(|_| ErrorCode::OverflowError.into())
 }
 
 /// Verify that actual loss does not exceed the LMSR theoretical maximum
