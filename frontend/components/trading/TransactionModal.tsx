@@ -368,7 +368,7 @@ function SuccessStep({
 }
 
 /**
- * Error step
+ * Error step with user-friendly messages
  */
 function ErrorStep({
   error,
@@ -381,10 +381,57 @@ function ErrorStep({
 }) {
   const isRecoverable = error?.recoverable ?? true;
 
+  // Convert technical error to user-friendly message
+  const getUserFriendlyMessage = (err: TransactionError | null): string => {
+    if (!err?.message) return 'An unknown error occurred';
+
+    const msg = err.message.toLowerCase();
+
+    // User rejected transaction
+    if (msg.includes('rejected') || msg.includes('cancelled') || msg.includes('user rejected')) {
+      return 'Transaction cancelled. You can try again when ready.';
+    }
+
+    // Insufficient funds
+    if (msg.includes('insufficient') || msg.includes('balance')) {
+      return 'Insufficient funds in your wallet. Please add more SOL and try again.';
+    }
+
+    // Network/RPC errors
+    if (msg.includes('network') || msg.includes('fetch') || msg.includes('rpc')) {
+      return 'Network error. Please check your connection and try again.';
+    }
+
+    // Simulation failed (usually means transaction would fail)
+    if (msg.includes('simulation') || msg.includes('simulate')) {
+      return 'Transaction simulation failed. Please check your wallet balance or market state.';
+    }
+
+    // Slippage exceeded
+    if (msg.includes('slippage')) {
+      return 'Price moved too much. Try increasing slippage tolerance or reducing trade size.';
+    }
+
+    // Wallet not connected
+    if (msg.includes('wallet') || msg.includes('not connected')) {
+      return 'Wallet not connected. Please connect your wallet and try again.';
+    }
+
+    // Timeout
+    if (msg.includes('timeout') || msg.includes('timed out')) {
+      return 'Transaction timed out. The network may be congested. Please try again.';
+    }
+
+    // Default to original message
+    return err.message;
+  };
+
+  const friendlyMessage = getUserFriendlyMessage(error);
+
   return (
     <div className="text-center py-8">
       {/* Error Icon */}
-      <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+      <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center animate-pulse">
         <svg
           className="w-8 h-8 text-red-600"
           fill="none"
@@ -402,14 +449,24 @@ function ErrorStep({
 
       <h3 className="text-xl font-bold text-gray-900 mb-2">Transaction Failed</h3>
       <p className="text-gray-600 text-sm mb-6">
-        {error?.message || 'An unknown error occurred'}
+        {friendlyMessage}
       </p>
 
-      {/* Error Code */}
+      {/* Error Code (for debugging) */}
       {error?.code && (
-        <div className="bg-red-50 rounded-lg p-3 mb-6">
-          <p className="text-xs font-mono text-red-800">Error Code: {error.code}</p>
-        </div>
+        <details className="mb-6">
+          <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-700">
+            Technical Details
+          </summary>
+          <div className="bg-red-50 rounded-lg p-3 mt-2">
+            <p className="text-xs font-mono text-red-800">Error Code: {error.code}</p>
+            {error.message && (
+              <p className="text-xs font-mono text-red-700 mt-1">
+                {error.message}
+              </p>
+            )}
+          </div>
+        </details>
       )}
 
       {/* Actions */}
@@ -417,7 +474,7 @@ function ErrorStep({
         {isRecoverable && (
           <button
             onClick={onRetry}
-            className="flex-1 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex-1 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Try Again
           </button>
@@ -425,7 +482,7 @@ function ErrorStep({
         <button
           onClick={onClose}
           className={cn(
-            'px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors',
+            'px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2',
             isRecoverable ? 'flex-1' : 'w-full'
           )}
         >

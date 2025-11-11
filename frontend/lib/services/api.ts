@@ -95,6 +95,49 @@ export class APIClient {
     });
 
     this.setupInterceptors();
+    this.setupRetryLogic();
+  }
+
+  /**
+   * Setup automatic retry logic for transient failures
+   * Retries on network errors and 5xx server errors (max 3 attempts)
+   */
+  private setupRetryLogic(): void {
+    this.client.interceptors.response.use(
+      undefined,
+      async (error) => {
+        const config = error.config;
+
+        // Don't retry if we've already retried too many times
+        if (!config || config.__retryCount >= 3) {
+          return Promise.reject(error);
+        }
+
+        config.__retryCount = config.__retryCount || 0;
+
+        // Retry on network errors or 5xx server errors (transient)
+        const shouldRetry =
+          !error.response || // Network error
+          (error.response.status >= 500 && error.response.status < 600); // Server error
+
+        if (shouldRetry) {
+          config.__retryCount += 1;
+
+          // Exponential backoff: 1s, 2s, 4s
+          const delayMs = Math.pow(2, config.__retryCount - 1) * 1000;
+
+          console.log(
+            `[API] Retrying request (attempt ${config.__retryCount}/3) after ${delayMs}ms...`
+          );
+
+          await new Promise((resolve) => setTimeout(resolve, delayMs));
+
+          return this.client.request(config);
+        }
+
+        return Promise.reject(error);
+      }
+    );
   }
 
   /**

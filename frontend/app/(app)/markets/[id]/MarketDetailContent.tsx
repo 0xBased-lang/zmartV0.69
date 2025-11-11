@@ -12,6 +12,7 @@ import { OrderBook } from '@/components/markets/OrderBook';
 import { CurrentPosition } from '@/components/markets/CurrentPosition';
 import { DiscussionSection } from '@/components/markets/DiscussionSection';
 import { TradeForm } from '@/components/trading/TradeForm';
+import { ClaimButton } from '@/components/trading/ClaimButton';
 
 interface MarketDetailContentProps {
   marketId: string;
@@ -139,6 +140,15 @@ export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
 
           {/* Current Position (if wallet connected) */}
           <CurrentPosition marketId={market.market_id} />
+
+          {/* Claim Winnings Button (if market is finalized and user has winning shares) */}
+          <ClaimButton
+            marketId={market.market_id}
+            marketState={market.state}
+            outcome={market.outcome ?? null}
+            userYesShares={0} // TODO: Get from user position
+            userNoShares={0}  // TODO: Get from user position
+          />
         </div>
 
         {/* Right Column: Trade Form (1/3 width on desktop) */}
