@@ -27,6 +27,7 @@ export function OutcomeSelector({
       {/* YES Tab */}
       <button
         type="button"
+        data-testid="outcome-yes"
         onClick={() => onChange(Outcome.YES)}
         className={cn(
           'flex-1 px-4 py-3 rounded-lg font-medium transition-all',
@@ -43,6 +44,7 @@ export function OutcomeSelector({
       {/* NO Tab */}
       <button
         type="button"
+        data-testid="outcome-no"
         onClick={() => onChange(Outcome.NO)}
         className={cn(
           'flex-1 px-4 py-3 rounded-lg font-medium transition-all',

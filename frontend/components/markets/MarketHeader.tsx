@@ -88,13 +88,15 @@ export function MarketHeader({ market }: MarketHeaderProps) {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       {/* State Badge with Icon */}
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-4" data-testid="market-state">
         {getStateIcon(market.state)}
         <StateBadge state={market.state} />
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl font-bold text-gray-900 mb-3">{market.title}</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-3" data-testid="market-question">
+        {market.title}
+      </h1>
 
       {/* Description */}
       <p className="text-gray-700 text-lg mb-6">{market.description}</p>
@@ -102,7 +104,7 @@ export function MarketHeader({ market }: MarketHeaderProps) {
       {/* Metadata */}
       <div className="flex flex-wrap gap-6 text-sm">
         {/* Creator with Copy Button */}
-        <div>
+        <div data-testid="market-creator">
           <span className="text-gray-500">Creator:</span>{' '}
           <button
             onClick={handleCopyCreator}

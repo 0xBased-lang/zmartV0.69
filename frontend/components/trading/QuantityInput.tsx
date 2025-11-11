@@ -44,6 +44,7 @@ export function QuantityInput({
         <input
           id="quantity"
           type="number"
+          data-testid="amount-input"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setFocused(true)}

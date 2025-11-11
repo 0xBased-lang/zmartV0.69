@@ -259,6 +259,7 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
       <div className="flex gap-2">
         <button
           type="button"
+          data-testid="action-buy"
           onClick={() => setAction(TradeAction.BUY)}
           className={cn(
             'flex-1 px-4 py-2 font-medium rounded-lg transition-colors',
@@ -272,6 +273,7 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
         </button>
         <button
           type="button"
+          data-testid="action-sell"
           onClick={() => setAction(TradeAction.SELL)}
           className={cn(
             'flex-1 px-4 py-2 font-medium rounded-lg transition-colors',
@@ -344,6 +346,7 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
       {/* Submit Button */}
       <button
         type="submit"
+        data-testid="submit-trade"
         disabled={!canSubmit}
         className={cn(
           'w-full px-6 py-4 text-lg font-semibold rounded-lg transition-colors',

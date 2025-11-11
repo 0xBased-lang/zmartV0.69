@@ -58,28 +58,55 @@
 
 ---
 
-## 🚨 CRITICAL: Backend Development Location
+## 🚨 CRITICAL: Backend Development Workflow
 
-**ALL BACKEND WORK HAPPENS ON VPS ONLY (185.202.236.71)**
+**LOCAL DEVELOPMENT + VPS DEPLOYMENT (Recommended)**
 
-- ✅ SSH to VPS: `ssh kek`
-- ✅ Backend code location: `/var/www/zmart/backend`
-- ✅ All backend services run via PM2 on VPS
-- ✅ All backend code changes made directly on VPS
-- ✅ All backend testing happens on VPS
-- ❌ NEVER run backend services locally
-- ❌ NEVER shift backend work to local directory
-- ❌ NEVER create local .env for backend
+### Development Workflow (Local → VPS)
 
-**Frontend ONLY runs locally** (localhost:3000) during development.
+**1. Develop Locally:**
+```bash
+cd backend
+pnpm dev  # Starts on localhost:4000
 
-**Why VPS-Only:**
-- Consistent environment (Ubuntu Linux, PM2, Redis)
-- Shared state with deployed services
-- Real blockchain connections (devnet SOL, Helius webhooks)
-- No local setup overhead
+# Test locally
+curl http://localhost:4000/health
+curl http://localhost:4000/api/markets
+```
 
-**Development Workflow:**
+**2. Deploy to VPS:**
+```bash
+# From project root
+./scripts/deploy-backend-to-vps.sh
+
+# This script:
+# - Builds locally (catches TypeScript errors early)
+# - Syncs files to VPS via rsync
+# - Rebuilds on VPS with VPS dependencies
+# - Restarts PM2 services
+# - Runs health checks
+```
+
+**3. Test on VPS:**
+```bash
+ssh kek "curl http://localhost:4000/health"
+ssh kek "pm2 logs api-gateway --lines 20"
+```
+
+### Frontend Environment Switching
+
+**Local Development (default):**
+- Frontend `.env.local` points to `localhost:4000`
+- Backend runs locally via `pnpm dev`
+
+**VPS Testing:**
+- Comment out localhost URLs in `.env.local`
+- Uncomment VPS URLs (`185.202.236.71:4000`)
+- Backend runs on VPS via PM2
+
+### Direct VPS Development (Hotfixes Only)
+
+For urgent production fixes:
 ```bash
 # 1. SSH to VPS
 ssh kek
@@ -87,7 +114,7 @@ ssh kek
 # 2. Navigate to backend
 cd /var/www/zmart/backend
 
-# 3. Make code changes
+# 3. Make changes
 nano src/api/routes/markets.ts
 
 # 4. Rebuild and restart
@@ -96,6 +123,8 @@ pnpm build && pm2 restart api-gateway
 # 5. Check logs
 pm2 logs api-gateway --lines 50
 ```
+
+**Note:** Always sync changes back to local repository after VPS hotfixes.
 
 See [docs/orientation/SERVICE_ARCHITECTURE.md](./docs/orientation/SERVICE_ARCHITECTURE.md) for complete VPS and service architecture documentation.
 

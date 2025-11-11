@@ -15,7 +15,7 @@ import { test, expect } from '@playwright/test';
  */
 
 const TEST_MARKET_ID = 'HFaHHLFukTcA15khhvssYa7fTFmkzxTDsLih2LGVWCrM';
-const MARKET_URL = `http://localhost:3000/markets/${TEST_MARKET_ID}`;
+const MARKET_URL = `/markets/${TEST_MARKET_ID}`; // Uses baseURL from playwright.config.ts
 
 test.describe('Direct Market Page Test', () => {
 
@@ -271,7 +271,7 @@ test.describe('Direct Market Page Test', () => {
     console.log('✅ All Playwright tests completed!');
     console.log('📸 Screenshots saved in: test-results/');
     console.log('📋 Market tested: ' + TEST_MARKET_ID);
-    console.log('🌐 Frontend: http://localhost:3000');
+    console.log('🌐 Frontend: http://localhost:3004');
     console.log('='.repeat(60) + '\n');
   });
 });

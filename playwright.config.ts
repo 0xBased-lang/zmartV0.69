@@ -36,7 +36,7 @@ module.exports = defineConfig({
   // Shared settings for all the projects below
   use: {
     // Base URL to use in actions like `await page.goto('/')`
-    baseURL: 'http://localhost:3001',
+    baseURL: 'http://localhost:3004',
 
     // ALWAYS collect trace for debugging real transactions
     trace: 'on', // Changed from 'on-first-retry' to always capture
@@ -92,8 +92,8 @@ module.exports = defineConfig({
 
   // Run your local dev server before starting the tests
   webServer: {
-    command: 'cd frontend && PORT=3001 pnpm dev',
-    url: 'http://localhost:3001',
+    command: 'cd frontend && PORT=3004 pnpm dev',
+    url: 'http://localhost:3004',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
     // Use real devnet environment
