@@ -144,8 +144,8 @@ export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
           {/* Claim Winnings Button (if market is finalized and user has winning shares) */}
           <ClaimButton
             marketId={market.market_id}
-            marketState={market.state}
-            outcome={market.outcome ?? null}
+            marketState={String(market.state)}
+            outcome={null} // TODO: Get from market resolution data
             userYesShares={0} // TODO: Get from user position
             userNoShares={0}  // TODO: Get from user position
           />

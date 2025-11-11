@@ -340,7 +340,7 @@ export function MarketCreationForm({ onSuccess, className }: MarketCreationFormP
           <li>• Community votes on proposal (approval requires 70%+ likes)</li>
           <li>• If approved, market transitions to <strong>ACTIVE</strong> for trading</li>
           <li>• Initial liquidity determines price sensitivity (LMSR parameter)</li>
-          <li>• You'll receive 2% of all trading fees as creator</li>
+          <li>• You&apos;ll receive 2% of all trading fees as creator</li>
         </ul>
       </div>
 

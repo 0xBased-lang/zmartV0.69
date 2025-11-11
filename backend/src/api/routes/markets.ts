@@ -61,11 +61,11 @@ router.get(
       'category',
       'state',
       'creator_wallet',
-      'liquidity_parameter',
-      'yes_shares',
-      'no_shares',
-      'created_at',
-      'end_date'
+      'b_parameter',
+      'initial_liquidity',
+      'shares_yes',
+      'shares_no',
+      'created_at'
     ].join(',');
 
     let query = supabase
@@ -248,12 +248,12 @@ router.post(
           on_chain_address: marketPda.toBase58(),
           question,
           category,
-          end_date,
           creator_wallet,
           state: "PROPOSED", // Initial state
-          liquidity_parameter: liquidity.toString(),
-          yes_shares: "0",
-          no_shares: "0",
+          b_parameter: liquidity.toString(),
+          initial_liquidity: liquidity.toString(),
+          shares_yes: "0",
+          shares_no: "0",
           created_at: new Date().toISOString(),
         })
         .select()

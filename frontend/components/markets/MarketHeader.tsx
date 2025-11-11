@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import type { Market } from '@/types/market';
+import { MarketState } from '@/types/market';
 import { StateBadge } from './StateBadge';
 import { formatDistanceToNow } from 'date-fns';
 import { Clock, CheckCircle, AlertCircle, XCircle, Copy, Check } from 'lucide-react';
@@ -16,18 +17,20 @@ interface MarketHeaderProps {
 function getStateIcon(state: Market['state']) {
   const iconClass = 'w-5 h-5';
   switch (state) {
-    case 'PROPOSED':
+    case MarketState.PROPOSED:
       return <Clock className={`${iconClass} text-blue-600`} />;
-    case 'APPROVED':
+    case MarketState.APPROVED:
       return <CheckCircle className={`${iconClass} text-green-600`} />;
-    case 'ACTIVE':
+    case MarketState.ACTIVE:
       return <Clock className={`${iconClass} text-green-600`} />;
-    case 'RESOLVING':
+    case MarketState.RESOLVING:
       return <AlertCircle className={`${iconClass} text-yellow-600`} />;
-    case 'DISPUTED':
+    case MarketState.DISPUTED:
       return <AlertCircle className={`${iconClass} text-orange-600`} />;
-    case 'FINALIZED':
+    case MarketState.FINALIZED:
       return <CheckCircle className={`${iconClass} text-gray-600`} />;
+    case MarketState.CANCELLED:
+      return <XCircle className={`${iconClass} text-red-600`} />;
     default:
       return null;
   }

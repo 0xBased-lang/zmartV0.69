@@ -75,7 +75,7 @@ export function PortfolioSummary() {
         <div className="text-4xl mb-4">📊</div>
         <h3 className="font-semibold text-gray-800 mb-2">No Positions Yet</h3>
         <p className="text-gray-600 text-sm mb-4">
-          You haven't made any trades yet. Browse markets and start trading!
+          You haven&apos;t made any trades yet. Browse markets and start trading!
         </p>
         <Link
           href="/markets"

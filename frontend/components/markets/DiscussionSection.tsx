@@ -67,17 +67,17 @@ export function DiscussionSection({
         <div className="space-y-4">
           {discussions.map((discussion) => (
           <div
-            key={discussion.id}
+            key={discussion.discussion_id}
             className="border-l-2 border-gray-200 pl-4 py-2"
           >
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-mono text-gray-600">
-                  {discussion.author.slice(0, 6)}...
-                  {discussion.author.slice(-4)}
+                  {discussion.wallet.slice(0, 6)}...
+                  {discussion.wallet.slice(-4)}
                 </span>
                 <span className="text-xs text-gray-500">
-                  {formatTimeAgo(discussion.timestamp)}
+                  {formatTimeAgo(new Date(discussion.created_at))}
                 </span>
               </div>
               <div className="flex items-center gap-1 text-xs text-gray-500">
@@ -94,7 +94,7 @@ export function DiscussionSection({
                     d="M5 15l7-7 7 7"
                   />
                 </svg>
-                {discussion.votes}
+                {discussion.upvotes}
               </div>
             </div>
             <p className="text-sm text-gray-700">{discussion.content}</p>
