@@ -30,11 +30,11 @@ export function OutcomeSelector({
         data-testid="outcome-yes"
         onClick={() => onChange(Outcome.YES)}
         className={cn(
-          'flex-1 px-4 py-3 rounded-lg font-medium transition-all',
-          'border-2 focus:outline-none focus:ring-2 focus:ring-green-500',
+          'flex-1 px-4 py-3 rounded-lg font-medium transition-all duration-200',
+          'border-2 focus:outline-none focus:ring-2 focus:ring-trading-yes',
           value === Outcome.YES
-            ? 'bg-green-50 border-green-500 text-green-900'
-            : 'bg-white border-gray-200 text-gray-700 hover:border-green-300'
+            ? 'bg-trading-yes/10 border-trading-yes text-trading-yes shadow-glow'
+            : 'bg-surface-elevated border-border-default text-text-secondary hover:border-trading-yes'
         )}
       >
         <div className="text-sm font-semibold">YES</div>
@@ -47,11 +47,11 @@ export function OutcomeSelector({
         data-testid="outcome-no"
         onClick={() => onChange(Outcome.NO)}
         className={cn(
-          'flex-1 px-4 py-3 rounded-lg font-medium transition-all',
-          'border-2 focus:outline-none focus:ring-2 focus:ring-red-500',
+          'flex-1 px-4 py-3 rounded-lg font-medium transition-all duration-200',
+          'border-2 focus:outline-none focus:ring-2 focus:ring-trading-no',
           value === Outcome.NO
-            ? 'bg-red-50 border-red-500 text-red-900'
-            : 'bg-white border-gray-200 text-gray-700 hover:border-red-300'
+            ? 'bg-trading-no/10 border-trading-no text-trading-no shadow-glow'
+            : 'bg-surface-elevated border-border-default text-text-secondary hover:border-trading-no'
         )}
       >
         <div className="text-sm font-semibold">NO</div>
