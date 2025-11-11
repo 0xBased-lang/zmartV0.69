@@ -10,6 +10,9 @@
  * - Transaction signature formatting
  */
 
+// Imports
+import { isValidDate } from '@/lib/utils/date-formatter';
+
 // Constants
 export const LAMPORTS_PER_SOL = 1_000_000_000; // 1 SOL = 1 billion lamports
 export const DECIMALS = 9; // Solana uses 9 decimals
@@ -299,6 +302,11 @@ export function formatTimeAgo(timestamp: string | Date): string {
  * formatDate("2025-11-09T12:00:00Z", 'time') // "12:00 PM"
  */
 export function formatDate(timestamp: string | Date, format: 'short' | 'long' | 'time' = 'short'): string {
+  // Validate date first
+  if (!isValidDate(timestamp)) {
+    return 'Invalid date';
+  }
+
   const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp;
 
   if (format === 'time') {

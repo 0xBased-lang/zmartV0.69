@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { getDiscussions } from '@/lib/supabase/database';
+import { safeFormatTimeAgo } from '@/lib/utils/date-formatter';
 
 interface DiscussionSectionProps {
   marketId: string;
@@ -77,7 +78,7 @@ export function DiscussionSection({
                   {discussion.wallet.slice(-4)}
                 </span>
                 <span className="text-xs text-text-tertiary">
-                  {formatTimeAgo(new Date(discussion.created_at))}
+                  {safeFormatTimeAgo(discussion.created_at)}
                 </span>
               </div>
               <div className="flex items-center gap-1 text-xs text-text-tertiary">
@@ -131,20 +132,4 @@ export function DiscussionSection({
   );
 }
 
-/**
- * Format timestamp as relative time
- */
-function formatTimeAgo(date: Date): string {
-  // Validate date
-  if (!date || isNaN(date.getTime())) {
-    return 'recently';
-  }
-
-  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-
-  if (seconds < 60) return 'just now';
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-  if (seconds < 2592000) return `${Math.floor(seconds / 86400)}d ago`;
-  return `${Math.floor(seconds / 2592000)}mo ago`;
-}
+// formatTimeAgo function removed - now using safeFormatTimeAgo from @/lib/utils/date-formatter

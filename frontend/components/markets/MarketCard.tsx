@@ -4,8 +4,8 @@ import Link from 'next/link';
 import type { Market } from '@/types/market';
 import { StateBadge } from './StateBadge';
 import { PriceDisplay } from './PriceDisplay';
-import { formatDistanceToNow } from 'date-fns';
 import { calculateMarketPrices } from '@/lib/utils/market-prices';
+import { isValidDate, safeFormatDistanceToNow } from '@/lib/utils/date-formatter';
 
 interface MarketCardProps {
   market: Market;
@@ -47,11 +47,14 @@ export function MarketCard({ market }: MarketCardProps) {
 
   const volume = formatVolume(market.total_volume);
 
-  const expiresAt = new Date(market.expires_at);
-  const hasExpired = expiresAt < new Date();
-  const expiryText = hasExpired
-    ? `Expired ${formatDistanceToNow(expiresAt, { addSuffix: true })}`
-    : `Ends ${formatDistanceToNow(expiresAt, { addSuffix: true })}`;
+  // Safely handle expiration date
+  const expiresAt = isValidDate(market.expires_at) ? new Date(market.expires_at) : null;
+  const hasExpired = expiresAt ? expiresAt < new Date() : false;
+  const expiryText = expiresAt
+    ? (hasExpired
+        ? `Expired ${safeFormatDistanceToNow(expiresAt, 'recently')}`
+        : `Ends ${safeFormatDistanceToNow(expiresAt, 'soon')}`)
+    : 'Unknown expiry';
 
   return (
     <Link href={`/markets/${market.market_id}`}>

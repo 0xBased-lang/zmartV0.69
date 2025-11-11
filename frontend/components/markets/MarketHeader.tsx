@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import type { Market } from '@/types/market';
 import { MarketState } from '@/types/market';
 import { StateBadge } from './StateBadge';
-import { formatDistanceToNow } from 'date-fns';
 import { Clock, CheckCircle, AlertCircle, XCircle, Copy, Check } from 'lucide-react';
+import { isValidDate, safeFormatDistanceToNow } from '@/lib/utils/date-formatter';
 
 interface MarketHeaderProps {
   market: Market;
@@ -38,8 +38,14 @@ function getStateIcon(state: Market['state']) {
 
 /**
  * Format time left in human-readable format
+ * Safely handles invalid dates
  */
 function formatTimeLeft(expiresAt: string): string {
+  // Validate date first
+  if (!isValidDate(expiresAt)) {
+    return 'Unknown';
+  }
+
   const now = Date.now();
   const expiry = new Date(expiresAt).getTime();
   const diff = expiry - now;
@@ -156,9 +162,7 @@ export function MarketHeader({ market }: MarketHeaderProps) {
         <div>
           <span className="text-text-tertiary">Created:</span>{' '}
           <span className="font-medium text-text-primary">
-            {formatDistanceToNow(new Date(market.created_at), {
-              addSuffix: true,
-            })}
+            {safeFormatDistanceToNow(market.created_at, 'recently')}
           </span>
         </div>
 

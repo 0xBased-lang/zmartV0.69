@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { useSupabaseStatus } from '@/lib/hooks/useSupabase';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { safeFormatDate } from '@/lib/utils/date-formatter';
 
 export default function Home() {
   const { connected } = useWallet();
@@ -126,7 +127,7 @@ export default function Home() {
                 <div className="flex justify-between items-center">
                   <span className="text-text-secondary">Member Since:</span>
                   <span className="text-text-primary">
-                    {new Date(user.created_at).toLocaleDateString()}
+                    {safeFormatDate(user.created_at, 'Unknown')}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">

@@ -4,6 +4,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useUserPositionWithStatus, calculatePositionPnL, formatPosition } from '@/lib/hooks/useUserPosition';
 import { useMarketState } from '@/lib/hooks/useMarketState';
 import { calculatePrices } from '@/lib/lmsr';
+import { safeFormatUnixTimestamp } from '@/lib/utils/date-formatter';
 
 interface CurrentPositionProps {
   marketId: string;
@@ -191,9 +192,7 @@ export function CurrentPosition({ marketId }: CurrentPositionProps) {
         <div className="flex justify-between items-center text-xs text-text-tertiary">
           <span>Trades: {position.tradesCount}</span>
           <span>
-            Last: {position.lastTradeAt && position.lastTradeAt > 0
-              ? new Date(position.lastTradeAt * 1000).toLocaleDateString()
-              : 'Never'}
+            Last: {safeFormatUnixTimestamp(position.lastTradeAt, 'Never')}
           </span>
         </div>
       </div>
