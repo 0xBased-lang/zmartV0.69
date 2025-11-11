@@ -1,0 +1,56 @@
+# Normal Load Test - ZMART V0.69
+# Target: 100 concurrent users, 10 req/sec sustained for 5 minutes
+
+config:
+  target: "http://185.202.236.71:4000"
+  phases:
+    - duration: 60
+      arrivalRate: 2
+      name: "Warm up"
+    - duration: 300
+      arrivalRate: 10
+      name: "Sustained load"
+  ensure:
+    p95: 200
+    p99: 500
+
+scenarios:
+  - name: "Browse markets"
+    weight: 50
+    flow:
+      - get:
+          url: "/api/markets"
+          expect:
+            - statusCode: 200
+      - think: 2
+      - get:
+          url: "/api/markets?state=ACTIVE"
+          expect:
+            - statusCode: 200
+      - think: 3
+
+  - name: "View market details"
+    weight: 30
+    flow:
+      - get:
+          url: "/api/markets"
+          expect:
+            - statusCode: 200
+          capture:
+            json: "$[0].market_id"
+            as: "marketId"
+      - think: 2
+      - get:
+          url: "/api/markets/{{ marketId }}"
+          expect:
+            - statusCode: 200
+      - think: 5
+
+  - name: "Check health"
+    weight: 20
+    flow:
+      - get:
+          url: "/health"
+          expect:
+            - statusCode: 200
+      - think: 3
