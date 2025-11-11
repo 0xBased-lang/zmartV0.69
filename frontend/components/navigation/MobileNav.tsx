@@ -20,7 +20,7 @@ export function MobileNav() {
       {/* Hamburger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 text-gray-600 hover:text-primary transition-colors"
+        className="p-2 text-text-secondary hover:text-brand-primary transition-colors"
         aria-label="Toggle menu"
         aria-expanded={isOpen}
       >
@@ -52,11 +52,11 @@ export function MobileNav() {
           />
 
           {/* Sidebar */}
-          <div className="fixed inset-y-0 right-0 w-64 bg-white shadow-xl z-50 transform transition-transform">
+          <div className="fixed inset-y-0 right-0 w-64 bg-surface-card border-l border-border-default shadow-glow-lg z-50 transform transition-transform">
             <div className="p-6">
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 p-2 text-gray-600 hover:text-primary transition-colors"
+                className="absolute top-4 right-4 p-2 text-text-secondary hover:text-brand-primary transition-colors"
                 aria-label="Close menu"
               >
                 <svg
@@ -84,10 +84,10 @@ export function MobileNav() {
                       href={item.href}
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        'block px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                        'block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
                         isActive
-                          ? 'bg-primary text-white'
-                          : 'text-gray-600 hover:bg-gray-100'
+                          ? 'bg-brand-primary/10 border border-brand-primary/20 text-brand-primary shadow-glow'
+                          : 'text-text-secondary hover:bg-surface-elevated hover:text-text-primary'
                       )}
                     >
                       {item.label}

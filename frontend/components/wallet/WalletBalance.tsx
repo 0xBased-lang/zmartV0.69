@@ -11,8 +11,8 @@ export function WalletBalance() {
   }
 
   return (
-    <div className="px-3 py-2 bg-primary-50 rounded-md">
-      <span className="text-sm font-semibold text-primary">
+    <div className="px-3 py-2 bg-brand-primary/10 border border-brand-primary/20 rounded-lg">
+      <span className="text-sm font-semibold text-brand-primary">
         {balance.toFixed(2)} SOL
       </span>
     </div>

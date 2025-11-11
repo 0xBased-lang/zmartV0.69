@@ -10,7 +10,7 @@ export function WalletButton() {
 
   if (!connected) {
     return (
-      <WalletMultiButton className="!bg-primary hover:!bg-primary-600 !rounded-md !px-4 !py-2" />
+      <WalletMultiButton className="!bg-brand-primary hover:!bg-brand-accent !text-text-primary-inverse !rounded-lg !px-4 !py-2 !font-medium shadow-glow hover:shadow-glow-lg !transition-all !duration-200" />
     );
   }
 
@@ -18,7 +18,7 @@ export function WalletButton() {
     <div className="flex items-center gap-2">
       <WalletBalance />
       <WalletAddress address={publicKey?.toString() || ''} />
-      <WalletMultiButton className="!bg-primary hover:!bg-primary-600 !rounded-md !px-4 !py-2" />
+      <WalletMultiButton className="!bg-brand-primary hover:!bg-brand-accent !text-text-primary-inverse !rounded-lg !px-4 !py-2 !font-medium shadow-glow hover:shadow-glow-lg !transition-all !duration-200" />
     </div>
   );
 }

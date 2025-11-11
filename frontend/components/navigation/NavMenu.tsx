@@ -24,8 +24,8 @@ export function NavMenu() {
             key={item.href}
             href={item.href}
             className={cn(
-              'text-sm font-medium transition-colors hover:text-primary',
-              isActive ? 'text-primary' : 'text-gray-600'
+              'text-sm font-medium transition-colors hover:text-brand-primary',
+              isActive ? 'text-brand-primary' : 'text-text-secondary'
             )}
           >
             {item.label}
