@@ -3,9 +3,9 @@
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
-import { Clock, TrendingUp, MessageSquare, Trophy } from 'lucide-react'
+import { Clock, TrendingUp, MessageSquare, Trophy, Activity as ActivityIcon } from 'lucide-react'
 
-interface Activity {
+interface ActivityItem {
   id: string
   type: 'trade' | 'comment' | 'resolution' | 'win'
   user: string
@@ -16,7 +16,7 @@ interface Activity {
   amount?: string
 }
 
-const MOCK_ACTIVITY: Activity[] = [
+const MOCK_ACTIVITY: ActivityItem[] = [
   {
     id: '1',
     type: 'trade',
@@ -78,7 +78,7 @@ export function RecentActivity() {
   return (
     <Card variant="dark" className="p-4">
       <h3 className="text-sm font-semibold text-text-primary mb-3 flex items-center gap-2">
-        <Activity className="w-4 h-4 text-brand-primary" />
+        <ActivityIcon className="w-4 h-4 text-brand-primary" />
         Recent Activity
       </h3>
       <div className="space-y-3 max-h-[600px] overflow-y-auto scrollbar-hide">
