@@ -135,6 +135,11 @@ export function DiscussionSection({
  * Format timestamp as relative time
  */
 function formatTimeAgo(date: Date): string {
+  // Validate date
+  if (!date || isNaN(date.getTime())) {
+    return 'recently';
+  }
+
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
 
   if (seconds < 60) return 'just now';
