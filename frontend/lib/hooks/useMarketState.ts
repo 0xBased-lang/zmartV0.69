@@ -119,15 +119,18 @@ export function useMarketState(
       const marketAccount = await program.account.marketAccount.fetch(marketPDA);
 
       // Convert BN to BigInt and extract relevant fields
+      // IMPORTANT: Rust program uses snake_case, Anchor may or may not convert to camelCase
+      // Try both formats for compatibility
+      const account = marketAccount as any;
       return {
-        qYes: BigInt(marketAccount.sharesYes.toString()),
-        qNo: BigInt(marketAccount.sharesNo.toString()),
-        liquidity: BigInt(marketAccount.bParameter.toString()),
-        state: marketAccount.state as any, // MarketState enum (u8)
-        currentLiquidity: BigInt(marketAccount.currentLiquidity.toString()),
-        totalVolume: BigInt(marketAccount.totalVolume.toString()),
-        creator: marketAccount.creator,
-        createdAt: Number(marketAccount.createdAt.toString()),
+        qYes: BigInt((account.sharesYes || account.shares_yes).toString()),
+        qNo: BigInt((account.sharesNo || account.shares_no).toString()),
+        liquidity: BigInt((account.bParameter || account.b_parameter).toString()),
+        state: account.state as any, // MarketState enum (u8)
+        currentLiquidity: BigInt((account.currentLiquidity || account.current_liquidity).toString()),
+        totalVolume: BigInt((account.totalVolume || account.total_volume).toString()),
+        creator: account.creator,
+        createdAt: Number((account.createdAt || account.created_at).toString()),
       };
     },
     staleTime,
