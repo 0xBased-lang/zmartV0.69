@@ -44,39 +44,40 @@ export function PriceChart({ marketId }: PriceChartProps) {
   }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-xl font-bold text-gray-900 mb-4">Price History</h2>
+    <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
+      <h2 className="text-xl font-display font-bold text-text-primary mb-4">Price History</h2>
 
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           data={priceData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
           <XAxis
             dataKey="date"
-            stroke="#6b7280"
+            stroke="rgba(255,255,255,0.4)"
             style={{ fontSize: '12px' }}
           />
           <YAxis
             domain={[0, 100]}
-            stroke="#6b7280"
+            stroke="rgba(255,255,255,0.4)"
             style={{ fontSize: '12px' }}
-            label={{ value: 'Price (%)', angle: -90, position: 'insideLeft' }}
+            label={{ value: 'Price (%)', angle: -90, position: 'insideLeft', fill: 'rgba(255,255,255,0.6)' }}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#fff',
-              border: '1px solid #e5e7eb',
+              backgroundColor: '#1A1B1F',
+              border: '1px solid rgba(255,255,255,0.1)',
               borderRadius: '8px',
+              color: '#FFFFFF',
             }}
             formatter={(value: number) => `${value.toFixed(1)}%`}
           />
-          <Legend />
+          <Legend wrapperStyle={{ color: '#FFFFFF' }} />
           <Line
             type="monotone"
             dataKey="yes"
-            stroke="#10b981"
+            stroke="#22C55E"
             strokeWidth={2}
             name="YES"
             dot={false}
@@ -85,7 +86,7 @@ export function PriceChart({ marketId }: PriceChartProps) {
           <Line
             type="monotone"
             dataKey="no"
-            stroke="#ef4444"
+            stroke="#EF4444"
             strokeWidth={2}
             name="NO"
             dot={false}
@@ -95,7 +96,7 @@ export function PriceChart({ marketId }: PriceChartProps) {
       </ResponsiveContainer>
 
       {/* MOCK Indicator */}
-      <p className="text-xs text-gray-500 mt-3 text-center">
+      <p className="text-xs text-text-tertiary mt-3 text-center">
         📊 Mock data - real price history coming soon
       </p>
     </div>
