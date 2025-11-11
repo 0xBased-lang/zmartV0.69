@@ -1,9 +1,15 @@
 'use client';
 
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useRouter } from 'next/navigation';
+import { MarketCreationForm } from '@/components/markets/MarketCreationForm';
 
 export default function CreateMarketPage() {
-  const { connected } = useWallet();
+  const router = useRouter();
+
+  const handleSuccess = (marketId: string) => {
+    // Redirect to the new market page after creation
+    router.push(`/markets/${marketId}`);
+  };
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
@@ -14,25 +20,7 @@ export default function CreateMarketPage() {
         </p>
       </div>
 
-      {!connected ? (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="font-semibold text-blue-800 mb-2">
-            Connect Your Wallet
-          </h3>
-          <p className="text-blue-700 text-sm">
-            Connect your wallet to create a new prediction market.
-          </p>
-        </div>
-      ) : (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="font-semibold text-yellow-800 mb-2">
-            🚧 Coming Soon
-          </h3>
-          <p className="text-yellow-700 text-sm">
-            Market creation form will be implemented in Day 22.
-          </p>
-        </div>
-      )}
+      <MarketCreationForm onSuccess={handleSuccess} />
     </div>
   );
 }
