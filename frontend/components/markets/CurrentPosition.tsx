@@ -30,10 +30,10 @@ export function CurrentPosition({ marketId }: CurrentPositionProps) {
   // Show loading state
   if (isLoadingPosition || isLoadingMarket) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Your Position</h2>
+      <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
+        <h2 className="text-xl font-display font-bold text-text-primary mb-4">Your Position</h2>
         <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-primary"></div>
         </div>
       </div>
     );
@@ -71,36 +71,36 @@ export function CurrentPosition({ marketId }: CurrentPositionProps) {
     : 0;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-xl font-bold text-gray-900 mb-4">Your Position</h2>
+    <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
+      <h2 className="text-xl font-display font-bold text-text-primary mb-4">Your Position</h2>
 
       {/* YES Position */}
       {sharesYesNum > 0 && (
-        <div className="mb-4 p-4 bg-green-50 rounded-lg">
+        <div className="mb-4 p-4 bg-trading-yes/10 border border-trading-yes/20 rounded-lg">
           <div className="flex justify-between items-start mb-2">
-            <span className="text-sm font-semibold text-green-800">
+            <span className="text-sm font-semibold text-trading-yes">
               YES Shares
             </span>
-            <span className="text-lg font-bold text-green-900">
+            <span className="text-lg font-bold text-trading-yes">
               {formatted.sharesYes}
             </span>
           </div>
           <div className="space-y-1 text-sm">
             <div className="flex justify-between">
-              <span className="text-green-700">Avg Price:</span>
-              <span className="font-medium text-green-900">
+              <span className="text-text-tertiary">Avg Price:</span>
+              <span className="font-medium text-text-primary">
                 {yesAvgPrice.toFixed(1)}%
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-green-700">Current Price:</span>
-              <span className="font-medium text-green-900">
+              <span className="text-text-tertiary">Current Price:</span>
+              <span className="font-medium text-text-primary">
                 {prices.yesPrice.toFixed(1)}%
               </span>
             </div>
-            <div className="flex justify-between border-t border-green-200 pt-1 mt-1">
-              <span className="text-green-700">Value:</span>
-              <span className="font-medium text-green-900">
+            <div className="flex justify-between border-t border-border-subtle pt-1 mt-1">
+              <span className="text-text-tertiary">Value:</span>
+              <span className="font-medium text-text-primary">
                 {(Number(pnl.currentValue) / 1_000_000_000).toFixed(4)} SOL
               </span>
             </div>
@@ -110,31 +110,31 @@ export function CurrentPosition({ marketId }: CurrentPositionProps) {
 
       {/* NO Position */}
       {sharesNoNum > 0 && (
-        <div className="mb-4 p-4 bg-red-50 rounded-lg">
+        <div className="mb-4 p-4 bg-trading-no/10 border border-trading-no/20 rounded-lg">
           <div className="flex justify-between items-start mb-2">
-            <span className="text-sm font-semibold text-red-800">
+            <span className="text-sm font-semibold text-trading-no">
               NO Shares
             </span>
-            <span className="text-lg font-bold text-red-900">
+            <span className="text-lg font-bold text-trading-no">
               {formatted.sharesNo}
             </span>
           </div>
           <div className="space-y-1 text-sm">
             <div className="flex justify-between">
-              <span className="text-red-700">Avg Price:</span>
-              <span className="font-medium text-red-900">
+              <span className="text-text-tertiary">Avg Price:</span>
+              <span className="font-medium text-text-primary">
                 {noAvgPrice.toFixed(1)}%
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-red-700">Current Price:</span>
-              <span className="font-medium text-red-900">
+              <span className="text-text-tertiary">Current Price:</span>
+              <span className="font-medium text-text-primary">
                 {prices.noPrice.toFixed(1)}%
               </span>
             </div>
-            <div className="flex justify-between border-t border-red-200 pt-1 mt-1">
-              <span className="text-red-700">Value:</span>
-              <span className="font-medium text-red-900">
+            <div className="flex justify-between border-t border-border-subtle pt-1 mt-1">
+              <span className="text-text-tertiary">Value:</span>
+              <span className="font-medium text-text-primary">
                 {(Number(pnl.currentValue) / 1_000_000_000).toFixed(4)} SOL
               </span>
             </div>
@@ -143,32 +143,32 @@ export function CurrentPosition({ marketId }: CurrentPositionProps) {
       )}
 
       {/* Total Summary */}
-      <div className="pt-4 border-t border-gray-200 space-y-2">
+      <div className="pt-4 border-t border-border-default space-y-2">
         {/* Total Invested */}
         <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-700">Total Invested:</span>
-          <span className="font-medium text-gray-900">
+          <span className="text-text-secondary">Total Invested:</span>
+          <span className="font-medium text-text-primary">
             {formatted.totalInvested} SOL
           </span>
         </div>
 
         {/* Current Value */}
         <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-700">Current Value:</span>
-          <span className="font-medium text-gray-900">
+          <span className="text-text-secondary">Current Value:</span>
+          <span className="font-medium text-text-primary">
             {(Number(pnl.currentValue) / 1_000_000_000).toFixed(4)} SOL
           </span>
         </div>
 
         {/* Unrealized P&L */}
-        <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-          <span className="text-sm font-medium text-gray-700">
+        <div className="flex justify-between items-center pt-2 border-t border-border-subtle">
+          <span className="text-sm font-medium text-text-secondary">
             Unrealized P&L:
           </span>
           <div className="text-right">
             <div
               className={`text-xl font-bold ${
-                pnl.unrealizedPnL >= 0n ? 'text-green-600' : 'text-red-600'
+                pnl.unrealizedPnL >= 0n ? 'text-trading-yes' : 'text-trading-no'
               }`}
             >
               {pnl.unrealizedPnL >= 0n ? '+' : ''}
@@ -176,7 +176,7 @@ export function CurrentPosition({ marketId }: CurrentPositionProps) {
             </div>
             <div
               className={`text-sm ${
-                pnl.roi >= 0 ? 'text-green-600' : 'text-red-600'
+                pnl.roi >= 0 ? 'text-trading-yes' : 'text-trading-no'
               }`}
             >
               ({pnl.roi >= 0 ? '+' : ''}
@@ -187,8 +187,8 @@ export function CurrentPosition({ marketId }: CurrentPositionProps) {
       </div>
 
       {/* Trade Stats */}
-      <div className="mt-4 pt-4 border-t border-gray-200">
-        <div className="flex justify-between items-center text-xs text-gray-500">
+      <div className="mt-4 pt-4 border-t border-border-subtle">
+        <div className="flex justify-between items-center text-xs text-text-tertiary">
           <span>Trades: {position.tradesCount}</span>
           <span>
             Last: {new Date(position.lastTradeAt * 1000).toLocaleDateString()}
