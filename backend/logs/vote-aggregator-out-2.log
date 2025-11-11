@@ -61122,3 +61122,1856 @@
 2025-11-11T17:55:03:   "failed": 0,
 2025-11-11T17:55:03:   "noAction": 0
 2025-11-11T17:55:03: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:00:00:   "service": "vote-aggregator",
+2025-11-11T18:00:00:   "url": "redis://localhost:6379"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:00:00:   "service": "vote-aggregator",
+2025-11-11T18:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:00:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:00:00:   "idlName": "zmart_core",
+2025-11-11T18:00:00:   "idlVersion": "0.69.0"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:00:00:   "service": "vote-aggregator",
+2025-11-11T18:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:00:00:   "service": "vote-aggregator",
+2025-11-11T18:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:00:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:00:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:00:00:   "service": "vote-aggregator",
+2025-11-11T18:00:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:00:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:00:00:   "config": {
+2025-11-11T18:00:00:     "proposalThreshold": 70,
+2025-11-11T18:00:00:     "disputeThreshold": 60,
+2025-11-11T18:00:00:     "minVotesRequired": 10,
+2025-11-11T18:00:00:     "retryAttempts": 3,
+2025-11-11T18:00:00:     "retryDelay": 1000
+2025-11-11T18:00:00:   }
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:00:00:   "service": "vote-aggregator",
+2025-11-11T18:00:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:00:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:00:00:   "service": "vote-aggregator"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:00: 2025-11-11 18:00:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:00:00:   "service": "vote-aggregator",
+2025-11-11T18:00:00:   "port": 3001,
+2025-11-11T18:00:00:   "environment": "development",
+2025-11-11T18:00:00:   "network": "devnet",
+2025-11-11T18:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:00:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:00:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:00:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:00:00: }
+2025-11-11T18:00:01: 2025-11-11 18:00:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:00:01:   "service": "vote-aggregator"
+2025-11-11T18:00:01: }
+2025-11-11T18:00:01: 2025-11-11 18:00:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:00:01:   "service": "vote-aggregator"
+2025-11-11T18:00:01: }
+2025-11-11T18:00:01: 2025-11-11 18:00:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:00:01:   "service": "vote-aggregator"
+2025-11-11T18:00:01: }
+2025-11-11T18:00:01: 2025-11-11 18:00:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:00:01:   "service": "vote-aggregator",
+2025-11-11T18:00:01:   "totalProcessed": 0,
+2025-11-11T18:00:01:   "successful": 0,
+2025-11-11T18:00:01:   "failed": 0
+2025-11-11T18:00:01: }
+2025-11-11T18:00:01: 2025-11-11 18:00:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:00:01:   "service": "vote-aggregator",
+2025-11-11T18:00:01:   "duration": "3ms",
+2025-11-11T18:00:01:   "total": 0,
+2025-11-11T18:00:01:   "successful": 0,
+2025-11-11T18:00:01:   "failed": 0,
+2025-11-11T18:00:01:   "noAction": 0
+2025-11-11T18:00:01: }
+2025-11-11T18:00:03: 2025-11-11 18:00:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:00:03:   "service": "vote-aggregator"
+2025-11-11T18:00:03: }
+2025-11-11T18:00:03: 2025-11-11 18:00:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:00:03:   "service": "vote-aggregator"
+2025-11-11T18:00:03: }
+2025-11-11T18:00:03: 2025-11-11 18:00:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:00:03:   "service": "vote-aggregator"
+2025-11-11T18:00:03: }
+2025-11-11T18:00:03: 2025-11-11 18:00:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:00:03:   "service": "vote-aggregator",
+2025-11-11T18:00:03:   "totalProcessed": 0,
+2025-11-11T18:00:03:   "successful": 0,
+2025-11-11T18:00:03:   "failed": 0
+2025-11-11T18:00:03: }
+2025-11-11T18:00:03: 2025-11-11 18:00:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:00:03:   "service": "vote-aggregator",
+2025-11-11T18:00:03:   "duration": "2ms",
+2025-11-11T18:00:03:   "total": 0,
+2025-11-11T18:00:03:   "successful": 0,
+2025-11-11T18:00:03:   "failed": 0,
+2025-11-11T18:00:03:   "noAction": 0
+2025-11-11T18:00:03: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:05:00:   "service": "vote-aggregator",
+2025-11-11T18:05:00:   "url": "redis://localhost:6379"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:05:00:   "service": "vote-aggregator",
+2025-11-11T18:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:05:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:05:00:   "idlName": "zmart_core",
+2025-11-11T18:05:00:   "idlVersion": "0.69.0"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:05:00:   "service": "vote-aggregator",
+2025-11-11T18:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:05:00:   "service": "vote-aggregator",
+2025-11-11T18:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:05:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:05:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:05:00:   "service": "vote-aggregator",
+2025-11-11T18:05:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:05:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:05:00:   "config": {
+2025-11-11T18:05:00:     "proposalThreshold": 70,
+2025-11-11T18:05:00:     "disputeThreshold": 60,
+2025-11-11T18:05:00:     "minVotesRequired": 10,
+2025-11-11T18:05:00:     "retryAttempts": 3,
+2025-11-11T18:05:00:     "retryDelay": 1000
+2025-11-11T18:05:00:   }
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:05:00:   "service": "vote-aggregator",
+2025-11-11T18:05:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:05:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:05:00:   "service": "vote-aggregator"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:00: 2025-11-11 18:05:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:05:00:   "service": "vote-aggregator",
+2025-11-11T18:05:00:   "port": 3001,
+2025-11-11T18:05:00:   "environment": "development",
+2025-11-11T18:05:00:   "network": "devnet",
+2025-11-11T18:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:05:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:05:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:05:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:05:00: }
+2025-11-11T18:05:01: 2025-11-11 18:05:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:05:01:   "service": "vote-aggregator"
+2025-11-11T18:05:01: }
+2025-11-11T18:05:01: 2025-11-11 18:05:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:05:01:   "service": "vote-aggregator"
+2025-11-11T18:05:01: }
+2025-11-11T18:05:01: 2025-11-11 18:05:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:05:01:   "service": "vote-aggregator"
+2025-11-11T18:05:01: }
+2025-11-11T18:05:01: 2025-11-11 18:05:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:05:01:   "service": "vote-aggregator",
+2025-11-11T18:05:01:   "totalProcessed": 0,
+2025-11-11T18:05:01:   "successful": 0,
+2025-11-11T18:05:01:   "failed": 0
+2025-11-11T18:05:01: }
+2025-11-11T18:05:01: 2025-11-11 18:05:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:05:01:   "service": "vote-aggregator",
+2025-11-11T18:05:01:   "duration": "3ms",
+2025-11-11T18:05:01:   "total": 0,
+2025-11-11T18:05:01:   "successful": 0,
+2025-11-11T18:05:01:   "failed": 0,
+2025-11-11T18:05:01:   "noAction": 0
+2025-11-11T18:05:01: }
+2025-11-11T18:05:03: 2025-11-11 18:05:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:05:03:   "service": "vote-aggregator"
+2025-11-11T18:05:03: }
+2025-11-11T18:05:03: 2025-11-11 18:05:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:05:03:   "service": "vote-aggregator"
+2025-11-11T18:05:03: }
+2025-11-11T18:05:03: 2025-11-11 18:05:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:05:03:   "service": "vote-aggregator"
+2025-11-11T18:05:03: }
+2025-11-11T18:05:03: 2025-11-11 18:05:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:05:03:   "service": "vote-aggregator",
+2025-11-11T18:05:03:   "totalProcessed": 0,
+2025-11-11T18:05:03:   "successful": 0,
+2025-11-11T18:05:03:   "failed": 0
+2025-11-11T18:05:03: }
+2025-11-11T18:05:03: 2025-11-11 18:05:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:05:03:   "service": "vote-aggregator",
+2025-11-11T18:05:03:   "duration": "1ms",
+2025-11-11T18:05:03:   "total": 0,
+2025-11-11T18:05:03:   "successful": 0,
+2025-11-11T18:05:03:   "failed": 0,
+2025-11-11T18:05:03:   "noAction": 0
+2025-11-11T18:05:03: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:10:00:   "service": "vote-aggregator",
+2025-11-11T18:10:00:   "url": "redis://localhost:6379"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:10:00:   "service": "vote-aggregator",
+2025-11-11T18:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:10:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:10:00:   "idlName": "zmart_core",
+2025-11-11T18:10:00:   "idlVersion": "0.69.0"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:10:00:   "service": "vote-aggregator",
+2025-11-11T18:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:10:00:   "service": "vote-aggregator",
+2025-11-11T18:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:10:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:10:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:10:00:   "service": "vote-aggregator",
+2025-11-11T18:10:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:10:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:10:00:   "config": {
+2025-11-11T18:10:00:     "proposalThreshold": 70,
+2025-11-11T18:10:00:     "disputeThreshold": 60,
+2025-11-11T18:10:00:     "minVotesRequired": 10,
+2025-11-11T18:10:00:     "retryAttempts": 3,
+2025-11-11T18:10:00:     "retryDelay": 1000
+2025-11-11T18:10:00:   }
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:10:00:   "service": "vote-aggregator",
+2025-11-11T18:10:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:10:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:10:00:   "service": "vote-aggregator"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:00: 2025-11-11 18:10:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:10:00:   "service": "vote-aggregator",
+2025-11-11T18:10:00:   "port": 3001,
+2025-11-11T18:10:00:   "environment": "development",
+2025-11-11T18:10:00:   "network": "devnet",
+2025-11-11T18:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:10:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:10:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:10:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:10:00: }
+2025-11-11T18:10:01: 2025-11-11 18:10:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:10:01:   "service": "vote-aggregator"
+2025-11-11T18:10:01: }
+2025-11-11T18:10:01: 2025-11-11 18:10:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:10:01:   "service": "vote-aggregator"
+2025-11-11T18:10:01: }
+2025-11-11T18:10:01: 2025-11-11 18:10:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:10:01:   "service": "vote-aggregator"
+2025-11-11T18:10:01: }
+2025-11-11T18:10:01: 2025-11-11 18:10:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:10:01:   "service": "vote-aggregator",
+2025-11-11T18:10:01:   "totalProcessed": 0,
+2025-11-11T18:10:01:   "successful": 0,
+2025-11-11T18:10:01:   "failed": 0
+2025-11-11T18:10:01: }
+2025-11-11T18:10:01: 2025-11-11 18:10:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:10:01:   "service": "vote-aggregator",
+2025-11-11T18:10:01:   "duration": "5ms",
+2025-11-11T18:10:01:   "total": 0,
+2025-11-11T18:10:01:   "successful": 0,
+2025-11-11T18:10:01:   "failed": 0,
+2025-11-11T18:10:01:   "noAction": 0
+2025-11-11T18:10:01: }
+2025-11-11T18:10:03: 2025-11-11 18:10:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:10:03:   "service": "vote-aggregator"
+2025-11-11T18:10:03: }
+2025-11-11T18:10:03: 2025-11-11 18:10:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:10:03:   "service": "vote-aggregator"
+2025-11-11T18:10:03: }
+2025-11-11T18:10:03: 2025-11-11 18:10:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:10:03:   "service": "vote-aggregator"
+2025-11-11T18:10:03: }
+2025-11-11T18:10:03: 2025-11-11 18:10:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:10:03:   "service": "vote-aggregator",
+2025-11-11T18:10:03:   "totalProcessed": 0,
+2025-11-11T18:10:03:   "successful": 0,
+2025-11-11T18:10:03:   "failed": 0
+2025-11-11T18:10:03: }
+2025-11-11T18:10:03: 2025-11-11 18:10:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:10:03:   "service": "vote-aggregator",
+2025-11-11T18:10:03:   "duration": "3ms",
+2025-11-11T18:10:03:   "total": 0,
+2025-11-11T18:10:03:   "successful": 0,
+2025-11-11T18:10:03:   "failed": 0,
+2025-11-11T18:10:03:   "noAction": 0
+2025-11-11T18:10:03: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:15:00:   "service": "vote-aggregator",
+2025-11-11T18:15:00:   "url": "redis://localhost:6379"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:15:00:   "service": "vote-aggregator",
+2025-11-11T18:15:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:15:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:15:00:   "idlName": "zmart_core",
+2025-11-11T18:15:00:   "idlVersion": "0.69.0"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:15:00:   "service": "vote-aggregator",
+2025-11-11T18:15:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:15:00:   "service": "vote-aggregator",
+2025-11-11T18:15:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:15:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:15:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:15:00:   "service": "vote-aggregator",
+2025-11-11T18:15:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:15:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:15:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:15:00:   "config": {
+2025-11-11T18:15:00:     "proposalThreshold": 70,
+2025-11-11T18:15:00:     "disputeThreshold": 60,
+2025-11-11T18:15:00:     "minVotesRequired": 10,
+2025-11-11T18:15:00:     "retryAttempts": 3,
+2025-11-11T18:15:00:     "retryDelay": 1000
+2025-11-11T18:15:00:   }
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:15:00:   "service": "vote-aggregator",
+2025-11-11T18:15:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:15:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:15:00:   "service": "vote-aggregator"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:00: 2025-11-11 18:15:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:15:00:   "service": "vote-aggregator",
+2025-11-11T18:15:00:   "port": 3001,
+2025-11-11T18:15:00:   "environment": "development",
+2025-11-11T18:15:00:   "network": "devnet",
+2025-11-11T18:15:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:15:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:15:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:15:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:15:00: }
+2025-11-11T18:15:01: 2025-11-11 18:15:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:15:01:   "service": "vote-aggregator"
+2025-11-11T18:15:01: }
+2025-11-11T18:15:01: 2025-11-11 18:15:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:15:01:   "service": "vote-aggregator"
+2025-11-11T18:15:01: }
+2025-11-11T18:15:01: 2025-11-11 18:15:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:15:01:   "service": "vote-aggregator"
+2025-11-11T18:15:01: }
+2025-11-11T18:15:01: 2025-11-11 18:15:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:15:01:   "service": "vote-aggregator",
+2025-11-11T18:15:01:   "totalProcessed": 0,
+2025-11-11T18:15:01:   "successful": 0,
+2025-11-11T18:15:01:   "failed": 0
+2025-11-11T18:15:01: }
+2025-11-11T18:15:01: 2025-11-11 18:15:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:15:01:   "service": "vote-aggregator",
+2025-11-11T18:15:01:   "duration": "3ms",
+2025-11-11T18:15:01:   "total": 0,
+2025-11-11T18:15:01:   "successful": 0,
+2025-11-11T18:15:01:   "failed": 0,
+2025-11-11T18:15:01:   "noAction": 0
+2025-11-11T18:15:01: }
+2025-11-11T18:15:03: 2025-11-11 18:15:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:15:03:   "service": "vote-aggregator"
+2025-11-11T18:15:03: }
+2025-11-11T18:15:03: 2025-11-11 18:15:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:15:03:   "service": "vote-aggregator"
+2025-11-11T18:15:03: }
+2025-11-11T18:15:03: 2025-11-11 18:15:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:15:03:   "service": "vote-aggregator"
+2025-11-11T18:15:03: }
+2025-11-11T18:15:03: 2025-11-11 18:15:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:15:03:   "service": "vote-aggregator",
+2025-11-11T18:15:03:   "totalProcessed": 0,
+2025-11-11T18:15:03:   "successful": 0,
+2025-11-11T18:15:03:   "failed": 0
+2025-11-11T18:15:03: }
+2025-11-11T18:15:03: 2025-11-11 18:15:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:15:03:   "service": "vote-aggregator",
+2025-11-11T18:15:03:   "duration": "2ms",
+2025-11-11T18:15:03:   "total": 0,
+2025-11-11T18:15:03:   "successful": 0,
+2025-11-11T18:15:03:   "failed": 0,
+2025-11-11T18:15:03:   "noAction": 0
+2025-11-11T18:15:03: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:20:00:   "service": "vote-aggregator",
+2025-11-11T18:20:00:   "url": "redis://localhost:6379"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:20:00:   "service": "vote-aggregator",
+2025-11-11T18:20:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:20:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:20:00:   "idlName": "zmart_core",
+2025-11-11T18:20:00:   "idlVersion": "0.69.0"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:20:00:   "service": "vote-aggregator",
+2025-11-11T18:20:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:20:00:   "service": "vote-aggregator",
+2025-11-11T18:20:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:20:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:20:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:20:00:   "service": "vote-aggregator",
+2025-11-11T18:20:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:20:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:20:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:20:00:   "config": {
+2025-11-11T18:20:00:     "proposalThreshold": 70,
+2025-11-11T18:20:00:     "disputeThreshold": 60,
+2025-11-11T18:20:00:     "minVotesRequired": 10,
+2025-11-11T18:20:00:     "retryAttempts": 3,
+2025-11-11T18:20:00:     "retryDelay": 1000
+2025-11-11T18:20:00:   }
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:20:00:   "service": "vote-aggregator",
+2025-11-11T18:20:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:20:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:20:00:   "service": "vote-aggregator"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:00: 2025-11-11 18:20:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:20:00:   "service": "vote-aggregator",
+2025-11-11T18:20:00:   "port": 3001,
+2025-11-11T18:20:00:   "environment": "development",
+2025-11-11T18:20:00:   "network": "devnet",
+2025-11-11T18:20:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:20:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:20:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:20:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:20:00: }
+2025-11-11T18:20:01: 2025-11-11 18:20:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:20:01:   "service": "vote-aggregator"
+2025-11-11T18:20:01: }
+2025-11-11T18:20:01: 2025-11-11 18:20:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:20:01:   "service": "vote-aggregator"
+2025-11-11T18:20:01: }
+2025-11-11T18:20:01: 2025-11-11 18:20:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:20:01:   "service": "vote-aggregator"
+2025-11-11T18:20:01: }
+2025-11-11T18:20:01: 2025-11-11 18:20:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:20:01:   "service": "vote-aggregator",
+2025-11-11T18:20:01:   "totalProcessed": 0,
+2025-11-11T18:20:01:   "successful": 0,
+2025-11-11T18:20:01:   "failed": 0
+2025-11-11T18:20:01: }
+2025-11-11T18:20:01: 2025-11-11 18:20:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:20:01:   "service": "vote-aggregator",
+2025-11-11T18:20:01:   "duration": "2ms",
+2025-11-11T18:20:01:   "total": 0,
+2025-11-11T18:20:01:   "successful": 0,
+2025-11-11T18:20:01:   "failed": 0,
+2025-11-11T18:20:01:   "noAction": 0
+2025-11-11T18:20:01: }
+2025-11-11T18:20:03: 2025-11-11 18:20:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:20:03:   "service": "vote-aggregator"
+2025-11-11T18:20:03: }
+2025-11-11T18:20:03: 2025-11-11 18:20:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:20:03:   "service": "vote-aggregator"
+2025-11-11T18:20:03: }
+2025-11-11T18:20:03: 2025-11-11 18:20:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:20:03:   "service": "vote-aggregator"
+2025-11-11T18:20:03: }
+2025-11-11T18:20:03: 2025-11-11 18:20:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:20:03:   "service": "vote-aggregator",
+2025-11-11T18:20:03:   "totalProcessed": 0,
+2025-11-11T18:20:03:   "successful": 0,
+2025-11-11T18:20:03:   "failed": 0
+2025-11-11T18:20:03: }
+2025-11-11T18:20:03: 2025-11-11 18:20:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:20:03:   "service": "vote-aggregator",
+2025-11-11T18:20:03:   "duration": "1ms",
+2025-11-11T18:20:03:   "total": 0,
+2025-11-11T18:20:03:   "successful": 0,
+2025-11-11T18:20:03:   "failed": 0,
+2025-11-11T18:20:03:   "noAction": 0
+2025-11-11T18:20:03: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:25:00:   "service": "vote-aggregator",
+2025-11-11T18:25:00:   "url": "redis://localhost:6379"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:25:00:   "service": "vote-aggregator",
+2025-11-11T18:25:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:25:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:25:00:   "idlName": "zmart_core",
+2025-11-11T18:25:00:   "idlVersion": "0.69.0"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:25:00:   "service": "vote-aggregator",
+2025-11-11T18:25:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:25:00:   "service": "vote-aggregator",
+2025-11-11T18:25:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:25:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:25:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:25:00:   "service": "vote-aggregator",
+2025-11-11T18:25:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:25:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:25:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:25:00:   "config": {
+2025-11-11T18:25:00:     "proposalThreshold": 70,
+2025-11-11T18:25:00:     "disputeThreshold": 60,
+2025-11-11T18:25:00:     "minVotesRequired": 10,
+2025-11-11T18:25:00:     "retryAttempts": 3,
+2025-11-11T18:25:00:     "retryDelay": 1000
+2025-11-11T18:25:00:   }
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:25:00:   "service": "vote-aggregator",
+2025-11-11T18:25:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:25:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:25:00:   "service": "vote-aggregator"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:00: 2025-11-11 18:25:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:25:00:   "service": "vote-aggregator",
+2025-11-11T18:25:00:   "port": 3001,
+2025-11-11T18:25:00:   "environment": "development",
+2025-11-11T18:25:00:   "network": "devnet",
+2025-11-11T18:25:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:25:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:25:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:25:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:25:00: }
+2025-11-11T18:25:01: 2025-11-11 18:25:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:25:01:   "service": "vote-aggregator"
+2025-11-11T18:25:01: }
+2025-11-11T18:25:01: 2025-11-11 18:25:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:25:01:   "service": "vote-aggregator"
+2025-11-11T18:25:01: }
+2025-11-11T18:25:01: 2025-11-11 18:25:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:25:01:   "service": "vote-aggregator"
+2025-11-11T18:25:01: }
+2025-11-11T18:25:01: 2025-11-11 18:25:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:25:01:   "service": "vote-aggregator",
+2025-11-11T18:25:01:   "totalProcessed": 0,
+2025-11-11T18:25:01:   "successful": 0,
+2025-11-11T18:25:01:   "failed": 0
+2025-11-11T18:25:01: }
+2025-11-11T18:25:01: 2025-11-11 18:25:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:25:01:   "service": "vote-aggregator",
+2025-11-11T18:25:01:   "duration": "2ms",
+2025-11-11T18:25:01:   "total": 0,
+2025-11-11T18:25:01:   "successful": 0,
+2025-11-11T18:25:01:   "failed": 0,
+2025-11-11T18:25:01:   "noAction": 0
+2025-11-11T18:25:01: }
+2025-11-11T18:25:03: 2025-11-11 18:25:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:25:03:   "service": "vote-aggregator"
+2025-11-11T18:25:03: }
+2025-11-11T18:25:03: 2025-11-11 18:25:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:25:03:   "service": "vote-aggregator"
+2025-11-11T18:25:03: }
+2025-11-11T18:25:03: 2025-11-11 18:25:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:25:03:   "service": "vote-aggregator"
+2025-11-11T18:25:03: }
+2025-11-11T18:25:03: 2025-11-11 18:25:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:25:03:   "service": "vote-aggregator",
+2025-11-11T18:25:03:   "totalProcessed": 0,
+2025-11-11T18:25:03:   "successful": 0,
+2025-11-11T18:25:03:   "failed": 0
+2025-11-11T18:25:03: }
+2025-11-11T18:25:03: 2025-11-11 18:25:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:25:03:   "service": "vote-aggregator",
+2025-11-11T18:25:03:   "duration": "2ms",
+2025-11-11T18:25:03:   "total": 0,
+2025-11-11T18:25:03:   "successful": 0,
+2025-11-11T18:25:03:   "failed": 0,
+2025-11-11T18:25:03:   "noAction": 0
+2025-11-11T18:25:03: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:30:00:   "service": "vote-aggregator",
+2025-11-11T18:30:00:   "url": "redis://localhost:6379"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:30:00:   "service": "vote-aggregator",
+2025-11-11T18:30:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:30:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:30:00:   "idlName": "zmart_core",
+2025-11-11T18:30:00:   "idlVersion": "0.69.0"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:30:00:   "service": "vote-aggregator",
+2025-11-11T18:30:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:30:00:   "service": "vote-aggregator",
+2025-11-11T18:30:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:30:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:30:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:30:00:   "service": "vote-aggregator",
+2025-11-11T18:30:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:30:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:30:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:30:00:   "config": {
+2025-11-11T18:30:00:     "proposalThreshold": 70,
+2025-11-11T18:30:00:     "disputeThreshold": 60,
+2025-11-11T18:30:00:     "minVotesRequired": 10,
+2025-11-11T18:30:00:     "retryAttempts": 3,
+2025-11-11T18:30:00:     "retryDelay": 1000
+2025-11-11T18:30:00:   }
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:30:00:   "service": "vote-aggregator",
+2025-11-11T18:30:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:30:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:30:00:   "service": "vote-aggregator"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:00: 2025-11-11 18:30:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:30:00:   "service": "vote-aggregator",
+2025-11-11T18:30:00:   "port": 3001,
+2025-11-11T18:30:00:   "environment": "development",
+2025-11-11T18:30:00:   "network": "devnet",
+2025-11-11T18:30:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:30:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:30:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:30:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:30:00: }
+2025-11-11T18:30:01: 2025-11-11 18:30:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:30:01:   "service": "vote-aggregator"
+2025-11-11T18:30:01: }
+2025-11-11T18:30:01: 2025-11-11 18:30:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:30:01:   "service": "vote-aggregator"
+2025-11-11T18:30:01: }
+2025-11-11T18:30:01: 2025-11-11 18:30:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:30:01:   "service": "vote-aggregator"
+2025-11-11T18:30:01: }
+2025-11-11T18:30:01: 2025-11-11 18:30:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:30:01:   "service": "vote-aggregator",
+2025-11-11T18:30:01:   "totalProcessed": 0,
+2025-11-11T18:30:01:   "successful": 0,
+2025-11-11T18:30:01:   "failed": 0
+2025-11-11T18:30:01: }
+2025-11-11T18:30:01: 2025-11-11 18:30:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:30:01:   "service": "vote-aggregator",
+2025-11-11T18:30:01:   "duration": "2ms",
+2025-11-11T18:30:01:   "total": 0,
+2025-11-11T18:30:01:   "successful": 0,
+2025-11-11T18:30:01:   "failed": 0,
+2025-11-11T18:30:01:   "noAction": 0
+2025-11-11T18:30:01: }
+2025-11-11T18:30:03: 2025-11-11 18:30:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:30:03:   "service": "vote-aggregator"
+2025-11-11T18:30:03: }
+2025-11-11T18:30:03: 2025-11-11 18:30:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:30:03:   "service": "vote-aggregator"
+2025-11-11T18:30:03: }
+2025-11-11T18:30:03: 2025-11-11 18:30:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:30:03:   "service": "vote-aggregator"
+2025-11-11T18:30:03: }
+2025-11-11T18:30:03: 2025-11-11 18:30:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:30:03:   "service": "vote-aggregator",
+2025-11-11T18:30:03:   "totalProcessed": 0,
+2025-11-11T18:30:03:   "successful": 0,
+2025-11-11T18:30:03:   "failed": 0
+2025-11-11T18:30:03: }
+2025-11-11T18:30:03: 2025-11-11 18:30:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:30:03:   "service": "vote-aggregator",
+2025-11-11T18:30:03:   "duration": "3ms",
+2025-11-11T18:30:03:   "total": 0,
+2025-11-11T18:30:03:   "successful": 0,
+2025-11-11T18:30:03:   "failed": 0,
+2025-11-11T18:30:03:   "noAction": 0
+2025-11-11T18:30:03: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:35:00:   "service": "vote-aggregator",
+2025-11-11T18:35:00:   "url": "redis://localhost:6379"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:35:00:   "service": "vote-aggregator",
+2025-11-11T18:35:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:35:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:35:00:   "idlName": "zmart_core",
+2025-11-11T18:35:00:   "idlVersion": "0.69.0"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:35:00:   "service": "vote-aggregator",
+2025-11-11T18:35:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:35:00:   "service": "vote-aggregator",
+2025-11-11T18:35:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:35:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:35:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:35:00:   "service": "vote-aggregator",
+2025-11-11T18:35:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:35:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:35:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:35:00:   "config": {
+2025-11-11T18:35:00:     "proposalThreshold": 70,
+2025-11-11T18:35:00:     "disputeThreshold": 60,
+2025-11-11T18:35:00:     "minVotesRequired": 10,
+2025-11-11T18:35:00:     "retryAttempts": 3,
+2025-11-11T18:35:00:     "retryDelay": 1000
+2025-11-11T18:35:00:   }
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:35:00:   "service": "vote-aggregator",
+2025-11-11T18:35:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:35:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:35:00:   "service": "vote-aggregator"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:00: 2025-11-11 18:35:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:35:00:   "service": "vote-aggregator",
+2025-11-11T18:35:00:   "port": 3001,
+2025-11-11T18:35:00:   "environment": "development",
+2025-11-11T18:35:00:   "network": "devnet",
+2025-11-11T18:35:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:35:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:35:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:35:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:35:00: }
+2025-11-11T18:35:01: 2025-11-11 18:35:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:35:01:   "service": "vote-aggregator"
+2025-11-11T18:35:01: }
+2025-11-11T18:35:01: 2025-11-11 18:35:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:35:01:   "service": "vote-aggregator"
+2025-11-11T18:35:01: }
+2025-11-11T18:35:01: 2025-11-11 18:35:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:35:01:   "service": "vote-aggregator"
+2025-11-11T18:35:01: }
+2025-11-11T18:35:01: 2025-11-11 18:35:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:35:01:   "service": "vote-aggregator",
+2025-11-11T18:35:01:   "totalProcessed": 0,
+2025-11-11T18:35:01:   "successful": 0,
+2025-11-11T18:35:01:   "failed": 0
+2025-11-11T18:35:01: }
+2025-11-11T18:35:01: 2025-11-11 18:35:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:35:01:   "service": "vote-aggregator",
+2025-11-11T18:35:01:   "duration": "4ms",
+2025-11-11T18:35:01:   "total": 0,
+2025-11-11T18:35:01:   "successful": 0,
+2025-11-11T18:35:01:   "failed": 0,
+2025-11-11T18:35:01:   "noAction": 0
+2025-11-11T18:35:01: }
+2025-11-11T18:35:03: 2025-11-11 18:35:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:35:03:   "service": "vote-aggregator"
+2025-11-11T18:35:03: }
+2025-11-11T18:35:03: 2025-11-11 18:35:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:35:03:   "service": "vote-aggregator"
+2025-11-11T18:35:03: }
+2025-11-11T18:35:03: 2025-11-11 18:35:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:35:03:   "service": "vote-aggregator"
+2025-11-11T18:35:03: }
+2025-11-11T18:35:03: 2025-11-11 18:35:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:35:03:   "service": "vote-aggregator",
+2025-11-11T18:35:03:   "totalProcessed": 0,
+2025-11-11T18:35:03:   "successful": 0,
+2025-11-11T18:35:03:   "failed": 0
+2025-11-11T18:35:03: }
+2025-11-11T18:35:03: 2025-11-11 18:35:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:35:03:   "service": "vote-aggregator",
+2025-11-11T18:35:03:   "duration": "2ms",
+2025-11-11T18:35:03:   "total": 0,
+2025-11-11T18:35:03:   "successful": 0,
+2025-11-11T18:35:03:   "failed": 0,
+2025-11-11T18:35:03:   "noAction": 0
+2025-11-11T18:35:03: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:40:00:   "service": "vote-aggregator",
+2025-11-11T18:40:00:   "url": "redis://localhost:6379"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:40:00:   "service": "vote-aggregator",
+2025-11-11T18:40:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:40:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:40:00:   "idlName": "zmart_core",
+2025-11-11T18:40:00:   "idlVersion": "0.69.0"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:40:00:   "service": "vote-aggregator",
+2025-11-11T18:40:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:40:00:   "service": "vote-aggregator",
+2025-11-11T18:40:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:40:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:40:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:40:00:   "service": "vote-aggregator",
+2025-11-11T18:40:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:40:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:40:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:40:00:   "config": {
+2025-11-11T18:40:00:     "proposalThreshold": 70,
+2025-11-11T18:40:00:     "disputeThreshold": 60,
+2025-11-11T18:40:00:     "minVotesRequired": 10,
+2025-11-11T18:40:00:     "retryAttempts": 3,
+2025-11-11T18:40:00:     "retryDelay": 1000
+2025-11-11T18:40:00:   }
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:40:00:   "service": "vote-aggregator",
+2025-11-11T18:40:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:40:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:40:00:   "service": "vote-aggregator"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:00: 2025-11-11 18:40:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:40:00:   "service": "vote-aggregator",
+2025-11-11T18:40:00:   "port": 3001,
+2025-11-11T18:40:00:   "environment": "development",
+2025-11-11T18:40:00:   "network": "devnet",
+2025-11-11T18:40:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:40:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:40:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:40:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:40:00: }
+2025-11-11T18:40:01: 2025-11-11 18:40:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:40:01:   "service": "vote-aggregator"
+2025-11-11T18:40:01: }
+2025-11-11T18:40:01: 2025-11-11 18:40:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:40:01:   "service": "vote-aggregator"
+2025-11-11T18:40:01: }
+2025-11-11T18:40:01: 2025-11-11 18:40:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:40:01:   "service": "vote-aggregator"
+2025-11-11T18:40:01: }
+2025-11-11T18:40:01: 2025-11-11 18:40:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:40:01:   "service": "vote-aggregator",
+2025-11-11T18:40:01:   "totalProcessed": 0,
+2025-11-11T18:40:01:   "successful": 0,
+2025-11-11T18:40:01:   "failed": 0
+2025-11-11T18:40:01: }
+2025-11-11T18:40:01: 2025-11-11 18:40:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:40:01:   "service": "vote-aggregator",
+2025-11-11T18:40:01:   "duration": "4ms",
+2025-11-11T18:40:01:   "total": 0,
+2025-11-11T18:40:01:   "successful": 0,
+2025-11-11T18:40:01:   "failed": 0,
+2025-11-11T18:40:01:   "noAction": 0
+2025-11-11T18:40:01: }
+2025-11-11T18:40:03: 2025-11-11 18:40:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:40:03:   "service": "vote-aggregator"
+2025-11-11T18:40:03: }
+2025-11-11T18:40:03: 2025-11-11 18:40:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:40:03:   "service": "vote-aggregator"
+2025-11-11T18:40:03: }
+2025-11-11T18:40:03: 2025-11-11 18:40:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:40:03:   "service": "vote-aggregator"
+2025-11-11T18:40:03: }
+2025-11-11T18:40:03: 2025-11-11 18:40:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:40:03:   "service": "vote-aggregator",
+2025-11-11T18:40:03:   "totalProcessed": 0,
+2025-11-11T18:40:03:   "successful": 0,
+2025-11-11T18:40:03:   "failed": 0
+2025-11-11T18:40:03: }
+2025-11-11T18:40:03: 2025-11-11 18:40:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:40:03:   "service": "vote-aggregator",
+2025-11-11T18:40:03:   "duration": "2ms",
+2025-11-11T18:40:03:   "total": 0,
+2025-11-11T18:40:03:   "successful": 0,
+2025-11-11T18:40:03:   "failed": 0,
+2025-11-11T18:40:03:   "noAction": 0
+2025-11-11T18:40:03: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:45:00:   "service": "vote-aggregator",
+2025-11-11T18:45:00:   "url": "redis://localhost:6379"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:45:00:   "service": "vote-aggregator",
+2025-11-11T18:45:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:45:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:45:00:   "idlName": "zmart_core",
+2025-11-11T18:45:00:   "idlVersion": "0.69.0"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:45:00:   "service": "vote-aggregator",
+2025-11-11T18:45:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:45:00:   "service": "vote-aggregator",
+2025-11-11T18:45:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:45:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:45:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:45:00:   "service": "vote-aggregator",
+2025-11-11T18:45:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:45:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:45:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:45:00:   "config": {
+2025-11-11T18:45:00:     "proposalThreshold": 70,
+2025-11-11T18:45:00:     "disputeThreshold": 60,
+2025-11-11T18:45:00:     "minVotesRequired": 10,
+2025-11-11T18:45:00:     "retryAttempts": 3,
+2025-11-11T18:45:00:     "retryDelay": 1000
+2025-11-11T18:45:00:   }
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:45:00:   "service": "vote-aggregator",
+2025-11-11T18:45:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:45:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:45:00:   "service": "vote-aggregator"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:00: 2025-11-11 18:45:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:45:00:   "service": "vote-aggregator",
+2025-11-11T18:45:00:   "port": 3001,
+2025-11-11T18:45:00:   "environment": "development",
+2025-11-11T18:45:00:   "network": "devnet",
+2025-11-11T18:45:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:45:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:45:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:45:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:45:00: }
+2025-11-11T18:45:01: 2025-11-11 18:45:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:45:01:   "service": "vote-aggregator"
+2025-11-11T18:45:01: }
+2025-11-11T18:45:01: 2025-11-11 18:45:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:45:01:   "service": "vote-aggregator"
+2025-11-11T18:45:01: }
+2025-11-11T18:45:01: 2025-11-11 18:45:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:45:01:   "service": "vote-aggregator"
+2025-11-11T18:45:01: }
+2025-11-11T18:45:01: 2025-11-11 18:45:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:45:01:   "service": "vote-aggregator",
+2025-11-11T18:45:01:   "totalProcessed": 0,
+2025-11-11T18:45:01:   "successful": 0,
+2025-11-11T18:45:01:   "failed": 0
+2025-11-11T18:45:01: }
+2025-11-11T18:45:01: 2025-11-11 18:45:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:45:01:   "service": "vote-aggregator",
+2025-11-11T18:45:01:   "duration": "3ms",
+2025-11-11T18:45:01:   "total": 0,
+2025-11-11T18:45:01:   "successful": 0,
+2025-11-11T18:45:01:   "failed": 0,
+2025-11-11T18:45:01:   "noAction": 0
+2025-11-11T18:45:01: }
+2025-11-11T18:45:03: 2025-11-11 18:45:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:45:03:   "service": "vote-aggregator"
+2025-11-11T18:45:03: }
+2025-11-11T18:45:03: 2025-11-11 18:45:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:45:03:   "service": "vote-aggregator"
+2025-11-11T18:45:03: }
+2025-11-11T18:45:03: 2025-11-11 18:45:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:45:03:   "service": "vote-aggregator"
+2025-11-11T18:45:03: }
+2025-11-11T18:45:03: 2025-11-11 18:45:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:45:03:   "service": "vote-aggregator",
+2025-11-11T18:45:03:   "totalProcessed": 0,
+2025-11-11T18:45:03:   "successful": 0,
+2025-11-11T18:45:03:   "failed": 0
+2025-11-11T18:45:03: }
+2025-11-11T18:45:03: 2025-11-11 18:45:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:45:03:   "service": "vote-aggregator",
+2025-11-11T18:45:03:   "duration": "1ms",
+2025-11-11T18:45:03:   "total": 0,
+2025-11-11T18:45:03:   "successful": 0,
+2025-11-11T18:45:03:   "failed": 0,
+2025-11-11T18:45:03:   "noAction": 0
+2025-11-11T18:45:03: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:50:00:   "service": "vote-aggregator",
+2025-11-11T18:50:00:   "url": "redis://localhost:6379"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:50:00:   "service": "vote-aggregator",
+2025-11-11T18:50:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:50:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:50:00:   "idlName": "zmart_core",
+2025-11-11T18:50:00:   "idlVersion": "0.69.0"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:50:00:   "service": "vote-aggregator",
+2025-11-11T18:50:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:50:00:   "service": "vote-aggregator",
+2025-11-11T18:50:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:50:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:50:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:50:00:   "service": "vote-aggregator",
+2025-11-11T18:50:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:50:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:50:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:50:00:   "config": {
+2025-11-11T18:50:00:     "proposalThreshold": 70,
+2025-11-11T18:50:00:     "disputeThreshold": 60,
+2025-11-11T18:50:00:     "minVotesRequired": 10,
+2025-11-11T18:50:00:     "retryAttempts": 3,
+2025-11-11T18:50:00:     "retryDelay": 1000
+2025-11-11T18:50:00:   }
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:50:00:   "service": "vote-aggregator",
+2025-11-11T18:50:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:50:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:50:00:   "service": "vote-aggregator"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:00: 2025-11-11 18:50:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:50:00:   "service": "vote-aggregator",
+2025-11-11T18:50:00:   "port": 3001,
+2025-11-11T18:50:00:   "environment": "development",
+2025-11-11T18:50:00:   "network": "devnet",
+2025-11-11T18:50:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:50:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:50:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:50:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:50:00: }
+2025-11-11T18:50:01: 2025-11-11 18:50:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:50:01:   "service": "vote-aggregator"
+2025-11-11T18:50:01: }
+2025-11-11T18:50:01: 2025-11-11 18:50:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:50:01:   "service": "vote-aggregator"
+2025-11-11T18:50:01: }
+2025-11-11T18:50:01: 2025-11-11 18:50:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:50:01:   "service": "vote-aggregator"
+2025-11-11T18:50:01: }
+2025-11-11T18:50:01: 2025-11-11 18:50:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:50:01:   "service": "vote-aggregator",
+2025-11-11T18:50:01:   "totalProcessed": 0,
+2025-11-11T18:50:01:   "successful": 0,
+2025-11-11T18:50:01:   "failed": 0
+2025-11-11T18:50:01: }
+2025-11-11T18:50:01: 2025-11-11 18:50:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:50:01:   "service": "vote-aggregator",
+2025-11-11T18:50:01:   "duration": "3ms",
+2025-11-11T18:50:01:   "total": 0,
+2025-11-11T18:50:01:   "successful": 0,
+2025-11-11T18:50:01:   "failed": 0,
+2025-11-11T18:50:01:   "noAction": 0
+2025-11-11T18:50:01: }
+2025-11-11T18:50:03: 2025-11-11 18:50:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:50:03:   "service": "vote-aggregator"
+2025-11-11T18:50:03: }
+2025-11-11T18:50:03: 2025-11-11 18:50:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:50:03:   "service": "vote-aggregator"
+2025-11-11T18:50:03: }
+2025-11-11T18:50:03: 2025-11-11 18:50:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:50:03:   "service": "vote-aggregator"
+2025-11-11T18:50:03: }
+2025-11-11T18:50:03: 2025-11-11 18:50:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:50:03:   "service": "vote-aggregator",
+2025-11-11T18:50:03:   "totalProcessed": 0,
+2025-11-11T18:50:03:   "successful": 0,
+2025-11-11T18:50:03:   "failed": 0
+2025-11-11T18:50:03: }
+2025-11-11T18:50:03: 2025-11-11 18:50:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:50:03:   "service": "vote-aggregator",
+2025-11-11T18:50:03:   "duration": "3ms",
+2025-11-11T18:50:03:   "total": 0,
+2025-11-11T18:50:03:   "successful": 0,
+2025-11-11T18:50:03:   "failed": 0,
+2025-11-11T18:50:03:   "noAction": 0
+2025-11-11T18:50:03: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T18:55:00:   "service": "vote-aggregator",
+2025-11-11T18:55:00:   "url": "redis://localhost:6379"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T18:55:00:   "service": "vote-aggregator",
+2025-11-11T18:55:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:55:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:55:00:   "idlName": "zmart_core",
+2025-11-11T18:55:00:   "idlVersion": "0.69.0"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T18:55:00:   "service": "vote-aggregator",
+2025-11-11T18:55:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T18:55:00:   "service": "vote-aggregator",
+2025-11-11T18:55:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:55:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T18:55:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T18:55:00:   "service": "vote-aggregator",
+2025-11-11T18:55:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T18:55:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:55:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:55:00:   "config": {
+2025-11-11T18:55:00:     "proposalThreshold": 70,
+2025-11-11T18:55:00:     "disputeThreshold": 60,
+2025-11-11T18:55:00:     "minVotesRequired": 10,
+2025-11-11T18:55:00:     "retryAttempts": 3,
+2025-11-11T18:55:00:     "retryDelay": 1000
+2025-11-11T18:55:00:   }
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:55:00:   "service": "vote-aggregator",
+2025-11-11T18:55:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T18:55:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Cron service started {
+2025-11-11T18:55:00:   "service": "vote-aggregator"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:00: 2025-11-11 18:55:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T18:55:00:   "service": "vote-aggregator",
+2025-11-11T18:55:00:   "port": 3001,
+2025-11-11T18:55:00:   "environment": "development",
+2025-11-11T18:55:00:   "network": "devnet",
+2025-11-11T18:55:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T18:55:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T18:55:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T18:55:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T18:55:00: }
+2025-11-11T18:55:01: 2025-11-11 18:55:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T18:55:01:   "service": "vote-aggregator"
+2025-11-11T18:55:01: }
+2025-11-11T18:55:01: 2025-11-11 18:55:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T18:55:01:   "service": "vote-aggregator"
+2025-11-11T18:55:01: }
+2025-11-11T18:55:01: 2025-11-11 18:55:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T18:55:01:   "service": "vote-aggregator"
+2025-11-11T18:55:01: }
+2025-11-11T18:55:01: 2025-11-11 18:55:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T18:55:01:   "service": "vote-aggregator",
+2025-11-11T18:55:01:   "totalProcessed": 0,
+2025-11-11T18:55:01:   "successful": 0,
+2025-11-11T18:55:01:   "failed": 0
+2025-11-11T18:55:01: }
+2025-11-11T18:55:01: 2025-11-11 18:55:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T18:55:01:   "service": "vote-aggregator",
+2025-11-11T18:55:01:   "duration": "4ms",
+2025-11-11T18:55:01:   "total": 0,
+2025-11-11T18:55:01:   "successful": 0,
+2025-11-11T18:55:01:   "failed": 0,
+2025-11-11T18:55:01:   "noAction": 0
+2025-11-11T18:55:01: }
+2025-11-11T18:55:03: 2025-11-11 18:55:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T18:55:03:   "service": "vote-aggregator"
+2025-11-11T18:55:03: }
+2025-11-11T18:55:03: 2025-11-11 18:55:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T18:55:03:   "service": "vote-aggregator"
+2025-11-11T18:55:03: }
+2025-11-11T18:55:03: 2025-11-11 18:55:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T18:55:03:   "service": "vote-aggregator"
+2025-11-11T18:55:03: }
+2025-11-11T18:55:03: 2025-11-11 18:55:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T18:55:03:   "service": "vote-aggregator",
+2025-11-11T18:55:03:   "totalProcessed": 0,
+2025-11-11T18:55:03:   "successful": 0,
+2025-11-11T18:55:03:   "failed": 0
+2025-11-11T18:55:03: }
+2025-11-11T18:55:03: 2025-11-11 18:55:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T18:55:03:   "service": "vote-aggregator",
+2025-11-11T18:55:03:   "duration": "2ms",
+2025-11-11T18:55:03:   "total": 0,
+2025-11-11T18:55:03:   "successful": 0,
+2025-11-11T18:55:03:   "failed": 0,
+2025-11-11T18:55:03:   "noAction": 0
+2025-11-11T18:55:03: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "totalProcessed": 0,
+2025-11-11T19:00:00:   "successful": 0,
+2025-11-11T19:00:00:   "failed": 0
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "duration": "3ms",
+2025-11-11T19:00:00:   "total": 0,
+2025-11-11T19:00:00:   "successful": 0,
+2025-11-11T19:00:00:   "failed": 0,
+2025-11-11T19:00:00:   "noAction": 0
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "url": "redis://localhost:6379"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:00:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:00:00:   "idlName": "zmart_core",
+2025-11-11T19:00:00:   "idlVersion": "0.69.0"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:00:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T19:00:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T19:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:00:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T19:00:00:   "config": {
+2025-11-11T19:00:00:     "proposalThreshold": 70,
+2025-11-11T19:00:00:     "disputeThreshold": 60,
+2025-11-11T19:00:00:     "minVotesRequired": 10,
+2025-11-11T19:00:00:     "retryAttempts": 3,
+2025-11-11T19:00:00:     "retryDelay": 1000
+2025-11-11T19:00:00:   }
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Cron service started {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T19:00:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Cron service started {
+2025-11-11T19:00:00:   "service": "vote-aggregator"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:00: 2025-11-11 19:00:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T19:00:00:   "service": "vote-aggregator",
+2025-11-11T19:00:00:   "port": 3001,
+2025-11-11T19:00:00:   "environment": "development",
+2025-11-11T19:00:00:   "network": "devnet",
+2025-11-11T19:00:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:00:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T19:00:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T19:00:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T19:00:00: }
+2025-11-11T19:00:01: 2025-11-11 19:00:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T19:00:01:   "service": "vote-aggregator"
+2025-11-11T19:00:01: }
+2025-11-11T19:00:01: 2025-11-11 19:00:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T19:00:01:   "service": "vote-aggregator"
+2025-11-11T19:00:01: }
+2025-11-11T19:00:01: 2025-11-11 19:00:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T19:00:01:   "service": "vote-aggregator"
+2025-11-11T19:00:01: }
+2025-11-11T19:00:01: 2025-11-11 19:00:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T19:00:01:   "service": "vote-aggregator",
+2025-11-11T19:00:01:   "totalProcessed": 0,
+2025-11-11T19:00:01:   "successful": 0,
+2025-11-11T19:00:01:   "failed": 0
+2025-11-11T19:00:01: }
+2025-11-11T19:00:01: 2025-11-11 19:00:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T19:00:01:   "service": "vote-aggregator",
+2025-11-11T19:00:01:   "duration": "2ms",
+2025-11-11T19:00:01:   "total": 0,
+2025-11-11T19:00:01:   "successful": 0,
+2025-11-11T19:00:01:   "failed": 0,
+2025-11-11T19:00:01:   "noAction": 0
+2025-11-11T19:00:01: }
+2025-11-11T19:00:03: 2025-11-11 19:00:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T19:00:03:   "service": "vote-aggregator"
+2025-11-11T19:00:03: }
+2025-11-11T19:00:03: 2025-11-11 19:00:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T19:00:03:   "service": "vote-aggregator"
+2025-11-11T19:00:03: }
+2025-11-11T19:00:03: 2025-11-11 19:00:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T19:00:03:   "service": "vote-aggregator"
+2025-11-11T19:00:03: }
+2025-11-11T19:00:03: 2025-11-11 19:00:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T19:00:03:   "service": "vote-aggregator",
+2025-11-11T19:00:03:   "totalProcessed": 0,
+2025-11-11T19:00:03:   "successful": 0,
+2025-11-11T19:00:03:   "failed": 0
+2025-11-11T19:00:03: }
+2025-11-11T19:00:03: 2025-11-11 19:00:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T19:00:03:   "service": "vote-aggregator",
+2025-11-11T19:00:03:   "duration": "2ms",
+2025-11-11T19:00:03:   "total": 0,
+2025-11-11T19:00:03:   "successful": 0,
+2025-11-11T19:00:03:   "failed": 0,
+2025-11-11T19:00:03:   "noAction": 0
+2025-11-11T19:00:03: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T19:05:00:   "service": "vote-aggregator",
+2025-11-11T19:05:00:   "url": "redis://localhost:6379"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T19:05:00:   "service": "vote-aggregator",
+2025-11-11T19:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:05:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:05:00:   "idlName": "zmart_core",
+2025-11-11T19:05:00:   "idlVersion": "0.69.0"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T19:05:00:   "service": "vote-aggregator",
+2025-11-11T19:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T19:05:00:   "service": "vote-aggregator",
+2025-11-11T19:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:05:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T19:05:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T19:05:00:   "service": "vote-aggregator",
+2025-11-11T19:05:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T19:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:05:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T19:05:00:   "config": {
+2025-11-11T19:05:00:     "proposalThreshold": 70,
+2025-11-11T19:05:00:     "disputeThreshold": 60,
+2025-11-11T19:05:00:     "minVotesRequired": 10,
+2025-11-11T19:05:00:     "retryAttempts": 3,
+2025-11-11T19:05:00:     "retryDelay": 1000
+2025-11-11T19:05:00:   }
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Cron service started {
+2025-11-11T19:05:00:   "service": "vote-aggregator",
+2025-11-11T19:05:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T19:05:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Cron service started {
+2025-11-11T19:05:00:   "service": "vote-aggregator"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:00: 2025-11-11 19:05:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T19:05:00:   "service": "vote-aggregator",
+2025-11-11T19:05:00:   "port": 3001,
+2025-11-11T19:05:00:   "environment": "development",
+2025-11-11T19:05:00:   "network": "devnet",
+2025-11-11T19:05:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:05:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T19:05:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T19:05:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T19:05:00: }
+2025-11-11T19:05:01: 2025-11-11 19:05:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T19:05:01:   "service": "vote-aggregator"
+2025-11-11T19:05:01: }
+2025-11-11T19:05:01: 2025-11-11 19:05:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T19:05:01:   "service": "vote-aggregator"
+2025-11-11T19:05:01: }
+2025-11-11T19:05:01: 2025-11-11 19:05:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T19:05:01:   "service": "vote-aggregator"
+2025-11-11T19:05:01: }
+2025-11-11T19:05:01: 2025-11-11 19:05:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T19:05:01:   "service": "vote-aggregator",
+2025-11-11T19:05:01:   "totalProcessed": 0,
+2025-11-11T19:05:01:   "successful": 0,
+2025-11-11T19:05:01:   "failed": 0
+2025-11-11T19:05:01: }
+2025-11-11T19:05:01: 2025-11-11 19:05:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T19:05:01:   "service": "vote-aggregator",
+2025-11-11T19:05:01:   "duration": "2ms",
+2025-11-11T19:05:01:   "total": 0,
+2025-11-11T19:05:01:   "successful": 0,
+2025-11-11T19:05:01:   "failed": 0,
+2025-11-11T19:05:01:   "noAction": 0
+2025-11-11T19:05:01: }
+2025-11-11T19:05:03: 2025-11-11 19:05:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T19:05:03:   "service": "vote-aggregator"
+2025-11-11T19:05:03: }
+2025-11-11T19:05:03: 2025-11-11 19:05:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T19:05:03:   "service": "vote-aggregator"
+2025-11-11T19:05:03: }
+2025-11-11T19:05:03: 2025-11-11 19:05:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T19:05:03:   "service": "vote-aggregator"
+2025-11-11T19:05:03: }
+2025-11-11T19:05:03: 2025-11-11 19:05:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T19:05:03:   "service": "vote-aggregator",
+2025-11-11T19:05:03:   "totalProcessed": 0,
+2025-11-11T19:05:03:   "successful": 0,
+2025-11-11T19:05:03:   "failed": 0
+2025-11-11T19:05:03: }
+2025-11-11T19:05:03: 2025-11-11 19:05:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T19:05:03:   "service": "vote-aggregator",
+2025-11-11T19:05:03:   "duration": "1ms",
+2025-11-11T19:05:03:   "total": 0,
+2025-11-11T19:05:03:   "successful": 0,
+2025-11-11T19:05:03:   "failed": 0,
+2025-11-11T19:05:03:   "noAction": 0
+2025-11-11T19:05:03: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Shutting down gracefully... {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Stopping cron service {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Cron service stopped {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Redis connection closed {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Connecting to Redis... {
+2025-11-11T19:10:00:   "service": "vote-aggregator",
+2025-11-11T19:10:00:   "url": "redis://localhost:6379"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Redis connected successfully {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Attempting to create Anchor Program {
+2025-11-11T19:10:00:   "service": "vote-aggregator",
+2025-11-11T19:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:10:00:   "idlAddress": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:10:00:   "idlName": "zmart_core",
+2025-11-11T19:10:00:   "idlVersion": "0.69.0"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Anchor Program created successfully {
+2025-11-11T19:10:00:   "service": "vote-aggregator",
+2025-11-11T19:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: AnchorClient initialized {
+2025-11-11T19:10:00:   "service": "vote-aggregator",
+2025-11-11T19:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:10:00:   "globalConfig": "DAMfA7TNuY6xB6DiEeqF5yLvZoeeuAxTJGDeycJjNxAX",
+2025-11-11T19:10:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: AggregationService initialized {
+2025-11-11T19:10:00:   "service": "vote-aggregator",
+2025-11-11T19:10:00:   "network": "https://api.devnet.solana.com",
+2025-11-11T19:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:10:00:   "payer": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T19:10:00:   "config": {
+2025-11-11T19:10:00:     "proposalThreshold": 70,
+2025-11-11T19:10:00:     "disputeThreshold": 60,
+2025-11-11T19:10:00:     "minVotesRequired": 10,
+2025-11-11T19:10:00:     "retryAttempts": 3,
+2025-11-11T19:10:00:     "retryDelay": 1000
+2025-11-11T19:10:00:   }
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Aggregation service initialized {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Starting cron service {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Cron service started {
+2025-11-11T19:10:00:   "service": "vote-aggregator",
+2025-11-11T19:10:00:   "proposalSchedule": "*/5 * * * * (every 5 minutes)",
+2025-11-11T19:10:00:   "disputeSchedule": "2-59/5 * * * * (every 5 minutes, offset)"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Cron service started {
+2025-11-11T19:10:00:   "service": "vote-aggregator"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:00: 2025-11-11 19:10:00 [[32minfo[39m]: Vote Aggregator Service started {
+2025-11-11T19:10:00:   "service": "vote-aggregator",
+2025-11-11T19:10:00:   "port": 3001,
+2025-11-11T19:10:00:   "environment": "development",
+2025-11-11T19:10:00:   "network": "devnet",
+2025-11-11T19:10:00:   "programId": "6s8bbbCS7oNYNnTUHgrPDHG4jqaSrD6MSxQSPVR1rxw",
+2025-11-11T19:10:00:   "deployerPubkey": "4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye",
+2025-11-11T19:10:00:   "healthCheck": "http://localhost:3001/health",
+2025-11-11T19:10:00:   "stats": "http://localhost:3001/api/stats"
+2025-11-11T19:10:00: }
+2025-11-11T19:10:01: 2025-11-11 19:10:01 [[32minfo[39m]: 🔄 Starting proposal aggregation job {
+2025-11-11T19:10:01:   "service": "vote-aggregator"
+2025-11-11T19:10:01: }
+2025-11-11T19:10:01: 2025-11-11 19:10:01 [[32minfo[39m]: Starting proposal vote aggregation {
+2025-11-11T19:10:01:   "service": "vote-aggregator"
+2025-11-11T19:10:01: }
+2025-11-11T19:10:01: 2025-11-11 19:10:01 [[32minfo[39m]: Found 0 proposal vote sets to process {
+2025-11-11T19:10:01:   "service": "vote-aggregator"
+2025-11-11T19:10:01: }
+2025-11-11T19:10:01: 2025-11-11 19:10:01 [[32minfo[39m]: Proposal vote aggregation complete {
+2025-11-11T19:10:01:   "service": "vote-aggregator",
+2025-11-11T19:10:01:   "totalProcessed": 0,
+2025-11-11T19:10:01:   "successful": 0,
+2025-11-11T19:10:01:   "failed": 0
+2025-11-11T19:10:01: }
+2025-11-11T19:10:01: 2025-11-11 19:10:01 [[32minfo[39m]: ✅ Proposal aggregation job complete {
+2025-11-11T19:10:01:   "service": "vote-aggregator",
+2025-11-11T19:10:01:   "duration": "2ms",
+2025-11-11T19:10:01:   "total": 0,
+2025-11-11T19:10:01:   "successful": 0,
+2025-11-11T19:10:01:   "failed": 0,
+2025-11-11T19:10:01:   "noAction": 0
+2025-11-11T19:10:01: }
+2025-11-11T19:10:03: 2025-11-11 19:10:03 [[32minfo[39m]: 🔄 Starting dispute aggregation job {
+2025-11-11T19:10:03:   "service": "vote-aggregator"
+2025-11-11T19:10:03: }
+2025-11-11T19:10:03: 2025-11-11 19:10:03 [[32minfo[39m]: Starting dispute vote aggregation {
+2025-11-11T19:10:03:   "service": "vote-aggregator"
+2025-11-11T19:10:03: }
+2025-11-11T19:10:03: 2025-11-11 19:10:03 [[32minfo[39m]: Found 0 dispute vote sets to process {
+2025-11-11T19:10:03:   "service": "vote-aggregator"
+2025-11-11T19:10:03: }
+2025-11-11T19:10:03: 2025-11-11 19:10:03 [[32minfo[39m]: Dispute vote aggregation complete {
+2025-11-11T19:10:03:   "service": "vote-aggregator",
+2025-11-11T19:10:03:   "totalProcessed": 0,
+2025-11-11T19:10:03:   "successful": 0,
+2025-11-11T19:10:03:   "failed": 0
+2025-11-11T19:10:03: }
+2025-11-11T19:10:03: 2025-11-11 19:10:03 [[32minfo[39m]: ✅ Dispute aggregation job complete {
+2025-11-11T19:10:03:   "service": "vote-aggregator",
+2025-11-11T19:10:03:   "duration": "1ms",
+2025-11-11T19:10:03:   "total": 0,
+2025-11-11T19:10:03:   "successful": 0,
+2025-11-11T19:10:03:   "failed": 0,
+2025-11-11T19:10:03:   "noAction": 0
+2025-11-11T19:10:03: }

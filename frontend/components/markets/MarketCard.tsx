@@ -5,30 +5,10 @@ import type { Market } from '@/types/market';
 import { StateBadge } from './StateBadge';
 import { PriceDisplay } from './PriceDisplay';
 import { formatDistanceToNow } from 'date-fns';
+import { calculateMarketPrices } from '@/lib/utils/market-prices';
 
 interface MarketCardProps {
   market: Market;
-}
-
-/**
- * Calculate mock prices for now (will be replaced with real LMSR calculation)
- * For MVP, use simple randomness based on market_id hash
- *
- * TODO: Implement real LMSR price calculation in Day 20
- * Formula: P(YES) = e^(q_yes/b) / (e^(q_yes/b) + e^(q_no/b))
- */
-function calculateMockPrices(market: Market): {
-  yesPrice: number;
-  noPrice: number;
-} {
-  // Create variation based on market_id hash
-  const hash = market.market_id
-    .split('')
-    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const yesPrice = 40 + (hash % 20); // Range: 40-60%
-  const noPrice = 100 - yesPrice;
-
-  return { yesPrice, noPrice };
 }
 
 /**
@@ -56,9 +36,15 @@ function formatVolume(volumeStr: string): string {
 /**
  * Individual market card component
  * Displays market information and links to detail page
+ *
+ * Uses real LMSR price calculation from on-chain state
+ * Formula: P(YES) = e^(q_yes/b) / (e^(q_yes/b) + e^(q_no/b))
  */
 export function MarketCard({ market }: MarketCardProps) {
-  const { yesPrice, noPrice } = calculateMockPrices(market);
+  // Calculate real LMSR prices from on-chain state
+  const prices = calculateMarketPrices(market);
+  const { yesPrice, noPrice } = prices;
+
   const volume = formatVolume(market.total_volume);
 
   const expiresAt = new Date(market.expires_at);
