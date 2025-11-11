@@ -55,17 +55,17 @@ export function MarketCard({ market }: MarketCardProps) {
 
   return (
     <Link href={`/markets/${market.market_id}`}>
-      <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg hover:border-primary/50 transition-all cursor-pointer group h-full flex flex-col">
+      <div className="bg-surface-card rounded-lg border border-border-default p-6 hover:shadow-glow-lg hover:border-border-interactive transition-all duration-200 cursor-pointer group h-full flex flex-col">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors line-clamp-2 flex-1">
+          <h3 className="text-lg font-semibold text-text-primary group-hover:text-brand-primary transition-colors line-clamp-2 flex-1">
             {market.title}
           </h3>
           <StateBadge state={market.state} className="ml-3 flex-shrink-0" />
         </div>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">
+        <p className="text-sm text-text-secondary mb-4 line-clamp-2 flex-grow">
           {market.description}
         </p>
 
@@ -73,13 +73,13 @@ export function MarketCard({ market }: MarketCardProps) {
         <PriceDisplay yesPrice={yesPrice} noPrice={noPrice} className="mb-4" />
 
         {/* Stats */}
-        <div className="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-gray-100">
+        <div className="flex items-center justify-between text-xs text-text-tertiary pt-4 border-t border-border-subtle">
           <div className="flex items-center gap-4">
             <div>
               <span className="font-medium">Volume:</span> {volume}
             </div>
             <div>
-              <span className={hasExpired ? 'text-red-600 font-medium' : ''}>
+              <span className={hasExpired ? 'text-status-error font-medium' : ''}>
                 {expiryText}
               </span>
             </div>
