@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-11-11T13:21:08.393Z",
+  "node": "v23.11.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "memory": {
+    "total": 25769803776,
+    "free": 2031419392,
+    "used": 44003120
+  },
+  "cpus": 10,
+  "env": {
+    "NODE_ENV": "test",
+    "CI": "false"
+  }
+}

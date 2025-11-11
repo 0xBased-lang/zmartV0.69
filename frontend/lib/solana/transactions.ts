@@ -23,7 +23,7 @@ import {
 import { AnchorProvider, Program, BN } from '@coral-xyz/anchor';
 import { PROGRAM_ID } from '@/config/constants';
 import type { ZmartCore } from '@/types/zmart_core';
-import idl from '@/../target/idl/zmart_core.json';
+import idl from '@/lib/idl/zmart_core.json';
 
 // ============================================================================
 // Type Definitions
