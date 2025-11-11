@@ -1,9 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    --font-inter: 'Inter', system-ui, sans-serif;
+    --font-sora: 'Sora', 'Inter', sans-serif;
+    --font-jetbrains-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+    /* Light mode (kept for compatibility) */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -25,13 +32,139 @@
     --ring: 199.2 89% 48%;
     --radius: 0.5rem;
   }
+
+  /* Dark mode (default) - ZMART crypto trading theme */
+  .dark, :root {
+    --background: 222 47% 5%;        /* #0a0e1a - deep navy */
+    --foreground: 210 40% 98%;       /* #f9fafb - white */
+    --card: 222 39% 11%;             /* #1a2332 - surface base */
+    --card-foreground: 210 40% 98%;  /* #f9fafb - white */
+    --popover: 222 39% 11%;          /* #1a2332 - surface base */
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;          /* #3b82f6 - blue */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 258 90% 66%;        /* #8b5cf6 - purple */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 13% 26%;            /* #374151 */
+    --muted-foreground: 220 9% 46%;  /* #6b7280 */
+    --accent: 189 94% 43%;           /* #06b6d4 - cyan */
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;        /* #ef4444 - red */
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 19% 20%;           /* #1f2937 */
+    --input: 217 19% 20%;            /* #1f2937 */
+    --ring: 217 91% 60%;             /* #3b82f6 - blue */
+    --radius: 0.5rem;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background-primary text-text-primary font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" auto;
+  }
+
+  /* Custom scrollbar for dark theme */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-sunken;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border-strong rounded-md;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-border-interactive;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.border.strong') theme('colors.surface.sunken');
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-brand-primary/30 text-text-primary;
+  }
+
+  /* Focus visible styling */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-brand-primary ring-offset-2 ring-offset-background-primary;
+  }
+
+  /* Headings with display font */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  /* Smooth transitions for interactive elements */
+  a, button, [role="button"] {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  /* Gradient text effect */
+  .gradient-text {
+    @apply bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-surface-base/80 backdrop-blur-md border border-border-default;
+  }
+
+  /* Glow card effect */
+  .glow-card {
+    @apply relative;
+  }
+
+  .glow-card::before {
+    content: '';
+    @apply absolute inset-0 -z-10 rounded-lg opacity-0 transition-opacity duration-300;
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  }
+
+  .glow-card:hover::before {
+    @apply opacity-100;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Shimmer loading effect */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      theme('colors.surface.base') 0%,
+      theme('colors.surface.elevated') 50%,
+      theme('colors.surface.base') 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
   }
 }
