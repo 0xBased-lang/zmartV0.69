@@ -102,6 +102,128 @@ router.get(
 );
 
 /**
+ * GET /api/markets/activity
+ * Get recent platform activity (trades, resolutions, etc.)
+ * IMPORTANT: This route MUST be before /:id to avoid matching "activity" as an ID
+ */
+router.get(
+  "/activity",
+  asyncHandler(async (req: Request, res: Response) => {
+    const { limit = 20, type } = req.query;
+
+    try {
+      const activities: Array<{
+        id: string;
+        type: "trade" | "resolution" | "creation";
+        user: string;
+        action: string;
+        market: string;
+        marketId: string;
+        time: string;
+        amount?: string;
+      }> = [];
+
+      // 1. Get recent trades
+      if (!type || type === "trade") {
+        const { data: trades, error: tradesError } = await supabase
+          .from("trades")
+          .select("id, user_wallet, trade_type, outcome, shares, cost, created_at, market_id")
+          .order("created_at", { ascending: false })
+          .limit(Math.floor(parseInt(limit as string) / 2));
+
+        if (!tradesError && trades) {
+          // Get market details for these trades
+          const marketIds = [...new Set(trades.map((t) => t.market_id))];
+          const { data: markets } = await supabase
+            .from("markets")
+            .select("id, question")
+            .in("id", marketIds);
+
+          const marketMap = new Map(markets?.map((m) => [m.id, m.question]) || []);
+
+          for (const trade of trades) {
+            activities.push({
+              id: trade.id,
+              type: "trade",
+              user: `${trade.user_wallet.slice(0, 6)}...${trade.user_wallet.slice(-4)}`,
+              action: `${trade.trade_type === "buy" ? "bought" : "sold"} ${Math.floor(parseFloat(trade.shares))} ${trade.outcome} shares`,
+              market: marketMap.get(trade.market_id) || "Unknown Market",
+              marketId: trade.market_id,
+              time: trade.created_at,
+              amount: `${(parseFloat(trade.cost) / 1e9).toFixed(2)} SOL`,
+            });
+          }
+        }
+      }
+
+      // 2. Get recent market resolutions
+      if (!type || type === "resolution") {
+        const { data: resolvedMarkets, error: resolvedError } = await supabase
+          .from("markets")
+          .select("id, question, proposed_outcome, resolved_at, creator_wallet")
+          .not("resolved_at", "is", null)
+          .order("resolved_at", { ascending: false })
+          .limit(Math.floor(parseInt(limit as string) / 4));
+
+        if (!resolvedError && resolvedMarkets) {
+          for (const market of resolvedMarkets) {
+            activities.push({
+              id: `resolution-${market.id}`,
+              type: "resolution",
+              user: market.creator_wallet
+                ? `${market.creator_wallet.slice(0, 6)}...${market.creator_wallet.slice(-4)}`
+                : "oracle",
+              action: `resolved as ${market.proposed_outcome === true ? "YES" : market.proposed_outcome === false ? "NO" : "INVALID"}`,
+              market: market.question,
+              marketId: market.id,
+              time: market.resolved_at,
+            });
+          }
+        }
+      }
+
+      // 3. Get recent market creations
+      if (!type || type === "creation") {
+        const { data: newMarkets, error: newMarketsError } = await supabase
+          .from("markets")
+          .select("id, question, creator_wallet, created_at")
+          .order("created_at", { ascending: false })
+          .limit(Math.floor(parseInt(limit as string) / 4));
+
+        if (!newMarketsError && newMarkets) {
+          for (const market of newMarkets) {
+            activities.push({
+              id: `creation-${market.id}`,
+              type: "creation",
+              user: market.creator_wallet
+                ? `${market.creator_wallet.slice(0, 6)}...${market.creator_wallet.slice(-4)}`
+                : "unknown",
+              action: "created market",
+              market: market.question,
+              marketId: market.id,
+              time: market.created_at,
+            });
+          }
+        }
+      }
+
+      // Sort all activities by time (most recent first)
+      activities.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+
+      // Limit to requested amount
+      const limitedActivities = activities.slice(0, parseInt(limit as string));
+
+      res.json({
+        activities: limitedActivities,
+        count: limitedActivities.length,
+      });
+    } catch (error: any) {
+      throw new ApiError(500, `Failed to fetch activity: ${error.message}`);
+    }
+  })
+);
+
+/**
  * GET /api/markets/:id
  * Get market details by ID (on-chain address or database id)
  */
@@ -405,127 +527,6 @@ router.get(
         sell_volume: sellVolume,
       },
     });
-  })
-);
-
-/**
- * GET /api/markets/activity
- * Get recent platform activity (trades, resolutions, etc.)
- */
-router.get(
-  "/activity",
-  asyncHandler(async (req: Request, res: Response) => {
-    const { limit = 20, type } = req.query;
-
-    try {
-      const activities: Array<{
-        id: string;
-        type: "trade" | "resolution" | "creation";
-        user: string;
-        action: string;
-        market: string;
-        marketId: string;
-        time: string;
-        amount?: string;
-      }> = [];
-
-      // 1. Get recent trades
-      if (!type || type === "trade") {
-        const { data: trades, error: tradesError } = await supabase
-          .from("trades")
-          .select("id, user_wallet, trade_type, outcome, shares, cost, created_at, market_id")
-          .order("created_at", { ascending: false })
-          .limit(Math.floor(parseInt(limit as string) / 2));
-
-        if (!tradesError && trades) {
-          // Get market details for these trades
-          const marketIds = [...new Set(trades.map((t) => t.market_id))];
-          const { data: markets } = await supabase
-            .from("markets")
-            .select("id, question")
-            .in("id", marketIds);
-
-          const marketMap = new Map(markets?.map((m) => [m.id, m.question]) || []);
-
-          for (const trade of trades) {
-            activities.push({
-              id: trade.id,
-              type: "trade",
-              user: `${trade.user_wallet.slice(0, 6)}...${trade.user_wallet.slice(-4)}`,
-              action: `${trade.trade_type === "buy" ? "bought" : "sold"} ${Math.floor(parseFloat(trade.shares))} ${trade.outcome} shares`,
-              market: marketMap.get(trade.market_id) || "Unknown Market",
-              marketId: trade.market_id,
-              time: trade.created_at,
-              amount: `${(parseFloat(trade.cost) / 1e9).toFixed(2)} SOL`,
-            });
-          }
-        }
-      }
-
-      // 2. Get recent market resolutions
-      if (!type || type === "resolution") {
-        const { data: resolvedMarkets, error: resolvedError } = await supabase
-          .from("markets")
-          .select("id, question, proposed_outcome, resolved_at, creator_wallet")
-          .not("resolved_at", "is", null)
-          .order("resolved_at", { ascending: false })
-          .limit(Math.floor(parseInt(limit as string) / 4));
-
-        if (!resolvedError && resolvedMarkets) {
-          for (const market of resolvedMarkets) {
-            activities.push({
-              id: `resolution-${market.id}`,
-              type: "resolution",
-              user: market.creator_wallet
-                ? `${market.creator_wallet.slice(0, 6)}...${market.creator_wallet.slice(-4)}`
-                : "oracle",
-              action: `resolved as ${market.proposed_outcome === true ? "YES" : market.proposed_outcome === false ? "NO" : "INVALID"}`,
-              market: market.question,
-              marketId: market.id,
-              time: market.resolved_at,
-            });
-          }
-        }
-      }
-
-      // 3. Get recent market creations
-      if (!type || type === "creation") {
-        const { data: newMarkets, error: newMarketsError } = await supabase
-          .from("markets")
-          .select("id, question, creator_wallet, created_at")
-          .order("created_at", { ascending: false })
-          .limit(Math.floor(parseInt(limit as string) / 4));
-
-        if (!newMarketsError && newMarkets) {
-          for (const market of newMarkets) {
-            activities.push({
-              id: `creation-${market.id}`,
-              type: "creation",
-              user: market.creator_wallet
-                ? `${market.creator_wallet.slice(0, 6)}...${market.creator_wallet.slice(-4)}`
-                : "unknown",
-              action: "created market",
-              market: market.question,
-              marketId: market.id,
-              time: market.created_at,
-            });
-          }
-        }
-      }
-
-      // Sort all activities by time (most recent first)
-      activities.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
-
-      // Limit to requested amount
-      const limitedActivities = activities.slice(0, parseInt(limit as string));
-
-      res.json({
-        activities: limitedActivities,
-        count: limitedActivities.length,
-      });
-    } catch (error: any) {
-      throw new ApiError(500, `Failed to fetch activity: ${error.message}`);
-    }
   })
 );
 
