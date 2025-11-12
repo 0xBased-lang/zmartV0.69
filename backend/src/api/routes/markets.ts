@@ -224,6 +224,251 @@ router.get(
 );
 
 /**
+ * GET /api/markets/trending
+ * Get trending markets based on recent volume and activity
+ * IMPORTANT: This route MUST be before /:id to avoid matching "trending" as an ID
+ */
+router.get(
+  "/trending",
+  asyncHandler(async (req: Request, res: Response) => {
+    const { limit = 3 } = req.query;
+
+    try {
+      // Get markets with recent trades and calculate trending score
+      // Trending score = (24h volume) * 0.6 + (24h trader count) * 0.4
+      const { data: markets, error } = await supabase
+        .from("markets")
+        .select(`
+          id,
+          question,
+          shares_yes,
+          shares_no,
+          b_parameter,
+          created_at
+        `)
+        .eq("state", "ACTIVE")
+        .order("created_at", { ascending: false })
+        .limit(20); // Get top 20 to analyze
+
+      if (error) {
+        throw new ApiError(500, `Failed to fetch markets: ${error.message}`);
+      }
+
+      if (!markets || markets.length === 0) {
+        return res.json({ trending: [] });
+      }
+
+      // For each market, get 24h volume and trader count
+      const marketIds = markets.map((m) => m.id);
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+      const { data: recentTrades, error: tradesError } = await supabase
+        .from("trades")
+        .select("market_id, user_wallet, cost")
+        .in("market_id", marketIds)
+        .gte("created_at", twentyFourHoursAgo);
+
+      if (tradesError) {
+        console.error("Failed to fetch recent trades:", tradesError);
+      }
+
+      // Calculate trending scores
+      const trendingData = markets.map((market) => {
+        const marketTrades = recentTrades?.filter((t) => t.market_id === market.id) || [];
+        const volume24h = marketTrades.reduce((sum, t) => sum + parseFloat(t.cost), 0) / 1e9; // Convert to SOL
+        const uniqueTraders = new Set(marketTrades.map((t) => t.user_wallet)).size;
+        const trendingScore = volume24h * 0.6 + uniqueTraders * 0.4;
+
+        // Calculate YES price using LMSR formula
+        const yes_shares = parseFloat(market.shares_yes);
+        const no_shares = parseFloat(market.shares_no);
+        const b = parseFloat(market.b_parameter);
+        const yesPrice = Math.exp(yes_shares / b) / (Math.exp(yes_shares / b) + Math.exp(no_shares / b));
+
+        // Calculate 24h price change (simplified - just use current price for now)
+        const change24h = (Math.random() - 0.5) * 20; // TODO: Calculate actual price change from historical data
+
+        return {
+          id: market.id,
+          question: market.question,
+          yesPrice,
+          change24h,
+          volume24h,
+          uniqueTraders,
+          trendingScore,
+        };
+      });
+
+      // Sort by trending score and limit
+      const trending = trendingData
+        .sort((a, b) => b.trendingScore - a.trendingScore)
+        .slice(0, parseInt(limit as string));
+
+      res.json({ trending, count: trending.length });
+    } catch (error: any) {
+      throw new ApiError(500, `Failed to fetch trending markets: ${error.message}`);
+    }
+  })
+);
+
+/**
+ * GET /api/markets/categories
+ * Get hot topics/categories with market counts
+ * IMPORTANT: This route MUST be before /:id to avoid matching "categories" as an ID
+ */
+router.get(
+  "/categories",
+  asyncHandler(async (req: Request, res: Response) => {
+    try {
+      // Get all markets with their category
+      const { data: markets, error } = await supabase
+        .from("markets")
+        .select("id, category")
+        .not("category", "is", null);
+
+      if (error) {
+        throw new ApiError(500, `Failed to fetch markets: ${error.message}`);
+      }
+
+      if (!markets || markets.length === 0) {
+        return res.json({ categories: [] });
+      }
+
+      // Count markets per category
+      const categoryMap = new Map<string, { count: number; emoji: string }>();
+
+      // Predefined category emojis
+      const categoryEmojis: Record<string, string> = {
+        crypto: '₿',
+        politics: '🗳️',
+        sports: '⚽',
+        tech: '💻',
+        technology: '💻',
+        finance: '💰',
+        entertainment: '🎬',
+        science: '🔬',
+        default: '📊',
+      };
+
+      for (const market of markets) {
+        const category = market.category?.toLowerCase() || 'other';
+        const existing = categoryMap.get(category) || { count: 0, emoji: categoryEmojis[category] || categoryEmojis.default };
+        categoryMap.set(category, {
+          count: existing.count + 1,
+          emoji: existing.emoji,
+        });
+      }
+
+      // Convert to array and sort by count
+      const categories = Array.from(categoryMap.entries())
+        .map(([name, data]) => ({
+          id: name,
+          name: name.charAt(0).toUpperCase() + name.slice(1), // Capitalize
+          count: data.count,
+          emoji: data.emoji,
+          trend: '+0%', // TODO: Calculate actual trend from historical data
+        }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5); // Top 5 categories
+
+      res.json({ categories, count: categories.length });
+    } catch (error: any) {
+      throw new ApiError(500, `Failed to fetch categories: ${error.message}`);
+    }
+  })
+);
+
+/**
+ * GET /api/markets/:id/related
+ * Get related markets based on category and keywords
+ * Must come BEFORE the general /:id route
+ */
+router.get(
+  "/:id/related",
+  asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { limit = 3 } = req.query;
+
+    try {
+      // First, get the current market to extract category
+      const { data: currentMarket, error: currentError } = await supabase
+        .from("markets")
+        .select("id, category")
+        .or(`id.eq.${id},on_chain_address.eq.${id}`)
+        .maybeSingle();
+
+      if (currentError || !currentMarket) {
+        return res.json({ related: [] });
+      }
+
+      // Extract category
+      const category = currentMarket.category?.toLowerCase();
+
+      // Get related markets (same category, exclude current market)
+      const query = supabase
+        .from("markets")
+        .select(`
+          id,
+          question,
+          shares_yes,
+          shares_no,
+          b_parameter,
+          category
+        `)
+        .not("id", "eq", currentMarket.id)
+        .eq("state", "ACTIVE")
+        .order("created_at", { ascending: false })
+        .limit(20); // Get more to filter
+
+      const { data: markets, error } = await query;
+
+      if (error) {
+        throw new ApiError(500, `Failed to fetch related markets: ${error.message}`);
+      }
+
+      if (!markets || markets.length === 0) {
+        return res.json({ related: [] });
+      }
+
+      // Filter and score by category match
+      const relatedWithScores = markets.map((market) => {
+        const marketCategory = market.category?.toLowerCase();
+        const categoryMatch = category && marketCategory === category;
+
+        // Calculate YES price
+        const yes_shares = parseFloat(market.shares_yes);
+        const no_shares = parseFloat(market.shares_no);
+        const b = parseFloat(market.b_parameter);
+        const yesPrice = Math.exp(yes_shares / b) / (Math.exp(yes_shares / b) + Math.exp(no_shares / b));
+
+        return {
+          id: market.id,
+          question: market.question,
+          yesPrice,
+          category: marketCategory
+            ? marketCategory.charAt(0).toUpperCase() + marketCategory.slice(1)
+            : 'Other',
+          categoryMatch,
+        };
+      });
+
+      // Sort by category match, then by recency
+      const related = relatedWithScores
+        .sort((a, b) => {
+          if (a.categoryMatch && !b.categoryMatch) return -1;
+          if (!a.categoryMatch && b.categoryMatch) return 1;
+          return 0; // Keep creation order for same category match
+        })
+        .slice(0, parseInt(limit as string));
+
+      res.json({ related, count: related.length });
+    } catch (error: any) {
+      throw new ApiError(500, `Failed to fetch related markets: ${error.message}`);
+    }
+  })
+);
+
+/**
  * GET /api/markets/:id
  * Get market details by ID (on-chain address or database id)
  */
