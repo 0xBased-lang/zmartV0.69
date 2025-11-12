@@ -29,8 +29,8 @@ async function proxyRequest(request: NextRequest, method: string) {
     const url = new URL(request.url)
     const path = url.pathname.replace('/api/proxy/', '')
 
-    // Build backend URL
-    const backendUrl = `${BACKEND_URL}/api/${path}${url.search}`
+    // Build backend URL (path already includes /api/ from frontend)
+    const backendUrl = `${BACKEND_URL}/${path}${url.search}`
 
     console.log(`[Proxy] ${method} ${backendUrl}`)
 
