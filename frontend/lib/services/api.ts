@@ -10,6 +10,7 @@
  */
 
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
+import apiLogger from './api-logger';
 
 // API response types
 export interface Market {
@@ -93,6 +94,9 @@ export class APIClient {
         'Content-Type': 'application/json',
       },
     });
+
+    // Setup API request/response logging
+    apiLogger.setupInterceptors(this.client);
 
     this.setupInterceptors();
     this.setupRetryLogic();

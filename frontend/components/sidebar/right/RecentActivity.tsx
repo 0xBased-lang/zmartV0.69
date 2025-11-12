@@ -5,6 +5,9 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import { Clock, TrendingUp, MessageSquare, Trophy, Activity as ActivityIcon, Plus } from 'lucide-react'
+import { createLogger } from '@/lib/utils/debug-logger'
+
+const log = createLogger('RecentActivity')
 
 interface ActivityItem {
   id: string
@@ -41,22 +44,37 @@ export function RecentActivity() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    log.info('Component mounted')
+
     const fetchActivity = async () => {
+      const startTime = performance.now()
       try {
         setLoading(true)
         setError(null)
 
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-        const response = await fetch(`${apiUrl}/api/markets/activity?limit=20`)
+        const url = `${apiUrl}/api/markets/activity?limit=20`
+        log.debug('Fetching activity', { url })
+
+        const response = await fetch(url)
 
         if (!response.ok) {
-          throw new Error('Failed to fetch activity')
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
         }
 
         const data = await response.json()
+        const duration = performance.now() - startTime
+
+        log.info(`Received ${data.activities?.length || 0} activity items`, {
+          count: data.activities?.length,
+          duration: `${duration.toFixed(2)}ms`
+        })
+
         setActivities(data.activities || [])
+        log.debug('State updated successfully')
       } catch (err) {
-        console.error('Error fetching activity:', err)
+        const duration = performance.now() - startTime
+        log.error('Failed to fetch activity', err, { duration: `${duration.toFixed(2)}ms` })
         setError('Failed to load activity')
         setActivities([])
       } finally {
@@ -67,8 +85,16 @@ export function RecentActivity() {
     fetchActivity()
 
     // Refresh activity every 30 seconds
-    const interval = setInterval(fetchActivity, 30000)
-    return () => clearInterval(interval)
+    log.debug('Setting up auto-refresh (30s interval)')
+    const interval = setInterval(() => {
+      log.debug('Auto-refresh triggered')
+      fetchActivity()
+    }, 30000)
+
+    return () => {
+      log.info('Component unmounting')
+      clearInterval(interval)
+    }
   }, [])
 
   if (loading) {
