@@ -33,12 +33,15 @@ package-lock.json
 /coverage
 *.lcov
 test-results/
+test-results-*/
 playwright-report/
 .env.test
 playwright/.auth/
 **/test-wallet.json
 test-screenshots/
 test-videos/
+test-data/runs/
+test-execution-*.log
 
 # ============================================================
 # Next.js
