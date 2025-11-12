@@ -20,9 +20,8 @@ import {
  * Market ready for finalization
  */
 export interface MarketToFinalize {
-  id: string; // UUID in Supabase
+  id: string; // UUID in Supabase (market identifier)
   on_chain_address: string; // Base58 public key
-  market_id: string; // Market identifier
   proposed_outcome: string | null; // 'YES', 'NO', 'INVALID'
   resolution_proposed_at: string; // ISO timestamp
   state: string; // Should be 'RESOLVING'
@@ -207,7 +206,7 @@ export class MarketMonitor {
     try {
       const { data, error } = await this.supabase
         .from('markets')
-        .select('id, on_chain_address, market_id, proposed_outcome, resolution_proposed_at, state')
+        .select('id, on_chain_address, proposed_outcome, resolution_proposed_at, state')
         .eq('state', 'RESOLVING')
         .not('resolution_proposed_at', 'is', null)
         .lte('resolution_proposed_at', cutoffTimestamp.toISOString())
@@ -223,7 +222,7 @@ export class MarketMonitor {
       if (MARKET_MONITOR_CONFIG.DEBUG_MODE && markets.length > 0) {
         logger.debug(`[MarketMonitor] Markets found:`, {
           count: markets.length,
-          marketIds: markets.map(m => m.market_id),
+          marketIds: markets.map(m => m.id),
         });
       }
 
@@ -251,7 +250,7 @@ export class MarketMonitor {
     const timeout = MARKET_MONITOR_CONFIG.MAX_PROCESSING_TIME_PER_MARKET_MS;
 
     logger.info(
-      `[MarketMonitor] Processing market ${market.market_id} ` +
+      `[MarketMonitor] Processing market ${market.id} ` +
       `(address: ${market.on_chain_address})`
     );
 
@@ -259,18 +258,18 @@ export class MarketMonitor {
       // Race between processing and timeout
       const result = await Promise.race([
         this.processMarket(market),
-        this.createTimeoutPromise(timeout, market.market_id),
+        this.createTimeoutPromise(timeout, market.id),
       ]);
 
       const processingTime = Date.now() - startTime;
 
       logger.info(
-        `[MarketMonitor] Market ${market.market_id} finalized successfully ` +
+        `[MarketMonitor] Market ${market.id} finalized successfully ` +
         `(signature: ${result.signature}, time: ${processingTime}ms)`
       );
 
       return {
-        marketId: market.market_id,
+        marketId: market.id,
         marketAddress: market.on_chain_address,
         success: true,
         signature: result.signature,
@@ -281,7 +280,7 @@ export class MarketMonitor {
       const processingTime = Date.now() - startTime;
 
       logger.error(
-        `[MarketMonitor] Failed to finalize market ${market.market_id}:`,
+        `[MarketMonitor] Failed to finalize market ${market.id}:`,
         error
       );
 
@@ -294,7 +293,7 @@ export class MarketMonitor {
       });
 
       return {
-        marketId: market.market_id,
+        marketId: market.id,
         marketAddress: market.on_chain_address,
         success: false,
         error: error.message,
@@ -380,7 +379,7 @@ export class MarketMonitor {
         .insert({
           market_id: market.id, // UUID from markets table
           market_on_chain_address: market.on_chain_address,
-          market_identifier: market.market_id,
+          market_identifier: market.id,
           error_message: errorMessage,
           resolution_proposed_at: market.resolution_proposed_at,
           created_at: new Date().toISOString(),
@@ -392,13 +391,13 @@ export class MarketMonitor {
 
       if (MARKET_MONITOR_CONFIG.DEBUG_MODE) {
         logger.debug(
-          `[MarketMonitor] Logged error to database for market ${market.market_id}`
+          `[MarketMonitor] Logged error to database for market ${market.id}`
         );
       }
     } catch (error: any) {
       // Don't throw - logging errors shouldn't prevent service from continuing
       logger.error(
-        `[MarketMonitor] Failed to log error to database for market ${market.market_id}:`,
+        `[MarketMonitor] Failed to log error to database for market ${market.id}:`,
         error
       );
     }
