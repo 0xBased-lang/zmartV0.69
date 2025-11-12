@@ -75,7 +75,7 @@ module.exports = {
     // Service 4: Market Monitor (cron: every 5 minutes)
     {
       name: 'market-monitor',
-      script: './dist/services/market-monitor/index.js',
+      script: './dist/services/market-monitor/standalone.js',
       cwd: '/var/www/zmart/backend',
       node_args: '-r dotenv/config', // Load .env before app starts
       exec_mode: 'fork',
