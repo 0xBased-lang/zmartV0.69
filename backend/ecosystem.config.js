@@ -1,9 +1,16 @@
 // PM2 Ecosystem Configuration for ZMART Backend Services
 // Usage: pm2 start ecosystem.config.js
+//
+// 🔧 Architecture: 5 services total (4 active + 1 disabled)
+//   - Service 1: API Gateway (includes WebSocket on port 4001)
+//   - Service 2: Vote Aggregator
+//   - Service 3: Market Monitor
+//   - Service 4: Event Indexer
+//   - Service 5: IPFS Snapshot (disabled for MVP)
 
 module.exports = {
   apps: [
-    // Service 1: API Gateway (port 4000)
+    // Service 1: API Gateway (REST API + WebSocket) - ports 4000, 4001
     {
       name: 'api-gateway',
       script: './dist/index.js',
@@ -18,6 +25,7 @@ module.exports = {
       env: {
         NODE_ENV: 'development',
         API_PORT: 4000,
+        WS_PORT: 4001,  // WebSocket runs inside api-gateway
       },
       error_file: './logs/api-gateway-error.log',
       out_file: './logs/api-gateway-out.log',
@@ -25,28 +33,8 @@ module.exports = {
       time: true,
     },
 
-    // Service 2: WebSocket Server (port 4001)
-    {
-      name: 'websocket-server',
-      script: './dist/services/websocket/server.js',
-      cwd: '/Users/seman/Desktop/zmartV0.69/backend',
-      instances: 1,
-      autorestart: true,
-      watch: false,
-      max_memory_restart: '500M',
-      max_restarts: 10,
-      min_uptime: '10s',
-      env: {
-        NODE_ENV: 'development',
-        WS_PORT: 4001,
-      },
-      error_file: './logs/websocket-error.log',
-      out_file: './logs/websocket-out.log',
-      log_file: './logs/websocket-combined.log',
-      time: true,
-    },
-
-    // Service 3: Vote Aggregator (HTTP server + cron: every 5 minutes)
+    // Service 2: Vote Aggregator (HTTP server + cron: every 5 minutes)
+    // NOTE: WebSocket Server runs inside api-gateway (not a separate PM2 process)
     {
       name: 'vote-aggregator',
       script: './dist/index.js',
@@ -67,7 +55,7 @@ module.exports = {
       time: true,
     },
 
-    // Service 4: Market Monitor (cron: every 5 minutes)
+    // Service 3: Market Monitor (cron: every 5 minutes)
     {
       name: 'market-monitor',
       script: './dist/services/market-monitor/index.js',
@@ -86,7 +74,7 @@ module.exports = {
       time: true,
     },
 
-    // Service 5: Event Indexer (Helius webhook listener) - Week 5
+    // Service 4: Event Indexer (Helius webhook listener) - Week 5
     // ✅ ENABLED - Real-time blockchain event monitoring
     // Receives webhooks from Helius and indexes on-chain events to Supabase
     {
@@ -112,7 +100,7 @@ module.exports = {
       time: true,
     },
 
-    // Service 6: IPFS Snapshot Service (cron: daily at midnight UTC)
+    // Service 5: IPFS Snapshot Service (cron: daily at midnight UTC)
     // ❌ DISABLED FOR MVP - Not needed for core functionality
     // Reason: Supabase stores discussions reliably, IPFS is nice-to-have
     // Can be re-enabled later if decentralized discussion storage needed
