@@ -14,6 +14,7 @@ import { VoteAggregatorScheduler } from "./services/vote-aggregator";
 import { PublicKey } from "@solana/web3.js";
 import { Program, AnchorProvider } from "@coral-xyz/anchor";
 import fs from "fs";
+import path from "path";
 
 // Store service instances for graceful shutdown
 let voteAggregatorScheduler: VoteAggregatorScheduler | null = null;
@@ -78,8 +79,8 @@ async function main() {
     // 3. Start Vote Aggregator Service (if program IDL available)
     logger.info("[3/4] Starting Vote Aggregator Service...");
     try {
-      // Check if IDL exists
-      const idlPath = `/Users/seman/Desktop/zmartV0.69/target/idl/zmart_core.json`;
+      // Check if IDL exists (relative path works in both dev and production)
+      const idlPath = path.join(__dirname, '../target/idl/zmart_core.json');
       if (fs.existsSync(idlPath)) {
         const idl = JSON.parse(fs.readFileSync(idlPath, "utf-8"));
         const provider = getProvider();
