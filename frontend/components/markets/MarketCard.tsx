@@ -81,7 +81,7 @@ export function MarketCard({ market }: MarketCardProps) {
             <div>
               <span className="font-medium">Volume:</span> {volume}
             </div>
-            <div>
+            <div suppressHydrationWarning>
               <span className={hasExpired ? 'text-status-error font-medium' : ''}>
                 {expiryText}
               </span>

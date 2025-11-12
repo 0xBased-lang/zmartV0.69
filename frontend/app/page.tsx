@@ -124,7 +124,7 @@ export default function Home() {
                     {user.wallet.slice(0, 4)}...{user.wallet.slice(-4)}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center" suppressHydrationWarning>
                   <span className="text-text-secondary">Member Since:</span>
                   <span className="text-text-primary">
                     {safeFormatDate(user.created_at, 'Unknown')}

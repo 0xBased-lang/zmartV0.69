@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { TrendingUp, Users, Activity, DollarSign } from 'lucide-react'
 
@@ -12,49 +13,99 @@ interface Stat {
   color: string
 }
 
-const MOCK_STATS: Stat[] = [
-  {
-    id: 'markets',
-    label: 'Active Markets',
-    value: '1,247',
-    change: '+12%',
-    icon: <Activity className="w-4 h-4" />,
-    color: 'text-brand-primary',
-  },
-  {
-    id: 'volume',
-    label: '24h Volume',
-    value: '$2.4M',
-    change: '+18%',
-    icon: <DollarSign className="w-4 h-4" />,
-    color: 'text-status-success',
-  },
-  {
-    id: 'users',
-    label: 'Active Users',
-    value: '8,542',
-    change: '+5%',
-    icon: <Users className="w-4 h-4" />,
-    color: 'text-brand-accent',
-  },
-  {
-    id: 'trades',
-    label: '24h Trades',
-    value: '15.2K',
-    change: '+23%',
-    icon: <TrendingUp className="w-4 h-4" />,
-    color: 'text-status-warning',
-  },
-]
+interface PlatformStats {
+  activeMarkets: number
+  totalVolume: string
+  activeUsers: number
+  totalTrades: number
+}
 
 export function QuickStats() {
+  const [stats, setStats] = useState<PlatformStats>({
+    activeMarkets: 0,
+    totalVolume: '$0',
+    activeUsers: 0,
+    totalTrades: 0,
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        // Fetch real markets from backend
+        const response = await fetch('/api/backend/api/markets')
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch markets')
+        }
+
+        const markets = await response.json()
+
+        // Calculate real active markets count
+        const activeCount = Array.isArray(markets)
+          ? markets.filter((m: any) => m.status === 'ACTIVE' || m.state === 2).length
+          : 0
+
+        setStats({
+          activeMarkets: activeCount,
+          totalVolume: 'Coming soon',
+          activeUsers: 0, // TODO: Add backend endpoint
+          totalTrades: 0, // TODO: Add backend endpoint
+        })
+      } catch (error) {
+        console.error('[QuickStats] Failed to fetch stats:', error)
+        // Fallback to zero on error
+        setStats({
+          activeMarkets: 0,
+          totalVolume: '$0',
+          activeUsers: 0,
+          totalTrades: 0,
+        })
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchStats()
+  }, [])
+
+  const displayStats: Stat[] = [
+    {
+      id: 'markets',
+      label: 'Active Markets',
+      value: loading ? '...' : stats.activeMarkets.toString(),
+      icon: <Activity className="w-4 h-4" />,
+      color: 'text-brand-primary',
+    },
+    {
+      id: 'volume',
+      label: '24h Volume',
+      value: stats.totalVolume,
+      icon: <DollarSign className="w-4 h-4" />,
+      color: 'text-status-success',
+    },
+    {
+      id: 'users',
+      label: 'Active Users',
+      value: loading ? '...' : stats.activeUsers > 0 ? stats.activeUsers.toLocaleString() : 'Coming soon',
+      icon: <Users className="w-4 h-4" />,
+      color: 'text-brand-accent',
+    },
+    {
+      id: 'trades',
+      label: '24h Trades',
+      value: loading ? '...' : stats.totalTrades > 0 ? stats.totalTrades.toLocaleString() : 'Coming soon',
+      icon: <TrendingUp className="w-4 h-4" />,
+      color: 'text-status-warning',
+    },
+  ]
   return (
     <Card variant="dark" className="p-4">
       <h3 className="text-sm font-semibold text-text-primary mb-3">
         Platform Stats
       </h3>
       <div className="space-y-3">
-        {MOCK_STATS.map((stat) => (
+        {displayStats.map((stat) => (
           <div
             key={stat.id}
             className="p-3 rounded-md bg-surface-elevated border border-border-default hover:border-border-interactive transition-colors"

@@ -1,11 +1,27 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { SolanaWalletProvider } from '@/lib/solana/wallet-provider';
+import dynamic from 'next/dynamic';
 import { FloatingWebSocketStatus } from '@/components/shared/WebSocketStatus';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
+
+/**
+ * Dynamic import of SolanaWalletProvider with SSR disabled
+ *
+ * This prevents React hydration errors caused by Solana wallet adapters
+ * accessing browser-specific APIs during server-side rendering.
+ *
+ * The wallet provider will only initialize on the client side.
+ */
+const SolanaWalletProvider = dynamic(
+  () => import('@/lib/solana/wallet-provider').then((mod) => mod.SolanaWalletProvider),
+  {
+    ssr: false,
+    loading: () => <div className="animate-pulse">Initializing wallet...</div>,
+  }
+);
 
 export function Providers({ children }: { children: React.ReactNode }) {
   // Create QueryClient with useState to avoid creating a new instance on every render

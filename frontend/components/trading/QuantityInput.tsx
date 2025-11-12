@@ -65,7 +65,7 @@ export function QuantityInput({
           )}
         />
         {max && (
-          <div className="absolute right-3 top-9 text-sm text-text-tertiary">
+          <div className="absolute right-3 top-9 text-sm text-text-tertiary" suppressHydrationWarning>
             Max: {max.toLocaleString()}
           </div>
         )}

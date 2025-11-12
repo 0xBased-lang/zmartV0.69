@@ -45,6 +45,7 @@ export const MARKET_STATE_COLORS: Record<MarketState, string> = {
  */
 export interface Market {
   market_id: string;
+  on_chain_address: string; // Base58-encoded PDA (Solana program account)
   title: string;
   description: string;
   state: MarketState;

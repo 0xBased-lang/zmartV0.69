@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
   LineChart,
   Line,
@@ -21,9 +21,19 @@ interface PriceChartProps {
  * Uses recharts for visualization
  */
 export function PriceChart({ marketId }: PriceChartProps) {
+  const [mounted, setMounted] = useState(false);
+
+  // Prevent SSR hydration issues with toLocaleDateString()
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // MOCK: Generate sample price data
   // TODO: Fetch actual price history from backend/indexer
   const priceData = useMemo(() => {
+    // Only generate data on client side to avoid SSR/CSR mismatch
+    if (!mounted) return [];
+
     const now = Date.now();
     const dayMs = 24 * 60 * 60 * 1000;
 
@@ -40,14 +50,13 @@ export function PriceChart({ marketId }: PriceChartProps) {
         no: Math.max(1, Math.min(99, basePrice - variance)),
       };
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [mounted]);
 
   return (
-    <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
+    <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6" suppressHydrationWarning>
       <h2 className="text-xl font-display font-bold text-text-primary mb-4">Price History</h2>
 
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={300} suppressHydrationWarning>
         <LineChart
           data={priceData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}

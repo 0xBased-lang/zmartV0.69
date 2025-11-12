@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 interface OrderBookProps {
   marketId: string;
@@ -18,9 +18,19 @@ interface Position {
  * Displays top holders for YES and NO outcomes
  */
 export function OrderBook({ marketId }: OrderBookProps) {
+  const [mounted, setMounted] = useState(false);
+
+  // Prevent SSR hydration issues with Math.random()
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // MOCK: Generate sample positions
   // TODO: Fetch actual positions from on-chain data
   const positions = useMemo((): Position[] => {
+    // Only generate positions on client side to avoid SSR/CSR mismatch
+    if (!mounted) return [];
+
     const mockAddresses = [
       '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp',
       '7xKXtg2CW87d97TXJSDpbD5jBkheTqA3',
@@ -43,8 +53,7 @@ export function OrderBook({ marketId }: OrderBookProps) {
         avgPrice: 40 + Math.random() * 20,
       },
     ]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [mounted]);
 
   const yesPositions = positions
     .filter((p) => p.outcome === 'YES')
@@ -55,6 +64,39 @@ export function OrderBook({ marketId }: OrderBookProps) {
     .filter((p) => p.outcome === 'NO')
     .sort((a, b) => b.shares - a.shares)
     .slice(0, 5);
+
+  // Show loading skeleton during SSR
+  if (!mounted) {
+    return (
+      <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
+        <h2 className="text-xl font-display font-bold text-text-primary mb-4">Order Book</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* YES skeleton */}
+          <div>
+            <h3 className="text-sm font-semibold text-trading-yes bg-trading-yes/10 border border-trading-yes/20 px-3 py-2 rounded mb-3">
+              YES Positions
+            </h3>
+            <div className="space-y-2">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={`yes-skeleton-${i}`} className="h-12 bg-surface-elevated rounded animate-pulse" />
+              ))}
+            </div>
+          </div>
+          {/* NO skeleton */}
+          <div>
+            <h3 className="text-sm font-semibold text-trading-no bg-trading-no/10 border border-trading-no/20 px-3 py-2 rounded mb-3">
+              NO Positions
+            </h3>
+            <div className="space-y-2">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={`no-skeleton-${i}`} className="h-12 bg-surface-elevated rounded animate-pulse" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">

@@ -3,7 +3,7 @@
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Twitter, Send, Share2, Copy, Check } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface SocialShareProps {
   marketId?: string
@@ -12,8 +12,16 @@ interface SocialShareProps {
 
 export function SocialShare({ marketId, marketQuestion }: SocialShareProps) {
   const [copied, setCopied] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  // Prevent SSR hydration issues with window/navigator
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleCopy = async () => {
+    if (!mounted) return
+
     const url = marketId
       ? `${window.location.origin}/markets/${marketId}`
       : window.location.href
@@ -24,6 +32,8 @@ export function SocialShare({ marketId, marketQuestion }: SocialShareProps) {
   }
 
   const handleTwitterShare = () => {
+    if (!mounted) return
+
     const text = marketQuestion
       ? `Check out this prediction market: ${marketQuestion}`
       : 'Check out ZMART - Decentralized Prediction Markets'
@@ -37,6 +47,8 @@ export function SocialShare({ marketId, marketQuestion }: SocialShareProps) {
   }
 
   const handleTelegramShare = () => {
+    if (!mounted) return
+
     const text = marketQuestion || 'Check out ZMART Prediction Markets'
     const url = marketId
       ? `${window.location.origin}/markets/${marketId}`
@@ -48,19 +60,36 @@ export function SocialShare({ marketId, marketQuestion }: SocialShareProps) {
   }
 
   const handleNativeShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: marketQuestion || 'ZMART Prediction Market',
-          url: marketId
-            ? `${window.location.origin}/markets/${marketId}`
-            : window.location.href,
-        })
-      } catch (err) {
-        // User cancelled or share failed
-        console.log('Share failed:', err)
-      }
+    if (!mounted || !navigator.share) return
+
+    try {
+      await navigator.share({
+        title: marketQuestion || 'ZMART Prediction Market',
+        url: marketId
+          ? `${window.location.origin}/markets/${marketId}`
+          : window.location.href,
+      })
+    } catch (err) {
+      // User cancelled or share failed
+      console.log('Share failed:', err)
     }
+  }
+
+  // Show loading skeleton during SSR
+  if (!mounted) {
+    return (
+      <Card variant="dark" className="p-4">
+        <h3 className="text-sm font-semibold text-text-primary mb-3 flex items-center gap-2">
+          <Share2 className="w-4 h-4 text-brand-primary" />
+          Share
+        </h3>
+        <div className="space-y-2">
+          <div className="h-9 bg-surface-elevated rounded animate-pulse" />
+          <div className="h-9 bg-surface-elevated rounded animate-pulse" />
+          <div className="h-9 bg-surface-elevated rounded animate-pulse" />
+        </div>
+      </Card>
+    )
   }
 
   return (
@@ -93,7 +122,7 @@ export function SocialShare({ marketId, marketQuestion }: SocialShareProps) {
         </Button>
 
         {/* Native Share (Mobile) */}
-        {typeof navigator !== 'undefined' && navigator.share && (
+        {navigator.share && (
           <Button
             variant="darkSecondary"
             size="sm"

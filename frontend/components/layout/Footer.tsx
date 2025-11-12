@@ -67,7 +67,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border-subtle mt-8 pt-6 text-center text-sm text-text-tertiary">
-          <p>&copy; {new Date().getFullYear()} ZMART. All rights reserved.</p>
+          <p suppressHydrationWarning>&copy; {new Date().getFullYear()} ZMART. All rights reserved.</p>
         </div>
       </div>
     </footer>

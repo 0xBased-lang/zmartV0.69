@@ -130,7 +130,7 @@ export function MarketHeader({ market }: MarketHeaderProps) {
         </div>
 
         {/* Expiry */}
-        <div>
+        <div suppressHydrationWarning>
           <span className="text-text-tertiary">
             {isExpired ? 'Expired' : 'Expires'}:
           </span>{' '}
@@ -159,7 +159,7 @@ export function MarketHeader({ market }: MarketHeaderProps) {
         </div>
 
         {/* Created */}
-        <div>
+        <div suppressHydrationWarning>
           <span className="text-text-tertiary">Created:</span>{' '}
           <span className="font-medium text-text-primary">
             {safeFormatDistanceToNow(market.created_at, 'recently')}
