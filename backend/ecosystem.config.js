@@ -7,7 +7,8 @@ module.exports = {
     {
       name: 'api-gateway',
       script: './dist/index.js',
-      cwd: '/Users/seman/Desktop/zmartV0.69/backend',
+      cwd: '/var/www/zmart/backend',
+      node_args: '-r dotenv/config', // Load .env before app starts
       exec_mode: 'fork',
       instances: 1,
       autorestart: true,
@@ -29,7 +30,9 @@ module.exports = {
     {
       name: 'websocket-server',
       script: './dist/services/websocket/server.js',
-      cwd: '/Users/seman/Desktop/zmartV0.69/backend',
+      cwd: '/var/www/zmart/backend',
+      node_args: '-r dotenv/config', // Load .env before app starts
+      exec_mode: 'fork',
       instances: 1,
       autorestart: true,
       watch: false,
@@ -49,34 +52,38 @@ module.exports = {
     // Service 3: Vote Aggregator (HTTP server + cron: every 5 minutes)
     {
       name: 'vote-aggregator',
-      script: './dist/index.js',
-      cwd: '/Users/seman/Desktop/zmartV0.69/backend/vote-aggregator',
+      script: './vote-aggregator/dist/backend/vote-aggregator/src/index.js',
+      cwd: '/var/www/zmart/backend', // Use parent backend cwd for .env access
+      node_args: '-r dotenv/config', // Load .env before app starts
       exec_mode: 'fork',
       instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '300M',
-      cron_restart: '*/5 * * * *', // Every 5 minutes
+      // cron_restart removed - service runs continuously with internal cron jobs
       env: {
         NODE_ENV: 'development',
+        PORT: 4005, // Changed from 4001 to avoid conflict with api-gateway
         VOTE_AGGREGATION_INTERVAL: 300000,
       },
-      error_file: '../logs/vote-aggregator-error.log',
-      out_file: '../logs/vote-aggregator-out.log',
-      log_file: '../logs/vote-aggregator-combined.log',
+      error_file: './logs/vote-aggregator-error.log',
+      out_file: './logs/vote-aggregator-out.log',
+      log_file: './logs/vote-aggregator-combined.log',
       time: true,
     },
 
     // Service 4: Market Monitor (cron: every 5 minutes)
     {
       name: 'market-monitor',
-      script: './dist/services/market-monitor/index.js',
-      cwd: '/Users/seman/Desktop/zmartV0.69/backend',
+      script: './dist/services/market-monitor/standalone.js',
+      cwd: '/var/www/zmart/backend',
+      node_args: '-r dotenv/config', // Load .env before app starts
+      exec_mode: 'fork',
       instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '300M',
-      cron_restart: '*/5 * * * *', // Every 5 minutes
+      // cron_restart removed - service runs continuously with internal cron jobs
       env: {
         NODE_ENV: 'development',
       },
@@ -92,10 +99,10 @@ module.exports = {
     {
       name: 'event-indexer',
       script: './src/index.ts',
-      cwd: '/Users/seman/Desktop/zmartV0.69/backend/event-indexer',
+      cwd: '/var/www/zmart/backend/event-indexer',
       exec_mode: 'fork',
       interpreter: 'node',
-      interpreter_args: '--require ts-node/register',
+      interpreter_args: '--require /var/www/zmart/backend/node_modules/.pnpm/ts-node@10.9.2_@types+node@20.19.24_typescript@5.9.3/node_modules/ts-node/register', // ts-node for TypeScript execution
       instances: 1,
       autorestart: true,
       watch: false,
@@ -105,6 +112,7 @@ module.exports = {
       env: {
         NODE_ENV: 'development',
         PORT: 4002,
+        DOTENV_CONFIG_PATH: '/var/www/zmart/backend/.env', // Explicitly point to parent backend .env
       },
       error_file: '../logs/event-indexer-error.log',
       out_file: '../logs/event-indexer-out.log',

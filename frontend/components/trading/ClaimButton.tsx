@@ -141,10 +141,10 @@ export function ClaimButton({
   // Already claimed
   if (claimed) {
     return (
-      <div className={cn('bg-green-50 border border-green-200 rounded-lg p-4', className)}>
+      <div className={cn('bg-status-success/10 border border-status-success/20 rounded-lg p-4', className)}>
         <div className="flex items-center gap-2">
           <svg
-            className="w-5 h-5 text-green-600"
+            className="w-5 h-5 text-status-success"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -156,7 +156,7 @@ export function ClaimButton({
               d="M5 13l4 4L19 7"
             />
           </svg>
-          <span className="text-green-900 font-medium">
+          <span className="text-status-success font-medium">
             Winnings Claimed!
           </span>
         </div>
@@ -168,10 +168,10 @@ export function ClaimButton({
   return (
     <div className={cn('space-y-3', className)}>
       {/* Info */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="bg-brand-primary/10 border border-brand-primary/20 rounded-lg p-4 shadow-glow">
         <div className="flex items-start gap-3">
           <svg
-            className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5"
+            className="w-5 h-5 text-brand-primary flex-shrink-0 mt-0.5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -184,10 +184,10 @@ export function ClaimButton({
             />
           </svg>
           <div>
-            <h4 className="font-semibold text-blue-900 mb-1">
+            <h4 className="font-semibold text-text-primary mb-1">
               Congratulations! You Won! 🎉
             </h4>
-            <p className="text-sm text-blue-800">
+            <p className="text-sm text-text-secondary">
               You have {winningShares.toFixed(2)} winning {outcome ? 'YES' : 'NO'} shares.
               Click below to claim your payout.
             </p>
@@ -200,10 +200,10 @@ export function ClaimButton({
         onClick={handleClaim}
         disabled={claiming}
         className={cn(
-          'w-full px-6 py-3 font-semibold rounded-lg transition-all',
-          'bg-gradient-to-r from-green-600 to-emerald-600 text-white',
-          'hover:from-green-700 hover:to-emerald-700',
-          'focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2',
+          'w-full px-6 py-3 font-semibold rounded-lg transition-all duration-200',
+          'bg-gradient-to-r from-status-success to-trading-yes text-text-primary-inverse',
+          'hover:shadow-glow-lg',
+          'focus:outline-none focus:ring-2 focus:ring-status-success focus:ring-offset-2 focus:ring-offset-surface-card',
           'disabled:opacity-50 disabled:cursor-not-allowed',
           'flex items-center justify-center gap-2'
         )}
@@ -234,7 +234,7 @@ export function ClaimButton({
       </button>
 
       {/* Help text */}
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-text-tertiary text-center">
         You will receive SOL equivalent to your winning shares
       </p>
     </div>

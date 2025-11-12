@@ -204,6 +204,7 @@ export function MarketCreationForm({ onSuccess, className }: MarketCreationFormP
         </label>
         <input
           id="question"
+          name="question"
           type="text"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
@@ -232,6 +233,7 @@ export function MarketCreationForm({ onSuccess, className }: MarketCreationFormP
         </label>
         <textarea
           id="description"
+          name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Provide details about resolution criteria, sources, and any important context..."
@@ -260,6 +262,7 @@ export function MarketCreationForm({ onSuccess, className }: MarketCreationFormP
         </label>
         <select
           id="category"
+          name="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -286,6 +289,7 @@ export function MarketCreationForm({ onSuccess, className }: MarketCreationFormP
           </label>
           <input
             id="expiry"
+            name="expiry"
             type="number"
             value={expiryDays}
             onChange={(e) => setExpiryDays(e.target.value)}
@@ -309,6 +313,7 @@ export function MarketCreationForm({ onSuccess, className }: MarketCreationFormP
           </label>
           <input
             id="liquidity"
+            name="liquidity"
             type="number"
             value={liquiditySOL}
             onChange={(e) => setLiquiditySOL(e.target.value)}

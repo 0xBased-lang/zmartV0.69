@@ -18,16 +18,16 @@ function LoadingSkeleton() {
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          className="bg-white rounded-lg border border-gray-200 p-6 animate-pulse"
+          className="bg-surface-card rounded-lg border border-border-default p-6 animate-pulse"
         >
-          <div className="h-6 bg-gray-200 rounded mb-4"></div>
-          <div className="h-4 bg-gray-200 rounded mb-2"></div>
-          <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+          <div className="h-6 bg-surface-elevated rounded mb-4"></div>
+          <div className="h-4 bg-surface-elevated rounded mb-2"></div>
+          <div className="h-4 bg-surface-elevated rounded w-3/4 mb-4"></div>
           <div className="flex gap-4 mb-4">
-            <div className="flex-1 h-12 bg-gray-200 rounded"></div>
-            <div className="flex-1 h-12 bg-gray-200 rounded"></div>
+            <div className="flex-1 h-12 bg-surface-elevated rounded"></div>
+            <div className="flex-1 h-12 bg-surface-elevated rounded"></div>
           </div>
-          <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+          <div className="h-4 bg-surface-elevated rounded w-1/2"></div>
         </div>
       ))}
     </div>

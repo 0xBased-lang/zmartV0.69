@@ -1,30 +1,103 @@
 # ZMART V0.69 - CURRENT PROJECT STATUS
-**Last Updated:** November 11, 2025 - FRONTEND DEPLOYED TO PRODUCTION! 🎊🚀
+**Last Updated:** November 11, 2025 - FIXING PRODUCTION ISSUES & CONNECTING REAL DATA
 **Single Source of Truth** - All other status documents archived to docs/archive/2025-11/
 
 ---
 
-## 📊 Overall Project Status: 100% COMPLETE! 🎉
+## 📊 Overall Project Status: ~60% COMPLETE (Realistic Assessment)
 
 | Phase | Component | Status | Completion |
 |-------|-----------|--------|------------|
 | **Phase 1** | Solana Programs | ✅ DEPLOYED | 100% |
-| **Phase 2** | Backend Services | ✅ OPERATIONAL | 100% |
+| **Phase 2** | Backend Services | ⚠️ MOSTLY OPERATIONAL | 80% |
 | **Phase 2.5** | Security Audit | ✅ COMPLETE | 100% |
-| **Phase 3** | Integration Tests | ✅ DOCUMENTED | 100% |
-| **Phase 4** | Frontend | ✅ **LIVE ON VERCEL** | 100% |
-| **Phase 4.5** | Deployment Prep | ✅ COMPLETE | 100% |
-| **Phase 5** | Production Launch | ✅ **DEPLOYED** | 100% |
+| **Phase 3** | Integration Tests | 🔄 IN PROGRESS | 65% |
+| **Phase 4** | Frontend | 🟡 DEPLOYED (NOT PRODUCTION-READY) | 60% |
+| **Phase 4.5** | Deployment Prep | 🟡 PARTIAL | 70% |
+| **Phase 5** | Production Launch | 🔜 BLOCKED BY ISSUES | 0% |
 
-**🚀 PRODUCTION URL:** https://frontend-alyfir8el-kektech1.vercel.app
+**⚠️ DEMO URL (NOT PRODUCTION):** https://frontend-czu6lxz7b-kektech1.vercel.app
 
-**Timeline to Production:** COMPLETE - **~12 WEEKS AHEAD OF SCHEDULE!** 🚀🚀🚀
+**Timeline to Production:** **5 DAYS** (Phase 1-3 of Fix Plan)
 
-**Current Status:** LIVE IN PRODUCTION! 🎯🎉
-**Security Status:** ✅ ALL 12 AUDIT FINDINGS RESOLVED + REVALIDATED (100%)
-**Frontend Status:** ✅ DEPLOYED TO VERCEL (November 11, 2025)
+**Current Status:** 🔄 FIXING CRITICAL ISSUES
+**Security Status:** ✅ ALL 12 AUDIT FINDINGS RESOLVED (100%)
+**Frontend Status:** 🟡 DEPLOYED BUT HAS CRITICAL ISSUES (See below)
 
-### 🚀 PRODUCTION DEPLOYMENT (November 11, 2025 - 45 minutes)
+---
+
+## 🚨 CRITICAL ISSUES DISCOVERED (November 11, 2025)
+
+### Issue #1: React Hydration Errors ⚠️ **FIXING NOW**
+**Impact:** Unprofessional console errors visible to users
+**Status:** 🔄 IN PROGRESS (3/3 components fixed)
+**Files Fixed:**
+- ✅ `utils/solana.ts` - Now uses safe date formatters
+- ✅ `PriceChart.tsx` - Added mounted state check
+- ✅ `QuantityInput.tsx` - Added suppressHydrationWarning
+
+**Remaining:** Build and deploy to verify fix
+
+### Issue #2: Mock Data in Production ⚠️ **FIXING NOW**
+**Impact:** Misleading users with fake statistics (1,247 markets vs real 4)
+**Status:** 🔄 IN PROGRESS (1/8 components fixed)
+**Files Fixed:**
+- ✅ `QuickStats.tsx` - Now shows REAL market count from backend
+
+**Remaining 7 Components:**
+- 🔜 PriceChart.tsx (mock sine wave → real price history)
+- 🔜 DiscussionPanel.tsx (mock comments → real discussions)
+- 🔜 OrderBook.tsx (mock positions → real positions)
+- 🔜 TrendingMarkets.tsx (mock data → trending algorithm)
+- 🔜 RecentActivity.tsx (mock feed → real activity)
+- 🔜 HotTopics.tsx (mock topics → real categories)
+- 🔜 RelatedMarkets.tsx (mock → similarity algorithm)
+
+### Issue #3: On-Chain State Loading Bug 🟡 NEEDS VALIDATION
+**Impact:** Market detail pages show "Failed to Load Market State" - Trading broken!
+**Status:** ✅ FIX IMPLEMENTED (Commit 44b26e0) - ⚠️ Needs browser validation
+**Root Cause:** Rust program uses snake_case (shares_yes, b_parameter) but frontend expected camelCase (sharesYes, bParameter)
+**Solution:** Updated useMarketState.ts (lines 125-132) to support both formats with fallback
+**Deployed:** Yes (in feature/dark-theme-ui branch, pushed to GitHub)
+**Next Step:** Test in browser on Vercel deployment to confirm trading works
+**Priority:** MEDIUM - Fix is in place, just needs validation
+
+### Issue #4: Misleading Status Documentation ⚠️ **FIXED**
+**Impact:** Team thought project was 100% complete when actually ~60%
+**Status:** ✅ FIXED - This document now shows realistic percentages
+**Evidence:** Previous claims vs reality:
+- Claimed: "Frontend 100%" | Reality: "Frontend 60% (UI scaffolded, data mocked)"
+- Claimed: "E2E 100%" | Reality: "E2E 65% (tests written, some fail)"
+- Claimed: "Production Ready" | Reality: "Demo only, not production-ready"
+
+---
+
+## 📅 REALISTIC TIMELINE TO PRODUCTION (5 Days)
+
+**Phase 1: Fix Foundation Issues (TODAY - 6 hours)** ← WE ARE HERE
+- ✅ Fix hydration errors (utils, PriceChart, QuantityInput)
+- ✅ Fix mock stats (QuickStats shows real count)
+- 🔄 Update CURRENT_STATUS.md (this file)
+- 🔜 Build and deploy to production
+- 🔜 Re-run E2E tests and document results
+- 🔜 Verify production console is clean
+
+**Phase 2: Connect Core Real Data (Days 2-3 - 12 hours)**
+- Debug on-chain market state loading (4 hrs) 🔴 CRITICAL
+- Connect discussion backend (4 hrs)
+- Implement price history collection (4 hrs)
+
+**Phase 3: Polish Sidebar Components (Days 4-5 - 12 hours)**
+- Real trending markets (3 hrs)
+- Real activity feed (3 hrs)
+- Real hot topics (3 hrs)
+- Related markets algorithm (3 hrs)
+
+**Total:** 5 days → Production-Ready ✅
+
+---
+
+### 🚀 PREVIOUS: PRODUCTION DEPLOYMENT (November 11, 2025 - 45 minutes)
 
 **Phase 6 - Production Deployment: 98% → 100% COMPLETE!**
 
@@ -188,13 +261,13 @@
 - **URL:** `https://tkkqqxepelibqjjhxxct.supabase.co`
 - **Migrations:** All 3 applied
 
-### 3. Backend Services - 100% OPERATIONAL ✅
+### 3. Backend Services - 80% OPERATIONAL ⚠️
 
-**Week 1 Complete:** All 5 services deployed and stable
+**Week 1 Status:** 4 of 5 services stable, 1 needs keypair fix
 
-#### Service Status (PM2) - Production Ready
+#### Service Status (PM2) - Updated Nov 12, 2025
 
-**✅ ALL SERVICES OPERATIONAL (5 of 5):**
+**✅ OPERATIONAL (4 of 5) | ⚠️ 1 SERVICE NEEDS FIX:**
 
 1. **API Gateway** (port 3000)
    - Status: ✅ Online (7+ min uptime)
@@ -203,13 +276,19 @@
    - Performance: 58ms avg response time
    - **Fixed:** Port configuration (4000 → 3000)
 
-2. **Vote Aggregator** (port 3001)
-   - Status: ✅ Online (15s uptime, stable)
+2. **Vote Aggregator** (port 4005)
+   - Status: ✅ Online (27+ min uptime, STABLE)
    - Health: HTTP server working, cron jobs running
-   - Memory: ~55mb
-   - **Fixed:** TypeScript tsconfig.json (rootDir issue), Anchor Program instantiation
-   - Root Cause: `rootDir: "../../"` created nested dist structure
-   - Solution: `rootDir: "./src"` + correct Program() call pattern
+   - Memory: ~74mb
+   - Restarts: 1 (down from 5,136 crash loop!)
+   - **Fixed:** Configuration standardization (Nov 12, 2025)
+     - Added `node_args: '-r dotenv/config'` to ecosystem.config.js
+     - Fixed cwd path for consistent .env loading
+     - Removed env_file (unreliable) in favor of node_args
+   - Previous Issues:
+     - TypeScript tsconfig.json (rootDir issue)
+     - Anchor Program instantiation
+   - Solution: Comprehensive PM2 configuration fixes
 
 3. **Event Indexer** (port 3002)
    - Status: ✅ Online (7+ min uptime)
@@ -222,11 +301,15 @@
    - Health: Healthy, connections ready
    - Memory: ~86mb
 
-5. **Market Monitor** (cron-based, no HTTP server)
-   - Status: ✅ Running (scheduled restarts every 5 min)
-   - Health: Cron jobs executing successfully
-   - Memory: ~40mb
-   - Note: Designed to restart regularly (not a crash)
+5. **Market Monitor** (cron-based, with standalone.js entry point)
+   - Status: ⚠️ CRASH LOOP - Keypair Mismatch (Nov 12, 2025)
+   - Health: Crashing on startup - Cannot start
+   - Issue: Backend authority keypair mismatch
+     - On-chain authority: 4MkybTASDtmzQnfUWztHmfgyHgBREw74eTKipVADqQLA
+     - Local keypair: 4WQwPjKHu3x7dHBEehBDgxXHJQoDuBvj6Xhu6C1jjTye
+   - Root Cause: Security validation prevents unauthorized operations
+   - Fix Needed: Update .env with correct keypair OR update on-chain authority
+   - Impact: Markets won't auto-resolve until fixed (manual resolution still works)
 
 **❌ DEFERRED TO V2:**
 6. **IPFS Service** (cron: daily midnight)

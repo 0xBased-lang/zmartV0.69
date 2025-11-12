@@ -34,10 +34,10 @@ export function SlippageSettings({
   return (
     <div className={cn('space-y-3', className)}>
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-gray-700">
+        <label className="text-sm font-medium text-text-primary">
           Slippage Tolerance
         </label>
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-text-tertiary">
           Max price movement accepted
         </span>
       </div>
@@ -50,10 +50,10 @@ export function SlippageSettings({
             type="button"
             onClick={() => handlePreset(preset)}
             className={cn(
-              'flex-1 px-3 py-2 text-sm font-medium rounded border transition-colors',
+              'flex-1 px-3 py-2 text-sm font-medium rounded border transition-all duration-200',
               !customMode && value === preset
-                ? 'bg-blue-50 border-blue-500 text-blue-900'
-                : 'border-gray-300 bg-white hover:bg-gray-50'
+                ? 'bg-brand-primary/10 border-brand-primary text-brand-primary shadow-glow'
+                : 'border-border-default bg-surface-elevated text-text-primary hover:bg-surface-card hover:border-brand-primary'
             )}
           >
             {preset}%
@@ -63,10 +63,10 @@ export function SlippageSettings({
           type="button"
           onClick={handleCustom}
           className={cn(
-            'flex-1 px-3 py-2 text-sm font-medium rounded border transition-colors',
+            'flex-1 px-3 py-2 text-sm font-medium rounded border transition-all duration-200',
             customMode
-              ? 'bg-blue-50 border-blue-500 text-blue-900'
-              : 'border-gray-300 bg-white hover:bg-gray-50'
+              ? 'bg-brand-primary/10 border-brand-primary text-brand-primary shadow-glow'
+              : 'border-border-default bg-surface-elevated text-text-primary hover:bg-surface-card hover:border-brand-primary'
           )}
         >
           Custom
@@ -84,15 +84,15 @@ export function SlippageSettings({
             min="0"
             max="100"
             step="0.1"
-            className="w-full px-3 py-2 text-sm rounded border-2 border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 text-sm rounded border-2 border-brand-primary bg-surface-elevated text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-primary shadow-glow"
           />
-          <span className="absolute right-3 top-2 text-sm text-gray-500">%</span>
+          <span className="absolute right-3 top-2 text-sm text-text-tertiary">%</span>
         </div>
       )}
 
       {/* Warning for high slippage */}
       {value > 5 && (
-        <div className="text-xs text-amber-600 flex items-center gap-1 bg-amber-50 p-2 rounded">
+        <div className="text-xs text-status-warning flex items-center gap-1 bg-status-warning/10 border border-status-warning/20 p-2 rounded">
           <span>⚠️</span>
           <span>High slippage tolerance may result in unfavorable trades</span>
         </div>

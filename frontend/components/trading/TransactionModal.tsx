@@ -98,12 +98,12 @@ export function TransactionModal({
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+      <div className="relative bg-surface-card rounded-xl shadow-glow-lg border border-border-default max-w-md w-full mx-4 p-6">
         {/* Close button (only in error state or success) */}
         {(state === TransactionState.ERROR || state === TransactionState.SUCCESS) && (
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            className="absolute top-4 right-4 text-text-tertiary hover:text-text-primary transition-colors"
           >
             <svg
               className="w-6 h-6"
@@ -165,10 +165,10 @@ function BuildingStep() {
   return (
     <div className="text-center py-8">
       <Spinner className="w-12 h-12 mx-auto mb-4" />
-      <h3 className="text-xl font-bold text-gray-900 mb-2">
+      <h3 className="text-xl font-display font-bold text-text-primary mb-2">
         Building Transaction
       </h3>
-      <p className="text-gray-600 text-sm">
+      <p className="text-text-secondary text-sm">
         Preparing your trade for the blockchain...
       </p>
     </div>
@@ -187,9 +187,9 @@ function ConfirmingStep({
 }) {
   return (
     <div className="text-center py-8">
-      <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+      <div className="w-16 h-16 mx-auto mb-4 bg-brand-primary/10 border border-brand-primary/20 rounded-full flex items-center justify-center shadow-glow">
         <svg
-          className="w-8 h-8 text-blue-600"
+          className="w-8 h-8 text-brand-primary"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -202,12 +202,12 @@ function ConfirmingStep({
           />
         </svg>
       </div>
-      <h3 className="text-xl font-bold text-gray-900 mb-2">Confirm in Wallet</h3>
-      <p className="text-gray-600 text-sm mb-4">
+      <h3 className="text-xl font-display font-bold text-text-primary mb-2">Confirm in Wallet</h3>
+      <p className="text-text-secondary text-sm mb-4">
         Please approve the transaction in your wallet
       </p>
-      <div className="bg-blue-50 rounded-lg p-3 text-sm">
-        <span className="font-medium">
+      <div className="bg-brand-primary/10 border border-brand-primary/20 rounded-lg p-3 text-sm">
+        <span className="font-medium text-text-primary">
           {action === TradeAction.BUY ? 'Buying' : 'Selling'} {outcome} shares
         </span>
       </div>
@@ -222,10 +222,10 @@ function SubmittingStep() {
   return (
     <div className="text-center py-8">
       <Spinner className="w-12 h-12 mx-auto mb-4" />
-      <h3 className="text-xl font-bold text-gray-900 mb-2">
+      <h3 className="text-xl font-display font-bold text-text-primary mb-2">
         Submitting Transaction
       </h3>
-      <p className="text-gray-600 text-sm">Sending to Solana blockchain...</p>
+      <p className="text-text-secondary text-sm">Sending to Solana blockchain...</p>
     </div>
   );
 }
@@ -243,20 +243,20 @@ function ConfirmingTxStep({
   return (
     <div className="text-center py-8">
       <Spinner className="w-12 h-12 mx-auto mb-4" />
-      <h3 className="text-xl font-bold text-gray-900 mb-2">
+      <h3 className="text-xl font-display font-bold text-text-primary mb-2">
         Confirming Transaction
       </h3>
-      <p className="text-gray-600 text-sm mb-4">
+      <p className="text-text-secondary text-sm mb-4">
         Waiting for blockchain confirmation...
       </p>
-      <p className="text-xs text-gray-500 mb-3">This usually takes 10-30 seconds</p>
+      <p className="text-xs text-text-tertiary mb-3">This usually takes 10-30 seconds</p>
 
       {signature && explorerUrl && (
         <a
           href={explorerUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium"
+          className="inline-flex items-center gap-2 text-sm text-brand-primary hover:text-brand-accent font-medium transition-colors"
         >
           View on Explorer
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -298,9 +298,9 @@ function SuccessStep({
   return (
     <div className="text-center py-8">
       {/* Success Icon */}
-      <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+      <div className="w-16 h-16 mx-auto mb-4 bg-status-success/10 border border-status-success/20 rounded-full flex items-center justify-center shadow-glow animate-pulse">
         <svg
-          className="w-8 h-8 text-green-600"
+          className="w-8 h-8 text-status-success"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -314,26 +314,26 @@ function SuccessStep({
         </svg>
       </div>
 
-      <h3 className="text-xl font-bold text-gray-900 mb-2">Trade Successful!</h3>
-      <p className="text-gray-600 text-sm mb-6">
+      <h3 className="text-xl font-display font-bold text-text-primary mb-2">Trade Successful!</h3>
+      <p className="text-text-secondary text-sm mb-6">
         Your {isBuy ? 'purchase' : 'sale'} has been confirmed
       </p>
 
       {/* Trade Summary */}
-      <div className="bg-gray-50 rounded-lg p-4 space-y-2 mb-6">
+      <div className="bg-surface-elevated border border-border-subtle rounded-lg p-4 space-y-2 mb-6">
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Action</span>
-          <span className="font-medium">
+          <span className="text-text-tertiary">Action</span>
+          <span className="font-medium text-text-primary">
             {isBuy ? 'Bought' : 'Sold'} {fromFixedPoint(quantity)} {outcome} shares
           </span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">{isBuy ? 'Cost' : 'Received'}</span>
-          <span className="font-medium">{fromFixedPoint(finalAmount).toFixed(4)} SOL</span>
+          <span className="text-text-tertiary">{isBuy ? 'Cost' : 'Received'}</span>
+          <span className="font-medium text-text-primary">{fromFixedPoint(finalAmount).toFixed(4)} SOL</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">New {outcome} Price</span>
-          <span className="font-medium">{newPrice.toFixed(1)}%</span>
+          <span className="text-text-tertiary">New {outcome} Price</span>
+          <span className="font-medium text-text-primary">{newPrice.toFixed(1)}%</span>
         </div>
       </div>
 
@@ -343,7 +343,7 @@ function SuccessStep({
           href={explorerUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium mb-4"
+          className="inline-flex items-center gap-2 text-sm text-brand-primary hover:text-brand-accent font-medium mb-4 transition-colors"
         >
           View Transaction
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -359,7 +359,7 @@ function SuccessStep({
 
       {/* Auto-close timer */}
       {autoCloseTimer !== null && (
-        <p className="text-xs text-gray-500 mt-4">
+        <p className="text-xs text-text-tertiary mt-4">
           Closing in {autoCloseTimer} seconds...
         </p>
       )}
@@ -431,9 +431,9 @@ function ErrorStep({
   return (
     <div className="text-center py-8">
       {/* Error Icon */}
-      <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center animate-pulse">
+      <div className="w-16 h-16 mx-auto mb-4 bg-status-error/10 border border-status-error/20 rounded-full flex items-center justify-center animate-pulse">
         <svg
-          className="w-8 h-8 text-red-600"
+          className="w-8 h-8 text-status-error"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -447,21 +447,21 @@ function ErrorStep({
         </svg>
       </div>
 
-      <h3 className="text-xl font-bold text-gray-900 mb-2">Transaction Failed</h3>
-      <p className="text-gray-600 text-sm mb-6">
+      <h3 className="text-xl font-display font-bold text-text-primary mb-2">Transaction Failed</h3>
+      <p className="text-text-secondary text-sm mb-6">
         {friendlyMessage}
       </p>
 
       {/* Error Code (for debugging) */}
       {error?.code && (
         <details className="mb-6">
-          <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-700">
+          <summary className="text-xs text-text-tertiary cursor-pointer hover:text-text-primary transition-colors">
             Technical Details
           </summary>
-          <div className="bg-red-50 rounded-lg p-3 mt-2">
-            <p className="text-xs font-mono text-red-800">Error Code: {error.code}</p>
+          <div className="bg-status-error/10 border border-status-error/20 rounded-lg p-3 mt-2">
+            <p className="text-xs font-mono text-status-error">Error Code: {error.code}</p>
             {error.message && (
-              <p className="text-xs font-mono text-red-700 mt-1">
+              <p className="text-xs font-mono text-text-secondary mt-1">
                 {error.message}
               </p>
             )}
@@ -474,7 +474,7 @@ function ErrorStep({
         {isRecoverable && (
           <button
             onClick={onRetry}
-            className="flex-1 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="flex-1 px-4 py-2 bg-brand-primary text-text-primary-inverse font-medium rounded-lg hover:bg-brand-accent shadow-glow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-surface-card"
           >
             Try Again
           </button>
@@ -482,7 +482,7 @@ function ErrorStep({
         <button
           onClick={onClose}
           className={cn(
-            'px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2',
+            'px-4 py-2 bg-surface-elevated text-text-primary border border-border-default font-medium rounded-lg hover:bg-surface-card hover:border-border-hover transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-border-hover focus:ring-offset-2 focus:ring-offset-surface-card',
             isRecoverable ? 'flex-1' : 'w-full'
           )}
         >
@@ -499,7 +499,7 @@ function ErrorStep({
 function Spinner({ className }: { className?: string }) {
   return (
     <svg
-      className={cn('animate-spin text-blue-600', className)}
+      className={cn('animate-spin text-brand-primary', className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

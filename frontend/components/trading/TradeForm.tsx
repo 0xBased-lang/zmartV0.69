@@ -241,8 +241,8 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
     <form onSubmit={handleSubmit} className={cn('space-y-6', className)}>
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Trade</h2>
-        <p className="text-gray-600 text-sm mt-1">
+        <h2 className="text-2xl font-display font-bold text-text-primary">Trade</h2>
+        <p className="text-text-secondary text-sm mt-1">
           Buy or sell shares based on your prediction
         </p>
       </div>
@@ -262,11 +262,11 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
           data-testid="action-buy"
           onClick={() => setAction(TradeAction.BUY)}
           className={cn(
-            'flex-1 px-4 py-2 font-medium rounded-lg transition-colors',
-            'border-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
+            'flex-1 px-4 py-2 font-medium rounded-lg transition-all duration-200',
+            'border-2 focus:outline-none focus:ring-2 focus:ring-brand-primary',
             action === TradeAction.BUY
-              ? 'bg-blue-50 border-blue-500 text-blue-900'
-              : 'bg-white border-gray-300 text-gray-700 hover:border-blue-300'
+              ? 'bg-brand-primary/10 border-brand-primary text-brand-primary shadow-glow'
+              : 'bg-surface-elevated border-border-default text-text-secondary hover:border-brand-primary'
           )}
         >
           Buy
@@ -276,11 +276,11 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
           data-testid="action-sell"
           onClick={() => setAction(TradeAction.SELL)}
           className={cn(
-            'flex-1 px-4 py-2 font-medium rounded-lg transition-colors',
-            'border-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
+            'flex-1 px-4 py-2 font-medium rounded-lg transition-all duration-200',
+            'border-2 focus:outline-none focus:ring-2 focus:ring-brand-primary',
             action === TradeAction.SELL
-              ? 'bg-blue-50 border-blue-500 text-blue-900'
-              : 'bg-white border-gray-300 text-gray-700 hover:border-blue-300'
+              ? 'bg-brand-primary/10 border-brand-primary text-brand-primary shadow-glow'
+              : 'bg-surface-elevated border-border-default text-text-secondary hover:border-brand-primary'
           )}
         >
           Sell
@@ -296,19 +296,19 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
 
       {/* Price Preview */}
       {tradeResult && (
-        <div className="bg-blue-50 rounded-lg p-4">
+        <div className="bg-brand-primary/10 border border-brand-primary/20 rounded-lg p-4">
           <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-blue-900">
+            <span className="text-sm font-medium text-text-primary">
               New {outcome} Price
             </span>
             <div className="text-right">
-              <div className="text-2xl font-bold text-blue-900">
+              <div className="text-2xl font-bold text-brand-primary">
                 {tradeResult.newPrice.toFixed(1)}%
               </div>
               <div
                 className={cn(
                   'text-sm font-medium',
-                  tradeResult.priceImpact > 0 ? 'text-green-600' : 'text-red-600'
+                  tradeResult.priceImpact > 0 ? 'text-trading-yes' : 'text-trading-no'
                 )}
               >
                 {tradeResult.priceImpact > 0 ? '+' : ''}
@@ -336,7 +336,7 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
       <button
         type="button"
         onClick={() => setShowSlippage(!showSlippage)}
-        className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+        className="text-sm text-brand-primary hover:text-brand-accent font-medium flex items-center gap-1 transition-colors"
       >
         {showSlippage ? '▼' : '▶'} Slippage Settings ({slippage}%)
       </button>
@@ -349,11 +349,11 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
         data-testid="submit-trade"
         disabled={!canSubmit}
         className={cn(
-          'w-full px-6 py-4 text-lg font-semibold rounded-lg transition-colors',
-          'focus:outline-none focus:ring-2 focus:ring-offset-2',
+          'w-full px-6 py-4 text-lg font-semibold rounded-lg transition-all duration-200',
+          'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-primary',
           canSubmit
-            ? 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
-            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            ? 'bg-brand-primary text-text-primary-inverse hover:bg-brand-accent shadow-glow-lg focus:ring-brand-primary'
+            : 'bg-surface-elevated text-text-tertiary cursor-not-allowed border border-border-default'
         )}
       >
         {!connected
@@ -367,9 +367,9 @@ export function TradeForm({ marketId, marketState, onTrade, className }: TradeFo
 
       {/* Wallet Connect Helper */}
       {!connected && (
-        <div className="text-center text-sm text-gray-600 bg-gray-50 rounded-lg p-4">
+        <div className="text-center text-sm text-text-secondary bg-surface-elevated border border-border-subtle rounded-lg p-4">
           <p>Connect your Solana wallet to start trading</p>
-          <p className="text-xs mt-1 text-gray-500">
+          <p className="text-xs mt-1 text-text-tertiary">
             Supported: Phantom, Solflare, Backpack
           </p>
         </div>

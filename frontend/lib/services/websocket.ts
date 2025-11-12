@@ -8,15 +8,14 @@
  * - User positions
  *
  * Features:
+ * - Native WebSocket API (browser standard)
  * - Automatic reconnection with exponential backoff
  * - Fallback to polling after 5 failed reconnections
  * - Type-safe event handling
  * - Connection state management
  */
 
-import { io, Socket } from 'socket.io-client';
-
-// WebSocket event types
+// WebSocket event types (matches backend protocol)
 export type WSEvent =
   | 'market:update'
   | 'trade:executed'
@@ -84,8 +83,26 @@ interface WSConfig {
   maxReconnectDelay?: number;
 }
 
+/**
+ * Backend message types (received from server)
+ */
+interface BackendMessage {
+  type: 'welcome' | 'market_state' | 'trade' | 'vote' | 'discussion' | 'error';
+  market_id?: string;
+  timestamp: string;
+  data: any;
+}
+
+/**
+ * Client message types (sent to server)
+ */
+interface ClientMessage {
+  action: 'subscribe' | 'unsubscribe' | 'pong';
+  market_id?: string;
+}
+
 export class WebSocketClient {
-  private socket: Socket | null = null;
+  private socket: WebSocket | null = null;
   private config: WSConfig;
   private reconnectAttempts = 0;
   private maxReconnectAttempts = 5;
@@ -94,6 +111,8 @@ export class WebSocketClient {
   private listeners: Map<WSEvent, Set<EventCallback>> = new Map();
   private connectionState: 'disconnected' | 'connecting' | 'connected' | 'error' = 'disconnected';
   private fallbackToPolling = false;
+  private reconnectTimeout: NodeJS.Timeout | null = null;
+  private heartbeatInterval: NodeJS.Timeout | null = null;
 
   constructor(config: WSConfig) {
     this.config = {
@@ -123,28 +142,47 @@ export class WebSocketClient {
    * Establish WebSocket connection
    */
   connect(): void {
-    if (this.socket?.connected) {
+    if (this.socket?.readyState === WebSocket.OPEN) {
       console.log('[WebSocket] Already connected');
       return;
+    }
+
+    // Clean up any existing connection
+    if (this.socket) {
+      this.socket.close();
+      this.socket = null;
     }
 
     console.log('[WebSocket] Connecting to', this.config.url);
     this.connectionState = 'connecting';
 
-    this.socket = io(this.config.url, {
-      transports: ['websocket', 'polling'],
-      reconnection: false, // We handle reconnection manually
-    });
-
-    this.setupEventHandlers();
+    try {
+      // Create native WebSocket connection
+      this.socket = new WebSocket(this.config.url);
+      this.setupEventHandlers();
+    } catch (error) {
+      console.error('[WebSocket] Failed to create connection:', error);
+      this.connectionState = 'error';
+      this.handleReconnection();
+    }
   }
 
   /**
    * Disconnect WebSocket
    */
   disconnect(): void {
+    if (this.reconnectTimeout) {
+      clearTimeout(this.reconnectTimeout);
+      this.reconnectTimeout = null;
+    }
+
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval);
+      this.heartbeatInterval = null;
+    }
+
     if (this.socket) {
-      this.socket.disconnect();
+      this.socket.close();
       this.socket = null;
       this.connectionState = 'disconnected';
       console.log('[WebSocket] Disconnected');
@@ -192,56 +230,159 @@ export class WebSocketClient {
   }
 
   /**
-   * Setup Socket.IO event handlers
+   * Subscribe to a market (for real-time updates)
+   */
+  subscribeToMarket(marketId: string): void {
+    if (this.socket?.readyState === WebSocket.OPEN) {
+      const message: ClientMessage = {
+        action: 'subscribe',
+        market_id: marketId,
+      };
+      this.socket.send(JSON.stringify(message));
+      console.log('[WebSocket] Subscribed to market:', marketId);
+    } else {
+      console.warn('[WebSocket] Cannot subscribe - not connected');
+    }
+  }
+
+  /**
+   * Unsubscribe from a market
+   */
+  unsubscribeFromMarket(marketId: string): void {
+    if (this.socket?.readyState === WebSocket.OPEN) {
+      const message: ClientMessage = {
+        action: 'unsubscribe',
+        market_id: marketId,
+      };
+      this.socket.send(JSON.stringify(message));
+      console.log('[WebSocket] Unsubscribed from market:', marketId);
+    }
+  }
+
+  /**
+   * Setup native WebSocket event handlers
    */
   private setupEventHandlers(): void {
     if (!this.socket) return;
 
-    // Connection events
-    this.socket.on('connect', () => {
-      console.log('[WebSocket] Connected');
+    // Connection opened
+    this.socket.onopen = () => {
+      console.log('[WebSocket] Connected to', this.config.url);
       this.connectionState = 'connected';
       this.reconnectAttempts = 0;
       this.reconnectDelay = this.config.reconnectDelay!;
       this.fallbackToPolling = false;
-    });
 
-    this.socket.on('disconnect', (reason) => {
-      console.log('[WebSocket] Disconnected:', reason);
+      // Start heartbeat
+      this.startHeartbeat();
+    };
+
+    // Message received
+    this.socket.onmessage = (event) => {
+      try {
+        const message: BackendMessage = JSON.parse(event.data);
+        this.handleBackendMessage(message);
+      } catch (error) {
+        console.error('[WebSocket] Failed to parse message:', error);
+      }
+    };
+
+    // Connection closed
+    this.socket.onclose = (event) => {
+      console.log('[WebSocket] Disconnected:', event.code, event.reason);
       this.connectionState = 'disconnected';
 
-      // Auto-reconnect if not manual disconnect
-      if (reason !== 'io client disconnect') {
+      // Stop heartbeat
+      if (this.heartbeatInterval) {
+        clearInterval(this.heartbeatInterval);
+        this.heartbeatInterval = null;
+      }
+
+      // Auto-reconnect if not clean close
+      if (event.code !== 1000) {
         this.handleReconnection();
       }
-    });
+    };
 
-    this.socket.on('connect_error', (error) => {
+    // Connection error
+    this.socket.onerror = (error) => {
       console.error('[WebSocket] Connection error:', error);
       this.connectionState = 'error';
-      this.handleReconnection();
-    });
+      // onclose will be called after onerror, which triggers reconnection
+    };
+  }
 
-    // Application events
-    this.socket.on('market:update', (data: MarketUpdateEvent) => {
-      this.emit('market:update', data);
-    });
+  /**
+   * Handle messages from backend
+   */
+  private handleBackendMessage(message: BackendMessage): void {
+    switch (message.type) {
+      case 'welcome':
+        console.log('[WebSocket] Welcome:', message.data);
+        break;
 
-    this.socket.on('trade:executed', (data: TradeExecutedEvent) => {
-      this.emit('trade:executed', data);
-    });
+      case 'market_state':
+        // Map backend 'market_state' to frontend 'market:update'
+        if (message.data && message.market_id) {
+          this.emit('market:update', {
+            marketId: message.market_id,
+            priceYes: message.data.priceYes || 0,
+            priceNo: message.data.priceNo || 0,
+            totalShares: message.data.totalShares || 0,
+            timestamp: new Date(message.timestamp).getTime(),
+          });
+        }
+        break;
 
-    this.socket.on('discussion:new', (data: DiscussionEvent) => {
-      this.emit('discussion:new', data);
-    });
+      case 'trade':
+        // Map backend 'trade' to frontend 'trade:executed'
+        if (message.data) {
+          this.emit('trade:executed', {
+            tradeId: message.data.tradeId || message.data.id,
+            marketId: message.market_id || message.data.marketId,
+            trader: message.data.trader || message.data.user,
+            outcome: message.data.outcome,
+            shares: message.data.shares || message.data.amount,
+            cost: message.data.cost || message.data.price,
+            timestamp: new Date(message.timestamp).getTime(),
+          });
+        }
+        break;
 
-    this.socket.on('position:update', (data: PositionUpdateEvent) => {
-      this.emit('position:update', data);
-    });
+      case 'discussion':
+        // Map backend 'discussion' to frontend 'discussion:new'
+        if (message.data) {
+          this.emit('discussion:new', {
+            postId: message.data.postId || message.data.id,
+            marketId: message.market_id || message.data.marketId,
+            author: message.data.author || message.data.user,
+            content: message.data.content || message.data.text,
+            parentId: message.data.parentId,
+            timestamp: new Date(message.timestamp).getTime(),
+          });
+        }
+        break;
 
-    this.socket.on('market:state_change', (data: MarketStateChangeEvent) => {
-      this.emit('market:state_change', data);
-    });
+      case 'error':
+        console.error('[WebSocket] Server error:', message.data);
+        break;
+
+      default:
+        console.log('[WebSocket] Unhandled message type:', message.type);
+    }
+  }
+
+  /**
+   * Start heartbeat (ping-pong)
+   */
+  private startHeartbeat(): void {
+    // Send pong every 30 seconds to keep connection alive
+    this.heartbeatInterval = setInterval(() => {
+      if (this.socket?.readyState === WebSocket.OPEN) {
+        const message: ClientMessage = { action: 'pong' };
+        this.socket.send(JSON.stringify(message));
+      }
+    }, 30000);
   }
 
   /**
@@ -265,7 +406,7 @@ export class WebSocketClient {
       `[WebSocket] Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`
     );
 
-    setTimeout(() => {
+    this.reconnectTimeout = setTimeout(() => {
       this.connect();
     }, delay);
   }
@@ -279,7 +420,7 @@ let wsClient: WebSocketClient | null = null;
  */
 export function getWebSocketClient(): WebSocketClient {
   if (!wsClient) {
-    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'http://localhost:3001';
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4001';
     wsClient = new WebSocketClient({
       url: wsUrl,
       autoConnect: true,

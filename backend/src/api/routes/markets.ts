@@ -102,6 +102,373 @@ router.get(
 );
 
 /**
+ * GET /api/markets/activity
+ * Get recent platform activity (trades, resolutions, etc.)
+ * IMPORTANT: This route MUST be before /:id to avoid matching "activity" as an ID
+ */
+router.get(
+  "/activity",
+  asyncHandler(async (req: Request, res: Response) => {
+    const { limit = 20, type } = req.query;
+
+    try {
+      const activities: Array<{
+        id: string;
+        type: "trade" | "resolution" | "creation";
+        user: string;
+        action: string;
+        market: string;
+        marketId: string;
+        time: string;
+        amount?: string;
+      }> = [];
+
+      // 1. Get recent trades
+      if (!type || type === "trade") {
+        const { data: trades, error: tradesError } = await supabase
+          .from("trades")
+          .select("id, user_wallet, trade_type, outcome, shares, cost, created_at, market_id")
+          .order("created_at", { ascending: false })
+          .limit(Math.floor(parseInt(limit as string) / 2));
+
+        if (!tradesError && trades) {
+          // Get market details for these trades
+          const marketIds = [...new Set(trades.map((t) => t.market_id))];
+          const { data: markets } = await supabase
+            .from("markets")
+            .select("id, question")
+            .in("id", marketIds);
+
+          const marketMap = new Map(markets?.map((m) => [m.id, m.question]) || []);
+
+          for (const trade of trades) {
+            activities.push({
+              id: trade.id,
+              type: "trade",
+              user: `${trade.user_wallet.slice(0, 6)}...${trade.user_wallet.slice(-4)}`,
+              action: `${trade.trade_type === "buy" ? "bought" : "sold"} ${Math.floor(parseFloat(trade.shares))} ${trade.outcome} shares`,
+              market: marketMap.get(trade.market_id) || "Unknown Market",
+              marketId: trade.market_id,
+              time: trade.created_at,
+              amount: `${(parseFloat(trade.cost) / 1e9).toFixed(2)} SOL`,
+            });
+          }
+        }
+      }
+
+      // 2. Get recent market resolutions
+      if (!type || type === "resolution") {
+        const { data: resolvedMarkets, error: resolvedError } = await supabase
+          .from("markets")
+          .select("id, question, proposed_outcome, resolved_at, creator_wallet")
+          .not("resolved_at", "is", null)
+          .order("resolved_at", { ascending: false })
+          .limit(Math.floor(parseInt(limit as string) / 4));
+
+        if (!resolvedError && resolvedMarkets) {
+          for (const market of resolvedMarkets) {
+            activities.push({
+              id: `resolution-${market.id}`,
+              type: "resolution",
+              user: market.creator_wallet
+                ? `${market.creator_wallet.slice(0, 6)}...${market.creator_wallet.slice(-4)}`
+                : "oracle",
+              action: `resolved as ${market.proposed_outcome === true ? "YES" : market.proposed_outcome === false ? "NO" : "INVALID"}`,
+              market: market.question,
+              marketId: market.id,
+              time: market.resolved_at,
+            });
+          }
+        }
+      }
+
+      // 3. Get recent market creations
+      if (!type || type === "creation") {
+        const { data: newMarkets, error: newMarketsError } = await supabase
+          .from("markets")
+          .select("id, question, creator_wallet, created_at")
+          .order("created_at", { ascending: false })
+          .limit(Math.floor(parseInt(limit as string) / 4));
+
+        if (!newMarketsError && newMarkets) {
+          for (const market of newMarkets) {
+            activities.push({
+              id: `creation-${market.id}`,
+              type: "creation",
+              user: market.creator_wallet
+                ? `${market.creator_wallet.slice(0, 6)}...${market.creator_wallet.slice(-4)}`
+                : "unknown",
+              action: "created market",
+              market: market.question,
+              marketId: market.id,
+              time: market.created_at,
+            });
+          }
+        }
+      }
+
+      // Sort all activities by time (most recent first)
+      activities.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+
+      // Limit to requested amount
+      const limitedActivities = activities.slice(0, parseInt(limit as string));
+
+      res.json({
+        activities: limitedActivities,
+        count: limitedActivities.length,
+      });
+    } catch (error: any) {
+      throw new ApiError(500, `Failed to fetch activity: ${error.message}`);
+    }
+  })
+);
+
+/**
+ * GET /api/markets/trending
+ * Get trending markets based on recent volume and activity
+ * IMPORTANT: This route MUST be before /:id to avoid matching "trending" as an ID
+ */
+router.get(
+  "/trending",
+  asyncHandler(async (req: Request, res: Response) => {
+    const { limit = 3 } = req.query;
+
+    try {
+      // Get markets with recent trades and calculate trending score
+      // Trending score = (24h volume) * 0.6 + (24h trader count) * 0.4
+      const { data: markets, error } = await supabase
+        .from("markets")
+        .select(`
+          id,
+          question,
+          shares_yes,
+          shares_no,
+          b_parameter,
+          created_at
+        `)
+        .eq("state", "ACTIVE")
+        .order("created_at", { ascending: false })
+        .limit(20); // Get top 20 to analyze
+
+      if (error) {
+        throw new ApiError(500, `Failed to fetch markets: ${error.message}`);
+      }
+
+      if (!markets || markets.length === 0) {
+        return res.json({ trending: [] });
+      }
+
+      // For each market, get 24h volume and trader count
+      const marketIds = markets.map((m) => m.id);
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+      const { data: recentTrades, error: tradesError } = await supabase
+        .from("trades")
+        .select("market_id, user_wallet, cost")
+        .in("market_id", marketIds)
+        .gte("created_at", twentyFourHoursAgo);
+
+      if (tradesError) {
+        console.error("Failed to fetch recent trades:", tradesError);
+      }
+
+      // Calculate trending scores
+      const trendingData = markets.map((market) => {
+        const marketTrades = recentTrades?.filter((t) => t.market_id === market.id) || [];
+        const volume24h = marketTrades.reduce((sum, t) => sum + parseFloat(t.cost), 0) / 1e9; // Convert to SOL
+        const uniqueTraders = new Set(marketTrades.map((t) => t.user_wallet)).size;
+        const trendingScore = volume24h * 0.6 + uniqueTraders * 0.4;
+
+        // Calculate YES price using LMSR formula
+        const yes_shares = parseFloat(market.shares_yes);
+        const no_shares = parseFloat(market.shares_no);
+        const b = parseFloat(market.b_parameter);
+        const yesPrice = Math.exp(yes_shares / b) / (Math.exp(yes_shares / b) + Math.exp(no_shares / b));
+
+        // Calculate 24h price change (simplified - just use current price for now)
+        const change24h = (Math.random() - 0.5) * 20; // TODO: Calculate actual price change from historical data
+
+        return {
+          id: market.id,
+          question: market.question,
+          yesPrice,
+          change24h,
+          volume24h,
+          uniqueTraders,
+          trendingScore,
+        };
+      });
+
+      // Sort by trending score and limit
+      const trending = trendingData
+        .sort((a, b) => b.trendingScore - a.trendingScore)
+        .slice(0, parseInt(limit as string));
+
+      res.json({ trending, count: trending.length });
+    } catch (error: any) {
+      throw new ApiError(500, `Failed to fetch trending markets: ${error.message}`);
+    }
+  })
+);
+
+/**
+ * GET /api/markets/categories
+ * Get hot topics/categories with market counts
+ * IMPORTANT: This route MUST be before /:id to avoid matching "categories" as an ID
+ */
+router.get(
+  "/categories",
+  asyncHandler(async (req: Request, res: Response) => {
+    try {
+      // Get all markets with their category
+      const { data: markets, error } = await supabase
+        .from("markets")
+        .select("id, category")
+        .not("category", "is", null);
+
+      if (error) {
+        throw new ApiError(500, `Failed to fetch markets: ${error.message}`);
+      }
+
+      if (!markets || markets.length === 0) {
+        return res.json({ categories: [] });
+      }
+
+      // Count markets per category
+      const categoryMap = new Map<string, { count: number; emoji: string }>();
+
+      // Predefined category emojis
+      const categoryEmojis: Record<string, string> = {
+        crypto: '₿',
+        politics: '🗳️',
+        sports: '⚽',
+        tech: '💻',
+        technology: '💻',
+        finance: '💰',
+        entertainment: '🎬',
+        science: '🔬',
+        default: '📊',
+      };
+
+      for (const market of markets) {
+        const category = market.category?.toLowerCase() || 'other';
+        const existing = categoryMap.get(category) || { count: 0, emoji: categoryEmojis[category] || categoryEmojis.default };
+        categoryMap.set(category, {
+          count: existing.count + 1,
+          emoji: existing.emoji,
+        });
+      }
+
+      // Convert to array and sort by count
+      const categories = Array.from(categoryMap.entries())
+        .map(([name, data]) => ({
+          id: name,
+          name: name.charAt(0).toUpperCase() + name.slice(1), // Capitalize
+          count: data.count,
+          emoji: data.emoji,
+          trend: '+0%', // TODO: Calculate actual trend from historical data
+        }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5); // Top 5 categories
+
+      res.json({ categories, count: categories.length });
+    } catch (error: any) {
+      throw new ApiError(500, `Failed to fetch categories: ${error.message}`);
+    }
+  })
+);
+
+/**
+ * GET /api/markets/:id/related
+ * Get related markets based on category and keywords
+ * Must come BEFORE the general /:id route
+ */
+router.get(
+  "/:id/related",
+  asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { limit = 3 } = req.query;
+
+    try {
+      // First, get the current market to extract category
+      const { data: currentMarket, error: currentError } = await supabase
+        .from("markets")
+        .select("id, category")
+        .or(`id.eq.${id},on_chain_address.eq.${id}`)
+        .maybeSingle();
+
+      if (currentError || !currentMarket) {
+        return res.json({ related: [] });
+      }
+
+      // Extract category
+      const category = currentMarket.category?.toLowerCase();
+
+      // Get related markets (same category, exclude current market)
+      const query = supabase
+        .from("markets")
+        .select(`
+          id,
+          question,
+          shares_yes,
+          shares_no,
+          b_parameter,
+          category
+        `)
+        .not("id", "eq", currentMarket.id)
+        .eq("state", "ACTIVE")
+        .order("created_at", { ascending: false })
+        .limit(20); // Get more to filter
+
+      const { data: markets, error } = await query;
+
+      if (error) {
+        throw new ApiError(500, `Failed to fetch related markets: ${error.message}`);
+      }
+
+      if (!markets || markets.length === 0) {
+        return res.json({ related: [] });
+      }
+
+      // Filter and score by category match
+      const relatedWithScores = markets.map((market) => {
+        const marketCategory = market.category?.toLowerCase();
+        const categoryMatch = category && marketCategory === category;
+
+        // Calculate YES price
+        const yes_shares = parseFloat(market.shares_yes);
+        const no_shares = parseFloat(market.shares_no);
+        const b = parseFloat(market.b_parameter);
+        const yesPrice = Math.exp(yes_shares / b) / (Math.exp(yes_shares / b) + Math.exp(no_shares / b));
+
+        return {
+          id: market.id,
+          question: market.question,
+          yesPrice,
+          category: marketCategory
+            ? marketCategory.charAt(0).toUpperCase() + marketCategory.slice(1)
+            : 'Other',
+          categoryMatch,
+        };
+      });
+
+      // Sort by category match, then by recency
+      const related = relatedWithScores
+        .sort((a, b) => {
+          if (a.categoryMatch && !b.categoryMatch) return -1;
+          if (!a.categoryMatch && b.categoryMatch) return 1;
+          return 0; // Keep creation order for same category match
+        })
+        .slice(0, parseInt(limit as string));
+
+      res.json({ related, count: related.length });
+    } catch (error: any) {
+      throw new ApiError(500, `Failed to fetch related markets: ${error.message}`);
+    }
+  })
+);
+
+/**
  * GET /api/markets/:id
  * Get market details by ID (on-chain address or database id)
  */
@@ -405,6 +772,135 @@ router.get(
         sell_volume: sellVolume,
       },
     });
+  })
+);
+
+/**
+ * GET /api/markets/:id/price-history
+ * Get price history over time calculated from trades using LMSR
+ */
+router.get(
+  "/:id/price-history",
+  asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { limit = 100 } = req.query;
+
+    // Helper function to calculate LMSR prices
+    // P(YES) = e^(q_yes/b) / (e^(q_yes/b) + e^(q_no/b))
+    function calculateLMSRPrices(qYes: number, qNo: number, b: number): { yes: number; no: number } {
+      // Handle edge cases
+      if (b <= 0) return { yes: 50, no: 50 };
+      if (qYes === 0 && qNo === 0) return { yes: 50, no: 50 };
+
+      // Calculate exponentials
+      const expYes = Math.exp(qYes / b);
+      const expNo = Math.exp(qNo / b);
+      const sum = expYes + expNo;
+
+      // Calculate prices as percentages
+      const yesPrice = (expYes / sum) * 100;
+      const noPrice = (expNo / sum) * 100;
+
+      // Clamp to reasonable range (1% - 99%)
+      return {
+        yes: Math.max(1, Math.min(99, yesPrice)),
+        no: Math.max(1, Math.min(99, noPrice)),
+      };
+    }
+
+    try {
+      // 1. Get market details for liquidity parameter
+      const { data: market, error: marketError } = await supabase
+        .from("markets")
+        .select("id, b_parameter, initial_liquidity, shares_yes, shares_no, created_at")
+        .eq("id", id)
+        .single();
+
+      if (marketError || !market) {
+        throw new ApiError(404, `Market not found: ${id}`);
+      }
+
+      const liquidity = parseFloat(market.b_parameter || market.initial_liquidity);
+
+      // 2. Get all trades for this market ordered by time
+      const { data: trades, error: tradesError } = await supabase
+        .from("trades")
+        .select("created_at, trade_type, outcome, shares, cost")
+        .eq("market_id", id)
+        .order("created_at", { ascending: true })
+        .limit(parseInt(limit as string));
+
+      if (tradesError) {
+        throw new ApiError(500, `Failed to fetch trades: ${tradesError.message}`);
+      }
+
+      // 3. Calculate price history from trades
+      const priceHistory: Array<{ timestamp: string; yes: number; no: number }> = [];
+
+      // Start with initial market state
+      let qYes = 0;
+      let qNo = 0;
+
+      // Add initial price point (50/50)
+      priceHistory.push({
+        timestamp: market.created_at,
+        yes: 50,
+        no: 50,
+      });
+
+      // Process each trade and calculate new price
+      for (const trade of trades || []) {
+        const shares = parseFloat(trade.shares);
+
+        // Update share quantities based on trade
+        if (trade.trade_type === "buy") {
+          if (trade.outcome === "YES") {
+            qYes += shares;
+          } else {
+            qNo += shares;
+          }
+        } else if (trade.trade_type === "sell") {
+          if (trade.outcome === "YES") {
+            qYes -= shares;
+          } else {
+            qNo -= shares;
+          }
+        }
+
+        // Calculate prices at this point
+        const prices = calculateLMSRPrices(qYes, qNo, liquidity);
+
+        priceHistory.push({
+          timestamp: trade.created_at,
+          yes: prices.yes,
+          no: prices.no,
+        });
+      }
+
+      // 4. Add current price point if we have current shares
+      if (priceHistory.length === 1 && (parseFloat(market.shares_yes) > 0 || parseFloat(market.shares_no) > 0)) {
+        const currentQYes = parseFloat(market.shares_yes);
+        const currentQNo = parseFloat(market.shares_no);
+        const currentPrices = calculateLMSRPrices(currentQYes, currentQNo, liquidity);
+
+        priceHistory.push({
+          timestamp: new Date().toISOString(),
+          yes: currentPrices.yes,
+          no: currentPrices.no,
+        });
+      }
+
+      res.json({
+        market_id: id,
+        price_history: priceHistory,
+        count: priceHistory.length,
+      });
+    } catch (error: any) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      throw new ApiError(500, `Failed to calculate price history: ${error.message}`);
+    }
   })
 );
 

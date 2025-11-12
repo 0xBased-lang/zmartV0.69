@@ -38,7 +38,7 @@ export function QuantityInput({
     <div className={cn('space-y-2', className)}>
       {/* Input Field */}
       <div className="relative">
-        <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="quantity" className="block text-sm font-medium text-text-primary mb-1">
           Number of Shares
         </label>
         <input
@@ -55,17 +55,17 @@ export function QuantityInput({
           step="0.01"
           className={cn(
             'w-full px-4 py-3 text-lg font-medium rounded-lg border-2',
-            'focus:outline-none focus:ring-2 focus:ring-blue-500',
-            'transition-colors',
+            'focus:outline-none focus:ring-2 focus:ring-brand-primary',
+            'transition-all duration-200 bg-surface-elevated text-text-primary',
             error
-              ? 'border-red-300 bg-red-50 text-red-900'
+              ? 'border-status-error'
               : focused
-                ? 'border-blue-400 bg-white'
-                : 'border-gray-300 bg-white'
+                ? 'border-brand-primary shadow-glow'
+                : 'border-border-default'
           )}
         />
         {max && (
-          <div className="absolute right-3 top-9 text-sm text-gray-500">
+          <div className="absolute right-3 top-9 text-sm text-text-tertiary" suppressHydrationWarning>
             Max: {max.toLocaleString()}
           </div>
         )}
@@ -73,7 +73,7 @@ export function QuantityInput({
 
       {/* Error Message */}
       {error && (
-        <div className="text-sm text-red-600 flex items-center gap-1">
+        <div className="text-sm text-status-error flex items-center gap-1">
           <span>⚠️</span>
           <span>{error}</span>
         </div>
@@ -86,7 +86,7 @@ export function QuantityInput({
             key={preset}
             type="button"
             onClick={() => handlePreset(preset)}
-            className="flex-1 px-3 py-2 text-sm font-medium rounded border border-gray-300 bg-white hover:bg-gray-50 transition-colors"
+            className="flex-1 px-3 py-2 text-sm font-medium rounded border border-border-default bg-surface-elevated text-text-primary hover:bg-surface-card hover:border-brand-primary transition-all duration-200"
           >
             {preset}
           </button>
@@ -95,7 +95,7 @@ export function QuantityInput({
           <button
             type="button"
             onClick={() => handlePreset('max')}
-            className="flex-1 px-3 py-2 text-sm font-medium rounded border border-gray-300 bg-white hover:bg-gray-50 transition-colors"
+            className="flex-1 px-3 py-2 text-sm font-medium rounded border border-border-default bg-surface-elevated text-text-primary hover:bg-surface-card hover:border-brand-primary transition-all duration-200"
           >
             MAX
           </button>

@@ -26,6 +26,9 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { MarketDetailContent } from './MarketDetailContent';
+import { ThreeColumnLayout } from '@/components/layout/ThreeColumnLayout';
+import { TrendingMarkets, HotTopics } from '@/components/sidebar/left';
+import { DiscussionPanel, SocialShare, RelatedMarkets } from '@/components/sidebar/right';
 
 interface MarketDetailPageProps {
   params: {
@@ -35,17 +38,31 @@ interface MarketDetailPageProps {
 
 export default function MarketDetailPage({ params }: MarketDetailPageProps) {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <ThreeColumnLayout
+      leftSidebar={
+        <>
+          <HotTopics />
+          <TrendingMarkets />
+        </>
+      }
+      rightSidebar={
+        <>
+          <SocialShare marketId={params.id} />
+          <RelatedMarkets currentMarketId={params.id} />
+          <DiscussionPanel marketId={params.id} />
+        </>
+      }
+    >
       {/* Breadcrumb Navigation */}
-      <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
+      <nav className="text-sm text-text-tertiary mb-6" aria-label="Breadcrumb">
         <ol className="flex items-center gap-2">
           <li>
-            <Link href="/markets" className="hover:text-gray-900 transition-colors">
+            <Link href="/markets" className="hover:text-text-primary transition-colors">
               Markets
             </Link>
           </li>
           <li aria-hidden="true">›</li>
-          <li className="text-gray-900 font-medium">Market Details</li>
+          <li className="text-text-primary font-medium">Market Details</li>
         </ol>
       </nav>
 
@@ -53,7 +70,7 @@ export default function MarketDetailPage({ params }: MarketDetailPageProps) {
       <Suspense fallback={<MarketDetailSkeleton />}>
         <MarketDetailContent marketId={params.id} />
       </Suspense>
-    </div>
+    </ThreeColumnLayout>
   );
 }
 

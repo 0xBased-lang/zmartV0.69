@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import type { Market } from '@/types/market';
 import { MarketState } from '@/types/market';
 import { StateBadge } from './StateBadge';
-import { formatDistanceToNow } from 'date-fns';
 import { Clock, CheckCircle, AlertCircle, XCircle, Copy, Check } from 'lucide-react';
+import { isValidDate, safeFormatDistanceToNow } from '@/lib/utils/date-formatter';
 
 interface MarketHeaderProps {
   market: Market;
@@ -18,19 +18,19 @@ function getStateIcon(state: Market['state']) {
   const iconClass = 'w-5 h-5';
   switch (state) {
     case MarketState.PROPOSED:
-      return <Clock className={`${iconClass} text-blue-600`} />;
+      return <Clock className={`${iconClass} text-brand-accent`} />;
     case MarketState.APPROVED:
-      return <CheckCircle className={`${iconClass} text-green-600`} />;
+      return <CheckCircle className={`${iconClass} text-status-success`} />;
     case MarketState.ACTIVE:
-      return <Clock className={`${iconClass} text-green-600`} />;
+      return <Clock className={`${iconClass} text-trading-yes`} />;
     case MarketState.RESOLVING:
-      return <AlertCircle className={`${iconClass} text-yellow-600`} />;
+      return <AlertCircle className={`${iconClass} text-status-warning`} />;
     case MarketState.DISPUTED:
-      return <AlertCircle className={`${iconClass} text-orange-600`} />;
+      return <AlertCircle className={`${iconClass} text-status-warning`} />;
     case MarketState.FINALIZED:
-      return <CheckCircle className={`${iconClass} text-gray-600`} />;
+      return <CheckCircle className={`${iconClass} text-text-tertiary`} />;
     case MarketState.CANCELLED:
-      return <XCircle className={`${iconClass} text-red-600`} />;
+      return <XCircle className={`${iconClass} text-status-error`} />;
     default:
       return null;
   }
@@ -38,8 +38,14 @@ function getStateIcon(state: Market['state']) {
 
 /**
  * Format time left in human-readable format
+ * Safely handles invalid dates
  */
 function formatTimeLeft(expiresAt: string): string {
+  // Validate date first
+  if (!isValidDate(expiresAt)) {
+    return 'Unknown';
+  }
+
   const now = Date.now();
   const expiry = new Date(expiresAt).getTime();
   const diff = expiry - now;
@@ -89,7 +95,7 @@ export function MarketHeader({ market }: MarketHeaderProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
       {/* State Badge with Icon */}
       <div className="flex items-center gap-2 mb-4" data-testid="market-state">
         {getStateIcon(market.state)}
@@ -97,26 +103,26 @@ export function MarketHeader({ market }: MarketHeaderProps) {
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl font-bold text-gray-900 mb-3" data-testid="market-question">
+      <h1 className="text-3xl font-display font-bold text-text-primary mb-3" data-testid="market-question">
         {market.title}
       </h1>
 
       {/* Description */}
-      <p className="text-gray-700 text-lg mb-6">{market.description}</p>
+      <p className="text-text-secondary text-lg mb-6">{market.description}</p>
 
       {/* Metadata */}
       <div className="flex flex-wrap gap-6 text-sm">
         {/* Creator with Copy Button */}
         <div data-testid="market-creator">
-          <span className="text-gray-500">Creator:</span>{' '}
+          <span className="text-text-tertiary">Creator:</span>{' '}
           <button
             onClick={handleCopyCreator}
-            className="inline-flex items-center gap-1 font-medium text-gray-900 hover:text-blue-600 transition-colors"
+            className="inline-flex items-center gap-1 font-medium text-text-primary hover:text-brand-primary transition-colors"
             title="Click to copy address"
           >
             <span>{market.creator.slice(0, 4)}...{market.creator.slice(-4)}</span>
             {copiedCreator ? (
-              <Check className="w-3 h-3 text-green-600" />
+              <Check className="w-3 h-3 text-status-success" />
             ) : (
               <Copy className="w-3 h-3" />
             )}
@@ -124,13 +130,13 @@ export function MarketHeader({ market }: MarketHeaderProps) {
         </div>
 
         {/* Expiry */}
-        <div>
-          <span className="text-gray-500">
+        <div suppressHydrationWarning>
+          <span className="text-text-tertiary">
             {isExpired ? 'Expired' : 'Expires'}:
           </span>{' '}
           <span
             className={`font-medium ${
-              isExpired ? 'text-red-600' : 'text-gray-900'
+              isExpired ? 'text-status-error' : 'text-text-primary'
             }`}
           >
             {timeLeft}
@@ -139,8 +145,8 @@ export function MarketHeader({ market }: MarketHeaderProps) {
 
         {/* Volume */}
         <div>
-          <span className="text-gray-500">Volume:</span>{' '}
-          <span className="font-medium text-gray-900">
+          <span className="text-text-tertiary">Volume:</span>{' '}
+          <span className="font-medium text-text-primary">
             {(() => {
               const volume = parseFloat(market.total_volume) || 0;
               return volume >= 1_000_000
@@ -153,20 +159,18 @@ export function MarketHeader({ market }: MarketHeaderProps) {
         </div>
 
         {/* Created */}
-        <div>
-          <span className="text-gray-500">Created:</span>{' '}
-          <span className="font-medium text-gray-900">
-            {formatDistanceToNow(new Date(market.created_at), {
-              addSuffix: true,
-            })}
+        <div suppressHydrationWarning>
+          <span className="text-text-tertiary">Created:</span>{' '}
+          <span className="font-medium text-text-primary">
+            {safeFormatDistanceToNow(market.created_at, 'recently')}
           </span>
         </div>
 
         {/* Market ID (Development Only) */}
         {process.env.NODE_ENV === 'development' && (
           <div>
-            <span className="text-gray-500">Market ID:</span>{' '}
-            <span className="font-mono text-xs text-gray-700">
+            <span className="text-text-tertiary">Market ID:</span>{' '}
+            <span className="font-mono text-xs text-text-secondary">
               {market.market_id.slice(0, 8)}...
             </span>
           </div>

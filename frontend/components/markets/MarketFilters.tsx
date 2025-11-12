@@ -22,7 +22,7 @@ export function MarketFilters({
       <div className="flex-1">
         <label
           htmlFor="state-filter"
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className="block text-sm font-medium text-text-primary mb-2"
         >
           Filter by State
         </label>
@@ -39,7 +39,7 @@ export function MarketFilters({
                   : (parseInt(value) as MarketState),
             });
           }}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 py-2 bg-surface-elevated border border-border-default rounded-lg text-text-primary focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-colors"
         >
           <option value="all">All States</option>
           <option value={MarketState.PROPOSED}>
@@ -67,7 +67,7 @@ export function MarketFilters({
       <div className="flex-1">
         <label
           htmlFor="sort-by"
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className="block text-sm font-medium text-text-primary mb-2"
         >
           Sort By
         </label>
@@ -80,7 +80,7 @@ export function MarketFilters({
               sortBy: e.target.value as Filters['sortBy'],
             });
           }}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 py-2 bg-surface-elevated border border-border-default rounded-lg text-text-primary focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-colors"
         >
           <option value="newest">Newest First</option>
           <option value="volume">Highest Volume</option>

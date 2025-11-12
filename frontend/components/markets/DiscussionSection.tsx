@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { getDiscussions } from '@/lib/supabase/database';
+import { safeFormatTimeAgo } from '@/lib/utils/date-formatter';
 
 interface DiscussionSectionProps {
   marketId: string;
@@ -26,13 +27,13 @@ export function DiscussionSection({
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-900">Discussion</h2>
+        <h2 className="text-xl font-display font-bold text-text-primary">Discussion</h2>
         {proposalId && (
           <Link
             href={`/proposals/${proposalId}`}
-            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+            className="text-sm text-brand-primary hover:text-brand-accent font-medium transition-colors"
           >
             View Full Proposal →
           </Link>
@@ -42,13 +43,13 @@ export function DiscussionSection({
       {/* Loading State */}
       {isLoading && (
         <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-primary"></div>
         </div>
       )}
 
       {/* Error State */}
       {error && !isLoading && (
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-8 text-text-secondary">
           <p>Failed to load discussions</p>
           <p className="text-sm mt-1">Please try refreshing the page</p>
         </div>
@@ -56,7 +57,7 @@ export function DiscussionSection({
 
       {/* Empty State */}
       {!isLoading && !error && discussions.length === 0 && (
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-8 text-text-secondary">
           <p>No discussions yet</p>
           <p className="text-sm mt-1">Be the first to comment on this market</p>
         </div>
@@ -68,19 +69,19 @@ export function DiscussionSection({
           {discussions.map((discussion) => (
           <div
             key={discussion.discussion_id}
-            className="border-l-2 border-gray-200 pl-4 py-2"
+            className="border-l-2 border-border-subtle pl-4 py-2"
           >
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-mono text-gray-600">
+                <span className="text-sm font-mono text-text-tertiary">
                   {discussion.wallet.slice(0, 6)}...
                   {discussion.wallet.slice(-4)}
                 </span>
-                <span className="text-xs text-gray-500">
-                  {formatTimeAgo(new Date(discussion.created_at))}
+                <span className="text-xs text-text-tertiary">
+                  {safeFormatTimeAgo(discussion.created_at)}
                 </span>
               </div>
-              <div className="flex items-center gap-1 text-xs text-gray-500">
+              <div className="flex items-center gap-1 text-xs text-text-tertiary">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -97,7 +98,7 @@ export function DiscussionSection({
                 {discussion.upvotes}
               </div>
             </div>
-            <p className="text-sm text-gray-700">{discussion.content}</p>
+            <p className="text-sm text-text-secondary">{discussion.content}</p>
           </div>
         ))}
         </div>
@@ -108,7 +109,7 @@ export function DiscussionSection({
         <div className="mt-6 text-center">
           <Link
             href={`/proposals/${proposalId}`}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors font-medium"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-brand-primary/10 border border-brand-primary/20 text-brand-primary rounded-lg hover:bg-brand-primary/20 shadow-glow transition-all duration-200 font-medium"
           >
             <span>View All Discussions</span>
             <svg
@@ -131,15 +132,4 @@ export function DiscussionSection({
   );
 }
 
-/**
- * Format timestamp as relative time
- */
-function formatTimeAgo(date: Date): string {
-  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-
-  if (seconds < 60) return 'just now';
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-  if (seconds < 2592000) return `${Math.floor(seconds / 86400)}d ago`;
-  return `${Math.floor(seconds / 2592000)}mo ago`;
-}
+// formatTimeAgo function removed - now using safeFormatTimeAgo from @/lib/utils/date-formatter

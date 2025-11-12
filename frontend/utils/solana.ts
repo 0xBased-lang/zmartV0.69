@@ -10,6 +10,14 @@
  * - Transaction signature formatting
  */
 
+// Imports
+import {
+  isValidDate,
+  safeFormatDate as safeFormatDateUtil,
+  safeFormatTime as safeFormatTimeUtil,
+  safeFormatDateTime as safeFormatDateTimeUtil
+} from '@/lib/utils/date-formatter';
+
 // Constants
 export const LAMPORTS_PER_SOL = 1_000_000_000; // 1 SOL = 1 billion lamports
 export const DECIMALS = 9; // Solana uses 9 decimals
@@ -289,7 +297,7 @@ export function formatTimeAgo(timestamp: string | Date): string {
 }
 
 /**
- * Format date for display
+ * Format date for display (uses safe formatters to prevent SSR/CSR hydration issues)
  * @param timestamp - ISO 8601 timestamp or Date
  * @param format - Format type ('short' | 'long' | 'time')
  * @returns Formatted date string
@@ -297,26 +305,20 @@ export function formatTimeAgo(timestamp: string | Date): string {
  * formatDate("2025-11-09T12:00:00Z", 'short') // "Nov 9, 2025"
  * formatDate("2025-11-09T12:00:00Z", 'long') // "November 9, 2025 at 12:00 PM"
  * formatDate("2025-11-09T12:00:00Z", 'time') // "12:00 PM"
+ * @note Components using this should add suppressHydrationWarning to prevent SSR/CSR mismatches
  */
 export function formatDate(timestamp: string | Date, format: 'short' | 'long' | 'time' = 'short'): string {
-  const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp;
-
+  // Use safe formatters to prevent "Invalid time value" errors
   if (format === 'time') {
-    return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    return safeFormatTimeUtil(timestamp, 'Invalid time');
   }
 
   if (format === 'long') {
-    return date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-    });
+    return safeFormatDateTimeUtil(timestamp, 'Invalid date');
   }
 
-  // short
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  // short (default)
+  return safeFormatDateUtil(timestamp, 'Invalid date');
 }
 
 /**

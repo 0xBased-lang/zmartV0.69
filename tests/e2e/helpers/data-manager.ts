@@ -83,6 +83,17 @@ export class TestDataManager {
   }
 
   /**
+   * Save test data (alias for saveData with automatic filename generation)
+   *
+   * @param data - Test data to save
+   */
+  async saveTestData(data: any): Promise<void> {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const filename = `test-data-${timestamp}`;
+    await this.saveData(filename, data);
+  }
+
+  /**
    * Save screenshot to data directory
    *
    * @param screenshotPath - Path to source screenshot

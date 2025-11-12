@@ -28,13 +28,14 @@ export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
   // Fetch market data from backend API
   const { data: market, isLoading, error } = useMarket(marketId);
 
-  // Fetch on-chain market state
+  // Fetch on-chain market state using PDA from backend
+  // IMPORTANT: Pass market.on_chain_address (PDA), NOT marketId!
   const {
     data: marketState,
     isLoading: isLoadingState,
     isError: isStateError,
     isNotFound: isStateNotFound,
-  } = useMarketStateWithStatus(marketId);
+  } = useMarketStateWithStatus(market?.on_chain_address);
 
   // Real-time WebSocket updates
   const { latestUpdate: marketUpdate } = useMarketUpdates(marketId);
@@ -47,9 +48,9 @@ export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
       console.log('[Real-time] Market price updated:', marketUpdate);
       // Invalidate market data to refetch with new prices
       queryClient.invalidateQueries({ queryKey: ['market', marketId] });
-      queryClient.invalidateQueries({ queryKey: ['market-state', marketId] });
+      queryClient.invalidateQueries({ queryKey: ['market-state', market?.on_chain_address] });
     }
-  }, [marketUpdate, marketId, queryClient]);
+  }, [marketUpdate, marketId, market?.on_chain_address, queryClient]);
 
   useEffect(() => {
     if (latestTrade) {
@@ -65,9 +66,9 @@ export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
       console.log('[Real-time] Market state changed:', stateChange);
       // Invalidate market state
       queryClient.invalidateQueries({ queryKey: ['market', marketId] });
-      queryClient.invalidateQueries({ queryKey: ['market-state', marketId] });
+      queryClient.invalidateQueries({ queryKey: ['market-state', market?.on_chain_address] });
     }
-  }, [stateChange, marketId, queryClient]);
+  }, [stateChange, marketId, market?.on_chain_address, queryClient]);
 
   // Handle loading (wait for both market metadata AND on-chain state)
   if (isLoading || isLoadingState) {
@@ -98,6 +99,8 @@ export function MarketDetailContent({ marketId }: MarketDetailContentProps) {
           </p>
           <p className="text-sm text-muted-foreground">
             Market ID: {marketId}
+            <br />
+            PDA: {market?.on_chain_address || 'unknown'}
           </p>
         </div>
       </div>

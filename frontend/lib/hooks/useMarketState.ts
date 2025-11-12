@@ -17,8 +17,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
-import { getProgram, deriveMarketPDA } from '@/lib/solana/transactions';
-import { PROGRAM_ID } from '@/config/constants';
+import { getProgram } from '@/lib/solana/transactions';
 
 // ============================================================================
 // Type Definitions
@@ -65,13 +64,14 @@ export interface UseMarketStateOptions {
 /**
  * Fetch market state from Solana blockchain
  *
- * @param marketId - Market ID (hex string without 0x prefix)
+ * @param marketPDA - Market account PDA (base58-encoded public key from backend's on_chain_address field)
  * @param options - Query options (refetch interval, stale time, enabled)
  * @returns React Query result with market state data
  *
  * @example
  * ```tsx
- * const { data: marketState, isLoading, error } = useMarketState('abc123...');
+ * // Pass the on_chain_address from backend API
+ * const { data: marketState, isLoading, error } = useMarketState(market.on_chain_address);
  *
  * if (isLoading) return <LoadingState />;
  * if (error) return <ErrorState error={error} />;
@@ -82,7 +82,7 @@ export interface UseMarketStateOptions {
  * ```
  */
 export function useMarketState(
-  marketId: string | undefined,
+  marketPDA: string | undefined,
   options: UseMarketStateOptions = {}
 ) {
   const { connection } = useConnection();
@@ -94,15 +94,14 @@ export function useMarketState(
   } = options;
 
   return useQuery({
-    queryKey: ['market-state', marketId],
+    queryKey: ['market-state', marketPDA],
     queryFn: async (): Promise<MarketState> => {
-      if (!marketId) {
-        throw new Error('Market ID is required');
+      if (!marketPDA) {
+        throw new Error('Market PDA is required');
       }
 
-      // Derive market PDA
-      const programId = new PublicKey(PROGRAM_ID);
-      const [marketPDA] = deriveMarketPDA(programId, marketId);
+      // Use the PDA directly (no derivation needed)
+      const marketPublicKey = new PublicKey(marketPDA);
 
       // Create dummy wallet for read-only operations
       // (getProgram requires wallet interface but we only need connection)
@@ -115,8 +114,8 @@ export function useMarketState(
       // Get program instance
       const program = getProgram(connection, dummyWallet);
 
-      // Fetch market account
-      const marketAccount = await program.account.marketAccount.fetch(marketPDA);
+      // Fetch market account using the PDA
+      const marketAccount = await program.account.marketAccount.fetch(marketPublicKey);
 
       // Convert BN to BigInt and extract relevant fields
       // IMPORTANT: Rust program uses snake_case, Anchor may or may not convert to camelCase
@@ -136,7 +135,7 @@ export function useMarketState(
     staleTime,
     refetchInterval,
     refetchOnWindowFocus: true,
-    enabled: enabled && !!marketId,
+    enabled: enabled && !!marketPDA,
     retry: 3,
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
@@ -149,12 +148,12 @@ export function useMarketState(
 /**
  * Get market state with convenient loading/error/notFound states
  *
- * @param marketId - Market ID (hex string without 0x prefix)
+ * @param marketPDA - Market account PDA (base58-encoded public key from backend's on_chain_address field)
  * @returns Object with data, loading, error, notFound booleans
  *
  * @example
  * ```tsx
- * const { data, isLoading, isError, isNotFound } = useMarketStateWithStatus('abc123...');
+ * const { data, isLoading, isError, isNotFound } = useMarketStateWithStatus(market.on_chain_address);
  *
  * if (isLoading) return <Skeleton />;
  * if (isNotFound) return <NotFound />;
@@ -164,8 +163,8 @@ export function useMarketState(
  * return <MarketDetails state={data} />;
  * ```
  */
-export function useMarketStateWithStatus(marketId: string | undefined) {
-  const query = useMarketState(marketId);
+export function useMarketStateWithStatus(marketPDA: string | undefined) {
+  const query = useMarketState(marketPDA);
 
   return {
     data: query.data,

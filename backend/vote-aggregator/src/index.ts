@@ -21,7 +21,7 @@ import bs58 from 'bs58';
 import { config } from '../../src/config/env';
 
 const app: Application = express();
-const PORT = config.api.port + 1; // Vote aggregator runs on API port + 1
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4005; // Allow PORT override via env, default to 4005 to avoid conflict with api-gateway (4000) and websocket (4001)
 
 // Redis client (from centralized config)
 const redisClient = createClient({
