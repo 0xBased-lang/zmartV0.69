@@ -14,8 +14,27 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 
-// Backend configuration
-const BACKEND_URL = process.env.BACKEND_API_URL || 'http://185.202.236.71:4000'
+// Backend configuration with defensive sanitization
+const rawBackendUrl = process.env.BACKEND_API_URL || 'https://edward-lovely-por-appreciate.trycloudflare.com'
+
+// Sanitize environment variable (remove quotes, newlines, whitespace)
+const BACKEND_URL = rawBackendUrl
+  .trim()                    // Remove leading/trailing whitespace
+  .replace(/^["']|["']$/g, '') // Remove surrounding quotes
+  .replace(/\n/g, '')          // Remove newlines
+  .replace(/\r/g, '')          // Remove carriage returns
+
+// Validation: Ensure URL is valid
+if (!BACKEND_URL.startsWith('http://') && !BACKEND_URL.startsWith('https://')) {
+  console.error('[Proxy] INVALID BACKEND_API_URL:', {
+    raw: rawBackendUrl,
+    sanitized: BACKEND_URL,
+    bytes: Buffer.from(rawBackendUrl).toString('hex'),
+  })
+  throw new Error(`Invalid BACKEND_API_URL environment variable: ${BACKEND_URL}`)
+}
+
+console.log('[Proxy] Backend URL configured:', BACKEND_URL)
 
 export const runtime = 'edge' // Use Edge Runtime for better performance
 

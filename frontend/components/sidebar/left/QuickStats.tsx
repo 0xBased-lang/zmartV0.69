@@ -32,14 +32,16 @@ export function QuickStats() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        // Fetch real markets from backend
-        const response = await fetch('/api/backend/api/markets')
+        // Fetch real markets from backend via proxy
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/api/proxy'
+        const response = await fetch(`${apiUrl}/api/markets`)
 
         if (!response.ok) {
           throw new Error('Failed to fetch markets')
         }
 
-        const markets = await response.json()
+        const data = await response.json()
+        const markets = data.markets || []
 
         // Calculate real active markets count
         const activeCount = Array.isArray(markets)
