@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 interface OrderBookProps {
   marketId: string;
@@ -15,45 +15,80 @@ interface Position {
 
 /**
  * Order book showing aggregated positions
- * Displays top holders for YES and NO outcomes
+ * Displays top holders for YES and NO outcomes based on real trade data
  */
 export function OrderBook({ marketId }: OrderBookProps) {
-  const [mounted, setMounted] = useState(false);
+  const [positions, setPositions] = useState<Position[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Prevent SSR hydration issues with Math.random()
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const fetchPositions = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-  // MOCK: Generate sample positions
-  // TODO: Fetch actual positions from on-chain data
-  const positions = useMemo((): Position[] => {
-    // Only generate positions on client side to avoid SSR/CSR mismatch
-    if (!mounted) return [];
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+        const response = await fetch(`${apiUrl}/api/markets/${marketId}/trades`);
 
-    const mockAddresses = [
-      '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp',
-      '7xKXtg2CW87d97TXJSDpbD5jBkheTqA3',
-      'C5v68qLr9V7aBkK9dRMZvE4FcA9sPmG4',
-      'DqL8Pz3nT6rVmWxK9jFbA2sN5hEcYt7R',
-      'E9mNxK2vR8tLpQ3zW5jF7aHcBs4DyG6T',
-    ];
+        if (!response.ok) {
+          throw new Error('Failed to fetch trades');
+        }
 
-    return mockAddresses.flatMap((addr, i) => [
-      {
-        address: addr,
-        outcome: 'YES' as const,
-        shares: Math.floor(Math.random() * 100) + 10,
-        avgPrice: 40 + Math.random() * 20,
-      },
-      {
-        address: addr,
-        outcome: 'NO' as const,
-        shares: Math.floor(Math.random() * 100) + 10,
-        avgPrice: 40 + Math.random() * 20,
-      },
-    ]);
-  }, [mounted]);
+        const data = await response.json();
+        const trades = data.trades || [];
+
+        // Aggregate positions by wallet and outcome
+        const positionMap = new Map<string, { shares: number; totalCost: number }>();
+
+        for (const trade of trades) {
+          const key = `${trade.user_wallet}-${trade.outcome}`;
+          const existing = positionMap.get(key) || { shares: 0, totalCost: 0 };
+
+          const shares = parseFloat(trade.shares);
+          const cost = parseFloat(trade.cost);
+
+          if (trade.trade_type === 'buy') {
+            positionMap.set(key, {
+              shares: existing.shares + shares,
+              totalCost: existing.totalCost + cost,
+            });
+          } else {
+            positionMap.set(key, {
+              shares: existing.shares - shares,
+              totalCost: existing.totalCost - cost,
+            });
+          }
+        }
+
+        // Convert to Position array
+        const aggregatedPositions: Position[] = [];
+        positionMap.forEach((value, key) => {
+          const [address, outcome] = key.split('-');
+          if (value.shares > 0) {
+            aggregatedPositions.push({
+              address,
+              outcome: outcome as 'YES' | 'NO',
+              shares: value.shares,
+              avgPrice: (value.totalCost / value.shares / 1e9) * 100, // Convert to percentage
+            });
+          }
+        });
+
+        setPositions(aggregatedPositions);
+      } catch (err) {
+        console.error('Error fetching positions:', err);
+        setError('Failed to load positions');
+        setPositions([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (marketId) {
+      fetchPositions();
+    }
+  }, [marketId]);
 
   const yesPositions = positions
     .filter((p) => p.outcome === 'YES')
@@ -65,8 +100,8 @@ export function OrderBook({ marketId }: OrderBookProps) {
     .sort((a, b) => b.shares - a.shares)
     .slice(0, 5);
 
-  // Show loading skeleton during SSR
-  if (!mounted) {
+  // Show loading skeleton
+  if (loading) {
     return (
       <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
         <h2 className="text-xl font-display font-bold text-text-primary mb-4">Order Book</h2>
@@ -94,6 +129,16 @@ export function OrderBook({ marketId }: OrderBookProps) {
             </div>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
+        <h2 className="text-xl font-display font-bold text-text-primary mb-4">Order Book</h2>
+        <div className="text-sm text-status-error text-center py-8">{error}</div>
       </div>
     );
   }
@@ -158,10 +203,16 @@ export function OrderBook({ marketId }: OrderBookProps) {
         </div>
       </div>
 
-      {/* MOCK Indicator */}
-      <p className="text-xs text-text-tertiary mt-4 text-center">
-        📊 Mock data - real positions coming soon
-      </p>
+      {positions.length > 0 && (
+        <p className="text-xs text-text-tertiary mt-4 text-center">
+          {positions.length} active positions • Real-time data
+        </p>
+      )}
+      {positions.length === 0 && (
+        <p className="text-xs text-text-tertiary mt-4 text-center">
+          No positions yet • Be the first to trade!
+        </p>
+      )}
     </div>
   );
 }

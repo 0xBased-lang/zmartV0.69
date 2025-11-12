@@ -1,13 +1,14 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
-import { Clock, TrendingUp, MessageSquare, Trophy, Activity as ActivityIcon } from 'lucide-react'
+import { Clock, TrendingUp, MessageSquare, Trophy, Activity as ActivityIcon, Plus } from 'lucide-react'
 
 interface ActivityItem {
   id: string
-  type: 'trade' | 'comment' | 'resolution' | 'win'
+  type: 'trade' | 'resolution' | 'creation'
   user: string
   action: string
   market: string
@@ -16,73 +17,101 @@ interface ActivityItem {
   amount?: string
 }
 
-const MOCK_ACTIVITY: ActivityItem[] = [
-  {
-    id: '1',
-    type: 'trade',
-    user: 'alice.eth',
-    action: 'bought 100 YES shares',
-    market: 'Bitcoin $100k by 2025?',
-    marketId: '1',
-    time: '2m ago',
-    amount: '$500',
-  },
-  {
-    id: '2',
-    type: 'comment',
-    user: 'bob.sol',
-    action: 'commented on',
-    market: 'AI surpass humans by 2030?',
-    marketId: '2',
-    time: '5m ago',
-  },
-  {
-    id: '3',
-    type: 'win',
-    user: 'charlie.eth',
-    action: 'won',
-    market: 'Will ETH hit $5k?',
-    marketId: '3',
-    time: '12m ago',
-    amount: '$1,250',
-  },
-  {
-    id: '4',
-    type: 'trade',
-    user: 'diana.sol',
-    action: 'sold 50 NO shares',
-    market: 'Recession in 2025?',
-    marketId: '4',
-    time: '18m ago',
-    amount: '$250',
-  },
-  {
-    id: '5',
-    type: 'resolution',
-    user: 'oracle.eth',
-    action: 'resolved',
-    market: 'Election prediction',
-    marketId: '5',
-    time: '25m ago',
-  },
-]
-
 const ACTIVITY_ICONS = {
   trade: <TrendingUp className="w-3.5 h-3.5 text-brand-primary" />,
-  comment: <MessageSquare className="w-3.5 h-3.5 text-brand-accent" />,
   resolution: <Clock className="w-3.5 h-3.5 text-status-info" />,
-  win: <Trophy className="w-3.5 h-3.5 text-status-success" />,
+  creation: <Plus className="w-3.5 h-3.5 text-status-success" />,
+}
+
+// Helper to format relative time
+function getRelativeTime(timestamp: string): string {
+  const now = new Date().getTime()
+  const time = new Date(timestamp).getTime()
+  const diff = Math.floor((now - time) / 1000) // seconds
+
+  if (diff < 60) return `${diff}s ago`
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
+  return `${Math.floor(diff / 86400)}d ago`
 }
 
 export function RecentActivity() {
+  const [activities, setActivities] = useState<ActivityItem[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchActivity = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+        const response = await fetch(`${apiUrl}/api/markets/activity?limit=20`)
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch activity')
+        }
+
+        const data = await response.json()
+        setActivities(data.activities || [])
+      } catch (err) {
+        console.error('Error fetching activity:', err)
+        setError('Failed to load activity')
+        setActivities([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchActivity()
+
+    // Refresh activity every 30 seconds
+    const interval = setInterval(fetchActivity, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  if (loading) {
+    return (
+      <Card variant="dark" className="p-4">
+        <h3 className="text-sm font-semibold text-text-primary mb-3 flex items-center gap-2">
+          <ActivityIcon className="w-4 h-4 text-brand-primary" />
+          Recent Activity
+        </h3>
+        <div className="space-y-3">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={`skeleton-${i}`} className="h-16 bg-surface-elevated rounded animate-pulse" />
+          ))}
+        </div>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card variant="dark" className="p-4">
+        <h3 className="text-sm font-semibold text-text-primary mb-3 flex items-center gap-2">
+          <ActivityIcon className="w-4 h-4 text-brand-primary" />
+          Recent Activity
+        </h3>
+        <div className="text-xs text-status-error text-center py-4">{error}</div>
+      </Card>
+    )
+  }
+
   return (
     <Card variant="dark" className="p-4">
       <h3 className="text-sm font-semibold text-text-primary mb-3 flex items-center gap-2">
         <ActivityIcon className="w-4 h-4 text-brand-primary" />
         Recent Activity
       </h3>
-      <div className="space-y-3 max-h-[600px] overflow-y-auto scrollbar-hide">
-        {MOCK_ACTIVITY.map((activity) => (
+      {activities.length === 0 ? (
+        <div className="text-xs text-text-tertiary text-center py-8">
+          No recent activity yet
+        </div>
+      ) : (
+        <div className="space-y-3 max-h-[600px] overflow-y-auto scrollbar-hide">
+          {activities.map((activity) => (
           <div
             key={activity.id}
             className="p-2.5 rounded-md hover:bg-surface-elevated transition-colors border border-transparent hover:border-border-default"
@@ -113,13 +142,14 @@ export function RecentActivity() {
                   {activity.market}
                 </Link>
                 <div className="text-xs text-text-tertiary mt-1">
-                  {activity.time}
+                  {getRelativeTime(activity.time)}
                 </div>
               </div>
             </div>
           </div>
         ))}
-      </div>
+        </div>
+      )}
     </Card>
   )
 }

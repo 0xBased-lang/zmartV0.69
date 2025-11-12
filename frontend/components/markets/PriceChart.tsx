@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   LineChart,
   Line,
@@ -16,41 +16,87 @@ interface PriceChartProps {
   marketId: string;
 }
 
+interface PriceDataPoint {
+  date: string;
+  timestamp: number;
+  yes: number;
+  no: number;
+}
+
 /**
  * Price history chart showing YES/NO prices over time
- * Uses recharts for visualization
+ * Uses recharts for visualization with real LMSR price data
  */
 export function PriceChart({ marketId }: PriceChartProps) {
-  const [mounted, setMounted] = useState(false);
+  const [priceData, setPriceData] = useState<PriceDataPoint[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Prevent SSR hydration issues with toLocaleDateString()
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const fetchPriceHistory = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-  // MOCK: Generate sample price data
-  // TODO: Fetch actual price history from backend/indexer
-  const priceData = useMemo(() => {
-    // Only generate data on client side to avoid SSR/CSR mismatch
-    if (!mounted) return [];
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+        const response = await fetch(`${apiUrl}/api/markets/${marketId}/price-history?limit=50`);
 
-    const now = Date.now();
-    const dayMs = 24 * 60 * 60 * 1000;
+        if (!response.ok) {
+          throw new Error('Failed to fetch price history');
+        }
 
-    // Generate 7 days of mock data
-    return Array.from({ length: 7 }, (_, i) => {
-      const date = new Date(now - (6 - i) * dayMs);
-      const basePrice = 50;
-      const variance = Math.sin(i * 0.5) * 15; // Oscillate between 35-65%
+        const data = await response.json();
 
-      return {
-        date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        timestamp: date.getTime(),
-        yes: Math.max(1, Math.min(99, basePrice + variance)),
-        no: Math.max(1, Math.min(99, basePrice - variance)),
-      };
-    });
-  }, [mounted]);
+        // Transform API response to chart format
+        const formattedData: PriceDataPoint[] = data.price_history.map((point: any) => ({
+          date: new Date(point.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          timestamp: new Date(point.timestamp).getTime(),
+          yes: point.yes,
+          no: point.no,
+        }));
+
+        setPriceData(formattedData);
+      } catch (err) {
+        console.error('Error fetching price history:', err);
+        setError('Failed to load price history');
+        // Fallback to initial 50/50 point
+        setPriceData([{
+          date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          timestamp: Date.now(),
+          yes: 50,
+          no: 50,
+        }]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (marketId) {
+      fetchPriceHistory();
+    }
+  }, [marketId]);
+
+  if (loading) {
+    return (
+      <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
+        <h2 className="text-xl font-display font-bold text-text-primary mb-4">Price History</h2>
+        <div className="h-[300px] flex items-center justify-center">
+          <div className="animate-pulse text-text-tertiary">Loading price history...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6">
+        <h2 className="text-xl font-display font-bold text-text-primary mb-4">Price History</h2>
+        <div className="h-[300px] flex items-center justify-center">
+          <div className="text-status-error text-sm">{error}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-surface-card rounded-lg shadow-glow border border-border-default p-6" suppressHydrationWarning>
@@ -104,10 +150,11 @@ export function PriceChart({ marketId }: PriceChartProps) {
         </LineChart>
       </ResponsiveContainer>
 
-      {/* MOCK Indicator */}
-      <p className="text-xs text-text-tertiary mt-3 text-center">
-        📊 Mock data - real price history coming soon
-      </p>
+      {priceData.length > 0 && (
+        <p className="text-xs text-text-tertiary mt-3 text-center">
+          {priceData.length} price points • Real-time LMSR data
+        </p>
+      )}
     </div>
   );
 }
