@@ -253,6 +253,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.18)
+      valtio:
+        specifier: ^2.2.0
+        version: 2.2.0(@types/react@18.3.26)(react@18.3.1)
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -12339,6 +12342,10 @@ packages:
     resolution: {integrity: sha512-8xuCeM3l8yqdmbPoYeLbrAXCBWu19XEYc5/F28f5qOaoAIMyfmBUkl5axiK+x9olUvRlcekvnm98AP9RDngOIw==}
     dev: false
 
+  /proxy-compare@3.0.1:
+    resolution: {integrity: sha512-V9plBAt3qjMlS1+nC8771KNf6oJ12gExvaxnNzN/9yVRLdTv/lc+oJlnSzrdYDAvBfTStPCoiaCOTmTs0adv7Q==}
+    dev: false
+
   /proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
@@ -14392,6 +14399,23 @@ packages:
       proxy-compare: 2.6.0
       react: 18.3.1
       use-sync-external-store: 1.2.0(react@18.3.1)
+    dev: false
+
+  /valtio@2.2.0(@types/react@18.3.26)(react@18.3.1):
+    resolution: {integrity: sha512-l/zzQahUIm+dfUUP9fIecNVEWJLea9shMC1Bb1aK+v4XNOEzoq796Qax+yzMemmqpltuxfH7kPJy62FVGJDEtw==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      react: '>=18.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      '@types/react': 18.3.26
+      proxy-compare: 3.0.1
+      react: 18.3.1
     dev: false
 
   /varint@6.0.0:
