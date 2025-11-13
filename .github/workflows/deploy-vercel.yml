@@ -17,8 +17,6 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -30,7 +28,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          cache-dependency-path: 'frontend/pnpm-lock.yaml'
 
       - name: Install dependencies
         working-directory: ./frontend
@@ -43,19 +40,17 @@ jobs:
           NEXT_PUBLIC_SOLANA_RPC_URL: https://devnet.helius-rpc.com/?api-key=bad6b679-fc49-4b3d-952b-8f99b498d686
 
       - name: Deploy to Vercel
+        working-directory: ./frontend
         run: |
-          pnpm install -g vercel
-          cd frontend
-          vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --prod
+          npm install -g vercel
+          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          NEXT_PUBLIC_SOLANA_RPC_URL: https://devnet.helius-rpc.com/?api-key=bad6b679-fc49-4b3d-952b-8f99b498d686
 
       - name: Deployment Summary
         if: success()
         run: |
           echo "✅ Deployment to Vercel successful!"
-          echo ""
           echo "🌐 Site: https://tinfoil-terminal.xyz"
           echo "📊 Dashboard: https://vercel.com/kektech1/frontend"
