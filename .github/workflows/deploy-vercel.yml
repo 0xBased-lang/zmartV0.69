@@ -1,0 +1,67 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/deploy-vercel.yml'
+
+jobs:
+  deploy:
+    name: Deploy Frontend to Vercel
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: 'frontend/pnpm-lock.yaml'
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: pnpm install --frozen-lockfile
+
+      - name: Build production bundle
+        working-directory: ./frontend
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_SOLANA_RPC_URL: https://devnet.helius-rpc.com/?api-key=bad6b679-fc49-4b3d-952b-8f99b498d686
+
+      - name: Deploy to Vercel
+        uses: vercel/action@v4
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          production: true
+          working-directory: frontend
+        env:
+          NEXT_PUBLIC_SOLANA_RPC_URL: https://devnet.helius-rpc.com/?api-key=bad6b679-fc49-4b3d-952b-8f99b498d686
+
+      - name: Comment deployment URL
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number || null,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Deployed to Vercel\n\n🌐 https://tinfoil-terminal.xyz'
+            }).catch(() => {
+              console.log('Not a PR, skipping comment');
+            });
